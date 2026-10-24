@@ -1,0 +1,8 @@
+---
+// UGOVOR: props { predavanje: Predavanje }. Vlasnik: agent Funkcionalnosti.
+import type { Predavanje } from '../../lib/types';
+import { url } from '../../lib/url';
+interface Props { predavanje: Predavanje }
+const { predavanje } = Astro.props;
+---
+<a href={url(`/predavanja/${predavanje.id}`)}>{predavanje.naslovCist}</a>

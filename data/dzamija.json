@@ -1,0 +1,16 @@
+{
+  "naziv": "Džamija na Jaliji",
+  "nazivArapski": null,
+  "grad": null,
+  "drzava": null,
+  "adresa": null,
+  "koordinate": { "lat": 43.1367, "lng": 20.5122, "potvrdjeno": false },
+  "kratakOpis": null,
+  "historija": [],
+  "cinjenice": [],
+  "kontakt": { "email": null, "telefon": null, "napomena": null },
+  "drustveneMreze": { "youtube": "https://www.youtube.com/@D%C5%BEamijanaJaliji", "facebook": null, "instagram": null },
+  "donacije": { "primalac": null, "banka": null, "racun": null, "iban": null, "swift": null, "svrha": null, "napomena": null },
+  "dzuma": { "vrijeme": null, "napomena": null },
+  "izvori": []
+}

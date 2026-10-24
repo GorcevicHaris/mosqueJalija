@@ -1,0 +1,80 @@
+// Jedino mjesto koje čita /data. Stranice i komponente uvoze odavde, nikad direktno JSON.
+import dzamijaJson from '../../data/dzamija.json';
+import imamiJson from '../../data/imami.json';
+import imamiBioJson from '../../data/imami-bio.json';
+import predavanjaJson from '../../data/predavanja.json';
+import kategorijeJson from '../../data/kategorije.json';
+import serijeJson from '../../data/serije.json';
+import obavjestenjaJson from '../../data/obavjestenja.json';
+import doveJson from '../../data/dove.json';
+import ajetiHadisiJson from '../../data/ajeti-hadisi.json';
+import galerijaJson from '../../data/galerija.json';
+import type {
+  AjetHadis,
+  Dova,
+  Dzamija,
+  GalerijaSlika,
+  Imam,
+  ImamBio,
+  ImamOsnovno,
+  Kategorija,
+  Obavjestenje,
+  Predavanje,
+  Serija,
+} from './types';
+
+export const dzamija = dzamijaJson as Dzamija;
+
+export const predavanja: Predavanje[] = (predavanjaJson as Predavanje[])
+  .slice()
+  .sort((a, b) => b.datum.localeCompare(a.datum));
+
+export const kategorije = kategorijeJson as Kategorija[];
+export const serije = serijeJson as Serija[];
+
+const bio = imamiBioJson as Record<string, Partial<ImamBio>>;
+
+export const imami: Imam[] = (imamiJson as ImamOsnovno[])
+  .map((i) => ({
+    ...i,
+    uloga: bio[i.slug]?.uloga ?? null,
+    bio: bio[i.slug]?.bio ?? null,
+    slika: bio[i.slug]?.slika ?? null,
+    potvrdjeno: bio[i.slug]?.potvrdjeno ?? false,
+    izvori: bio[i.slug]?.izvori ?? [],
+    brojPredavanja: predavanja.filter((p) => p.imam === i.slug).length,
+  }))
+  .sort((a, b) => b.brojPredavanja - a.brojPredavanja);
+
+export const obavjestenja: Obavjestenje[] = (obavjestenjaJson as Obavjestenje[])
+  .slice()
+  .sort((a, b) => b.datum.localeCompare(a.datum));
+
+export const dove = doveJson as Dova[];
+export const ajetiHadisi = ajetiHadisiJson as AjetHadis[];
+export const galerija = galerijaJson as GalerijaSlika[];
+
+export const getImam = (slug: string | null) => imami.find((i) => i.slug === slug) ?? null;
+export const getKategorija = (slug: string | null) => kategorije.find((k) => k.slug === slug) ?? null;
+export const getSerija = (slug: string | null) => serije.find((s) => s.slug === slug) ?? null;
+export const getPredavanje = (id: string) => predavanja.find((p) => p.id === id) ?? null;
+
+const MJESECI = [
+  'januar', 'februar', 'mart', 'april', 'maj', 'jun',
+  'jul', 'avgust', 'septembar', 'oktobar', 'novembar', 'decembar',
+];
+
+/** "2026-10-24" -> "24. oktobar 2026." */
+export function formatDatum(iso: string): string {
+  const [g, m, d] = iso.split('-').map(Number);
+  return `${d}. ${MJESECI[m - 1]} ${g}.`;
+}
+
+/** 636 -> "10:36", 3725 -> "1:02:05" */
+export function formatTrajanje(sekunde: number): string {
+  const h = Math.floor(sekunde / 3600);
+  const m = Math.floor((sekunde % 3600) / 60);
+  const s = Math.floor(sekunde % 60);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+}
