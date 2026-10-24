@@ -11,19 +11,50 @@
   "orientation": "any",
   "theme_color": "#0c3b2e",
   "background_color": "#f7f1e3",
-  "categories": ["education", "lifestyle"],
+  "categories": [
+    "education",
+    "lifestyle"
+  ],
   "icons": [
     {
       "src": "/mosqueJalija/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
+    },
+    {
+      "src": "/mosqueJalija/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/mosqueJalija/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "shortcuts": [
-    { "name": "Vaktija", "short_name": "Vaktija", "url": "/mosqueJalija/vaktija/" },
-    { "name": "Predavanja", "short_name": "Predavanja", "url": "/mosqueJalija/predavanja/" },
-    { "name": "Islamski kalendar", "short_name": "Kalendar", "url": "/mosqueJalija/kalendar/" },
-    { "name": "Pretraga", "short_name": "Pretraga", "url": "/mosqueJalija/pretraga/" }
+    {
+      "name": "Vaktija",
+      "short_name": "Vaktija",
+      "url": "/mosqueJalija/vaktija/"
+    },
+    {
+      "name": "Predavanja",
+      "short_name": "Predavanja",
+      "url": "/mosqueJalija/predavanja/"
+    },
+    {
+      "name": "Islamski kalendar",
+      "short_name": "Kalendar",
+      "url": "/mosqueJalija/kalendar/"
+    },
+    {
+      "name": "Pretraga",
+      "short_name": "Pretraga",
+      "url": "/mosqueJalija/pretraga/"
+    }
   ]
 }
