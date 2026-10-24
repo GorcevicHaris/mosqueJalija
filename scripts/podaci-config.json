@@ -1,0 +1,122 @@
+{
+  "_uputstvo": "Pravila za scripts/update-videos.mjs. Svi regularni izrazi (polja *Obrazac, naslov, opis, ukloni) se primjenjuju na NORMALIZOVAN tekst: mala slova, bez dijakritika (č/ć→c, š→s, ž→z, đ→d). Npr. 'Džuma' se piše kao 'dzuma'. Opširnije: docs/predavanja-podaci.md.",
+  "kanal": {
+    "url": "https://www.youtube.com/@D%C5%BEamijanaJaliji",
+    "channelId": "UCyw1ppQVijYlaQ6BicgZTVg"
+  },
+  "imami": [
+    {
+      "slug": "admir-jasarevic",
+      "punoIme": "Hfz. Admir ef. Jašarević",
+      "imeObrazac": "admir",
+      "prezimeObrazac": "jasarevic",
+      "aliasi": ["Admir ef. Jašarević", "Admir Jašarević"]
+    },
+    {
+      "slug": "abdurahman-kujevic",
+      "punoIme": "Muftija hfz. Abdurahman ef. Kujević",
+      "imeObrazac": "abdur?rahman",
+      "prezimeObrazac": "kujevic",
+      "aliasi": ["Abdurahman ef. Kujević", "Abdurrahman Kujević"]
+    },
+    {
+      "slug": "edin-redzepovic",
+      "punoIme": "Hfz. Edin Redžepović",
+      "imeObrazac": "edin",
+      "prezimeObrazac": "redzepovic",
+      "aliasi": []
+    },
+    {
+      "slug": "edin-salihovic",
+      "punoIme": "Edin ef. Salihović",
+      "imeObrazac": "edin",
+      "prezimeObrazac": "salihovic",
+      "aliasi": []
+    },
+    {
+      "slug": "muhamed-metjahic",
+      "punoIme": "Muhamed Metjahić",
+      "imeObrazac": "muhamm?ed",
+      "prezimeObrazac": "metjahic",
+      "aliasi": []
+    },
+    {
+      "slug": "dzenan-kamesnicanin",
+      "punoIme": "Prof. Dženan ef. Kamešničanin",
+      "imeObrazac": "dzenan",
+      "prezimeObrazac": "kamesnicanin",
+      "aliasi": []
+    },
+    {
+      "slug": "ferid-fijuljanin",
+      "punoIme": "Hfz. Ferid Fijuljanin",
+      "imeObrazac": "ferid",
+      "prezimeObrazac": "fijuljanin",
+      "aliasi": []
+    },
+    {
+      "slug": "zikret-mustafic",
+      "punoIme": "Hfz. Zikret Mustafić",
+      "imeObrazac": "zikret",
+      "prezimeObrazac": "mustafic",
+      "aliasi": []
+    }
+  ],
+  "kategorije": [
+    { "slug": "hutba", "naziv": "Hutba (džuma)", "opis": "Petkove hutbe održane u džamiji na džuma-namazu." },
+    { "slug": "predavanje", "naziv": "Predavanje", "opis": "Predavanja i vazovi na različite teme iz vjere i svakodnevnog života." },
+    { "slug": "tefsir", "naziv": "Tefsir", "opis": "Tumačenje kur'anskih sura i ajeta, kao ramazanski serijal tefsira sure Jusuf." },
+    { "slug": "halka-hadisa", "naziv": "Halka hadisa", "opis": "Kružoci (halke) u kojima se čitaju i objašnjavaju hadisi Allahovog Poslanika ﷺ." },
+    { "slug": "ucenje-kurana", "naziv": "Učenje Kur'ana", "opis": "Kratki snimci učenja (kiraeta) kur'anskih sura." },
+    { "slug": "kratki-video", "naziv": "Kratki video", "opis": "Kratki isječci (YouTube Shorts) sa kanala džamije." },
+    { "slug": "ostalo", "naziv": "Ostalo", "opis": "Obavještenja i ostali snimci sa kanala džamije." }
+  ],
+  "kategorijePravila": [
+    { "kategorija": "kratki-video", "tip": "short" },
+    { "kategorija": "tefsir", "serija": ["tefsir-sure-jusuf"] },
+    { "kategorija": "tefsir", "naslov": "\\btefsir" },
+    { "kategorija": "ucenje-kurana", "naslov": "(^|[^a-z])(sura|surah)\\b|سورة", "maxTrajanje": 400 },
+    { "kategorija": "halka-hadisa", "naslov": "\\bhalka hadisa\\b" },
+    { "kategorija": "hutba", "naslov": "\\b(dzuma|dzume|hutba|hutbe)\\b" },
+    { "kategorija": "hutba", "opis": "\\b(dzuma|hutba)\\b" },
+    { "kategorija": "ostalo", "bezImama": true }
+  ],
+  "podrazumijevanaKategorija": "predavanje",
+  "serije": [
+    {
+      "slug": "tefsir-sure-jusuf",
+      "naziv": "Tefsir sure Jusuf",
+      "opis": "Ramazanski serijal hfz. Admira ef. Jašarevića (ramazan 2026), svakog jutra prije sabahskog farza: tumačenje sure Jusuf i kazivanja o Jusufu, alejhisselam, u 25 dijelova.",
+      "playliste": ["PLZlxZ_eErRskNpeR6DDKrPrFj5GwQXj1W"],
+      "opisObrazac": "tefsir sure jusuf"
+    },
+    {
+      "slug": "duhovna-opskrba-vjernika",
+      "naziv": "Duhovna opskrba vjernika",
+      "opis": "Sedmično predavanje hfz. Admira ef. Jašarevića, petkom poslije jacija-namaza.",
+      "naslovObrazac": "duhovna opskrba vjernika"
+    },
+    {
+      "slug": "djela-koja-uvode-u-dzennet",
+      "naziv": "Djela koja uvode u Džennet",
+      "opis": "Hutbe hfz. Admira ef. Jašarevića u dva dijela (novembar 2025).",
+      "naslovObrazac": "dj?ijela koja uvode u dzennet"
+    },
+    {
+      "slug": "sura-el-kijame",
+      "naziv": "Učenje sure El-Kijame",
+      "opis": "Učenje sure El-Kijame (Smak svijeta) u dva dijela: ajeti 1–19 i 20–40.",
+      "naslovObrazac": "\\bkijame\\b"
+    }
+  ],
+  "naslovUkloni": [
+    "\\(?\\b(hutba|dzuma)\\b[\\s\\-.]*\\d{1,2}[./]\\d{1,2}[./]\\d{2,4}\\.?\\)?",
+    "\\bdzamija na jaliji\\b",
+    "(^|[|\\-]\\s*)(dzuma|hutba)\\s*(?=[|\\-]|$)",
+    "^\\s*halka hadisa\\b"
+  ],
+  "opisBoilerplateLinije": [
+    "^dzamija na jaliji[\\s.]*$",
+    "^(hutba|dzuma)?[\\s\\-]*\\d{1,2}[./]\\d{1,2}[./]\\d{2,4}\\.?(\\s+dzamija na jaliji)?$"
+  ]
+}

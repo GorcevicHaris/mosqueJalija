@@ -1,0 +1,70 @@
+name: Osvježavanje predavanja sa YouTube-a
+
+on:
+  schedule:
+    - cron: '0 5 * * 1' # svakog ponedjeljka u 05:00 UTC
+  workflow_dispatch:
+    inputs:
+      sve:
+        description: 'Ponovo preuzmi detalje SVIH videa (--sve)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # commit i push izmjena u data/
+  actions: write # pokretanje deploy workflowa
+
+concurrency:
+  group: update-videos
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # yt-dlp za YouTube traži JavaScript runtime (deno) za dio zahtjeva
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Instaliraj yt-dlp
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade "yt-dlp[default]"
+          yt-dlp --version
+
+      - name: Osvježi podatke
+        run: npm run update-videos -- ${{ inputs.sve && '--sve' || '' }}
+
+      - name: Commit i push ako ima izmjena
+        id: commit
+        run: |
+          git add data/predavanja.json data/imami.json data/kategorije.json data/serije.json scripts/cache/youtube-sirovo.json
+          if git diff --cached --quiet; then
+            echo "Nema izmjena."
+            echo "promijenjeno=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Predavanja: automatsko osvježavanje sa YouTube-a"
+          git push
+          echo "promijenjeno=true" >> "$GITHUB_OUTPUT"
+
+      # Push napravljen sa GITHUB_TOKEN-om NE pokreće druge workflowe (pravilo GitHub-a),
+      # zato deploy pokrećemo eksplicitno (workflow_dispatch je dozvoljen).
+      - name: Pokreni deploy
+        if: steps.commit.outputs.promijenjeno == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref "${{ github.ref_name }}"
