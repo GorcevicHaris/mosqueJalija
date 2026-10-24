@@ -1,0 +1,33 @@
+---
+// Ukrasni razdjelnik: linija — zvijezda — linija.
+interface Props { class?: string; align?: 'center' | 'left' }
+const { class: cls, align = 'center' } = Astro.props;
+---
+<div class:list={['ornament-divider', `ornament-divider--${align}`, cls]} role="presentation" aria-hidden="true">
+  <span class="ornament-divider__line"></span>
+  <svg viewBox="0 0 100 100" width="22" height="22">
+    <path d="M50,2L64.06,16.06L83.94,16.06L83.94,35.94L98,50L83.94,64.06L83.94,83.94L64.06,83.94L50,98L35.94,83.94L16.06,83.94L16.06,64.06L2,50L16.06,35.94L16.06,16.06L35.94,16.06Z" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M62.93,55.36L55.36,62.93L44.64,62.93L37.07,55.36L37.07,44.64L44.64,37.07L55.36,37.07L62.93,44.64Z" fill="currentColor"/>
+  </svg>
+  <span class="ornament-divider__line"></span>
+</div>
+<style>
+  .ornament-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-accent-bright);
+    margin: var(--space-5) auto;
+    max-width: 420px;
+  }
+  .ornament-divider--left { margin-inline: 0; max-width: 220px; }
+  .ornament-divider--left .ornament-divider__line:first-child { display: none; }
+  .ornament-divider__line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, currentColor 40%, currentColor 60%, transparent);
+    opacity: 0.8;
+  }
+  .ornament-divider--left .ornament-divider__line { background: linear-gradient(to right, currentColor, transparent); }
+  svg { flex: none; }
+</style>

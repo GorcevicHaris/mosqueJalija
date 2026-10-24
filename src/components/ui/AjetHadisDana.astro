@@ -1,0 +1,139 @@
+---
+// Ajet/hadis dana: bira stavku po danu u godini (u pregledaču, pa se mijenja svaki dan i na statičkom sajtu).
+// Bez JS-a prikazuje stavku za dan builda. Prazan niz → Placeholder.
+import { ajetiHadisi } from '../../lib/data';
+import type { AjetHadis } from '../../lib/types';
+import Placeholder from './Placeholder.astro';
+import CopyButton from './CopyButton.astro';
+
+interface Props {
+  tip?: 'ajet' | 'hadis';
+  naslov?: string;
+  variant?: 'card' | 'feature';
+  class?: string;
+}
+const { tip, naslov, variant = 'card', class: cls } = Astro.props;
+const items: AjetHadis[] = (ajetiHadisi ?? []).filter((x) => !tip || x.tip === tip);
+
+function dayOfYear(d: Date) {
+  return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 864e5);
+}
+const item = items.length ? items[dayOfYear(new Date()) % items.length] : null;
+const title = naslov ?? (tip === 'hadis' ? 'Hadis dana' : tip === 'ajet' ? 'Ajet dana' : 'Ajet / hadis dana');
+const label = (x: AjetHadis | null) => (x?.tip === 'hadis' ? 'Hadis' : "Kur'an");
+const copyText = item ? `${item.tekst} (${item.izvor})` : '';
+---
+<figure class:list={['ahd', `ahd--${variant}`, cls]} data-ahd data-items={items.length > 1 ? JSON.stringify(items) : undefined}>
+  <div class="ahd__head">
+    <span class="ahd__mark" aria-hidden="true">
+      <svg viewBox="0 0 100 100" width="18" height="18"><path d="M50,2L64.06,16.06L83.94,16.06L83.94,35.94L98,50L83.94,64.06L83.94,83.94L64.06,83.94L50,98L35.94,83.94L16.06,83.94L16.06,64.06L2,50L16.06,35.94L16.06,16.06L35.94,16.06Z" fill="currentColor"/></svg>
+    </span>
+    <span class="ahd__title">{title}</span>
+  </div>
+  {item ? (
+    <>
+      <blockquote class="ahd__quote">
+        <p class="ahd__arabic" lang="ar" dir="rtl" data-ahd-arabic hidden={!item.arapski}>{item.arapski}</p>
+        <p class="ahd__text" data-ahd-text>{item.tekst}</p>
+      </blockquote>
+      <figcaption class="ahd__source">
+        <span><span data-ahd-label>{label(item)}</span>, <cite data-ahd-izvor>{item.izvor}</cite></span>
+        <CopyButton text={copyText} label="Kopiraj" />
+      </figcaption>
+    </>
+  ) : (
+    <Placeholder label={tip === 'hadis' ? 'hadisi (sa provjerenim izvorom)' : tip === 'ajet' ? 'ajeti (sa provjerenim prevodom i izvorom)' : 'ajeti i hadisi (sa provjerenim izvorom)'} hint="biće prikazani kada se unesu u data/ajeti-hadisi.json" />
+  )}
+</figure>
+
+<script>
+  type Item = { tip: 'ajet' | 'hadis'; arapski: string | null; tekst: string; izvor: string };
+  const d = new Date();
+  const doy = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 864e5);
+  document.querySelectorAll<HTMLElement>('[data-ahd][data-items]').forEach((el) => {
+    let items: Item[] = [];
+    try { items = JSON.parse(el.dataset.items ?? '[]'); } catch { return; }
+    if (!items.length) return;
+    const it = items[doy % items.length];
+    const ar = el.querySelector<HTMLElement>('[data-ahd-arabic]');
+    const tx = el.querySelector<HTMLElement>('[data-ahd-text]');
+    const iz = el.querySelector<HTMLElement>('[data-ahd-izvor]');
+    const lb = el.querySelector<HTMLElement>('[data-ahd-label]');
+    const cp = el.querySelector<HTMLElement>('[data-copy]');
+    if (ar) { ar.textContent = it.arapski ?? ''; ar.hidden = !it.arapski; }
+    if (tx) tx.textContent = it.tekst;
+    if (iz) iz.textContent = it.izvor;
+    if (lb) lb.textContent = it.tip === 'hadis' ? 'Hadis' : "Kur'an";
+    if (cp) cp.dataset.copy = `${it.tekst} (${it.izvor})`;
+  });
+</script>
+
+<style>
+  .ahd {
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-5) var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .ahd::after {
+    content: '';
+    position: absolute;
+    right: -50px;
+    bottom: -50px;
+    width: 170px;
+    height: 170px;
+    background: var(--color-accent-bright);
+    opacity: 0.08;
+    -webkit-mask: var(--ornament-star-line) center / contain no-repeat;
+    mask: var(--ornament-star-line) center / contain no-repeat;
+    pointer-events: none;
+  }
+  .ahd > * { position: relative; z-index: 1; }
+  .ahd--feature { padding: clamp(1.5rem, 4vw, 2.5rem); }
+  .ahd__head { display: flex; align-items: center; gap: var(--space-2); }
+  .ahd__mark { color: var(--color-accent-bright); display: inline-flex; }
+  .ahd__title {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .ahd__quote { margin: 0; display: grid; gap: var(--space-3); }
+  .ahd__arabic {
+    margin: 0;
+    font-family: var(--font-arabic);
+    font-size: clamp(1.4rem, 1.2vw + 1.1rem, 1.85rem);
+    line-height: 2;
+    text-align: right;
+    color: var(--color-text);
+  }
+  .ahd__text {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 0.6vw + 1rem, 1.3rem);
+    line-height: 1.55;
+    font-weight: 450;
+  }
+  .ahd--feature .ahd__text { font-size: clamp(1.2rem, 1vw + 1rem, 1.5rem); }
+  .ahd__source {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .ahd__source cite { font-style: normal; color: var(--color-accent); }
+</style>

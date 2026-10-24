@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import Icon from '../components/ui/Icon.astro';
+import { url } from '../lib/url';
+import { dzamija, galerija } from '../lib/data';
+
+const src = (s: string) => (/^https?:/.test(s) ? s : url(s));
+const email = dzamija.kontakt.email;
+const mailto = email
+  ? `mailto:${email}?subject=${encodeURIComponent('Fotografije za galeriju sajta')}&body=${encodeURIComponent('Selam alejkum,\n\nšaljem fotografije džamije za galeriju sajta. Autor fotografija: …\nDozvoljavam objavu na sajtu džamije.\n')}`
+  : null;
+---
+<BaseLayout title="Galerija" description="Fotografije Džamije na Jaliji i aktivnosti džemata.">
+  <PageHero eyebrow="O džamiji" title="Galerija" subtitle="Fotografije džamije, mekteba i aktivnosti džemata." />
+
+  <section class="section">
+    <div class="container">
+      {galerija.length ? (
+        <>
+          <ul class="gallery" role="list" data-gallery>
+            {galerija.map((g, i) => (
+              <li class="gallery__item">
+                <button type="button" class="gallery__btn" data-index={i} aria-label={`Otvori sliku: ${g.alt}`}>
+                  <img src={src(g.src)} alt={g.alt} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="600" height="450" />
+                </button>
+                {(g.opis || g.izvor) && (
+                  <p class="gallery__cap">
+                    {g.opis}
+                    {g.izvor && <span class="gallery__credit"> · Foto: {g.izvor}{g.licenca && ` (${g.licenca})`}</span>}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          <dialog class="lightbox" data-lightbox aria-label="Pregled slike">
+            <div class="lightbox__inner">
+              <button type="button" class="lightbox__close" data-lb-close aria-label="Zatvori (Esc)"><Icon name="x" size={26} /></button>
+              <button type="button" class="lightbox__nav lightbox__nav--prev" data-lb-prev aria-label="Prethodna slika"><Icon name="chevron-left" size={30} /></button>
+              <figure class="lightbox__figure">
+                <img data-lb-img alt="" />
+                <figcaption data-lb-cap></figcaption>
+              </figure>
+              <button type="button" class="lightbox__nav lightbox__nav--next" data-lb-next aria-label="Sljedeća slika"><Icon name="chevron-right" size={30} /></button>
+              <p class="lightbox__count" data-lb-count aria-live="polite"></p>
+            </div>
+          </dialog>
+          <script type="application/json" data-gallery-data set:html={JSON.stringify(galerija.map((g) => ({ src: src(g.src), alt: g.alt, opis: g.opis, izvor: g.izvor })))} />
+        </>
+      ) : (
+        <div class="empty-gallery">
+          <div class="empty-gallery__art theme-inverse pattern-bg" aria-hidden="true">
+            <Icon name="image" size={48} />
+          </div>
+          <div>
+            <h2>Galerija je u pripremi</h2>
+            <Placeholder label="fotografije džamije" hint="enterijer, eksterijer, munara, mekteb, aktivnosti džemata (uz dozvolu autora)" />
+            <p class="muted">
+              Imate lijepe fotografije džamije? Pošaljite ih uz ime autora i dozvolu za objavu — biće objavljene
+              sa potpisom.
+            </p>
+            {mailto ? (
+              <a class="btn btn--primary" href={mailto}><Icon name="mail" size={18} /> Pošaljite fotografije</a>
+            ) : dzamija.drustveneMreze.instagram ? (
+              <a class="btn btn--primary" href={dzamija.drustveneMreze.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> Pošaljite nam na Instagramu</a>
+            ) : (
+              <a class="btn btn--primary" href={url('/kontakt')}><Icon name="mail" size={18} /> Kontaktirajte nas</a>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  type G = { src: string; alt: string; opis: string | null; izvor: string | null };
+  const dataEl = document.querySelector('[data-gallery-data]');
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  if (dataEl && dlg) {
+    const items: G[] = JSON.parse(dataEl.textContent || '[]');
+    const img = dlg.querySelector<HTMLImageElement>('[data-lb-img]')!;
+    const cap = dlg.querySelector<HTMLElement>('[data-lb-cap]')!;
+    const count = dlg.querySelector<HTMLElement>('[data-lb-count]')!;
+    let idx = 0;
+    let opener: HTMLElement | null = null;
+    const show = (i: number) => {
+      idx = (i + items.length) % items.length;
+      const it = items[idx];
+      img.src = it.src;
+      img.alt = it.alt;
+      cap.textContent = [it.opis ?? it.alt, it.izvor ? `Foto: ${it.izvor}` : ''].filter(Boolean).join(' · ');
+      count.textContent = `${idx + 1} / ${items.length}`;
+    };
+    document.querySelectorAll<HTMLButtonElement>('.gallery__btn').forEach((b) =>
+      b.addEventListener('click', () => {
+        opener = b;
+        show(Number(b.dataset.index));
+        dlg.showModal();
+        document.body.classList.add('no-scroll');
+      }),
+    );
+    const single = items.length < 2;
+    dlg.querySelectorAll<HTMLElement>('[data-lb-prev],[data-lb-next]').forEach((b) => (b.hidden = single));
+    dlg.querySelector('[data-lb-prev]')?.addEventListener('click', () => show(idx - 1));
+    dlg.querySelector('[data-lb-next]')?.addEventListener('click', () => show(idx + 1));
+    dlg.querySelector('[data-lb-close]')?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg || (e.target as HTMLElement).classList.contains('lightbox__inner')) dlg.close(); });
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+    });
+    dlg.addEventListener('close', () => { document.body.classList.remove('no-scroll'); opener?.focus(); });
+  }
+</script>
+
+<style>
+  .gallery {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-4);
+  }
+  .gallery__btn {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: zoom-in;
+    background: var(--color-surface-2);
+    aspect-ratio: 4 / 3;
+  }
+  .gallery__btn img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; }
+  @media (prefers-reduced-motion: no-preference) {
+    .gallery__btn:hover img { transform: scale(1.04); }
+  }
+  .gallery__cap { font-size: 0.88rem; color: var(--color-text-muted); margin: var(--space-2) 0 0; }
+  .gallery__credit { opacity: 0.85; }
+
+  .lightbox {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(5 14 11 / 0.94);
+    color: #f6efdd;
+  }
+  .lightbox::backdrop { background: rgb(5 14 11 / 0.7); }
+  .lightbox__inner {
+    position: relative;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-7) var(--space-3) var(--space-6);
+  }
+  .lightbox__figure { margin: 0; display: grid; justify-items: center; gap: var(--space-3); min-width: 0; max-height: 100%; }
+  .lightbox__figure img { max-height: calc(100vh - 170px); width: auto; max-width: 100%; object-fit: contain; border-radius: var(--radius-md); }
+  .lightbox__figure figcaption { text-align: center; color: #c9d6cc; font-size: 0.95rem; }
+  .lightbox button {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgb(246 239 221 / 0.25);
+    background: rgb(246 239 221 / 0.08);
+    color: #f6efdd;
+    cursor: pointer;
+  }
+  .lightbox button:hover { background: rgb(246 239 221 / 0.18); }
+  .lightbox button[hidden] { display: none; }
+  .lightbox__close { position: absolute; top: var(--space-3); right: var(--space-3); }
+  .lightbox__count { position: absolute; top: var(--space-4); left: var(--space-4); margin: 0; font-weight: 700; color: #e2bf6e; }
+  @media (max-width: 640px) {
+    .lightbox__inner { grid-template-columns: 1fr; }
+    .lightbox__nav { position: absolute; bottom: var(--space-4); }
+    .lightbox__nav--prev { left: var(--space-4); }
+    .lightbox__nav--next { right: var(--space-4); }
+  }
+
+  .empty-gallery { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 800px) { .empty-gallery { grid-template-columns: 340px 1fr; } }
+  .empty-gallery__art {
+    aspect-ratio: 4 / 5;
+    border-radius: 170px 170px var(--radius-lg) var(--radius-lg);
+    display: grid;
+    place-items: center;
+    color: var(--inverse-accent);
+    max-width: 340px;
+    width: 100%;
+    justify-self: center;
+    --ornament-opacity: 0.18;
+  }
+  .empty-gallery :global(.placeholder) { margin-bottom: var(--space-4); }
+</style>

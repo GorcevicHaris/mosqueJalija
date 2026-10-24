@@ -1,0 +1,119 @@
+---
+// Društvene mreže iz data.dzamija.drustveneMreze. variant: 'icons' (okrugle ikonice) | 'cards' (velike kartice).
+// Mreže čiji link nije poznat: u 'cards' varijanti prikazuju Placeholder, u 'icons' se izostavljaju.
+import { dzamija } from '../../lib/data';
+import Icon from './Icon.astro';
+import Placeholder from './Placeholder.astro';
+
+interface Props { variant?: 'icons' | 'cards'; class?: string }
+const { variant = 'icons', class: cls } = Astro.props;
+const m = dzamija.drustveneMreze;
+
+function handle(u: string): string {
+  try {
+    const p = decodeURIComponent(new URL(u).pathname).replace(/^\/+|\/+$/g, '');
+    if (p.startsWith('@')) return p;
+    // Facebook "/p/Ime-Stranice-123456" → "Ime Stranice"
+    const fb = p.match(/^p\/(.+?)-\d+$/);
+    if (fb) return fb[1].replace(/-/g, ' ');
+    if (/instagram\.com$/.test(new URL(u).hostname) && p && !p.includes('/')) return `@${p}`;
+    return p ? `/${p}` : new URL(u).hostname;
+  } catch { return u; }
+}
+
+const mreze = [
+  { key: 'youtube', naziv: 'YouTube', url: m.youtube, opis: 'Predavanja, hutbe i snimci iz džamije', ikona: 'youtube' as const },
+  { key: 'facebook', naziv: 'Facebook', url: m.facebook, opis: 'Obavještenja i najave', ikona: 'facebook' as const },
+  { key: 'instagram', naziv: 'Instagram', url: m.instagram, opis: 'Fotografije i objave iz džemata', ikona: 'instagram' as const },
+];
+---
+{variant === 'icons' ? (
+  <ul class:list={['social-icons', cls]} role="list">
+    {mreze.filter((x) => x.url).map((x) => (
+      <li>
+        <a href={x.url!} target="_blank" rel="noopener" aria-label={`${x.naziv} (otvara se u novom prozoru)`}>
+          <Icon name={x.ikona} size={20} />
+        </a>
+      </li>
+    ))}
+  </ul>
+) : (
+  <ul class:list={['social-cards', cls]} role="list">
+    {mreze.map((x) => (
+      <li class={`social-card social-card--${x.key}`}>
+        <span class="social-card__icon"><Icon name={x.ikona} size={26} /></span>
+        <div class="social-card__body">
+          <h3 class="social-card__title">
+            {x.url ? <a href={x.url} target="_blank" rel="noopener">{x.naziv}</a> : x.naziv}
+          </h3>
+          {x.url ? (
+            <>
+              <p class="social-card__handle">{handle(x.url)}</p>
+              <p class="social-card__desc">{x.opis}</p>
+            </>
+          ) : (
+            <Placeholder label={`zvanični ${x.naziv} profil džamije`} />
+          )}
+        </div>
+        {x.url && <Icon name="external" size={18} class="social-card__ext" />}
+      </li>
+    ))}
+  </ul>
+)}
+<style>
+  .social-icons { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+  .social-icons a {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text);
+    transition: all var(--transition);
+  }
+  .social-icons a:hover { background: var(--color-accent-bright); border-color: var(--color-accent-bright); color: #1f1606; }
+
+  .social-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .social-card {
+    position: relative;
+    display: flex;
+    gap: var(--space-4);
+    align-items: flex-start;
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    transition: box-shadow var(--transition), border-color var(--transition);
+  }
+  .social-card:has(a:hover) { box-shadow: var(--shadow-md); border-color: var(--color-border-strong); }
+  .social-card__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    color: #fff;
+    background: var(--color-primary);
+  }
+  .social-card--youtube .social-card__icon { background: #c4302b; }
+  .social-card--facebook .social-card__icon { background: #1f5fbf; }
+  .social-card--instagram .social-card__icon { background: linear-gradient(135deg, #8a3ab9, #c13584 50%, #e1306c 75%, #f5a623); }
+  .social-card__body { min-width: 0; flex: 1; }
+  .social-card__title { font-size: 1.2rem; margin: 0 0 2px; }
+  .social-card__title a { color: inherit; text-decoration: none; }
+  .social-card__title a::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+  .social-card:has(a:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+  .social-card__title a:focus-visible { outline: none; }
+  .social-card__handle { font-weight: 700; color: var(--color-primary); margin: 0 0 var(--space-1); overflow-wrap: anywhere; font-size: 0.95rem; }
+  .social-card__desc { margin: 0; color: var(--color-text-muted); font-size: 0.93rem; }
+  .social-card :global(.social-card__ext) { color: var(--color-text-muted); flex: none; }
+</style>

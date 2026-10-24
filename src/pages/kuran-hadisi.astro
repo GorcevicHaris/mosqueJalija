@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import AjetHadisDana from '../components/ui/AjetHadisDana.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import FilterChips from '../components/ui/FilterChips.astro';
+import Icon from '../components/ui/Icon.astro';
+import { url } from '../lib/url';
+import { ajetiHadisi } from '../lib/data';
+
+const brojAjeta = ajetiHadisi.filter((x) => x.tip === 'ajet').length;
+const brojHadisa = ajetiHadisi.filter((x) => x.tip === 'hadis').length;
+const opcije = [
+  ...(brojAjeta ? [{ value: 'ajet', label: 'Ajeti', count: brojAjeta }] : []),
+  ...(brojHadisa ? [{ value: 'hadis', label: 'Hadisi', count: brojHadisa }] : []),
+];
+---
+<BaseLayout title="Kur'an i hadisi" description="Ajet dana i hadis dana sa arapskim tekstom, prevodom i jasno navedenim izvorom.">
+  <PageHero eyebrow="Korisno" title="Kur'an i hadisi" subtitle="Ajet i hadis dana — svaki dan novi, sa arapskim tekstom, prevodom i jasno navedenim izvorom." arabic="وَقُل رَّبِّ زِدْنِي عِلْمًا" />
+
+  <section class="section">
+    <div class="container">
+      <div class="daily">
+        <AjetHadisDana tip="ajet" variant="feature" />
+        <AjetHadisDana tip="hadis" variant="feature" />
+      </div>
+      <p class="note muted"><Icon name="info" size={16} /> Prevod ajeta je prevod značenja, ne zamjena za arapski original. Stavka dana se mijenja svakog dana u ponoć.</p>
+    </div>
+  </section>
+
+  <section class="section section--tint" aria-labelledby="svi-naslov">
+    <div class="container container--narrow">
+      <SectionHeading id="svi-naslov" eyebrow="Zbirka" title="Svi ajeti i hadisi" />
+      {ajetiHadisi.length ? (
+        <>
+          <FilterChips target="ah-lista" options={opcije} label="Vrsta" />
+          <ul class="ah-list" id="ah-lista" role="list">
+            {ajetiHadisi.map((x) => (
+              <li class="card ah" data-filter-value={x.tip}>
+                <span class:list={['badge', { 'badge--primary': x.tip === 'ajet' }]}>{x.tip === 'ajet' ? 'Ajet' : 'Hadis'}</span>
+                {x.arapski && <p class="arabic-block ah__ar" lang="ar" dir="rtl">{x.arapski}</p>}
+                <p class="ah__text">{x.tekst}</p>
+                <p class="ah__src">{x.tip === 'ajet' ? "Kur'an" : 'Hadis'}, <cite>{x.izvor}</cite></p>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <Placeholder label="zbirka ajeta i hadisa" hint="unijeti u data/ajeti-hadisi.json, svaki sa izvorom" />
+      )}
+      <div class="more">
+        <a class="btn btn--ghost" href={url('/dove')}>Dove</a>
+        <a class="btn btn--ghost" href={url('/ucenje-kurana')}>Učenje Kur'ana</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .daily { display: grid; gap: var(--space-5); }
+  @media (min-width: 900px) { .daily { grid-template-columns: 1fr 1fr; } }
+  .note { display: flex; align-items: center; gap: var(--space-2); font-size: 0.88rem; margin: var(--space-5) 0 0; }
+  .ah-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+  .ah { gap: var(--space-3); align-items: flex-start; }
+  .ah[hidden] { display: none; }
+  .ah__ar { width: 100%; font-size: 1.5rem; }
+  .ah__text { margin: 0; font-family: var(--font-serif); font-size: 1.1rem; }
+  .ah__src { margin: 0; font-size: 0.88rem; color: var(--color-text-muted); }
+  .ah__src cite { font-style: normal; font-weight: 700; color: var(--color-accent); }
+  .more { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+</style>

@@ -1,0 +1,37 @@
+---
+// Naslov sekcije: eyebrow + h2 + lead; slot "action" za link desno (npr. "Sva predavanja →").
+interface Props {
+  title: string;
+  eyebrow?: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  id?: string;
+  level?: 2 | 3;
+}
+const { title, eyebrow, lead, align = 'left', id, level = 2 } = Astro.props;
+const H = `h${level}` as 'h2' | 'h3';
+const hasAction = Astro.slots.has('action');
+---
+<div class:list={['section-heading', `section-heading--${align}`, { 'section-heading--action': hasAction }]}>
+  <div class="section-heading__text">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <H id={id} class="section-heading__title">{title}</H>
+    {lead && <p class="lead section-heading__lead">{lead}</p>}
+  </div>
+  {hasAction && <div class="section-heading__action"><slot name="action" /></div>}
+</div>
+<style>
+  .section-heading { margin-bottom: var(--space-6); }
+  .section-heading--center { text-align: center; }
+  .section-heading--center .section-heading__lead { margin-inline: auto; }
+  .section-heading__title { margin-bottom: var(--space-2); }
+  .section-heading__lead { max-width: 60ch; margin: 0; }
+  .section-heading--action {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+  }
+  .section-heading__action { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+</style>

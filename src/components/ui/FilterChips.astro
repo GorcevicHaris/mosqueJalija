@@ -1,0 +1,43 @@
+---
+// Čipovi za filtriranje liste. Stavke liste nose data-filter-value="<slug>".
+// Upotreba: <FilterChips target="dove-lista" options={[{value:'jutro', label:'Jutarnje', count: 3}]} />
+interface Option { value: string; label: string; count?: number }
+interface Props { target: string; options: Option[]; allLabel?: string; label?: string }
+const { target, options, allLabel = 'Sve', label = 'Filter po kategoriji' } = Astro.props;
+const total = options.reduce((s, o) => s + (o.count ?? 0), 0);
+---
+{options.length > 1 && (
+  <div class="filter" data-filter={target}>
+    <ul class="chips" role="list" aria-label={label}>
+      <li><button type="button" class="chip" aria-pressed="true" data-value="">{allLabel}{total > 0 && <span class="chip__count">{total}</span>}</button></li>
+      {options.map((o) => (
+        <li><button type="button" class="chip" aria-pressed="false" data-value={o.value}>{o.label}{o.count != null && <span class="chip__count">{o.count}</span>}</button></li>
+      ))}
+    </ul>
+    <p class="visually-hidden" aria-live="polite" data-filter-status></p>
+  </div>
+)}
+<script>
+  document.querySelectorAll<HTMLElement>('[data-filter]').forEach((wrap) => {
+    const list = document.getElementById(wrap.dataset.filter!);
+    if (!list) return;
+    const chips = Array.from(wrap.querySelectorAll<HTMLButtonElement>('.chip'));
+    const status = wrap.querySelector<HTMLElement>('[data-filter-status]');
+    const apply = (value: string) => {
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.value === value)));
+      let shown = 0;
+      list.querySelectorAll<HTMLElement>('[data-filter-value]').forEach((el) => {
+        const vis = !value || el.dataset.filterValue === value;
+        el.hidden = !vis;
+        if (vis) shown++;
+      });
+      if (status) status.textContent = `Prikazano: ${shown}`;
+    };
+    chips.forEach((c) => c.addEventListener('click', () => apply(c.dataset.value ?? '')));
+    const fromHash = decodeURIComponent(location.hash.slice(1));
+    if (fromHash && chips.some((c) => c.dataset.value === fromHash)) apply(fromHash);
+  });
+</script>
+<style>
+  .filter { margin-bottom: var(--space-6); }
+</style>

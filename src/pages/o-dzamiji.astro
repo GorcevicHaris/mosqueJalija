@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import SourceLink from '../components/ui/SourceLink.astro';
+import OrnamentDivider from '../components/ui/OrnamentDivider.astro';
+import Icon from '../components/ui/Icon.astro';
+import { url } from '../lib/url';
+import { dzamija } from '../lib/data';
+
+const d = dzamija;
+const opis = 'Vakuf, gradnja, otvaranje i džemat danas — činjenice uz navedene izvore.';
+---
+<BaseLayout title="O džamiji — historija" description={`O Džamiji na Jaliji: historija, činjenice i lokacija. ${d.kratakOpis ?? ''}`.trim()}>
+  <PageHero eyebrow="O džamiji" title="Historija džamije" subtitle={opis} />
+
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-main">
+        <h2 class="visually-hidden">Historija</h2>
+        {d.kratakOpis && <p class="lead">{d.kratakOpis}</p>}
+        {d.historija.length ? (
+          <ol class="timeline" role="list">
+            {d.historija.map((h) => (
+              <li class="timeline__item">
+                <span class="timeline__dot" aria-hidden="true"></span>
+                <h3 class="timeline__title">{h.naslov}</h3>
+                <div class="timeline__body">
+                  {h.tekst.split(/\n{2,}/).map((p) => <p>{p}</p>)}
+                </div>
+                <SourceLink izvor={h.izvor} required />
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <div class="stack">
+            <Placeholder label="historija džamije" hint="godina izgradnje, graditelj (vakif), obnove i važni događaji — svaka tvrdnja sa izvorom" />
+            <p class="muted">
+              Ne objavljujemo nepotvrđene podatke o historiji džamije. Ako imate pouzdane izvore (knjige, arhivske
+              dokumente, publikacije Islamske zajednice), molimo vas da nas <a href={url('/kontakt')}>kontaktirate</a>.
+            </p>
+          </div>
+        )}
+
+        {d.izvori.length > 0 && (
+          <>
+            <OrnamentDivider align="left" />
+            <h2 class="h3">Izvori</h2>
+            <ul class="sources" role="list">
+              {d.izvori.map((i) => (
+                <li>{i.url ? <a href={i.url} target="_blank" rel="noopener">{i.naziv}</a> : i.naziv}</li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+
+      <aside class="about-side" aria-label="Činjenice i lokacija">
+        <div class="side-block">
+          <h2 class="side-title">Činjenice</h2>
+          {d.cinjenice.length ? (
+            <dl class="facts card">
+              {d.cinjenice.map((c) => (
+                <div class="fact">
+                  <dt>{c.oznaka}</dt>
+                  <dd>
+                    <span class="fact__value">{c.vrijednost}</span>
+                    <SourceLink izvor={c.izvor} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <Placeholder label="osnovne činjenice" hint="npr. godina izgradnje, površina, kapacitet" />
+          )}
+        </div>
+
+        <div class="side-block card">
+          <h2 class="side-title"><Icon name="map-pin" size={20} /> Lokacija</h2>
+          <dl class="loc">
+            <div><dt>Adresa</dt><dd>{d.adresa ?? <Placeholder inline label="adresa" />}</dd></div>
+            <div><dt>Grad</dt><dd>{d.grad ?? <Placeholder inline label="grad" />}</dd></div>
+            <div><dt>Država</dt><dd>{d.drzava ?? <Placeholder inline label="država" />}</dd></div>
+          </dl>
+          {!d.koordinate.potvrdjeno && (
+            <p class="muted small">Položaj na mapi je približan i čeka potvrdu džemata.</p>
+          )}
+          <a class="btn btn--primary btn--block" href={url('/kontakt')}>Mapa i kontakt</a>
+        </div>
+
+        <nav class="side-block" aria-label="Povezane stranice">
+          <h2 class="side-title">Pogledajte i</h2>
+          <ul class="related" role="list">
+            <li><a class="link-arrow" href={url('/galerija')}>Galerija</a></li>
+            <li><a class="link-arrow" href={url('/pravila-ponasanja')}>Pravila ponašanja u džamiji</a></li>
+            <li><a class="link-arrow" href={url('/imami')}>Imami i predavači</a></li>
+            <li><a class="link-arrow" href={url('/mekteb')}>Mekteb i halke</a></li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-grid { display: grid; gap: var(--space-7); }
+  @media (min-width: 960px) {
+    .about-grid { grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); }
+    .about-side { position: sticky; top: calc(var(--header-h) + 24px); align-self: start; }
+  }
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 var(--space-6); position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(var(--color-accent-bright), var(--color-border));
+  }
+  .timeline__item { position: relative; padding-bottom: var(--space-6); }
+  .timeline__item:last-child { padding-bottom: 0; }
+  .timeline__dot {
+    position: absolute;
+    left: calc(-1 * var(--space-6));
+    top: 0.2em;
+    width: 20px; height: 20px;
+    background: var(--color-accent-bright);
+    -webkit-mask: var(--ornament-star) center / contain no-repeat;
+    mask: var(--ornament-star) center / contain no-repeat;
+  }
+  .timeline__title { font-size: 1.35rem; }
+  .timeline__body p { max-width: 68ch; }
+  .timeline__body p:last-child { margin-bottom: 0; }
+  .h3 { font-size: 1.3rem; }
+  .sources { padding-left: 1.2em; }
+  .side-block + .side-block { margin-top: var(--space-6); }
+  .side-title { display: flex; align-items: center; gap: var(--space-2); font-size: 1.25rem; margin-bottom: var(--space-4); }
+  .side-title :global(svg) { color: var(--color-accent-bright); }
+  .facts { margin: 0; padding: var(--space-2) var(--space-5); border-top: 3px solid var(--color-accent-bright); }
+  .fact { padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); }
+  .fact:last-child { border-bottom: 0; }
+  .fact dt { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); }
+  .fact dd { margin: 2px 0 0; }
+  .fact__value { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 600; line-height: 1.35; }
+  .fact :global(.source) { margin-top: 2px; font-size: 0.8rem; }
+  .loc { margin: 0 0 var(--space-4); display: grid; gap: var(--space-3); }
+  .loc div { display: grid; grid-template-columns: 80px 1fr; gap: var(--space-3); align-items: center; }
+  .loc dt { font-weight: 700; font-size: 0.88rem; color: var(--color-text-muted); }
+  .loc dd { margin: 0; }
+  .small { font-size: 0.88rem; }
+  .related { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2); }
+</style>

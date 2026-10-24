@@ -1,0 +1,589 @@
+---
+import { url } from '../../lib/url';
+import { dzamija } from '../../lib/data';
+import { glavniMeni, isGroup, isActive, stripBase } from './nav';
+import Icon from '../ui/Icon.astro';
+import StarEmblem from '../ui/StarEmblem.astro';
+
+const current = stripBase(Astro.url.pathname);
+const mjesto = [dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
+const yt = dzamija.drustveneMreze.youtube;
+const email = dzamija.kontakt.email;
+---
+<div class="topbar theme-inverse">
+  <div class="container topbar__inner">
+    <a class="topbar__date" href={url('/kalendar')} data-today>
+      <Icon name="calendar" size={15} />
+      <span data-today-text>Islamski kalendar</span>
+    </a>
+    {current !== '/' ? (
+      <p class="topbar__bismillah calligraphy" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+    ) : <span aria-hidden="true"></span>}
+    <ul class="topbar__links" role="list">
+      {mjesto && (
+        <li><a href={url('/kontakt')}><Icon name="map-pin" size={15} /><span>{mjesto}</span></a></li>
+      )}
+      {email && (
+        <li><a href={`mailto:${email}`}><Icon name="mail" size={15} /><span>{email}</span></a></li>
+      )}
+      {yt && (
+        <li><a href={yt} target="_blank" rel="noopener"><Icon name="youtube" size={15} /><span>YouTube</span></a></li>
+      )}
+    </ul>
+  </div>
+</div>
+
+<header class="site-header" data-site-header>
+  <div class="container site-header__inner">
+    <a class="brand" href={url('/')} aria-label="Džamija na Jaliji — početna">
+      <StarEmblem size={42} class="brand__emblem" />
+      <span class="brand__text">
+        <span class="brand__name">Džamija na Jaliji</span>
+        <span class="brand__sub">{dzamija.grad ?? 'Džemat · Predavanja · Vaktija'}</span>
+      </span>
+    </a>
+
+    <div class="nav-backdrop" data-nav-backdrop hidden></div>
+
+    <nav class="site-nav" id="site-nav" aria-label="Glavna navigacija" data-site-nav>
+      <div class="site-nav__head">
+        <span class="site-nav__title">Meni</span>
+        <button type="button" class="icon-btn" data-nav-close aria-label="Zatvori meni">
+          <Icon name="x" size={22} />
+        </button>
+      </div>
+      <ul class="nav__list" role="list">
+        {glavniMeni.map((item, i) => {
+          if (isGroup(item)) {
+            const active = item.children.some((c) => isActive(c.href, current));
+            const subId = `podmeni-${i}`;
+            return (
+              <li class="nav__item nav__item--group" data-nav-group>
+                <button
+                  type="button"
+                  class:list={['nav__link nav__toggle', { 'is-active': active }]}
+                  aria-expanded="false"
+                  aria-controls={subId}
+                  data-nav-toggle
+                >
+                  {item.label}
+                  <Icon name="chevron-down" size={16} class="nav__chevron" />
+                </button>
+                <ul class="nav__sub" id={subId} role="list">
+                  {item.children.map((c) => (
+                    <li>
+                      <a
+                        class="nav__sublink"
+                        href={url(c.href)}
+                        aria-current={isActive(c.href, current) && current === c.href ? 'page' : undefined}
+                      >
+                        <span class="nav__sublabel">{c.label}</span>
+                        {c.opis && <span class="nav__subdesc">{c.opis}</span>}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          }
+          return (
+            <li class="nav__item">
+              <a
+                class:list={['nav__link', { 'is-active': isActive(item.href, current) }]}
+                href={url(item.href)}
+                aria-current={current === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="site-nav__footer">
+        <a class="btn btn--ghost btn--block" href={url('/pretraga')}>
+          <Icon name="search" size={18} /> Pretraga
+        </a>
+        <a class="btn btn--gold btn--block" href={url('/donacije')}>
+          <Icon name="heart" size={18} /> Doniraj
+        </a>
+      </div>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="icon-btn search-btn" href={url('/pretraga')} aria-label="Pretraga">
+        <Icon name="search" size={20} />
+      </a>
+      <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Promijeni temu">
+        <Icon name="moon" size={20} class="theme-toggle__moon" />
+        <Icon name="sun" size={20} class="theme-toggle__sun" />
+      </button>
+      <a class="btn btn--gold btn--sm donate-btn" href={url('/donacije')}>
+        <Icon name="heart" size={16} /> <span>Doniraj</span>
+      </a>
+      <button
+        type="button"
+        class="icon-btn menu-toggle"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        data-nav-open
+      >
+        <Icon name="menu" size={24} />
+        <span class="visually-hidden">Otvori meni</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* ---------- Gornja traka ---------- */
+  .topbar {
+    font-size: 0.82rem;
+    border-bottom: 1px solid rgb(226 191 110 / 0.22);
+  }
+  .topbar__inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 38px;
+  }
+  .topbar p { margin: 0; }
+  .topbar__date {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--inverse-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .topbar__date:hover { color: var(--inverse-text); }
+  .topbar__date :global(svg) { color: var(--inverse-accent); flex: none; }
+  .topbar__bismillah {
+    color: var(--inverse-accent);
+    font-size: 1.15rem;
+    line-height: 1.3;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .topbar__links {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .topbar__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    color: var(--inverse-text);
+    text-decoration: none;
+    opacity: 0.9;
+  }
+  .topbar__links a:hover { opacity: 1; color: var(--inverse-accent); }
+  @media (max-width: 760px) {
+    .topbar__inner { grid-template-columns: 1fr auto; }
+    .topbar__links { display: none; }
+    .topbar__bismillah { font-size: 1rem; }
+  }
+  @media (max-width: 420px) {
+    .topbar__date { font-size: 0.75rem; }
+    .topbar__inner { gap: var(--space-2); }
+  }
+
+  /* ---------- Zaglavlje ---------- */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--color-border);
+  }
+  /* blur je na pseudo-elementu: backdrop-filter na samom headeru bi "zarobio" position:fixed ladicu */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  }
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: var(--header-h);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+    color: var(--color-text);
+    margin-right: auto;
+    min-width: 0;
+  }
+  .brand:hover { color: var(--color-text); }
+  .brand :global(.brand__emblem) { flex: none; transition: transform 600ms ease; }
+  @media (prefers-reduced-motion: no-preference) {
+    .brand:hover :global(.brand__emblem) { transform: rotate(45deg); }
+  }
+  .brand__text { display: flex; flex-direction: column; min-width: 0; }
+  .brand__name {
+    font-family: var(--font-serif);
+    font-weight: 650;
+    font-size: 1.28rem;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .brand__sub {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .site-header__actions { display: flex; align-items: center; gap: var(--space-2); }
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: background-color var(--transition), border-color var(--transition);
+  }
+  .icon-btn:hover { background: var(--color-surface-2); border-color: var(--color-border); }
+
+  .theme-toggle :global(.theme-toggle__sun) { display: none; }
+  :global([data-theme='dark']) .theme-toggle :global(.theme-toggle__sun) { display: block; }
+  :global([data-theme='dark']) .theme-toggle :global(.theme-toggle__moon) { display: none; }
+
+  /* ---------- Navigacija: zajedničko ---------- */
+  .nav__list { list-style: none; margin: 0; padding: 0; }
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.55rem 0.7rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-weight: 650;
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+  }
+  .nav__link:hover { color: var(--color-primary); }
+  .nav__link.is-active, .nav__link[aria-current='page'] { color: var(--color-primary); }
+  .nav__toggle :global(.nav__chevron) { transition: transform var(--transition); opacity: 0.7; }
+  .nav__toggle[aria-expanded='true'] :global(.nav__chevron) { transform: rotate(180deg); }
+  .nav__sub { list-style: none; margin: 0; padding: 0; }
+  .nav__sublink {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .nav__sublink:hover { background: var(--color-surface-2); color: var(--color-text); }
+  .nav__sublink[aria-current='page'] { background: var(--color-accent-soft); }
+  .nav__sublink[aria-current='page'] .nav__sublabel { color: var(--color-primary); }
+  .nav__sublabel { font-weight: 700; font-size: 0.95rem; }
+  .nav__subdesc { font-size: 0.8rem; color: var(--color-text-muted); }
+
+  /* ---------- Desktop ---------- */
+  @media (min-width: 1140px) {
+    .menu-toggle, .site-nav__head, .site-nav__footer, .nav-backdrop { display: none !important; }
+    .site-nav { order: 0; }
+    .site-header__actions { order: 1; }
+    .nav__list { display: flex; align-items: center; gap: 0.1rem; }
+    .nav__item { position: relative; }
+    .nav__link.is-active::after, .nav__link[aria-current='page']::after {
+      content: '';
+      position: absolute;
+      left: 0.7rem; right: 0.7rem; bottom: 0.15rem;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--color-accent-bright);
+    }
+    .nav__sub {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      min-width: 270px;
+      padding: var(--space-2);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -6px);
+      transition: opacity var(--transition), transform var(--transition), visibility 0s linear 180ms;
+    }
+    .nav__sub::before {
+      /* most za hover između dugmeta i menija */
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: -10px;
+      height: 10px;
+    }
+    .nav__toggle[aria-expanded='true'] + .nav__sub {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      transition: opacity var(--transition), transform var(--transition), visibility 0s;
+    }
+  }
+
+  /* ---------- Mobilni / tablet: ladica ---------- */
+  @media (max-width: 1139.98px) {
+    .site-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 120;
+      width: min(380px, 88vw);
+      display: flex;
+      flex-direction: column;
+      background: var(--color-bg);
+      border-left: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      transform: translateX(100%);
+      visibility: hidden;
+      transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 260ms;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .site-nav.is-open {
+      transform: translateX(0);
+      visibility: visible;
+      transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
+    }
+    .site-nav__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      background: var(--color-bg);
+      z-index: 1;
+    }
+    .site-nav__title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    .nav__list { padding: var(--space-2) var(--space-3); flex: 1; }
+    .nav__item { border-bottom: 1px solid var(--color-border); }
+    .nav__item:last-child { border-bottom: 0; }
+    .nav__link {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      padding: 0.85rem 0.5rem;
+      font-size: 1.05rem;
+      min-height: 48px;
+    }
+    .nav__sub { display: none; padding: 0 0 var(--space-3) var(--space-2); }
+    .nav__toggle[aria-expanded='true'] + .nav__sub { display: block; }
+    .site-nav__footer { display: grid; gap: var(--space-3); padding: var(--space-4); border-top: 1px solid var(--color-border); }
+    .nav-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 110;
+      background: rgb(5 18 14 / 0.55);
+      backdrop-filter: blur(2px);
+    }
+    .nav-backdrop[hidden] { display: none; }
+  }
+  @media (max-width: 520px) {
+    .donate-btn span { display: none; }
+    .donate-btn { padding-inline: 0.7rem; }
+    .brand__name { font-size: 1.12rem; }
+    .brand :global(.brand__emblem) { width: 36px; height: 36px; }
+    .site-header__inner { gap: var(--space-2); }
+    .site-header__actions { gap: 2px; }
+  }
+  @media (max-width: 480px) {
+    .search-btn { display: none; }
+  }
+  @media (max-width: 374px) {
+    .brand__sub { display: none; }
+  }
+</style>
+
+<script>
+  // ---------- Datum (gregorijanski + hidžretski) u gornjoj traci ----------
+  const DANI = ['nedjelja', 'ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota'];
+  const MJ = ['januar', 'februar', 'mart', 'april', 'maj', 'jun', 'jul', 'avgust', 'septembar', 'oktobar', 'novembar', 'decembar'];
+  const HMJ = ['muharrem', 'safer', 'rebiu-l-evvel', 'rebiu-l-ahir', 'džumade-l-ula', 'džumade-l-uhra', 'redžeb', "ša'ban", 'ramazan', 'ševval', "zu-l-ka'de", 'zu-l-hidždže'];
+  function renderDate() {
+    const el = document.querySelector('[data-today-text]');
+    if (!el) return;
+    const d = new Date();
+    let text = `${DANI[d.getDay()]}, ${d.getDate()}. ${MJ[d.getMonth()]} ${d.getFullYear()}.`;
+    try {
+      const parts = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn', { day: 'numeric', month: 'numeric', year: 'numeric' }).formatToParts(d);
+      const get = (t: string) => parts.find((p) => p.type === t)?.value;
+      const hd = Number(get('day'));
+      const hm = Number(get('month'));
+      const hy = parseInt(get('year') ?? '', 10);
+      if (hd && hm && hy && HMJ[hm - 1]) {
+        text += ` · ${hd}. ${HMJ[hm - 1]} ${hy}. h.`;
+        el.parentElement?.setAttribute('title', 'Hidžretski datum prema kalendaru Umm al-Qura (moguće odstupanje od jednog dana).');
+      }
+    } catch { /* stari pregledač: samo gregorijanski datum */ }
+    el.textContent = text.charAt(0).toUpperCase() + text.slice(1);
+  }
+  renderDate();
+
+  // ---------- Tema ----------
+  const root = document.documentElement;
+  const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  function syncThemeButton() {
+    if (!themeBtn) return;
+    const dark = root.dataset.theme === 'dark';
+    themeBtn.setAttribute('aria-label', dark ? 'Uključi svijetlu temu' : 'Uključi tamnu temu');
+    themeBtn.setAttribute('aria-pressed', String(dark));
+  }
+  syncThemeButton();
+  themeBtn?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch { /* privatni režim */ }
+    syncThemeButton();
+  });
+  // Prati sistemsku temu dok korisnik ručno ne izabere
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  mq.addEventListener?.('change', (e) => {
+    let stored: string | null = null;
+    try { stored = localStorage.getItem('theme'); } catch { /* */ }
+    if (stored === 'light' || stored === 'dark') return;
+    root.dataset.theme = e.matches ? 'dark' : 'light';
+    syncThemeButton();
+  });
+
+  // ---------- Navigacija ----------
+  const desktop = window.matchMedia('(min-width: 1140px)');
+  const nav = document.querySelector<HTMLElement>('[data-site-nav]');
+  const openBtn = document.querySelector<HTMLButtonElement>('[data-nav-open]');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-nav-close]');
+  const backdrop = document.querySelector<HTMLElement>('[data-nav-backdrop]');
+  const toggles = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-nav-toggle]'));
+
+  function setSub(btn: HTMLButtonElement, open: boolean) {
+    btn.setAttribute('aria-expanded', String(open));
+  }
+  function closeAllSubs(except?: HTMLButtonElement) {
+    toggles.forEach((t) => { if (t !== except) setSub(t, false); });
+  }
+
+  toggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      if (desktop.matches) closeAllSubs(btn);
+      setSub(btn, open);
+    });
+    const li = btn.closest<HTMLElement>('[data-nav-group]');
+    let timer: number | undefined;
+    li?.addEventListener('pointerenter', (e) => {
+      if (!desktop.matches || e.pointerType !== 'mouse') return;
+      window.clearTimeout(timer);
+      closeAllSubs(btn);
+      setSub(btn, true);
+    });
+    li?.addEventListener('pointerleave', (e) => {
+      if (!desktop.matches || e.pointerType !== 'mouse') return;
+      timer = window.setTimeout(() => setSub(btn, false), 160);
+    });
+    li?.addEventListener('focusout', (e) => {
+      if (!desktop.matches) return;
+      const next = (e as FocusEvent).relatedTarget as Node | null;
+      if (!next || !li.contains(next)) setSub(btn, false);
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!desktop.matches) return;
+    if (!(e.target as HTMLElement).closest('[data-nav-group]')) closeAllSubs();
+  });
+
+  function focusables(): HTMLElement[] {
+    if (!nav) return [];
+    return Array.from(nav.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')).filter(
+      (el) => el.offsetParent !== null,
+    );
+  }
+
+  function openDrawer() {
+    if (!nav || !openBtn) return;
+    nav.classList.add('is-open');
+    backdrop?.removeAttribute('hidden');
+    openBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('no-scroll');
+    nav.setAttribute('role', 'dialog');
+    nav.setAttribute('aria-modal', 'true');
+    // otvori grupu koja sadrži aktivnu stranicu
+    toggles.forEach((t) => { if (t.classList.contains('is-active')) setSub(t, true); });
+    window.setTimeout(() => closeBtn?.focus(), 30);
+  }
+  function closeDrawer(returnFocus = true) {
+    if (!nav || !openBtn) return;
+    nav.classList.remove('is-open');
+    backdrop?.setAttribute('hidden', '');
+    openBtn.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('no-scroll');
+    nav.removeAttribute('role');
+    nav.removeAttribute('aria-modal');
+    if (returnFocus) openBtn.focus();
+  }
+
+  openBtn?.addEventListener('click', openDrawer);
+  closeBtn?.addEventListener('click', () => closeDrawer());
+  backdrop?.addEventListener('click', () => closeDrawer());
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (nav?.classList.contains('is-open')) { closeDrawer(); return; }
+      const open = toggles.find((t) => t.getAttribute('aria-expanded') === 'true');
+      if (open && desktop.matches) { setSub(open, false); open.focus(); }
+      return;
+    }
+    if (e.key === 'Tab' && nav?.classList.contains('is-open')) {
+      const f = focusables();
+      if (!f.length) return;
+      const first = f[0];
+      const last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  desktop.addEventListener?.('change', () => {
+    closeAllSubs();
+    if (nav?.classList.contains('is-open')) closeDrawer(false);
+  });
+</script>

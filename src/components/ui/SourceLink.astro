@@ -1,0 +1,23 @@
+---
+// "Izvor: …" — link ako je URL, inače tekst. null → ništa (ili Placeholder ako je `required`).
+import Placeholder from './Placeholder.astro';
+interface Props { izvor: string | null | undefined; required?: boolean; label?: string }
+const { izvor, required = false, label = 'Izvor' } = Astro.props;
+const isUrl = !!izvor && /^https?:\/\//.test(izvor);
+let host = '';
+if (isUrl) {
+  try { host = new URL(izvor!).hostname.replace(/^www\./, ''); } catch { host = izvor!; }
+}
+---
+{izvor ? (
+  <p class="source">
+    <span class="source__label">{label}:</span>{' '}
+    {isUrl ? <a href={izvor} target="_blank" rel="noopener">{host}<span class="visually-hidden"> (otvara se u novom prozoru)</span></a> : <span>{izvor}</span>}
+  </p>
+) : required ? (
+  <Placeholder inline label="izvor" />
+) : null}
+<style>
+  .source { margin: var(--space-2) 0 0; font-size: 0.86rem; color: var(--color-text-muted); overflow-wrap: anywhere; }
+  .source__label { font-weight: 700; }
+</style>

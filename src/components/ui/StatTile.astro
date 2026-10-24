@@ -1,0 +1,38 @@
+---
+// Pločica sa činjenicom (vrijednost + oznaka + izvor).
+import { url } from '../../lib/url';
+interface Props { value: string; label: string; source?: string | null }
+const { value, label, source } = Astro.props;
+const isUrl = source ? /^(https?:)?\/\//.test(source) || source.startsWith('/') : false;
+---
+<div class="stat">
+  <span class:list={['stat__value', { 'stat__value--long': value.length > 16 }]}>{value}</span>
+  <span class="stat__label">{label}</span>
+  {source && (
+    <span class="stat__source">
+      Izvor: {isUrl ? <a href={url(source)} rel="noopener" target={source.startsWith('/') ? undefined : '_blank'}>{(() => { try { return new URL(source).hostname.replace(/^www\./, ''); } catch { return source; } })()}</a> : source}
+    </span>
+  )}
+</div>
+<style>
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-top: 3px solid var(--color-accent-bright);
+  }
+  .stat__value {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 2vw + 1rem, 2.3rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--color-primary);
+  }
+  .stat__value--long { font-size: clamp(1.15rem, 0.8vw + 0.95rem, 1.4rem); line-height: 1.25; }
+  .stat__label { font-weight: 600; }
+  .stat__source { font-size: 0.82rem; color: var(--color-text-muted); margin-top: var(--space-2); overflow-wrap: anywhere; }
+</style>

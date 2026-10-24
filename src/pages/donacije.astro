@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import CopyButton from '../components/ui/CopyButton.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Icon from '../components/ui/Icon.astro';
+import { url } from '../lib/url';
+import { dzamija } from '../lib/data';
+
+const don = dzamija.donacije;
+const email = dzamija.kontakt.email;
+const polja: { oznaka: string; vrijednost: string | null; mono?: boolean }[] = [
+  { oznaka: 'Primalac', vrijednost: don.primalac },
+  { oznaka: 'Banka', vrijednost: don.banka },
+  { oznaka: 'Broj računa', vrijednost: don.racun, mono: true },
+  { oznaka: 'IBAN', vrijednost: don.iban, mono: true },
+  { oznaka: 'SWIFT / BIC', vrijednost: don.swift, mono: true },
+  { oznaka: 'Svrha uplate', vrijednost: don.svrha },
+];
+const imaRacun = Boolean(don.racun || don.iban);
+const upit = email
+  ? `mailto:${email}?subject=${encodeURIComponent('Podaci za donaciju')}&body=${encodeURIComponent('Selam alejkum,\n\nmolim vas za zvanične podatke za uplatu donacije džamiji.\n')}`
+  : null;
+
+const namjene = [
+  { naslov: 'Održavanje džamije', opis: 'Režije, čistoća, grijanje i redovno održavanje objekta i prostora za abdest.', ikona: 'building' as const },
+  { naslov: 'Mekteb i halke', opis: 'Udžbenici, materijali i uslovi za vjersku pouku djece i odraslih.', ikona: 'graduation' as const },
+  { naslov: 'Aktivnosti džemata', opis: 'Predavanja, snimanje i objava predavanja te druge zajedničke aktivnosti džemata.', ikona: 'users' as const },
+];
+---
+<BaseLayout title="Donacije" description="Podržite rad Džamije na Jaliji — održavanje džamije, mekteb i aktivnosti džemata. Zvanični podaci za uplatu.">
+  <PageHero eyebrow="Sadaka i vakuf" title="Donacije" subtitle="Vaša sadaka pomaže da džamija ostane otvorena, uređena i puna znanja." arabic="مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ" />
+
+  <section class="section">
+    <div class="container">
+      <p class="hadith-note muted">„Sadaka ne umanjuje imetak.“ — hadis, bilježi Muslim</p>
+      <SectionHeading eyebrow="Namjena" title="Za šta se koriste donacije" />
+      <ul class="grid-cards" role="list">
+        {namjene.map((n) => (
+          <li class="card">
+            <span class="card__icon"><Icon name={n.ikona} size={24} /></span>
+            <h3 class="card__title">{n.naslov}</h3>
+            <p class="muted">{n.opis}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="uplata-naslov">
+    <div class="container container--narrow">
+      <div class="bank card">
+        <div class="bank__head">
+          <span class="card__icon"><Icon name="hand-heart" size={24} /></span>
+          <div>
+            <h2 id="uplata-naslov" class="bank__title">Podaci za uplatu</h2>
+            <p class="muted">Koristite isključivo podatke objavljene ovdje ili potvrđene direktno od uprave džamije.</p>
+          </div>
+        </div>
+        <dl class="bank__list">
+          {polja.map((p) => (
+            <div class="bank__row">
+              <dt>{p.oznaka}</dt>
+              <dd>
+                {p.vrijednost ? (
+                  <>
+                    <span class:list={['bank__value', { 'bank__value--mono': p.mono }]}>{p.vrijednost}</span>
+                    <CopyButton text={p.vrijednost} label="Kopiraj" />
+                  </>
+                ) : (
+                  <Placeholder inline label={p.oznaka.toLowerCase()} />
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        {don.napomena && <p class="bank__note"><Icon name="info" size={18} /> {don.napomena}</p>}
+        {!imaRacun && (
+          <div class="bank__missing">
+            <p><strong>Broj računa još nije objavljen.</strong> Ne objavljujemo nepotvrđene podatke za uplatu — zatražite ih direktno od džemata.</p>
+            {upit ? (
+              <a class="btn btn--primary" href={upit}><Icon name="mail" size={18} /> Zatražite podatke e-mailom</a>
+            ) : (
+              <div class="bank__ask">
+                {dzamija.drustveneMreze.instagram && <a class="btn btn--primary" href={dzamija.drustveneMreze.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> Pitajte na Instagramu</a>}
+                {dzamija.drustveneMreze.facebook && <a class="btn btn--ghost" href={dzamija.drustveneMreze.facebook} target="_blank" rel="noopener"><Icon name="facebook" size={18} /> Facebook</a>}
+                <a class="btn btn--ghost" href={url('/kontakt')}>Kontakt</a>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <p class="warn"><Icon name="shield" size={18} /> Savjet: prije uplate provjerite podatke direktno sa upravom džamije i ne uplaćujte na račune dobijene putem nepoznatih poruka.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hadith-note { font-family: var(--font-serif); font-size: 1.15rem; text-align: center; margin-bottom: var(--space-7); }
+  .grid-cards { list-style: none; margin: 0; padding: 0; }
+  .grid-cards p { margin: 0; }
+  .bank { padding: clamp(1.25rem, 4vw, 2.25rem); border-top: 4px solid var(--color-accent-bright); }
+  .bank__head { display: flex; gap: var(--space-4); align-items: flex-start; margin-bottom: var(--space-5); }
+  .bank__head .card__icon { margin: 0; flex: none; }
+  .bank__title { font-size: 1.6rem; margin-bottom: var(--space-1); }
+  .bank__head p { margin: 0; }
+  .bank__list { margin: 0; display: grid; }
+  .bank__row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: var(--space-2) var(--space-4);
+    align-items: center;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .bank__row:last-child { border-bottom: 0; }
+  @media (max-width: 520px) { .bank__row { grid-template-columns: 1fr; } }
+  .bank__row dt { font-weight: 700; font-size: 0.9rem; color: var(--color-text-muted); }
+  .bank__row dd { margin: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+  .bank__value { font-weight: 700; overflow-wrap: anywhere; }
+  .bank__value--mono { font-variant-numeric: tabular-nums; letter-spacing: 0.03em; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+  .bank__note { display: flex; gap: var(--space-2); margin: var(--space-4) 0 0; color: var(--color-text-muted); }
+  .bank__missing { margin-top: var(--space-5); padding: var(--space-4); border-radius: var(--radius-md); background: var(--color-surface-2); }
+  .bank__missing p { margin: 0 0 var(--space-3); }
+  .bank__ask { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .warn { display: flex; gap: var(--space-2); align-items: flex-start; margin: var(--space-5) 0 0; font-size: 0.92rem; color: var(--color-text-muted); }
+  .warn :global(svg) { flex: none; margin-top: 3px; color: var(--color-accent); }
+</style>

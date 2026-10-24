@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Icon from '../components/ui/Icon.astro';
+import type { IconName } from '../components/ui/Icon.astro';
+import { url } from '../lib/url';
+
+const pravila: { naslov: string; tekst: string; ikona: IconName }[] = [
+  { naslov: 'Ulazak sa poštovanjem', tekst: 'U džamiju ulazite smireno, desnom nogom, uz dovu za ulazak u džamiju. Izlazite lijevom nogom, uz dovu za izlazak.', ikona: 'door' },
+  { naslov: 'Čistoća i abdest', tekst: 'Dođite sa abdestom, u čistoj i pristojnoj odjeći. Obuću ostavite na predviđenom mjestu, a prostor za abdest ostavite urednim.', ikona: 'droplet' },
+  { naslov: 'Tišina', tekst: 'Izbjegavajte glasan razgovor i sve što ometa namaz, učenje Kur\'ana i zikr drugih.', ikona: 'volume-off' },
+  { naslov: 'Isključen telefon', tekst: 'Prije ulaska u saf utišajte ili isključite mobilni telefon.', ikona: 'phone-off' },
+  { naslov: 'Tehijjetul-mesdžid', tekst: 'Kada uđete u džamiju, prije nego što sjednete, klanjajte dva rekata pozdrava džamiji — kao što je preporučio Poslanik ﷺ.', ikona: 'sparkles' },
+  { naslov: 'Ne prolazite ispred klanjača', tekst: 'Sačekajte ili obiđite iza onoga ko klanja. Ne prelazite preko safova i ne gurajte se.', ikona: 'footprints' },
+  { naslov: 'Popunjavanje safova', tekst: 'Popunjavajte prve safove i stanite uredno, rame uz rame, bez praznina.', ikona: 'users' },
+  { naslov: 'Hutba', tekst: 'Za vrijeme hutbe pažljivo slušajte, bez razgovora i korištenja telefona — čak ni drugoga ne opominjite riječima.', ikona: 'mic' },
+  { naslov: 'Džuma', tekst: 'Na džumu dođite ranije, okupani, mirisni i lijepo obučeni. Iskoristite vrijeme do hutbe za učenje Kur\'ana i dovu.', ikona: 'calendar' },
+  { naslov: 'Poštovanje džematlija', tekst: 'Selamite se, poštujte starije, budite strpljivi i blagi prema gostima i djeci.', ikona: 'heart' },
+  { naslov: 'Djeca u džamiji', tekst: 'Djeca su dobrodošla. Učite ih tišini i redu ličnim primjerom, i budite uz njih tokom namaza.', ikona: 'baby' },
+  { naslov: 'Čuvanje vakufa', tekst: 'Mushafe, serdžade i inventar koristite pažljivo i vratite na svoje mjesto. Džamija je vakuf — amanet svih nas.', ikona: 'book-quran' },
+  { naslov: 'Bez otpadaka', tekst: 'Ne ostavljajte smeće u džamiji i njenom dvorištu. Otpatke odložite u kantu.', ikona: 'trash' },
+  { naslov: 'Bez rasprava', tekst: 'Izbjegavajte prepirke i rasprave. Savjet dajte lijepom riječju i u pravo vrijeme.', ikona: 'message' },
+];
+---
+<BaseLayout title="Pravila ponašanja u džamiji" description="Adab u džamiji: kako se ponašati u kući Allahovoj — ulazak, čistoća, tišina, hutba, džuma, djeca i čuvanje vakufa.">
+  <PageHero eyebrow="Adab" title="Pravila ponašanja u džamiji" subtitle="Džamija je kuća Allahova — mjesto namaza, mira i znanja. Ponašajmo se u njoj dostojanstveno i sa poštovanjem." />
+
+  <section class="section">
+    <div class="container">
+      <figure class="intro">
+        <blockquote>
+          <p class="arabic-block intro__ar" lang="ar" dir="rtl">يَا بَنِي آدَمَ خُذُوا زِينَتَكُمْ عِندَ كُلِّ مَسْجِدٍ</p>
+          <p class="intro__tr">„O sinovi Ademovi, uljepšajte se (lijepo se obucite) za svaki namaz.“</p>
+        </blockquote>
+        <figcaption>Kur'an, El-A'raf, 31 — prevod značenja</figcaption>
+      </figure>
+
+      <ol class="rules" role="list">
+        {pravila.map((p, i) => (
+          <li class="rule card">
+            <div class="rule__top">
+              <span class="card__icon"><Icon name={p.ikona} size={24} /></span>
+              <span class="rule__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <h2 class="card__title">{p.naslov}</h2>
+            <p>{p.tekst}</p>
+          </li>
+        ))}
+      </ol>
+
+      <p class="disclaimer">
+        <Icon name="info" size={18} />
+        <span>Sadržaj je edukativnog karaktera. Za konkretna šerijatska pitanja obratite se imamu džamije — <a href={url('/kontakt')}>kontakt</a>.</span>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    max-width: 760px;
+    margin: 0 auto var(--space-7);
+    text-align: center;
+  }
+  .intro blockquote { margin: 0; }
+  .intro__ar { text-align: center; color: var(--color-primary); font-size: clamp(1.6rem, 2vw + 1.1rem, 2.3rem); }
+  .intro__tr { font-family: var(--font-serif); font-size: clamp(1.15rem, 0.8vw + 1rem, 1.4rem); margin: var(--space-2) 0; }
+  .intro figcaption { color: var(--color-text-muted); font-size: 0.9rem; }
+  .rules {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: var(--space-4);
+  }
+  .rule p { margin: 0; color: var(--color-text-muted); }
+  .rule__top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .rule__num { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 600; color: var(--color-border-strong); line-height: 1; }
+  .disclaimer {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    margin: var(--space-7) auto 0;
+    max-width: 760px;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-2);
+    font-size: 0.95rem;
+  }
+  .disclaimer :global(svg) { flex: none; margin-top: 4px; color: var(--color-accent); }
+</style>

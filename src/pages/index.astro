@@ -1,6 +1,502 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LectureCard from '../components/predavanja/LectureCard.astro';
+import VaktijaToday from '../components/vaktija/VaktijaToday.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import StatTile from '../components/ui/StatTile.astro';
+import Icon from '../components/ui/Icon.astro';
+import StarEmblem from '../components/ui/StarEmblem.astro';
+import AjetHadisDana from '../components/ui/AjetHadisDana.astro';
+import SocialLinks from '../components/ui/SocialLinks.astro';
+import { url } from '../lib/url';
+import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum } from '../lib/data';
+
+const najnovija = predavanja.slice(0, 6);
+const brojHutbi = predavanja.filter((p) => p.kategorija === 'hutba').length;
+const aktuelno = obavjestenja.slice(0, 3);
+const istaknutiImami = imami.slice(0, 4);
+const cinjenice = dzamija.cinjenice.filter((c) => c.oznaka !== 'Adresa' && c.vrijednost.length <= 40).slice(0, 3);
+const prvaHistorija = dzamija.historija[0] ?? null;
+const naslovnaSlika = galerija[0] ?? null;
+const imgSrc = (src: string) => (/^https?:/.test(src) ? src : url(src));
+const inicijali = (ime: string) =>
+  ime
+    .replace(/\b(hfz|ef|mr|dr|prof|muftija|kurra)\.?\b/gi, '')
+    .split(/\s+/)
+    .filter((w) => /^[A-ZČĆĐŠŽ]/.test(w))
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('');
+const mjesto = [dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
+
+const korisno = [
+  { naslov: 'Mekteb i halke', opis: 'Vjerska pouka za djecu i halke za odrasle — informacije i prijava.', href: '/mekteb', ikona: 'graduation' as const },
+  { naslov: 'Dove', opis: 'Dove iz Kur\'ana i sunneta sa arapskim tekstom, transliteracijom i prevodom.', href: '/dove', ikona: 'hands' as const },
+  { naslov: "Kur'an i hadisi", opis: 'Ajet i hadis dana, sa jasno navedenim izvorima.', href: '/kuran-hadisi', ikona: 'book-quran' as const },
+  { naslov: "Učenje Kur'ana", opis: 'Provjereni izvori za čitanje, slušanje i učenje tedžvida.', href: '/ucenje-kurana', ikona: 'book' as const },
+  { naslov: 'Pravila ponašanja', opis: 'Adab u džamiji — kako se ponašati u kući Allahovoj.', href: '/pravila-ponasanja', ikona: 'door' as const },
+  { naslov: 'Mediji', opis: 'YouTube kanal džamije i ostale zvanične mreže.', href: '/mediji', ikona: 'youtube' as const },
+];
 ---
 <BaseLayout title="Džamija na Jaliji">
-  <h1>Džamija na Jaliji</h1>
+  <!-- ================= HERO ================= -->
+  <section class="hero theme-inverse pattern-bg" aria-labelledby="hero-naslov">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <p class="hero__bismillah calligraphy" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+        <p class="eyebrow">{mjesto ? `Džemat · ${mjesto}` : 'Dobro došli u naš džemat'}</p>
+        <h1 id="hero-naslov" class="hero__title">Džamija <span>na Jaliji</span></h1>
+        {dzamija.kratakOpis ? (
+          <p class="hero__lead">{dzamija.kratakOpis}</p>
+        ) : (
+          <>
+            <p class="hero__lead">Predavanja i hutbe, vaktija, obavještenja i korisni sadržaji za džemat — na jednom mjestu.</p>
+            <Placeholder label="kratak opis džamije (lokacija, historija u dvije rečenice)" />
+          </>
+        )}
+        <div class="hero__cta">
+          <a class="btn btn--gold" href={url('/predavanja')}><Icon name="play" size={18} /> Predavanja</a>
+          <a class="btn btn--ghost" href={url('/vaktija')}><Icon name="clock" size={18} /> Vaktija</a>
+        </div>
+        {predavanja.length > 0 && (
+          <ul class="hero__facts" role="list">
+            <li><strong>{predavanja.length}</strong> snimaka na kanalu</li>
+            {brojHutbi > 0 && <li><strong>{brojHutbi}</strong> hutbi</li>}
+            {imami.length > 0 && <li><strong>{imami.length}</strong> {imami.length === 1 ? 'predavač' : 'predavača'}</li>}
+          </ul>
+        )}
+      </div>
+
+      <aside class="hero__arch" aria-labelledby="vaktija-naslov">
+        <div class="hero__arch-inner">
+          <div class="hero__arch-head">
+            <StarEmblem size={34} />
+            <div>
+              <h2 id="vaktija-naslov" class="hero__arch-title">Namaska vremena</h2>
+              <p class="hero__arch-sub">Današnja vaktija</p>
+            </div>
+          </div>
+          <VaktijaToday compact />
+          <div class="hero__arch-foot">
+            <p class="hero__dzuma">
+              <Icon name="calendar" size={16} />
+              <span>Džuma: {dzamija.dzuma.vrijeme ?? <Placeholder inline label="vrijeme džume" />}</span>
+            </p>
+            <a class="link-arrow" href={url('/vaktija')}>Mjesečna vaktija</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <div class="hero__arcade" aria-hidden="true"></div>
+  </section>
+
+  <!-- ================= PREDAVANJA ================= -->
+  <section class="section" aria-labelledby="predavanja-naslov">
+    <div class="container">
+      <SectionHeading id="predavanja-naslov" eyebrow="Sa YouTube kanala" title="Najnovija predavanja" lead="Predavanja, hutbe i tefsirske serije imama i gostiju džamije.">
+        <Fragment slot="action">
+          <a class="btn btn--ghost btn--sm" href={url('/hutbe')}>Hutbe</a>
+          <a class="btn btn--primary btn--sm" href={url('/predavanja')}>Sva predavanja <Icon name="arrow-right" size={16} /></a>
+        </Fragment>
+      </SectionHeading>
+      {najnovija.length ? (
+        <div class="grid-cards">
+          {najnovija.map((p) => <LectureCard predavanje={p} />)}
+        </div>
+      ) : (
+        <Placeholder label="predavanja sa YouTube kanala" hint="pokrenuti skriptu za preuzimanje videa" />
+      )}
+    </div>
+  </section>
+
+  <!-- ================= AKTUELNO + AJET DANA ================= -->
+  <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="aktuelno-naslov">
+    <div class="container grid-2 grid-2--wide-left">
+      <div>
+        <SectionHeading id="aktuelno-naslov" eyebrow="Aktuelno" title="Obavještenja">
+          <a slot="action" class="link-arrow" href={url('/obavjestenja')}>Sva obavještenja</a>
+        </SectionHeading>
+        {aktuelno.length ? (
+          <ul class="news" role="list">
+            {aktuelno.map((o) => (
+              <li class="news__item card card--link">
+                <div class="news__meta">
+                  <time datetime={o.datum}>{formatDatum(o.datum)}</time>
+                  <span class="badge">{o.kategorija}</span>
+                  {o.placeholder && <span class="badge badge--warn">Primjer sadržaja</span>}
+                </div>
+                <h3 class="card__title news__title">
+                  <a href={url(`/obavjestenja/${o.slug}`)}>{o.naslov}</a>
+                </h3>
+                <p class="news__excerpt">{o.sazetak}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="card empty">
+            <Icon name="bell" size={28} />
+            <p><strong>Trenutno nema novih obavještenja.</strong></p>
+            <p class="muted">Najave predavanja, halki i aktivnosti džemata objavljivaće se ovdje.</p>
+            <a class="link-arrow" href={url('/objave')}>Pogledajte objave</a>
+          </div>
+        )}
+      </div>
+      <div class="ahd-col">
+        <AjetHadisDana naslov="Ajet / hadis dana" />
+        <a class="link-arrow ahd-col__link" href={url('/kuran-hadisi')}>Kur'an i hadisi</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= O DŽAMIJI ================= -->
+  <section class="section" aria-labelledby="o-dzamiji-naslov">
+    <div class="container grid-2 about">
+      <div class="about__text">
+        <p class="eyebrow">O džamiji</p>
+        <h2 id="o-dzamiji-naslov">Kuća namaza, znanja i zajedništva</h2>
+        {prvaHistorija ? (
+          <p>{prvaHistorija.tekst.length > 420 ? prvaHistorija.tekst.slice(0, 420).replace(/\s\S*$/, '') + '…' : prvaHistorija.tekst}</p>
+        ) : (
+          <Placeholder label="historija džamije (godina izgradnje, graditelj, obnove)" hint="sa izvorima" />
+        )}
+        {cinjenice.length ? (
+          <div class="about__stats">
+            {cinjenice.map((c) => <StatTile value={c.vrijednost} label={c.oznaka} source={c.izvor} />)}
+          </div>
+        ) : null}
+        <div class="about__links">
+          <a class="btn btn--primary" href={url('/o-dzamiji')}>Historija džamije</a>
+          <a class="btn btn--ghost" href={url('/galerija')}><Icon name="image" size={18} /> Galerija</a>
+        </div>
+      </div>
+      <div class="about__visual">
+        <div class="arch-frame">
+          {naslovnaSlika ? (
+            <img src={imgSrc(naslovnaSlika.src)} alt={naslovnaSlika.alt} loading="lazy" decoding="async" width="600" height="760" />
+          ) : (
+            <div class="arch-frame__ornament theme-inverse pattern-bg" aria-hidden="true">
+              <StarEmblem size={150} />
+            </div>
+          )}
+        </div>
+        {!naslovnaSlika && <p class="about__caption muted">Fotografije džamije biće dodate u <a href={url('/galerija')}>galeriju</a>.</p>}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= IMAMI ================= -->
+  {istaknutiImami.length > 0 && (
+    <section class="section section--tint" aria-labelledby="imami-naslov">
+      <div class="container">
+        <SectionHeading id="imami-naslov" eyebrow="Imami i predavači" title="Ko drži predavanja">
+          <a slot="action" class="link-arrow" href={url('/imami')}>Svi imami i predavači</a>
+        </SectionHeading>
+        <ul class="imami grid-cards grid-cards--sm" role="list">
+          {istaknutiImami.map((i) => (
+            <li class="card card--link imam">
+              {i.slika ? (
+                <img class="imam__avatar" src={imgSrc(i.slika)} alt="" width="72" height="72" loading="lazy" />
+              ) : (
+                <span class="imam__avatar imam__avatar--initials" aria-hidden="true">{inicijali(i.punoIme) || '•'}</span>
+              )}
+              <h3 class="card__title imam__name"><a href={url(`/imami/${i.slug}`)}>{i.punoIme}</a></h3>
+              <p class="imam__role">
+                {i.uloga ?? <span class="muted">Predavač</span>}
+                {!i.potvrdjeno && <span class="badge badge--muted">nepotvrđeno</span>}
+              </p>
+              <p class="card__meta">{i.brojPredavanja} {i.brojPredavanja === 1 ? 'snimak' : 'snimaka'}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- ================= KORISNO ================= -->
+  <section class="section" aria-labelledby="korisno-naslov">
+    <div class="container">
+      <SectionHeading id="korisno-naslov" eyebrow="Edukacija" title="Mekteb, halke i korisni sadržaji" align="center" lead="Vjerska pouka, učenje Kur'ana i korisni sadržaji za svaki uzrast." />
+      <ul class="grid-cards korisno" role="list">
+        {korisno.map((k) => (
+          <li class="card card--link">
+            <span class="card__icon"><Icon name={k.ikona} size={24} /></span>
+            <h3 class="card__title"><a href={url(k.href)}>{k.naslov}</a></h3>
+            <p class="muted">{k.opis}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= DONACIJE ================= -->
+  <section class="donate theme-inverse pattern-bg" aria-labelledby="donacije-naslov">
+    <div class="container donate__inner">
+      <div class="donate__text">
+        <p class="eyebrow">Sadaka i vakuf</p>
+        <h2 id="donacije-naslov">Podržite rad džamije</h2>
+        <p>Vaši prilozi pomažu održavanje džamije, rad mekteba i halki, te aktivnosti džemata.</p>
+        <figure class="donate__hadith">
+          <blockquote>
+            <p lang="ar" dir="rtl" class="donate__ar">مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ</p>
+            <p>„Sadaka ne umanjuje imetak.“</p>
+          </blockquote>
+          <figcaption>Hadis, bilježi Muslim</figcaption>
+        </figure>
+      </div>
+      <div class="donate__actions">
+        <a class="btn btn--gold" href={url('/donacije')}><Icon name="heart" size={18} /> Doniraj</a>
+        <a class="btn btn--ghost" href={url('/kontakt')}>Kontaktirajte nas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRATITE NAS + POSJETITE NAS ================= -->
+  <section class="section" aria-labelledby="pratite-naslov">
+    <div class="container">
+      <SectionHeading id="pratite-naslov" eyebrow="Pratite nas" title="Budite u toku sa džematom">
+        <a slot="action" class="link-arrow" href={url('/mediji')}>Mediji</a>
+      </SectionHeading>
+      <SocialLinks variant="cards" />
+      <div class="visit card">
+        <div class="visit__icon"><Icon name="map-pin" size={26} /></div>
+        <div class="visit__body">
+          <h3>Posjetite nas</h3>
+          {[dzamija.adresa, dzamija.grad].some(Boolean) ? (
+            <p>{[dzamija.adresa, dzamija.grad, dzamija.drzava].filter(Boolean).join(', ')}</p>
+          ) : (
+            <Placeholder label="tačna adresa džamije" />
+          )}
+        </div>
+        <a class="btn btn--primary" href={url('/kontakt')}>Kontakt i mapa</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3.5rem, 8vw, 6rem);
+  }
+  .hero__glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 78% 40%, rgb(40 130 100 / 0.45), transparent 70%),
+      radial-gradient(ellipse 50% 50% at 10% 0%, rgb(226 191 110 / 0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .hero__grid {
+    position: relative;
+    display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .hero__grid { grid-template-columns: 1.15fr 0.85fr; gap: var(--space-8); }
+  }
+  .hero__bismillah {
+    font-size: clamp(1.9rem, 3.6vw + 0.8rem, 3.1rem);
+    color: var(--inverse-accent);
+    margin: 0 0 var(--space-3);
+    text-align: left;
+    direction: rtl;
+    unicode-bidi: plaintext;
+  }
+  .hero__title {
+    font-size: clamp(2.5rem, 6vw + 0.5rem, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-4);
+    color: var(--inverse-text);
+  }
+  .hero__title span { display: block; color: var(--inverse-accent); font-style: italic; font-weight: 500; }
+  .hero__lead {
+    font-size: clamp(1.08rem, 0.6vw + 1rem, 1.25rem);
+    color: var(--inverse-muted);
+    max-width: 52ch;
+  }
+  .hero__text :global(.placeholder) { max-width: 52ch; margin-bottom: var(--space-4); }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+  .hero__cta .btn--ghost { --btn-fg: var(--inverse-text); --btn-border: rgb(246 239 221 / 0.4); }
+  .hero__cta .btn--ghost:hover { --btn-bg: rgb(246 239 221 / 0.08); --btn-border: var(--inverse-accent); }
+  .hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-6) 0 0;
+    color: var(--inverse-muted);
+    font-size: 0.92rem;
+  }
+  .hero__facts strong { color: var(--inverse-text); font-family: var(--font-serif); font-size: 1.35rem; margin-right: 0.25em; }
+
+  .hero__arch {
+    position: relative;
+    padding: 10px;
+    border-radius: 220px 220px var(--radius-lg) var(--radius-lg);
+    border: 1.5px solid rgb(226 191 110 / 0.7);
+    max-width: 460px;
+    width: 100%;
+    justify-self: center;
+  }
+  .hero__arch::before {
+    /* zvijezda na vrhu luka */
+    content: '';
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    width: 26px;
+    height: 26px;
+    transform: translateX(-50%);
+    background: var(--inverse-accent);
+    -webkit-mask: var(--ornament-star) center / contain no-repeat;
+    mask: var(--ornament-star) center / contain no-repeat;
+  }
+  .hero__arch-inner {
+    border-radius: 210px 210px calc(var(--radius-lg) - 4px) calc(var(--radius-lg) - 4px);
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.03));
+    border: 1px solid rgb(226 191 110 / 0.25);
+    padding: clamp(3.5rem, 8vw, 4.5rem) clamp(1rem, 3vw, 1.75rem) var(--space-5);
+    backdrop-filter: blur(3px);
+  }
+  .hero__arch-head { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); text-align: center; margin-bottom: var(--space-4); }
+  .hero__arch-title { font-size: 1.5rem; margin: 0; color: var(--inverse-text); }
+  .hero__arch-sub { margin: 0; font-size: 0.85rem; color: var(--inverse-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .hero__arch-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgb(226 191 110 / 0.25);
+    font-size: 0.92rem;
+  }
+  .hero__dzuma { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0; color: var(--inverse-muted); }
+  .hero__dzuma :global(svg) { color: var(--inverse-accent); flex: none; }
+  .hero__arch-foot .link-arrow { color: var(--inverse-accent); }
+  .hero__arcade {
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 18px;
+    background: radial-gradient(circle at 50% 100%, var(--page-bg) 12px, transparent 12.5px) 0 0 / 34px 18px repeat-x;
+  }
+
+  /* ---------- Obavještenja ---------- */
+  .news { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+  .news__item { padding: var(--space-5); }
+  .news__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); font-size: 0.86rem; color: var(--color-text-muted); margin-bottom: var(--space-2); }
+  .news__title { font-size: 1.25rem; }
+  .news__excerpt { margin: 0; color: var(--color-text-muted); }
+  .empty { align-items: flex-start; gap: var(--space-2); }
+  .empty :global(svg) { color: var(--color-accent-bright); margin-bottom: var(--space-2); }
+  .empty p { margin: 0; }
+  .empty .link-arrow { margin-top: var(--space-3); }
+  .ahd-col { display: flex; flex-direction: column; gap: var(--space-4); }
+  @media (min-width: 900px) { .ahd-col { padding-top: calc(0.78rem * 1.6 + var(--space-3) + 0.5rem); } }
+  .ahd-col__link { align-self: flex-start; }
+
+  /* ---------- O džamiji ---------- */
+  .about { align-items: center; }
+  .about__text :global(.placeholder) { margin-bottom: var(--space-5); }
+  .about__stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-3); margin: var(--space-5) 0; }
+  .about__links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+  .about__visual { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
+  .arch-frame {
+    width: min(100%, 420px);
+    aspect-ratio: 4 / 5;
+    padding: 10px;
+    border-radius: 210px 210px var(--radius-lg) var(--radius-lg);
+    border: 1.5px solid var(--color-accent-bright);
+    position: relative;
+  }
+  .arch-frame::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: 50%;
+    width: 24px; height: 24px;
+    transform: translateX(-50%);
+    background: var(--color-accent-bright);
+    -webkit-mask: var(--ornament-star) center / contain no-repeat;
+    mask: var(--ornament-star) center / contain no-repeat;
+  }
+  .arch-frame > img,
+  .arch-frame__ornament {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 200px 200px calc(var(--radius-lg) - 4px) calc(var(--radius-lg) - 4px);
+  }
+  .arch-frame__ornament {
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 50% 45%, #1b6b52, var(--inverse-bg) 70%);
+    --ornament-opacity: 0.16;
+  }
+  .about__caption { font-size: 0.9rem; text-align: center; margin: 0; }
+
+  /* ---------- Imami ---------- */
+  .imami { list-style: none; margin: 0; padding: 0; }
+  .imam { align-items: center; text-align: center; }
+  .imam__avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: var(--space-3);
+  }
+  .imam__avatar--initials {
+    display: grid;
+    place-items: center;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    border-radius: 0;
+    -webkit-mask: var(--ornament-star) center / contain no-repeat;
+    mask: var(--ornament-star) center / contain no-repeat;
+  }
+  .imam__name { font-size: 1.1rem; }
+  .imam__role { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-1); font-size: 0.92rem; }
+  .imam .card__meta { margin: 0; }
+
+  /* ---------- Korisno ---------- */
+  .korisno { list-style: none; margin: 0; padding: 0; }
+  .korisno p { margin: 0; }
+
+  /* ---------- Donacije ---------- */
+  .donate { padding-block: clamp(3rem, 7vw, 4.5rem); }
+  .donate__inner { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 860px) { .donate__inner { grid-template-columns: 1.6fr 1fr; } }
+  .donate h2 { color: var(--inverse-text); }
+  .donate__text > p { color: var(--inverse-muted); max-width: 56ch; }
+  .donate__hadith { margin: var(--space-5) 0 0; padding-left: var(--space-4); border-left: 3px solid var(--inverse-accent); }
+  .donate__hadith blockquote { margin: 0; }
+  .donate__hadith p { margin: 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--inverse-text); }
+  .donate__hadith .donate__ar { font-family: var(--font-arabic); font-size: 1.6rem; color: var(--inverse-accent); text-align: left; }
+  .donate__hadith figcaption { font-size: 0.85rem; color: var(--inverse-muted); margin-top: var(--space-1); }
+  .donate__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  @media (min-width: 860px) { .donate__actions { justify-content: flex-end; } }
+  .donate__actions .btn--ghost { --btn-fg: var(--inverse-text); --btn-border: rgb(246 239 221 / 0.4); }
+
+  /* ---------- Posjetite nas ---------- */
+  .visit {
+    margin-top: var(--space-6);
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-5);
+  }
+  .visit__icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--color-accent-soft); color: var(--color-accent); flex: none; }
+  .visit__body { flex: 1 1 260px; }
+  .visit__body h3 { margin-bottom: var(--space-2); }
+  .visit__body p { margin: 0; }
+</style>

@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StarEmblem from '../components/ui/StarEmblem.astro';
+import Icon from '../components/ui/Icon.astro';
+import { url } from '../lib/url';
+---
+<BaseLayout title="Stranica nije pronađena" description="Tražena stranica ne postoji." noindex>
+  <section class="nf section pattern-bg">
+    <div class="container nf__inner">
+      <div class="nf__arch" aria-hidden="true">
+        <StarEmblem size={90} />
+        <span class="nf__code">404</span>
+      </div>
+      <h1>Stranica nije pronađena</h1>
+      <p class="lead">Stranica koju tražite ne postoji ili je premještena. Možda vam pomognu ovi linkovi:</p>
+      <div class="nf__links">
+        <a class="btn btn--primary" href={url('/')}><Icon name="home" size={18} /> Početna</a>
+        <a class="btn btn--ghost" href={url('/predavanja')}>Predavanja</a>
+        <a class="btn btn--ghost" href={url('/vaktija')}>Vaktija</a>
+        <a class="btn btn--ghost" href={url('/kontakt')}>Kontakt</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .nf { padding-block: clamp(3rem, 10vw, 7rem); }
+  .nf__inner { text-align: center; max-width: 640px; }
+  .nf__arch {
+    width: 200px;
+    height: 240px;
+    margin: 0 auto var(--space-6);
+    border-radius: 100px 100px var(--radius-lg) var(--radius-lg);
+    border: 1.5px solid var(--color-accent-bright);
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-3);
+    background: var(--color-surface);
+  }
+  .nf__code { font-family: var(--font-serif); font-size: 2.6rem; font-weight: 600; color: var(--color-primary); line-height: 1; }
+  .nf__links { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-5); }
+</style>

@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import SocialLinks from '../components/ui/SocialLinks.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import LectureCard from '../components/predavanja/LectureCard.astro';
+import Icon from '../components/ui/Icon.astro';
+import { url } from '../lib/url';
+import { dzamija, predavanja } from '../lib/data';
+
+const yt = dzamija.drustveneMreze.youtube;
+const najnovije = predavanja.slice(0, 6);
+const subscribe = yt ? `${yt.replace(/\/$/, '')}?sub_confirmation=1` : null;
+---
+<BaseLayout title="Mediji" description="YouTube kanal Džamije na Jaliji, najnoviji snimci i zvanični profili na društvenim mrežama.">
+  <PageHero eyebrow="Pratite nas" title="Mediji" subtitle="Predavanja, hutbe i snimci sa YouTube kanala džamije i zvanični profili na društvenim mrežama." />
+
+  <section class="section">
+    <div class="container">
+      <div class="yt theme-inverse pattern-bg">
+        <span class="yt__icon"><Icon name="youtube" size={40} /></span>
+        <div class="yt__text">
+          <h2>YouTube kanal džamije</h2>
+          <p>{predavanja.length > 0 ? `${predavanja.length} snimaka` : 'Snimci'} predavanja, hutbi i učenja Kur'ana — nova predavanja se na ovom sajtu pojavljuju automatski.</p>
+        </div>
+        <div class="yt__actions">
+          {yt ? (
+            <>
+              <a class="btn btn--gold" href={yt} target="_blank" rel="noopener">Otvori kanal <Icon name="external" size={16} /></a>
+              {subscribe && <a class="btn btn--ghost" href={subscribe} target="_blank" rel="noopener">Pretplati se</a>}
+            </>
+          ) : (
+            <Placeholder label="link YouTube kanala" />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="najnovije-naslov">
+    <div class="container">
+      <SectionHeading id="najnovije-naslov" eyebrow="Najnovije" title="Posljednji snimci">
+        <a slot="action" class="btn btn--primary btn--sm" href={url('/predavanja')}>Sva predavanja <Icon name="arrow-right" size={16} /></a>
+      </SectionHeading>
+      {najnovije.length ? (
+        <div class="grid-cards">{najnovije.map((p) => <LectureCard predavanje={p} />)}</div>
+      ) : (
+        <Placeholder label="snimci sa YouTube kanala" />
+      )}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="mreze-naslov">
+    <div class="container">
+      <SectionHeading id="mreze-naslov" eyebrow="Društvene mreže" title="Zvanični profili" lead="Pratite samo zvanične profile džamije navedene ovdje." />
+      <SocialLinks variant="cards" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .yt {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  @media (min-width: 860px) { .yt { grid-template-columns: auto 1fr auto; } }
+  .yt__icon { display: grid; place-items: center; width: 80px; height: 80px; border-radius: 22px; background: #c4302b; color: #fff; }
+  .yt h2 { color: var(--inverse-text); margin-bottom: var(--space-2); }
+  .yt p { margin: 0; color: var(--inverse-muted); max-width: 56ch; }
+  .yt__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .yt__actions .btn--ghost { --btn-fg: var(--inverse-text); --btn-border: rgb(246 239 221 / 0.4); }
+</style>

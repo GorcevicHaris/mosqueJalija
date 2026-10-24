@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import CopyButton from '../components/ui/CopyButton.astro';
+import FilterChips from '../components/ui/FilterChips.astro';
+import { dove } from '../lib/data';
+
+const slugify = (s: string) =>
+  s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'dj').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const kategorije = Array.from(new Set(dove.map((d) => d.kategorija))).map((k) => ({
+  value: slugify(k),
+  label: k,
+  count: dove.filter((d) => d.kategorija === k).length,
+}));
+---
+<BaseLayout title="Dove" description="Dove iz Kur'ana i sunneta — arapski tekst, transliteracija, prevod i izvor.">
+  <PageHero eyebrow="Korisno" title="Dove" subtitle="Dove iz Kur'ana i sunneta sa arapskim tekstom, transliteracijom, prevodom i izvorom." arabic="رَبَّنَا تَقَبَّلْ مِنَّا" />
+
+  <section class="section">
+    <div class="container container--narrow">
+      {dove.length ? (
+        <>
+          <FilterChips target="dove-lista" options={kategorije} label="Kategorije dova" />
+          <ul class="dove" id="dove-lista" role="list">
+            {dove.map((d) => (
+              <li class="dova card" id={d.slug} data-filter-value={slugify(d.kategorija)}>
+                <div class="dova__head">
+                  <h2 class="dova__title">{d.naslov}</h2>
+                  <span class="badge">{d.kategorija}</span>
+                </div>
+                {d.arapski && <p class="arabic-block dova__ar" lang="ar" dir="rtl">{d.arapski}</p>}
+                {d.transliteracija && <p class="dova__translit"><span class="visually-hidden">Transliteracija: </span>{d.transliteracija}</p>}
+                <p class="dova__prevod"><span class="visually-hidden">Prevod: </span>{d.prevod}</p>
+                <div class="dova__foot">
+                  <span class="dova__izvor">Izvor: <cite>{d.izvor}</cite></span>
+                  <CopyButton text={[d.arapski, d.transliteracija, d.prevod, `(${d.izvor})`].filter(Boolean).join('\n\n')} label="Kopiraj dovu" />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <Placeholder label="dove" hint="biće prikazane kada se unesu u data/dove.json (arapski tekst, transliteracija, prevod i izvor)" />
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dove { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); }
+  .dova { gap: var(--space-4); }
+  .dova[hidden] { display: none; }
+  .dova__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+  .dova__title { font-size: 1.35rem; margin: 0; }
+  .dova__ar { padding: var(--space-4); border-radius: var(--radius-md); background: var(--color-surface-2); }
+  .dova__translit { margin: 0; font-style: italic; color: var(--color-text-muted); }
+  .dova__prevod { margin: 0; font-family: var(--font-serif); font-size: 1.12rem; line-height: 1.6; }
+  .dova__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-border); font-size: 0.9rem; color: var(--color-text-muted); }
+  .dova__izvor cite { font-style: normal; font-weight: 700; color: var(--color-accent); }
+</style>

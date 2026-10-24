@@ -1,0 +1,159 @@
+---
+import { url } from '../../lib/url';
+import { dzamija } from '../../lib/data';
+import Icon from '../ui/Icon.astro';
+import StarEmblem from '../ui/StarEmblem.astro';
+import SocialLinks from '../ui/SocialLinks.astro';
+import Placeholder from '../ui/Placeholder.astro';
+
+const godina = new Date().getFullYear();
+const k = dzamija.kontakt;
+const adresa = [dzamija.adresa, dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
+
+const kolone = [
+  {
+    naslov: 'Džemat',
+    linkovi: [
+      ['Vaktija', '/vaktija'],
+      ['Obavještenja', '/obavjestenja'],
+      ['Objave', '/objave'],
+      ['Predavanja', '/predavanja'],
+      ['Hutbe', '/hutbe'],
+      ['Imami', '/imami'],
+    ],
+  },
+  {
+    naslov: 'O džamiji',
+    linkovi: [
+      ['Historija', '/o-dzamiji'],
+      ['Galerija', '/galerija'],
+      ['Pravila ponašanja', '/pravila-ponasanja'],
+      ['Mekteb i halke', '/mekteb'],
+      ['Donacije', '/donacije'],
+      ['Kontakt', '/kontakt'],
+    ],
+  },
+  {
+    naslov: 'Korisno',
+    linkovi: [
+      ['Dove', '/dove'],
+      ["Kur'an i hadisi", '/kuran-hadisi'],
+      ["Učenje Kur'ana", '/ucenje-kurana'],
+      ['Mediji', '/mediji'],
+      ['Islamski kalendar', '/kalendar'],
+      ['Pretraga', '/pretraga'],
+    ],
+  },
+];
+---
+<footer class="site-footer theme-inverse pattern-bg" aria-labelledby="footer-naslov">
+  <h2 id="footer-naslov" class="visually-hidden">Podnožje stranice</h2>
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="footer-brand" href={url('/')}>
+        <StarEmblem size={52} />
+        <span>Džamija na Jaliji</span>
+      </a>
+      <p class="site-footer__about">
+        {dzamija.kratakOpis ?? 'Predavanja, hutbe, vaktija i obavještenja džemata na jednom mjestu.'}
+      </p>
+      <SocialLinks variant="icons" />
+    </div>
+
+    {kolone.map((kol) => (
+      <nav class="site-footer__col" aria-label={kol.naslov}>
+        <h3 class="site-footer__title">{kol.naslov}</h3>
+        <ul role="list">
+          {kol.linkovi.map(([label, href]) => (
+            <li><a href={url(href)}>{label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+
+    <div class="site-footer__col site-footer__contact">
+      <h3 class="site-footer__title">Kontakt</h3>
+      <ul role="list">
+        <li>
+          <Icon name="map-pin" size={18} />
+          {adresa ? <span>{adresa}</span> : <Placeholder inline label="adresa" />}
+        </li>
+        <li>
+          <Icon name="mail" size={18} />
+          {k.email ? <a href={`mailto:${k.email}`}>{k.email}</a> : <Placeholder inline label="e-mail" />}
+        </li>
+        {k.telefon && (
+          <li><Icon name="phone" size={18} /><a href={`tel:${k.telefon.replace(/\s+/g, '')}`}>{k.telefon}</a></li>
+        )}
+      </ul>
+      <a class="btn btn--gold btn--sm" href={url('/donacije')}><Icon name="heart" size={16} /> Podržite džamiju</a>
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>© {godina} Džamija na Jaliji</p>
+    <p class="site-footer__note">
+      Oznake <span class="badge badge--warn">Podatak nedostaje</span> označavaju informacije koje džemat tek treba potvrditi.
+    </p>
+  </div>
+</footer>
+<style>
+  .site-footer {
+    margin-top: auto;
+    padding-top: clamp(3rem, 7vw, 4.5rem);
+    font-size: 0.95rem;
+    border-top: 3px solid var(--inverse-accent);
+  }
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 600px) {
+    .site-footer__grid { grid-template-columns: 1fr 1fr; }
+    .site-footer__brand { grid-column: 1 / -1; }
+  }
+  @media (min-width: 1000px) {
+    .site-footer__grid { grid-template-columns: 1.6fr 1fr 1fr 1fr 1.4fr; gap: var(--space-6); }
+    .site-footer__brand { grid-column: auto; }
+  }
+  .footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--inverse-text);
+    text-decoration: none;
+  }
+  .footer-brand:hover { color: var(--inverse-text); }
+  .site-footer__about { color: var(--inverse-muted); margin: var(--space-4) 0 var(--space-5); max-width: 38ch; }
+  .site-footer__title {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--inverse-accent);
+    margin-bottom: var(--space-4);
+  }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  .site-footer__col a { color: var(--inverse-text); text-decoration: none; opacity: 0.88; }
+  .site-footer__col a:hover { opacity: 1; color: var(--inverse-accent); text-decoration: underline; }
+  .site-footer__contact li { display: flex; gap: var(--space-2); align-items: flex-start; color: var(--inverse-muted); }
+  .site-footer__contact li :global(svg) { flex: none; margin-top: 3px; color: var(--inverse-accent); }
+  .site-footer__contact .btn { margin-top: var(--space-5); }
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    margin-top: var(--space-7);
+    padding-block: var(--space-5);
+    border-top: 1px solid var(--color-border);
+    color: var(--inverse-muted);
+    font-size: 0.85rem;
+  }
+  .site-footer__bottom p { margin: 0; }
+  .site-footer__note .badge { font-size: 0.72rem; }
+</style>
