@@ -63,8 +63,16 @@ zvijezda / girih), zelena/zlatna/krem paleta, Amiri za arapski, moderan sans za 
 kaligrafija u zaglavlju. Svjetla + tamna tema (toggle + `prefers-color-scheme`, bez bljeska),
 potpuno responzivno (od 360px), brzo, pristupačno (kontrast AA, fokus stilovi, skip-link, aria), SEO
 (meta, canonical, OG/Twitter, JSON-LD `Mosque`, sitemap preko integracije).
-CSS tokeni se definišu u `src/styles/global.css` kao `--color-*`, `--font-*`, `--space-*`, `--radius-*`.
-Ostali agenti koriste tokene, ne hardkodovane boje.
+CSS tokeni se definišu u `src/styles/global.css` (uvozi ga BaseLayout). Ostali agenti koriste tokene,
+ne hardkodovane boje. **Obavezni nazivi** (dizajner ih definiše za obje teme, smije dodati još):
+`--color-bg`, `--color-surface`, `--color-surface-2`, `--color-text`, `--color-text-muted`,
+`--color-primary` (zelena), `--color-primary-hover`, `--color-on-primary`, `--color-accent` (zlatna),
+`--color-accent-soft`, `--color-border`, `--color-focus`, `--color-danger`, `--color-success`,
+`--font-sans`, `--font-serif`, `--font-arabic`, `--font-calligraphy`,
+`--space-1` … `--space-8` (4px→64px), `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-full`,
+`--shadow-sm`, `--shadow-md`, `--shadow-lg`, `--container` (max širina), `--transition`.
+Zajedničke klase koje dizajner pravi: `.container`, `.btn`, `.btn--primary`, `.btn--ghost`, `.card`,
+`.badge`, `.visually-hidden`, `.prose` (tipografija dužeg teksta), `.grid-cards` (responzivna mreža kartica).
 
 ## Lokalni rad (paralelni agenti)
 - Dev server: Dizajner port 4321, Funkcionalnosti 4322, QA 4323: `npx astro dev --port 43xx`.
