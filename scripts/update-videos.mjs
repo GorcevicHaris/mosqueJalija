@@ -28,6 +28,14 @@ const P = {
 };
 
 const args = new Set(process.argv.slice(2));
+const POZNATE = new Set(['--sve', '--dry-run', '--offline', '--rss']);
+const nepoznate = [...args].filter((a) => !POZNATE.has(a));
+if (nepoznate.length || args.has('--help')) {
+  const uputstvo = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(4, 11).join('\n');
+  if (nepoznate.length && !args.has('--help')) console.error(`Nepoznata opcija: ${nepoznate.join(' ')}\n`);
+  console.log(uputstvo.replace(/^\/\/ ?/gm, ''));
+  process.exit(args.has('--help') ? 0 : 1);
+}
 const DRY = args.has('--dry-run');
 const SVE = args.has('--sve');
 const OFFLINE = args.has('--offline');

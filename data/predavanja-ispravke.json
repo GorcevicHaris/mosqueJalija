@@ -1,3 +1,24 @@
 {
-  "_uputstvo": "Ručne ispravke podataka o predavanjima. Ključ je YouTube ID videa (dio linka poslije 'watch?v='), a vrijednost objekat sa poljima koja želite promijeniti: imam (slug iz data/imami.json ili null), imamPotvrdjen (true/false), kategorija (slug iz data/kategorije.json), serija (slug iz data/serije.json ili null), serijaDio (broj ili null), naslovCist (tekst), opis (tekst ili null). Primjer: \"tb5geb6Gxcg\": { \"kategorija\": \"hutba\", \"naslovCist\": \"Ne moraš učiniti svako dobro djelo da bi imao nagradu za njega\" }. Skripta scripts/update-videos.mjs ove ispravke primjenjuje POSLIJE automatskih pravila, pa ostaju i nakon svakog osvježavanja. Kad postavite imam, smatra se potvrđenim (imamPotvrdjen: true) osim ako izričito ne navedete drugačije. Ključevi koji počinju sa '_' se ignorišu. Novi imam ili nova serija se prvo definišu u scripts/podaci-config.json. Poslije izmjene pokrenite: npm run update-videos (ili node scripts/update-videos.mjs --offline za primjenu bez mreže)."
+  "_uputstvo": "Ručne ispravke podataka o predavanjima. Ključ je YouTube ID videa (dio linka poslije 'watch?v='), a vrijednost objekat sa poljima koja želite promijeniti: imam (slug iz data/imami.json ili null), imamPotvrdjen (true/false), kategorija (slug iz data/kategorije.json), serija (slug iz data/serije.json ili null), serijaDio (broj ili null), naslovCist (tekst), opis (tekst ili null). Primjer: \"tb5geb6Gxcg\": { \"kategorija\": \"hutba\", \"naslovCist\": \"Ne moraš učiniti svako dobro djelo da bi imao nagradu za njega\" }. Skripta scripts/update-videos.mjs ove ispravke primjenjuje POSLIJE automatskih pravila, pa ostaju i nakon svakog osvježavanja. Kad postavite imam, smatra se potvrđenim (imamPotvrdjen: true) osim ako izričito ne navedete drugačije. Ključevi koji počinju sa '_' se ignorišu. Novi imam ili nova serija se prvo definišu u scripts/podaci-config.json. Poslije izmjene pokrenite: npm run update-videos (ili node scripts/update-videos.mjs --offline za primjenu bez mreže).",
+  "Dnqhzz-b4gw": {
+    "naslovCist": "Kratki video sa predavanja (1/6) — 12. decembar 2025."
+  },
+  "GhdekPqiJd4": {
+    "naslovCist": "Kratki video sa predavanja (2/6) — 12. decembar 2025."
+  },
+  "m_aOyTS120Q": {
+    "naslovCist": "Kratki video sa predavanja (3/6) — 12. decembar 2025."
+  },
+  "WA79h85BTKU": {
+    "naslovCist": "Kratki video sa predavanja (4/6) — 12. decembar 2025."
+  },
+  "eTjV_BlQIqk": {
+    "naslovCist": "Kratki video sa predavanja (5/6) — 12. decembar 2025."
+  },
+  "fZ_cV_h1pcc": {
+    "naslovCist": "Kratki video sa predavanja (6/6) — 12. decembar 2025."
+  },
+  "HcPnSj8Ph34": {
+    "naslovCist": "Poklon umra"
+  }
 }
