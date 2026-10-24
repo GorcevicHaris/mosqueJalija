@@ -1,0 +1,208 @@
+---
+// Mjesečna vaktija sa navigacijom (prethodni/sljedeći mjesec), isticanjem današnjeg dana i petka (džuma),
+// preuzimanjem CSV-a i štampom. Početni prikaz (mjesec builda) se generiše pri buildu; skripta ga
+// ponovo iscrtava za stvarni tekući mjesec i omogućava navigaciju (?mjesec=GGGG-MM u adresi).
+import { dzamija } from '../../lib/data';
+import { danUZoni } from '../../lib/vaktija';
+import { VAKTIJA_CONFIG } from '../../lib/vaktija-config';
+import { naslovMjeseca, redoviMjeseca } from './mjesec-render';
+
+const k = { lat: dzamija.koordinate.lat, lng: dzamija.koordinate.lng };
+const d = danUZoni();
+const danasIso = `${d.god}-${String(d.mj).padStart(2, '0')}-${String(d.dan).padStart(2, '0')}`;
+const redovi = redoviMjeseca(d.god, d.mj, k, danasIso);
+const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
+const saSabahom = VAKTIJA_CONFIG.sabahMinutaPrijeIzlaska != null;
+---
+<section class="vm" data-vm data-lat={k.lat} data-lng={k.lng} data-grad={grad} aria-labelledby="vm-naslov">
+  <div class="vm__bar">
+    <h2 class="vm__title" id="vm-naslov">
+      <span class="visually-hidden">Mjesečna vaktija: </span><span data-vm-title>{naslovMjeseca(d.god, d.mj)}</span>
+      <span class="vm__grad">{grad}</span>
+    </h2>
+    <div class="vm__nav" role="group" aria-label="Izbor mjeseca">
+      <button type="button" class="btn btn--ghost btn--sm" data-vm-prev aria-label="Prethodni mjesec">
+        <span aria-hidden="true">←</span><span class="vm__navtxt">Prethodni</span>
+      </button>
+      <button type="button" class="btn btn--ghost btn--sm" data-vm-today>Tekući mjesec</button>
+      <button type="button" class="btn btn--ghost btn--sm" data-vm-next aria-label="Sljedeći mjesec">
+        <span class="vm__navtxt">Sljedeći</span><span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <p class="visually-hidden" aria-live="polite" data-vm-live></p>
+
+  <div class="table-wrap vm__wrap">
+    <table class="table vm__table">
+      <caption class="visually-hidden">Namaska vremena po danima za izabrani mjesec ({grad})</caption>
+      <thead>
+        <tr>
+          <th scope="col">Dan</th>
+          <th scope="col">Zora</th>
+          {saSabahom && <th scope="col"><span class="vm__long">Sabah u džamiji</span><span class="vm__short" aria-hidden="true">Sabah</span></th>}
+          <th scope="col"><span class="vm__long">Izlazak sunca</span><span class="vm__short" aria-hidden="true">Izlazak</span></th>
+          <th scope="col">Podne</th>
+          <th scope="col">Ikindija</th>
+          <th scope="col">Akšam</th>
+          <th scope="col">Jacija</th>
+        </tr>
+      </thead>
+      <tbody data-vm-body set:html={redovi} />
+    </table>
+  </div>
+
+  <div class="vm__tools">
+    <button type="button" class="btn btn--ghost btn--sm" data-vm-csv>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>
+      Preuzmi mjesec (CSV)
+    </button>
+    <button type="button" class="btn btn--ghost btn--sm" data-vm-print>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      Štampaj
+    </button>
+  </div>
+</section>
+
+<style>
+  .vm { display: grid; gap: var(--space-4); }
+  .vm__bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .vm__title { margin: 0; font-size: clamp(1.4rem, 1.5vw + 1rem, 1.9rem); display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-3); }
+  .vm__grad { font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; color: var(--color-text-muted); }
+  .vm__nav { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .vm__nav .btn { gap: var(--space-1); }
+  .vm__table { font-size: 0.95rem; min-width: 560px; }
+  .vm__table :global(th), .vm__table :global(td) { padding: 0.5rem 0.7rem; }
+  .vm__table :global(td.vm__t) { font-weight: 600; white-space: nowrap; }
+  .vm__table :global(td.vm__t--sun) { color: var(--color-text-muted); font-weight: 500; }
+  .vm__table :global(.vm__day) { white-space: nowrap; font-weight: 700; }
+  .vm__table :global(.vm__dow) { font-weight: 500; color: var(--color-text-muted); font-size: 0.85em; }
+  .vm__table :global(.vm__hijri) { display: block; font-size: 0.74em; font-weight: 500; color: var(--color-text-muted); }
+  .vm__table :global(tr.is-friday) { background: color-mix(in srgb, var(--color-accent-soft) 55%, transparent); }
+  .vm__table :global(.vm__dzuma) {
+    display: inline-block;
+    margin-left: 0.3em;
+    padding: 0 0.4em;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    font-size: 0.72em;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    vertical-align: 0.1em;
+  }
+  .vm__table :global(tr.is-today) {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+  .vm__table :global(tr.is-today th),
+  .vm__table :global(tr.is-today td),
+  .vm__table :global(tr.is-today .vm__dow),
+  .vm__table :global(tr.is-today .vm__hijri) { color: var(--color-on-primary); }
+  .vm__table :global(.vm__today) {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0 0.35em;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-bright);
+    color: #1f1606;
+  }
+  .vm__tools { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .vm__short { display: none; }
+  @media (max-width: 520px) {
+    .vm__navtxt { display: none; }
+    .vm__table { min-width: 0; font-size: 0.8rem; }
+    .vm__table :global(th), .vm__table :global(td) { padding: 0.45rem 0.2rem; }
+    .vm__table :global(th:first-child), .vm__table :global(td:first-child) { padding-left: 0.45rem; }
+    .vm__table thead th { font-size: 0.6rem; letter-spacing: 0; }
+    .vm__long { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .vm__short { display: inline; }
+    .vm__table :global(td.vm__t) { white-space: normal; }
+    .vm__table :global(.vm__dzuma) { display: block; margin: 0.1em 0 0; width: fit-content; font-size: 0.56rem; padding: 0 0.25em; }
+    .vm__table :global(.vm__hijri) { display: none; }
+    .vm__table :global(.vm__today) { display: none; }
+  }
+  @media print {
+    .vm__nav, .vm__tools { display: none !important; }
+    .vm__wrap { overflow: visible; border: 0; }
+    .vm__table { min-width: 0; font-size: 10pt; }
+    .vm__table :global(th), .vm__table :global(td) { padding: 2pt 4pt; }
+    .vm__table :global(tr.is-today) { background: none; color: inherit; outline: 1.5pt solid #000; }
+    .vm__table :global(tr.is-today th), .vm__table :global(tr.is-today td) { color: #000; }
+    .vm__table :global(tr.is-friday) { background: #eee; }
+  }
+</style>
+
+<script>
+  import { danUZoni, MJESECI } from '../../lib/vaktija.ts';
+  import { csvMjeseca, naslovMjeseca, redoviMjeseca } from './mjesec-render.ts';
+
+  function init(root: HTMLElement) {
+    const k = { lat: Number(root.dataset.lat), lng: Number(root.dataset.lng) };
+    const body = root.querySelector<HTMLElement>('[data-vm-body]')!;
+    const title = root.querySelector<HTMLElement>('[data-vm-title]')!;
+    const live = root.querySelector<HTMLElement>('[data-vm-live]')!;
+    const danas = danUZoni();
+    const danasIso = `${danas.god}-${String(danas.mj).padStart(2, '0')}-${String(danas.dan).padStart(2, '0')}`;
+    let god = danas.god;
+    let mj = danas.mj;
+
+    const sp = new URLSearchParams(location.search);
+    const m = /^(\d{4})-(\d{1,2})$/.exec(sp.get('mjesec') ?? '');
+    if (m && +m[2] >= 1 && +m[2] <= 12 && +m[1] > 1900 && +m[1] < 2200) {
+      god = +m[1];
+      mj = +m[2];
+    }
+
+    function render(najava: boolean) {
+      body.innerHTML = redoviMjeseca(god, mj, k, danasIso);
+      title.textContent = naslovMjeseca(god, mj);
+      const jeTekuci = god === danas.god && mj === danas.mj;
+      const url = new URL(location.href);
+      if (jeTekuci) url.searchParams.delete('mjesec');
+      else url.searchParams.set('mjesec', `${god}-${String(mj).padStart(2, '0')}`);
+      if (url.href !== location.href) history.replaceState(history.state, '', url);
+      if (najava) live.textContent = `Prikazan je ${MJESECI[mj - 1]} ${god}.`;
+    }
+
+    function pomjeri(delta: number) {
+      const d = new Date(Date.UTC(god, mj - 1 + delta, 1));
+      god = d.getUTCFullYear();
+      mj = d.getUTCMonth() + 1;
+      render(true);
+    }
+
+    root.querySelector('[data-vm-prev]')!.addEventListener('click', () => pomjeri(-1));
+    root.querySelector('[data-vm-next]')!.addEventListener('click', () => pomjeri(1));
+    root.querySelector('[data-vm-today]')!.addEventListener('click', () => {
+      god = danas.god;
+      mj = danas.mj;
+      render(true);
+      body.querySelector('tr.is-today')?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    root.querySelector('[data-vm-print]')!.addEventListener('click', () => window.print());
+    root.querySelector('[data-vm-csv]')!.addEventListener('click', () => {
+      const blob = new Blob([csvMjeseca(god, mj, k)], { type: 'text/csv;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const grad = (root.dataset.grad || 'dzamija').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      a.download = `vaktija-${grad}-${god}-${String(mj).padStart(2, '0')}.csv`;
+      document.body.append(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    });
+
+    render(false);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-vm]').forEach(init);
+</script>

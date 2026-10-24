@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import ContactForm from '../components/forms/ContactForm.astro';
+import { dzamija } from '../lib/data';
+
+const { lat, lng, potvrdjeno } = dzamija.koordinate;
+const d = 0.0035;
+const bbox = [lng - d * 1.6, lat - d, lng + d * 1.6, lat + d].map((x) => x.toFixed(5)).join(',');
+const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${lat}%2C${lng}`;
+const osmLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=18/${lat}/${lng}`;
+const gmaps = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+const gnav = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+const apple = `https://maps.apple.com/?daddr=${lat},${lng}&q=${encodeURIComponent(dzamija.naziv)}`;
+const adresa = [dzamija.adresa, dzamija.drzava].filter(Boolean).join(', ');
+const k = dzamija.kontakt;
+const m = dzamija.drustveneMreze;
+const mreze = [
+  { naziv: 'YouTube', url: m.youtube },
+  { naziv: 'Facebook', url: m.facebook },
+  { naziv: 'Instagram', url: m.instagram },
+];
+---
+<BaseLayout title="Kontakt" description={`Kontakt i lokacija: ${dzamija.naziv}${adresa ? `, ${adresa}` : ''}. Mapa, navigacija, društvene mreže i kontakt forma.`}>
+  <PageHero eyebrow="Kontakt i lokacija" title="Posjetite nas" subtitle={adresa || dzamija.naziv} />
+
+  <section class="section section--tight">
+    <div class="container kt">
+      <div class="kt__info">
+        <div class="card kt__card">
+          <h2 class="kt__h">Adresa</h2>
+          {adresa ? <p class="kt__big">{adresa}</p> : <Placeholder label="adresa džamije" />}
+          {!potvrdjeno && <p class="muted kt__small">Lokacija na mapi je približna (nije potvrđena).</p>}
+          <div class="kt__btns">
+            <a class="btn btn--primary btn--sm" href={gnav} target="_blank" rel="noopener">Navigacija do džamije</a>
+            <a class="btn btn--ghost btn--sm" href={gmaps} target="_blank" rel="noopener">Otvori u Google Maps</a>
+            <a class="btn btn--ghost btn--sm" href={apple} target="_blank" rel="noopener">Apple Maps</a>
+          </div>
+        </div>
+
+        <div class="card kt__card">
+          <h2 class="kt__h">E-mail i telefon</h2>
+          <dl class="kt__dl">
+            <div>
+              <dt>E-mail</dt>
+              <dd>{k.email ? <a href={`mailto:${k.email}`}>{k.email}</a> : <Placeholder label="e-mail džamije" inline />}</dd>
+            </div>
+            <div>
+              <dt>Telefon</dt>
+              <dd>{k.telefon ? <a href={`tel:${k.telefon.replace(/[^\d+]/g, '')}`}>{k.telefon}</a> : <Placeholder label="telefon džamije" inline />}</dd>
+            </div>
+          </dl>
+          {k.napomena && <p class="muted kt__small">{k.napomena}</p>}
+        </div>
+
+        <div class="card kt__card">
+          <h2 class="kt__h">Društvene mreže</h2>
+          <ul class="kt__mreze">
+            {mreze.map((x) => (
+              <li>
+                {x.url ? (
+                  <a href={x.url} target="_blank" rel="noopener">{x.naziv}</a>
+                ) : (
+                  <Placeholder label={`${x.naziv} profil`} inline />
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="kt__map">
+        <div class="kt__frame">
+          <iframe
+            src={osmEmbed}
+            title={`Mapa: lokacija — ${dzamija.naziv}`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <p class="kt__small muted">
+          Mapa: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> saradnici ·
+          <a href={osmLink} target="_blank" rel="noopener">Veća mapa</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint section--tight" aria-labelledby="forma-naslov">
+    <div class="container container--narrow">
+      <h2 id="forma-naslov">Pošaljite poruku</h2>
+      <p class="muted">Pitanja o mektebu, halkama, donacijama ili bilo čemu drugom — pišite nam.</p>
+      <div class="card kt__form">
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .kt { display: grid; gap: var(--space-6); }
+  @media (min-width: 960px) { .kt { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); align-items: start; } }
+  .kt__info { display: grid; gap: var(--space-4); }
+  .kt__card { gap: var(--space-3); }
+  .kt__h { font-size: 1.1rem; margin: 0; }
+  .kt__big { margin: 0; font-size: 1.12rem; font-weight: 600; }
+  .kt__small { margin: 0; font-size: 0.86rem; }
+  .kt__btns { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .kt__dl { margin: 0; display: grid; gap: var(--space-2); }
+  .kt__dl div { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+  .kt__dl dt { font-weight: 700; min-width: 5.5em; }
+  .kt__dl dd { margin: 0; }
+  .kt__mreze { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-weight: 600; }
+  .kt__map { display: grid; gap: var(--space-2); }
+  .kt__frame {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    background: var(--color-surface-2);
+  }
+  @media (min-width: 960px) { .kt__frame { aspect-ratio: auto; height: 520px; } }
+  .kt__frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .kt__form { margin-top: var(--space-4); }
+</style>

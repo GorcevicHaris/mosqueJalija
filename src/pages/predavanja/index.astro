@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import LectureBrowser from '../../components/predavanja/LectureBrowser.astro';
+import { predavanja, dzamija } from '../../lib/data';
+import { url } from '../../lib/url';
+
+const opis = `Sva predavanja, hutbe i tefsir sa YouTube kanala džamije (${predavanja.length}). Filtriranje po imamu, kategoriji, seriji i godini, pretraga po naslovu.`;
+---
+<BaseLayout title="Predavanja" description={opis}>
+  <PageHero
+    eyebrow="Ilim i nasihat"
+    title="Predavanja"
+    subtitle="Predavanja, hutbe, tefsir i halke sa YouTube kanala džamije — pretražite po naslovu ili filtrirajte po imamu, kategoriji, seriji i godini."
+    arabic="طَلَبُ الْعِلْمِ فَرِيضَةٌ"
+  />
+  <section class="section section--tight">
+    <div class="container">
+      <LectureBrowser lista={predavanja} />
+      <p class="pred-izvor muted">
+        Snimci se automatski preuzimaju sa
+        <a href={dzamija.drustveneMreze.youtube} target="_blank" rel="noopener">YouTube kanala džamije</a>.
+        Pogledajte i <a href={url('/hutbe')}>hutbe</a> i <a href={url('/imami')}>imame i predavače</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pred-izvor { margin-top: var(--space-6); font-size: 0.92rem; text-align: center; }
+</style>

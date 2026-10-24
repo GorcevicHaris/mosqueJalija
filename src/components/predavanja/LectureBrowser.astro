@@ -1,0 +1,555 @@
+---
+// Pregled predavanja sa filterima (imam, kategorija, serija, godina), pretragom, sortiranjem i
+// "Učitaj još". Prva stranica kartica se generiše pri buildu (SEO, bez JS-a), a skripta zatim
+// preuzima podatke iz ugrađenog JSON-a. Stanje filtera je u URL-u (?imam=&kategorija=&serija=&godina=&q=&sort=).
+import type { Predavanje } from '../../lib/types';
+import { url } from '../../lib/url';
+import { imami, kategorije, serije } from '../../lib/data';
+import { jsonZaSkriptu, klijentPodaci } from '../../lib/predavanja';
+import LectureCard from './LectureCard.astro';
+
+interface Props {
+  lista: Predavanje[];
+  /** Fiksna kategorija (npr. 'hutba' na /hutbe) — tada se filter kategorije ne prikazuje. */
+  zakljucanaKategorija?: string;
+  /** Oblici imenice za brojanje: [1, 2-4, 5+] */
+  rijeci?: [string, string, string];
+  oznakaPretrage?: string;
+}
+
+const {
+  lista,
+  zakljucanaKategorija,
+  rijeci = ['predavanje', 'predavanja', 'predavanja'],
+  oznakaPretrage = 'Pretraži po naslovu',
+} = Astro.props;
+
+const PAGE = 12;
+const podaci = klijentPodaci(lista);
+const prva = lista.slice(0, PAGE);
+
+const broj = (fn: (p: Predavanje) => boolean) => lista.filter(fn).length;
+const opcijeImam = imami
+  .map((i) => ({ v: i.slug, l: i.punoIme, n: broj((p) => p.imam === i.slug) }))
+  .filter((o) => o.n > 0);
+const opcijeKategorija = kategorije
+  .map((k) => ({ v: k.slug, l: k.naziv, n: broj((p) => p.kategorija === k.slug) }))
+  .filter((o) => o.n > 0);
+const opcijeSerija = serije
+  .map((s) => ({ v: s.slug, l: s.naziv, n: broj((p) => p.serija === s.slug) }))
+  .filter((o) => o.n > 0);
+const godine = [...new Set(lista.map((p) => p.datum.slice(0, 4)))].sort((a, b) => b.localeCompare(a));
+const opcijeGodina = godine.map((g) => ({ v: g, l: g, n: broj((p) => p.datum.startsWith(g)) }));
+const imaPreglede = lista.some((p) => typeof p.pregledi === 'number');
+
+const oblikRijeci = (n: number) => {
+  const d = n % 10;
+  const s = n % 100;
+  if (d === 1 && s !== 11) return rijeci[0];
+  if (d >= 2 && d <= 4 && (s < 12 || s > 14)) return rijeci[1];
+  return rijeci[2];
+};
+const uid = zakljucanaKategorija ? `lb-${zakljucanaKategorija}` : 'lb';
+---
+<div
+  class="lb"
+  data-lb
+  data-locked-kategorija={zakljucanaKategorija ?? ''}
+  data-rijeci={rijeci.join('|')}
+>
+  <script type="application/json" data-lb-data set:html={jsonZaSkriptu(podaci)} />
+
+  <form class="lb__controls" role="search" aria-label="Pretraga i filteri" data-lb-form>
+    <div class="lb__searchrow">
+      <div class="lb__search">
+        <label class="visually-hidden" for={`${uid}-q`}>{oznakaPretrage}</label>
+        <svg class="lb__search-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input
+          class="input lb__q"
+          type="search"
+          id={`${uid}-q`}
+          name="q"
+          placeholder={`${oznakaPretrage}…`}
+          autocomplete="off"
+          spellcheck="false"
+          enterkeyhint="search"
+          data-lb-q
+        />
+      </div>
+      <button
+        type="button"
+        class="btn btn--ghost lb__toggle"
+        aria-expanded="false"
+        aria-controls={`${uid}-panel`}
+        data-lb-toggle
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>
+        Filteri<span class="lb__toggle-count" data-lb-toggle-count></span>
+      </button>
+    </div>
+
+    <div class="lb__panel" id={`${uid}-panel`} data-lb-panel>
+      {opcijeImam.length > 0 && (
+        <div class="field lb__field">
+          <label for={`${uid}-imam`}>Imam / predavač</label>
+          <select class="select" id={`${uid}-imam`} name="imam" data-lb-facet="imam">
+            <option value="">Svi predavači</option>
+            {opcijeImam.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
+          </select>
+        </div>
+      )}
+      {!zakljucanaKategorija && opcijeKategorija.length > 0 && (
+        <div class="field lb__field">
+          <label for={`${uid}-kategorija`}>Kategorija</label>
+          <select class="select" id={`${uid}-kategorija`} name="kategorija" data-lb-facet="kategorija">
+            <option value="">Sve kategorije</option>
+            {opcijeKategorija.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
+          </select>
+        </div>
+      )}
+      {opcijeSerija.length > 0 && (
+        <div class="field lb__field">
+          <label for={`${uid}-serija`}>Serija</label>
+          <select class="select" id={`${uid}-serija`} name="serija" data-lb-facet="serija">
+            <option value="">Sve serije</option>
+            {opcijeSerija.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
+          </select>
+        </div>
+      )}
+      {opcijeGodina.length > 1 && (
+        <div class="field lb__field lb__field--sm">
+          <label for={`${uid}-godina`}>Godina</label>
+          <select class="select" id={`${uid}-godina`} name="godina" data-lb-facet="godina">
+            <option value="">Sve godine</option>
+            {opcijeGodina.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
+          </select>
+        </div>
+      )}
+      <div class="field lb__field lb__field--sm">
+        <label for={`${uid}-sort`}>Poredak</label>
+        <select class="select" id={`${uid}-sort`} name="sort" data-lb-sort>
+          <option value="najnovije">Najnovije</option>
+          <option value="najstarije">Najstarije</option>
+          {imaPreglede && <option value="najgledanije">Najgledanije</option>}
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <div class="lb__status">
+    <p class="lb__count" aria-live="polite" aria-atomic="true" data-lb-count>
+      Ukupno {lista.length} {oblikRijeci(lista.length)}{lista.length > PAGE ? ` · prikazano ${PAGE}` : ''}
+    </p>
+    <ul class="chips lb__active" data-lb-active aria-label="Aktivni filteri"></ul>
+    <button type="button" class="btn btn--sm btn--ghost lb__reset" data-lb-reset hidden>Poništi filtere</button>
+  </div>
+
+  <div class="grid-cards lb__grid" data-lb-grid>
+    {prva.map((p) => <LectureCard predavanje={p} />)}
+  </div>
+
+  <div class="lb__empty card" data-lb-empty hidden={lista.length > 0}>
+    <p class="lb__empty-title">Nema rezultata</p>
+    <p class="muted" data-lb-empty-text>
+      {lista.length === 0 ? 'Još nema objavljenih snimaka u ovoj kategoriji.' : 'Nijedan snimak ne odgovara zadanim filterima.'}
+    </p>
+    <button type="button" class="btn btn--primary" data-lb-reset-empty hidden={lista.length === 0}>Poništi filtere</button>
+  </div>
+
+  <div class="lb__more">
+    <button type="button" class="btn btn--primary" data-lb-more hidden>Učitaj još</button>
+  </div>
+
+  {lista.length > PAGE && (
+    <noscript>
+      <section class="lb__noscript">
+        <h2>Svi snimci</h2>
+        <ul>
+          {lista.slice(PAGE).map((p) => (
+            <li><a href={url(`/predavanja/${p.id}`)}>{p.naslovCist || p.naslov}</a> <span class="muted">({p.datum})</span></li>
+          ))}
+        </ul>
+      </section>
+    </noscript>
+  )}
+</div>
+
+<style>
+  .lb { display: grid; gap: var(--space-5); }
+  .lb__controls {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .lb__searchrow { display: flex; gap: var(--space-3); align-items: stretch; }
+  .lb__search { position: relative; flex: 1; min-width: 0; }
+  .lb__search-icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+  .lb__q { padding-left: 2.6rem; }
+  .lb__toggle { display: none; flex: none; }
+  .lb__toggle-count:not(:empty) {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.4em;
+    height: 1.4em;
+    padding: 0 0.3em;
+    border-radius: var(--radius-full);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.78rem;
+  }
+  .lb__panel {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  }
+  .lb__field label { font-size: 0.85rem; }
+  .lb__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    min-height: 40px;
+  }
+  .lb__count { margin: 0; font-weight: 700; color: var(--color-text); }
+  .lb__active:empty { display: none; }
+  .lb__active :global(.lb__chip) { min-height: 34px; padding: 0.25rem 0.75rem; font-size: 0.86rem; }
+  .lb__active :global(.lb__chip-x) { font-size: 1.1em; line-height: 1; }
+  .lb__empty { align-items: center; text-align: center; gap: var(--space-2); padding: var(--space-7) var(--space-5); }
+  .lb__empty-title { font-family: var(--font-serif); font-size: 1.3rem; margin: 0; }
+  .lb__more { display: flex; justify-content: center; }
+  .lb :global([hidden]) { display: none !important; }
+  .lb__noscript ul { columns: 2 320px; padding-left: 1.2em; }
+
+  @media (max-width: 767px) {
+    .lb__controls { padding: var(--space-3); }
+    .lb__toggle { display: inline-flex; }
+    .lb__panel { display: none; grid-template-columns: 1fr 1fr; }
+    .lb__panel > :global(.lb__field:not(.lb__field--sm)) { grid-column: 1 / -1; }
+    .lb__panel[data-open] { display: grid; }
+  }
+</style>
+
+<script>
+  import { karticaHTML } from './kartica.ts';
+  import { indeksTekst, odgovara, rijeciUpita } from '../../lib/pretraga.ts';
+
+  type Stavka = {
+    id: string; n: string; o: string; d: string; t: number; th: string;
+    i: string | null; k: string; s: string | null; sd: number | null; p: number | null;
+  };
+  type Podaci = {
+    stavke: Stavka[];
+    imami: Record<string, string>;
+    kategorije: Record<string, string>;
+    serije: Record<string, string>;
+  };
+  type Facet = 'imam' | 'kategorija' | 'serija' | 'godina';
+  const FACETS: Facet[] = ['imam', 'kategorija', 'serija', 'godina'];
+  const NAZIV_FACETA: Record<Facet, string> = { imam: 'Imam', kategorija: 'Kategorija', serija: 'Serija', godina: 'Godina' };
+  const PAGE = 12;
+  const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+  function init(root: HTMLElement) {
+    const dataEl = root.querySelector<HTMLScriptElement>('[data-lb-data]');
+    if (!dataEl) return;
+    const data = JSON.parse(dataEl.textContent || '{}') as Podaci;
+    const rijeci = (root.dataset.rijeci || 'predavanje|predavanja|predavanja').split('|');
+    const oblik = (n: number) => {
+      const d = n % 10, s = n % 100;
+      if (d === 1 && s !== 11) return rijeci[0];
+      if (d >= 2 && d <= 4 && (s < 12 || s > 14)) return rijeci[1];
+      return rijeci[2];
+    };
+
+    const stavke = data.stavke.map((s) => ({
+      ...s,
+      god: s.d.slice(0, 4),
+      idx: indeksTekst(s.n, s.o, s.i ? data.imami[s.i] : '', s.s ? data.serije[s.s] : ''),
+    }));
+    type S = (typeof stavke)[number];
+    const vrijednost = (it: S, f: Facet) =>
+      f === 'imam' ? it.i : f === 'kategorija' ? it.k : f === 'serija' ? it.s : it.god;
+    const nazivVrijednosti = (f: Facet, v: string) =>
+      f === 'imam' ? data.imami[v] ?? v : f === 'kategorija' ? data.kategorije[v] ?? v : f === 'serija' ? data.serije[v] ?? v : v;
+
+    const grid = root.querySelector<HTMLElement>('[data-lb-grid]')!;
+    const qInput = root.querySelector<HTMLInputElement>('[data-lb-q]')!;
+    const sortSel = root.querySelector<HTMLSelectElement>('[data-lb-sort]')!;
+    const countEl = root.querySelector<HTMLElement>('[data-lb-count]')!;
+    const activeEl = root.querySelector<HTMLElement>('[data-lb-active]')!;
+    const resetBtn = root.querySelector<HTMLButtonElement>('[data-lb-reset]')!;
+    const emptyEl = root.querySelector<HTMLElement>('[data-lb-empty]')!;
+    const emptyReset = root.querySelector<HTMLButtonElement>('[data-lb-reset-empty]')!;
+    const moreBtn = root.querySelector<HTMLButtonElement>('[data-lb-more]')!;
+    const toggle = root.querySelector<HTMLButtonElement>('[data-lb-toggle]')!;
+    const toggleCount = root.querySelector<HTMLElement>('[data-lb-toggle-count]')!;
+    const panel = root.querySelector<HTMLElement>('[data-lb-panel]')!;
+    const selects = {} as Record<Facet, HTMLSelectElement | null>;
+    for (const f of FACETS) selects[f] = root.querySelector<HTMLSelectElement>(`[data-lb-facet="${f}"]`);
+
+    const imaPreglede = stavke.some((s) => typeof s.p === 'number');
+    const state = { imam: '', kategorija: '', serija: '', godina: '', q: '', sort: 'najnovije' };
+    let prikazano = PAGE;
+
+    const dozvoljeno = (f: Facet, v: string) =>
+      !!selects[f] && stavke.some((s) => vrijednost(s, f) === v);
+    const sortValjan = (v: string) =>
+      v === 'najnovije' || v === 'najstarije' || (v === 'najgledanije' && imaPreglede) || (v === 'dio' && !!state.serija);
+
+    function procitajUrl() {
+      const sp = new URLSearchParams(location.search);
+      for (const f of FACETS) {
+        const v = sp.get(f) || '';
+        state[f] = v && dozvoljeno(f, v) ? v : '';
+      }
+      state.q = (sp.get('q') || '').slice(0, 100);
+      const s = sp.get('sort') || 'najnovije';
+      state.sort = sortValjan(s) ? s : 'najnovije';
+    }
+
+    function upisiUrl() {
+      const sp = new URLSearchParams();
+      for (const f of FACETS) if (state[f]) sp.set(f, state[f]);
+      if (state.q.trim()) sp.set('q', state.q.trim());
+      if (state.sort !== 'najnovije') sp.set('sort', state.sort);
+      const qs = sp.toString();
+      const novi = location.pathname + (qs ? `?${qs}` : '') + location.hash;
+      if (novi !== location.pathname + location.search + location.hash) history.replaceState(history.state, '', novi);
+    }
+
+    function odgovaraStavka(it: S, osim: Facet | null, rijeciQ: string[][]) {
+      for (const f of FACETS) {
+        if (f !== osim && state[f] && vrijednost(it, f) !== state[f]) return false;
+      }
+      return rijeciQ.length === 0 || odgovara(it.idx, rijeciQ);
+    }
+
+    function sortiraj(lista: S[]) {
+      const l = lista.slice();
+      const poDatumu = (a: S, b: S) => b.d.localeCompare(a.d) || a.id.localeCompare(b.id);
+      if (state.sort === 'najstarije') l.sort((a, b) => -poDatumu(a, b));
+      else if (state.sort === 'najgledanije') l.sort((a, b) => (b.p ?? -1) - (a.p ?? -1) || poDatumu(a, b));
+      else if (state.sort === 'dio')
+        l.sort((a, b) => (a.sd ?? 1e9) - (b.sd ?? 1e9) || a.d.localeCompare(b.d));
+      else l.sort(poDatumu);
+      return l;
+    }
+
+    function azurirajSort() {
+      const treba = !!state.serija;
+      let opt = sortSel.querySelector<HTMLOptionElement>('option[value="dio"]');
+      if (treba && !opt) {
+        opt = document.createElement('option');
+        opt.value = 'dio';
+        opt.textContent = 'Redoslijed dijelova';
+        sortSel.append(opt);
+      } else if (!treba && opt) {
+        opt.remove();
+        if (state.sort === 'dio') state.sort = 'najnovije';
+      }
+      sortSel.value = state.sort;
+    }
+
+    function kartica(it: S) {
+      return karticaHTML(
+        {
+          id: it.id,
+          naslov: it.n,
+          datum: it.d,
+          trajanje: it.t,
+          thumbnail: it.th,
+          imamIme: it.i ? data.imami[it.i] ?? null : null,
+          kategorijaNaziv: data.kategorije[it.k] ?? null,
+          dio: it.s ? it.sd : null,
+        },
+        `${BASE}/predavanja/${encodeURIComponent(it.id)}`,
+      );
+    }
+
+    let rezultat: S[] = [];
+
+    function render(resetGrid: boolean) {
+      const rijeciQ = rijeciUpita(state.q);
+      rezultat = sortiraj(stavke.filter((s) => odgovaraStavka(s, null, rijeciQ)));
+
+      // brojevi po opcijama (fasetno: uzima u obzir sve ostale filtere)
+      for (const f of FACETS) {
+        const sel = selects[f];
+        if (!sel) continue;
+        const brojevi = new Map<string, number>();
+        for (const s of stavke) {
+          if (!odgovaraStavka(s, f, rijeciQ)) continue;
+          const v = vrijednost(s, f);
+          if (v) brojevi.set(v, (brojevi.get(v) || 0) + 1);
+        }
+        for (const opt of Array.from(sel.options)) {
+          if (!opt.value) continue;
+          const n = brojevi.get(opt.value) || 0;
+          opt.textContent = `${opt.dataset.label ?? opt.value} (${n})`;
+          opt.disabled = n === 0 && opt.value !== state[f];
+        }
+        sel.value = state[f];
+      }
+      azurirajSort();
+      if (qInput.value !== state.q && document.activeElement !== qInput) qInput.value = state.q;
+
+      // aktivni filteri
+      const aktivni: { f: Facet | 'q'; tekst: string }[] = [];
+      for (const f of FACETS) if (state[f]) aktivni.push({ f, tekst: `${NAZIV_FACETA[f]}: ${nazivVrijednosti(f, state[f])}` });
+      if (state.q.trim()) aktivni.push({ f: 'q', tekst: `Pretraga: „${state.q.trim()}”` });
+      activeEl.replaceChildren(
+        ...aktivni.map((a) => {
+          const li = document.createElement('li');
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'chip lb__chip';
+          b.dataset.remove = a.f;
+          b.setAttribute('aria-label', `Ukloni filter ${a.tekst}`);
+          b.append(a.tekst + ' ');
+          const x = document.createElement('span');
+          x.className = 'lb__chip-x';
+          x.setAttribute('aria-hidden', 'true');
+          x.textContent = '×';
+          b.append(x);
+          li.append(b);
+          return li;
+        }),
+      );
+      const brojFiltera = FACETS.filter((f) => state[f]).length;
+      toggleCount.textContent = brojFiltera ? String(brojFiltera) : '';
+      resetBtn.hidden = aktivni.length === 0;
+
+      // broj rezultata
+      const ukupno = stavke.length;
+      const n = rezultat.length;
+      const vidljivo = Math.min(prikazano, n);
+      countEl.textContent =
+        aktivni.length === 0
+          ? `Ukupno ${ukupno} ${oblik(ukupno)}${vidljivo < n ? ` · prikazano ${vidljivo}` : ''}`
+          : `Pronađeno: ${n} ${oblik(n)}${vidljivo < n ? ` · prikazano ${vidljivo}` : ''}`;
+
+      // mreža
+      if (resetGrid) {
+        grid.innerHTML = rezultat.slice(0, vidljivo).map(kartica).join('');
+      } else {
+        const vec = grid.children.length;
+        if (vidljivo > vec) grid.insertAdjacentHTML('beforeend', rezultat.slice(vec, vidljivo).map(kartica).join(''));
+      }
+      grid.hidden = n === 0;
+      emptyEl.hidden = n !== 0;
+      emptyReset.hidden = aktivni.length === 0;
+      const tekstPrazno = emptyEl.querySelector('[data-lb-empty-text]');
+      if (tekstPrazno && ukupno > 0) tekstPrazno.textContent = 'Nijedan snimak ne odgovara zadanim filterima. Pokušajte sa manje filtera ili drugim pojmom.';
+      const ostalo = n - vidljivo;
+      moreBtn.hidden = ostalo <= 0;
+      moreBtn.textContent = `Učitaj još · preostalo ${ostalo}`;
+    }
+
+    function promjena() {
+      prikazano = PAGE;
+      upisiUrl();
+      render(true);
+    }
+
+    function jeDefault() {
+      return FACETS.every((f) => !state[f]) && !state.q && state.sort === 'najnovije';
+    }
+
+    function ponisti() {
+      for (const f of FACETS) state[f] = '';
+      state.q = '';
+      qInput.value = '';
+      state.sort = 'najnovije';
+      promjena();
+    }
+
+    // događaji
+    for (const f of FACETS) {
+      selects[f]?.addEventListener('change', () => {
+        state[f] = selects[f]!.value;
+        promjena();
+      });
+    }
+    sortSel.addEventListener('change', () => {
+      state.sort = sortSel.value;
+      promjena();
+    });
+    let t: number | undefined;
+    qInput.addEventListener('input', () => {
+      clearTimeout(t);
+      t = window.setTimeout(() => {
+        state.q = qInput.value.slice(0, 100);
+        promjena();
+      }, 160);
+    });
+    root.querySelector('[data-lb-form]')!.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearTimeout(t);
+      state.q = qInput.value.slice(0, 100);
+      promjena();
+      // na mobilnom zatvori tastaturu
+      qInput.blur();
+    });
+    activeEl.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-remove]');
+      if (!b) return;
+      const f = b.dataset.remove as Facet | 'q';
+      if (f === 'q') {
+        state.q = '';
+        qInput.value = '';
+      } else state[f] = '';
+      promjena();
+      (activeEl.querySelector<HTMLButtonElement>('[data-remove]') ?? qInput).focus();
+    });
+    resetBtn.addEventListener('click', () => {
+      ponisti();
+      qInput.focus();
+    });
+    emptyReset.addEventListener('click', () => {
+      ponisti();
+      qInput.focus();
+    });
+    moreBtn.addEventListener('click', () => {
+      const prije = grid.children.length;
+      prikazano += PAGE;
+      render(false);
+      // fokus na prvu novu karticu (tastatura/čitači ekrana nastavljaju odatle)
+      const nova = grid.children[prije]?.querySelector<HTMLAnchorElement>('a');
+      nova?.focus({ preventScroll: false });
+    });
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.toggleAttribute('data-open', open);
+    });
+    window.addEventListener('popstate', () => {
+      procitajUrl();
+      prikazano = PAGE;
+      render(true);
+    });
+
+    procitajUrl();
+    qInput.value = state.q;
+    // ako je stanje podrazumijevano, server je već iscrtao prvu stranicu — ne diramo mrežu
+    render(!jeDefault());
+    // na mobilnom otvori panel ako su filteri aktivni (da korisnik vidi šta je izabrano)
+    if (FACETS.some((f) => state[f]) && matchMedia('(max-width: 767px)').matches) {
+      toggle.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('data-open', '');
+    }
+    root.dataset.enhanced = '';
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-lb]').forEach(init);
+</script>

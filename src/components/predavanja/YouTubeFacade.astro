@@ -1,0 +1,118 @@
+---
+// Lagani "klikni za pokretanje" YouTube player (youtube-nocookie). Bez JS-a je to običan link na YouTube.
+interface Props {
+  id: string;
+  naslov: string;
+  thumbnail: string;
+  start?: number;
+}
+const { id, naslov, thumbnail, start } = Astro.props;
+const yt = `https://i.ytimg.com/vi/${encodeURIComponent(id)}`;
+const jeYt = /ytimg\.com/.test(thumbnail);
+const src = jeYt ? `${yt}/hqdefault.jpg` : thumbnail;
+const srcset = jeYt
+  ? `${yt}/hqdefault.jpg 480w${/maxresdefault/.test(thumbnail) ? `, ${yt}/maxresdefault.jpg 1280w` : ''}`
+  : undefined;
+const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}${start ? `&t=${start}s` : ''}`;
+---
+<div class="ytf" data-ytf data-id={id} data-title={naslov} data-start={start ?? ''}>
+  <a class="ytf__btn" href={watch} target="_blank" rel="noopener" aria-label={`Pokreni video: ${naslov}`} data-ytf-btn>
+    <img
+      class="ytf__img"
+      src={src}
+      srcset={srcset}
+      sizes="(min-width: 1100px) 760px, 100vw"
+      alt=""
+      width="1280"
+      height="720"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <span class="ytf__play" aria-hidden="true">
+      <svg viewBox="0 0 68 48" width="68" height="48"><path class="ytf__play-bg" d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.3.3 34 .3 34 .3s-21.3 0-26.5 1.4a8.5 8.5 0 0 0-6 6C.1 13 .1 24 .1 24s0 11 1.4 16.3a8.5 8.5 0 0 0 6 6C12.7 47.7 34 47.7 34 47.7s21.3 0 26.5-1.4a8.5 8.5 0 0 0 6-6C67.9 35 67.9 24 67.9 24s0-11-1.4-16.3z"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+    </span>
+    <span class="ytf__hint">Pokreni video</span>
+  </a>
+</div>
+
+<style>
+  .ytf {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #000;
+    box-shadow: var(--shadow-md);
+  }
+  .ytf__btn, .ytf :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .ytf__btn { display: block; cursor: pointer; color: #fff; }
+  .ytf__btn:focus-visible { outline: 3px solid var(--color-focus); outline-offset: -3px; }
+  .ytf__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ytf__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 4px 14px rgb(0 0 0 / 0.4));
+    transition: transform var(--transition);
+  }
+  .ytf__play-bg { fill: #212121; fill-opacity: 0.85; transition: fill var(--transition), fill-opacity var(--transition); }
+  .ytf__btn:hover .ytf__play-bg, .ytf__btn:focus-visible .ytf__play-bg { fill: #c4302b; fill-opacity: 1; }
+  .ytf__btn:hover .ytf__play { transform: translate(-50%, -50%) scale(1.06); }
+  .ytf__hint {
+    position: absolute;
+    left: var(--space-3);
+    bottom: var(--space-3);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    background: rgb(0 0 0 / 0.65);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  function aktiviraj(root: HTMLElement) {
+    const btn = root.querySelector<HTMLAnchorElement>('[data-ytf-btn]');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      // Ctrl/Cmd/srednji klik — pusti da se otvori YouTube u novom tabu
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      const id = root.dataset.id!;
+      const start = Number(root.dataset.start) || 0;
+      const params = new URLSearchParams({ autoplay: '1', rel: '0', modestbranding: '1', playsinline: '1' });
+      if (start) params.set('start', String(start));
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${params}`;
+      iframe.title = root.dataset.title || 'YouTube video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      btn.replaceWith(iframe);
+      iframe.focus();
+    });
+    // predučitaj veze kad korisnik pokaže namjeru (brži start)
+    let warmed = false;
+    const warm = () => {
+      if (warmed) return;
+      warmed = true;
+      for (const href of ['https://www.youtube-nocookie.com', 'https://i.ytimg.com', 'https://www.google.com']) {
+        const l = document.createElement('link');
+        l.rel = 'preconnect';
+        l.href = href;
+        document.head.append(l);
+      }
+    };
+    btn.addEventListener('pointerover', warm, { once: true });
+    btn.addEventListener('focus', warm, { once: true });
+  }
+  document.querySelectorAll<HTMLElement>('[data-ytf]').forEach(aktiviraj);
+</script>

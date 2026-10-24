@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import VaktijaToday from '../components/vaktija/VaktijaToday.astro';
+import VaktijaMonth from '../components/vaktija/VaktijaMonth.astro';
+import { dzamija } from '../lib/data';
+import { VAKTIJA_CONFIG } from '../lib/vaktija-config';
+
+const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
+const izvor = VAKTIJA_CONFIG.zvanicniIzvor;
+---
+<BaseLayout
+  title="Vaktija"
+  description={`Vaktija za ${grad}: današnja namaska vremena sa odbrojavanjem do sljedećeg namaza i mjesečna tabela (zora, izlazak sunca, podne, ikindija, akšam, jacija).`}
+>
+  <PageHero
+    eyebrow="Namazi"
+    title={`Vaktija · ${grad}`}
+    subtitle="Današnja namaska vremena, odbrojavanje do sljedećeg namaza i mjesečni pregled."
+    arabic="إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا"
+  />
+
+  <section class="section section--tight">
+    <div class="container vk">
+      <div class="vk__today">
+        <h2 class="vk__h2">Danas</h2>
+        <VaktijaToday />
+      </div>
+
+      <aside class="vk__info" aria-label="Napomene">
+        <div class="card vk__card">
+          <h3 class="vk__h3">Sabah-namaz u džamiji</h3>
+          {VAKTIJA_CONFIG.sabahNapomena ? (
+            <p>{VAKTIJA_CONFIG.sabahNapomena}</p>
+          ) : (
+            <Placeholder label="vrijeme klanjanja sabah-namaza u džamiji" hint="džemat treba potvrditi (npr. koliko minuta prije izlaska sunca)" />
+          )}
+        </div>
+        <div class="card vk__card">
+          <h3 class="vk__h3">Džuma-namaz</h3>
+          {dzamija.dzuma.vrijeme ? (
+            <p><strong>{dzamija.dzuma.vrijeme}</strong>{dzamija.dzuma.napomena && <> — {dzamija.dzuma.napomena}</>}</p>
+          ) : (
+            <>
+              <p>Džuma se klanja petkom u vrijeme podne-namaza (u tabeli označeno sa <span class="badge">Džuma</span>).</p>
+              {dzamija.dzuma.napomena ? <p class="muted">{dzamija.dzuma.napomena}</p> : <Placeholder label="tačno vrijeme hutbe i džume u džamiji" inline />}
+            </>
+          )}
+        </div>
+        <div class="card vk__card vk__card--note">
+          <h3 class="vk__h3">O tačnosti</h3>
+          <p>
+            Vremena se računaju u vašem pregledaču za {grad}, po parametrima usklađenim sa zvaničnom
+            vaktijom Islamske zajednice. Moguće je odstupanje do <strong>±1–2 minute</strong>.
+            Za ibadet se oslonite na zvaničnu vaktiju:
+            <a href={izvor.url} target="_blank" rel="noopener">{izvor.naziv}</a>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--tint section--tight">
+    <div class="container">
+      <VaktijaMonth />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .vk { display: grid; gap: var(--space-6); }
+  @media (min-width: 1000px) {
+    .vk { grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr); align-items: start; }
+  }
+  .vk__h2 { font-size: 1.4rem; margin: 0 0 var(--space-3); }
+  .vk__info { display: grid; gap: var(--space-4); }
+  @media (min-width: 1000px) { .vk__info { margin-top: calc(1.4rem * 1.3 + var(--space-3)); } }
+  .vk__card { padding: var(--space-4) var(--space-5); gap: var(--space-2); }
+  .vk__card p { margin: 0; }
+  .vk__h3 { font-size: 1.05rem; margin: 0 0 var(--space-1); }
+  .vk__card--note { background: var(--color-surface-2); box-shadow: none; }
+  @media print {
+    .vk__info, .vk__today, :global(.page-hero) { display: none !important; }
+  }
+</style>

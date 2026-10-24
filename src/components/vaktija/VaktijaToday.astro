@@ -1,6 +1,252 @@
 ---
 // UGOVOR: props { compact?: boolean }. Prikazuje današnja namaska vremena (računa se u pregledaču).
 // Vlasnik: agent Funkcionalnosti.
+// Pri buildu se iscrtavaju rezervisana mjesta (--:--), a skripta ih popunjava za stvarni današnji dan
+// u zoni Europe/Belgrade (bez pomjeranja rasporeda). Koordinate se čitaju iz data/dzamija.json.
+import { dzamija } from '../../lib/data';
+import { url } from '../../lib/url';
+import { VAKTI, VAKTIJA_CONFIG } from '../../lib/vaktija-config';
+
 interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+const { lat, lng } = dzamija.koordinate;
+const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
 ---
-<div data-vaktija-today>Vaktija</div>
+<section
+  class:list={['vt', { 'vt--compact': compact }]}
+  data-vaktija-today
+  data-lat={lat}
+  data-lng={lng}
+  aria-label={`Današnja vaktija — ${grad}`}
+>
+  <div class="vt__head">
+    <div class="vt__dates">
+      <p class="vt__greg" data-vt-greg>&nbsp;</p>
+      <p class="vt__hijri">
+        <span data-vt-hijri>&nbsp;</span>
+        <span class="vt__hijri-note" title="Hidžretski datum je izračunat (kalendar Umm al-Qura) i može se razlikovati ±1 dan od zvaničnog takvima.">± 1 dan</span>
+      </p>
+    </div>
+    <div class="vt__next">
+      <span class="vt__next-lbl" data-vt-next-lbl aria-live="polite">Sljedeći namaz</span>
+      <span class="vt__countdown" role="timer" aria-live="off" data-vt-countdown>-:--:--</span>
+    </div>
+  </div>
+
+  <ol class="vt__list">
+    {VAKTI.map((v) => (
+      <li class:list={['vt__item', { 'vt__item--sun': !v.namaz }]} data-vt-item={v.kljuc}>
+        <span class="vt__name">{v.naziv}</span>
+        <time class="vt__time" data-vt-time>--:--</time>
+        <span class="vt__tag" data-vt-tag></span>
+      </li>
+    ))}
+  </ol>
+
+  <noscript><p class="vt__noscript">Za prikaz vaktije potreban je JavaScript. Zvanična vaktija: <a href={VAKTIJA_CONFIG.zvanicniIzvor.url}>{VAKTIJA_CONFIG.zvanicniIzvor.naziv}</a>.</p></noscript>
+
+  <p class="vt__foot">
+    {compact ? (
+      <>
+        <span>{grad} · izračunato lokalno</span>
+        <a class="link-arrow" href={url('/vaktija')}>Mjesečna vaktija</a>
+      </>
+    ) : (
+      <span>
+        Vremena za {grad} su izračunata u pregledaču (odstupanje od zvanične vaktije do ±1–2 min).
+        Zvanični izvor: <a href={VAKTIJA_CONFIG.zvanicniIzvor.url} target="_blank" rel="noopener">{VAKTIJA_CONFIG.zvanicniIzvor.naziv}</a>.
+      </span>
+    )}
+  </p>
+</section>
+
+<style>
+  .vt {
+    --vt-pad: var(--space-5);
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--vt-pad);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .vt--compact { --vt-pad: var(--space-4); gap: var(--space-3); }
+  .vt__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-3) var(--space-5);
+  }
+  .vt__dates p { margin: 0; }
+  .vt__greg {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    min-height: 1.5em;
+  }
+  .vt__hijri { color: var(--color-text-muted); font-size: 0.92rem; min-height: 1.45em; display: flex; flex-wrap: wrap; gap: 0 var(--space-2); align-items: baseline; }
+  .vt__hijri-note { font-size: 0.75rem; opacity: 0.8; cursor: help; border-bottom: 1px dotted currentColor; }
+  .vt__next { display: grid; justify-items: end; text-align: right; }
+  .vt__next-lbl { font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600; min-height: 1.3em; }
+  .vt__countdown {
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(1.6rem, 2vw + 1rem, 2.1rem);
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: var(--color-primary);
+    line-height: 1.1;
+  }
+  .vt--compact .vt__countdown { font-size: 1.5rem; }
+  .vt__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+    gap: var(--space-2);
+  }
+  .vt--compact .vt__list { grid-template-columns: repeat(3, 1fr); }
+  .vt__item {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.1rem;
+    padding: var(--space-3) var(--space-2);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-2);
+    border: 1.5px solid transparent;
+    text-align: center;
+    transition: background-color var(--transition), border-color var(--transition);
+  }
+  .vt__name { font-size: 0.85rem; font-weight: 700; color: var(--color-text-muted); }
+  .vt__time {
+    font-variant-numeric: tabular-nums;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .vt--compact .vt__time { font-size: 1.2rem; }
+  .vt__item--sun .vt__time { font-weight: 600; color: var(--color-text-muted); }
+  .vt__tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; min-height: 1.2em; }
+  .vt__item.is-current {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+  .vt__item.is-current .vt__name, .vt__item.is-current .vt__time { color: var(--color-on-primary); }
+  .vt__item.is-next { border-color: var(--color-accent-bright); background: var(--color-accent-soft); }
+  .vt__item.is-next .vt__tag { color: var(--color-accent); }
+  .vt__item.is-past:not(.is-current) .vt__time { opacity: 0.6; }
+  .vt__foot {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .vt__noscript { margin: 0; font-size: 0.9rem; }
+  @media (max-width: 420px) {
+    .vt__list { grid-template-columns: repeat(3, 1fr); }
+    .vt__next { justify-items: start; text-align: left; }
+  }
+</style>
+
+<script>
+  import {
+    danUZoni,
+    formatGregorijanski,
+    formatHidzretski,
+    formatOdbrojavanje,
+    izracunajDan,
+    pomjeriDan,
+    stanje,
+    type DanVaktije,
+  } from '../../lib/vaktija.ts';
+
+  const DO: Record<string, string> = {
+    zora: 'zore',
+    izlazak: 'izlaska sunca',
+    podne: 'podne-namaza',
+    ikindija: 'ikindije',
+    aksam: 'akšama',
+    jacija: 'jacije',
+  };
+
+  function init(root: HTMLElement) {
+    const k = { lat: Number(root.dataset.lat), lng: Number(root.dataset.lng) };
+    if (!Number.isFinite(k.lat) || !Number.isFinite(k.lng)) return;
+    const greg = root.querySelector<HTMLElement>('[data-vt-greg]')!;
+    const hijri = root.querySelector<HTMLElement>('[data-vt-hijri]')!;
+    const lbl = root.querySelector<HTMLElement>('[data-vt-next-lbl]')!;
+    const cd = root.querySelector<HTMLElement>('[data-vt-countdown]')!;
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-vt-item]'));
+
+    let datum = '';
+    let danas: DanVaktije;
+    let sutra: DanVaktije;
+    let zadnjiNaredni = '';
+
+    function postaviDan() {
+      const d = danUZoni();
+      const s = pomjeriDan(d.god, d.mj, d.dan, 1);
+      danas = izracunajDan(d.god, d.mj, d.dan, k);
+      sutra = izracunajDan(s.god, s.mj, s.dan, k);
+      datum = danas.datum;
+      const g = formatGregorijanski(d.god, d.mj, d.dan);
+      greg.textContent = g.charAt(0).toUpperCase() + g.slice(1);
+      hijri.textContent = formatHidzretski(d.god, d.mj, d.dan) ?? '';
+      items.forEach((el, i) => {
+        const v = danas.vakti[i];
+        const t = el.querySelector<HTMLTimeElement>('[data-vt-time]')!;
+        t.textContent = v.hhmm;
+        t.dateTime = v.vrijeme.toISOString();
+      });
+      zadnjiNaredni = '';
+    }
+
+    function tick() {
+      const now = new Date();
+      const d = danUZoni(now);
+      const iso = `${d.god}-${String(d.mj).padStart(2, '0')}-${String(d.dan).padStart(2, '0')}`;
+      if (iso !== datum) postaviDan();
+      const st = stanje(now, danas, sutra);
+      const kljuc = `${st.naredni.kljuc}-${st.naredniSutra}-${st.trenutni}`;
+      if (kljuc !== zadnjiNaredni) {
+        zadnjiNaredni = kljuc;
+        items.forEach((el, i) => {
+          const v = danas.vakti[i];
+          const jeNaredni = !st.naredniSutra && v.kljuc === st.naredni.kljuc;
+          const jeTrenutni = i === st.trenutni;
+          el.classList.toggle('is-current', jeTrenutni);
+          el.classList.toggle('is-next', jeNaredni);
+          el.classList.toggle('is-past', v.vrijeme.getTime() <= now.getTime());
+          const tag = el.querySelector<HTMLElement>('[data-vt-tag]')!;
+          tag.textContent = jeTrenutni ? 'sada' : jeNaredni ? 'slijedi' : '';
+          if (jeTrenutni) el.setAttribute('aria-current', 'time');
+          else el.removeAttribute('aria-current');
+        });
+        lbl.textContent = `Do ${DO[st.naredni.kljuc] ?? st.naredni.naziv}${st.naredniSutra ? ' (sutra)' : ''} još`;
+      }
+      cd.textContent = formatOdbrojavanje(st.naredni.vrijeme.getTime() - now.getTime());
+    }
+
+    postaviDan();
+    tick();
+    // poravnaj otkucaje sa početkom sekunde
+    window.setTimeout(() => {
+      tick();
+      window.setInterval(tick, 1000);
+    }, 1000 - (Date.now() % 1000));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') tick();
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-vaktija-today]').forEach(init);
+</script>

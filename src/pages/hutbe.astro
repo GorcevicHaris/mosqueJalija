@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import LectureBrowser from '../components/predavanja/LectureBrowser.astro';
+import { predavanja, getKategorija, dzamija } from '../lib/data';
+import { HUTBA_KATEGORIJA } from '../lib/predavanja';
+import { url } from '../lib/url';
+
+const hutbe = predavanja.filter((p) => p.kategorija === HUTBA_KATEGORIJA);
+const kat = getKategorija(HUTBA_KATEGORIJA);
+const opis = `Džuma hutbe održane u džamiji (${hutbe.length}) — snimci sa YouTube kanala, pretraga po naslovu i filter po hatibu i godini.`;
+---
+<BaseLayout title="Hutbe" description={opis}>
+  <PageHero
+    eyebrow="Džuma"
+    title="Hutbe"
+    subtitle={kat?.opis ?? 'Petkove hutbe održane u džamiji na džuma-namazu.'}
+    arabic="خُطْبَةُ الْجُمُعَةِ"
+  />
+  <section class="section section--tight">
+    <div class="container">
+      {dzamija.dzuma.vrijeme && (
+        <p class="hutbe-dzuma"><strong>Džuma-namaz:</strong> {dzamija.dzuma.vrijeme}{dzamija.dzuma.napomena && ` — ${dzamija.dzuma.napomena}`}</p>
+      )}
+      <LectureBrowser
+        lista={hutbe}
+        zakljucanaKategorija={HUTBA_KATEGORIJA}
+        rijeci={['hutba', 'hutbe', 'hutbi']}
+        oznakaPretrage="Pretraži hutbe po naslovu"
+      />
+      <p class="hutbe-dalje muted">
+        Tražite predavanja, tefsir ili halke? <a href={url('/predavanja')}>Sva predavanja</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hutbe-dzuma { margin: 0 0 var(--space-5); padding: var(--space-3) var(--space-4); border-left: 3px solid var(--color-accent-bright); background: var(--color-surface-2); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+  .hutbe-dalje { margin-top: var(--space-6); text-align: center; font-size: 0.92rem; }
+</style>

@@ -1,0 +1,104 @@
+---
+// Lista obavještenja/objava sa filterom po kategoriji (čipovi). Bez JS-a prikazuje sve stavke.
+import type { StavkaListe } from '../../lib/obavjestenja';
+import { kategorijaSlug } from '../../lib/obavjestenja';
+import { formatDatum } from '../../lib/data';
+
+interface Props { stavke: StavkaListe[]; prazno: string }
+const { stavke, prazno } = Astro.props;
+const kategorije = [...new Set(stavke.map((s) => s.kategorija))].map((k) => ({
+  naziv: k,
+  slug: kategorijaSlug(k),
+  n: stavke.filter((s) => s.kategorija === k).length,
+}));
+---
+<div class="ol" data-ol>
+  {kategorije.length > 1 && (
+    <div class="ol__filter" role="group" aria-label="Filter po kategoriji" data-ol-filter hidden>
+      <ul class="chips">
+        <li><button type="button" class="chip" aria-pressed="true" data-ol-kat="">Sve <span class="chip__count">{stavke.length}</span></button></li>
+        {kategorije.map((k) => (
+          <li><button type="button" class="chip" aria-pressed="false" data-ol-kat={k.slug}>{k.naziv} <span class="chip__count">{k.n}</span></button></li>
+        ))}
+      </ul>
+      <p class="visually-hidden" aria-live="polite" data-ol-live></p>
+    </div>
+  )}
+
+  {stavke.length === 0 ? (
+    <div class="card ol__empty">
+      <p class="ol__empty-title">Trenutno nema objava</p>
+      <p class="muted">{prazno}</p>
+    </div>
+  ) : (
+    <ul class="ol__list" role="list">
+      {stavke.map((s) => (
+        <li class="card ol__item" data-ol-item={kategorijaSlug(s.kategorija)}>
+          {s.slika && (
+            <img class="ol__img" src={s.slika} alt="" width="320" height="180" loading="lazy" decoding="async" />
+          )}
+          <div class="ol__body">
+            <p class="ol__meta">
+              <time datetime={s.datum}>{formatDatum(s.datum)}</time>
+              <span class="badge">{s.kategorija}</span>
+              {s.automatski && <span class="badge badge--primary" title="Automatski iz YouTube kanala">YouTube</span>}
+              {s.placeholder && <span class="badge badge--warn" title="Primjer sadržaja — biće zamijenjen stvarnim obavještenjem">Primjer</span>}
+            </p>
+            <h2 class="ol__title card__title"><a href={s.href}>{s.naslov}</a></h2>
+            <p class="ol__sazetak">{s.sazetak}</p>
+            <span class="ol__more link-arrow" aria-hidden="true">{s.automatski ? 'Pogledaj snimak' : 'Pročitaj više'}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+<style>
+  .ol { display: grid; gap: var(--space-5); }
+  .ol [hidden] { display: none !important; }
+  .ol__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+  .ol__item { flex-direction: row; gap: var(--space-5); align-items: flex-start; }
+  .ol__item:hover { box-shadow: var(--shadow-md); border-color: var(--color-border-strong); }
+  .ol__img { width: 200px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius-md); flex: none; background: var(--color-surface-2); }
+  .ol__body { display: grid; gap: var(--space-2); min-width: 0; }
+  .ol__meta { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-size: 0.88rem; color: var(--color-text-muted); }
+  .ol__title { margin: 0; font-size: 1.25rem; overflow-wrap: anywhere; }
+  .ol__sazetak { margin: 0; color: var(--color-text-muted); }
+  .ol__more { font-size: 0.9rem; color: var(--color-primary); }
+  .ol__empty { text-align: center; align-items: center; padding: var(--space-7) var(--space-5); }
+  .ol__empty-title { font-family: var(--font-serif); font-size: 1.3rem; margin: 0; }
+  @media (max-width: 640px) {
+    .ol__item { flex-direction: column; }
+    .ol__img { width: 100%; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ol]').forEach((root) => {
+    const filter = root.querySelector<HTMLElement>('[data-ol-filter]');
+    if (!filter) return;
+    const btns = Array.from(filter.querySelectorAll<HTMLButtonElement>('[data-ol-kat]'));
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-ol-item]'));
+    const live = filter.querySelector<HTMLElement>('[data-ol-live]')!;
+    function primijeni(kat: string, najava: boolean) {
+      if (kat && !btns.some((b) => b.dataset.olKat === kat)) kat = '';
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.olKat === kat)));
+      let n = 0;
+      items.forEach((it) => {
+        const v = !kat || it.dataset.olItem === kat;
+        it.hidden = !v;
+        if (v) n++;
+      });
+      const u = new URL(location.href);
+      if (kat) u.searchParams.set('kategorija', kat);
+      else u.searchParams.delete('kategorija');
+      if (u.href !== location.href) history.replaceState(history.state, '', u);
+      if (najava) live.textContent = `Prikazano: ${n}`;
+    }
+    btns.forEach((b) => b.addEventListener('click', () => primijeni(b.dataset.olKat ?? '', true)));
+    filter.hidden = false;
+    primijeni(new URLSearchParams(location.search).get('kategorija') ?? '', false);
+    window.addEventListener('popstate', () => primijeni(new URLSearchParams(location.search).get('kategorija') ?? '', false));
+  });
+</script>

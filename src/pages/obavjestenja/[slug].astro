@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ShareButton from '../../components/predavanja/ShareButton.astro';
+import { obavjestenja, formatDatum } from '../../lib/data';
+import { opisHTML } from '../../lib/predavanja';
+import { kategorijaSlug } from '../../lib/obavjestenja';
+import { url } from '../../lib/url';
+import type { Obavjestenje } from '../../lib/types';
+
+export function getStaticPaths() {
+  return obavjestenja.map((o) => ({ params: { slug: o.slug }, props: { o } }));
+}
+interface Props { o: Obavjestenje }
+const { o } = Astro.props;
+
+const jeObjava = o.tip === 'objava';
+const lista = jeObjava ? { href: url('/objave'), naziv: 'Objave' } : { href: url('/obavjestenja'), naziv: 'Obavještenja' };
+const slika = o.slika ? (/^https?:\/\//.test(o.slika) ? o.slika : url(o.slika)) : undefined;
+const ostala = obavjestenja.filter((x) => x.slug !== o.slug && x.tip === o.tip).slice(0, 3);
+const site = Astro.site ?? new URL('https://gorcevicharis.github.io');
+const pageUrl = new URL(url(`/obavjestenja/${o.slug}`), site).href;
+const ld = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: o.naslov,
+  datePublished: o.datum,
+  description: o.sazetak,
+  ...(slika && { image: new URL(slika, site).href }),
+  publisher: { '@type': 'Organization', name: 'Džamija na Jaliji' },
+  mainEntityOfPage: pageUrl,
+}).replace(/</g, '\\u003c');
+---
+<BaseLayout title={o.naslov} description={o.sazetak} image={slika} noindex={o.placeholder}>
+  <article class="od">
+    <header class="od__hero theme-inverse pattern-bg">
+      <div class="container container--narrow">
+        <p class="od__back"><a href={lista.href}>← {lista.naziv}</a></p>
+        <p class="od__meta">
+          <time datetime={o.datum}>{formatDatum(o.datum)}</time>
+          <a class="badge" href={`${lista.href}?kategorija=${kategorijaSlug(o.kategorija)}`}>{o.kategorija}</a>
+          {o.placeholder && <span class="badge badge--warn">Primjer</span>}
+        </p>
+        <h1 class="od__title">{o.naslov}</h1>
+        <p class="od__lead">{o.sazetak}</p>
+      </div>
+    </header>
+
+    <div class="section section--tight">
+      <div class="container container--narrow">
+        {o.placeholder && (
+          <p class="od__primjer" role="note">
+            <strong>Primjer sadržaja.</strong> Ovo nije stvarno obavještenje džemata — biće zamijenjeno kada džemat dostavi podatke.
+          </p>
+        )}
+        {slika && <img class="od__img" src={slika} alt={o.naslov} loading="eager" decoding="async" />}
+        <div class="prose od__body">
+          {o.sadrzaj.map((par) => <Fragment set:html={opisHTML(par)} />)}
+        </div>
+        <div class="od__actions">
+          <ShareButton naslov={o.naslov} link={pageUrl} />
+          <a class="btn btn--ghost" href={lista.href}>Sva {jeObjava ? 'objave' : 'obavještenja'}</a>
+        </div>
+
+        {ostala.length > 0 && (
+          <aside class="od__ostala" aria-labelledby="ostala">
+            <h2 id="ostala">{jeObjava ? 'Ostale objave' : 'Ostala obavještenja'}</h2>
+            <ul>
+              {ostala.map((x) => (
+                <li>
+                  <a href={url(`/obavjestenja/${x.slug}`)}>{x.naslov}</a>
+                  <span class="muted"> · {formatDatum(x.datum)}</span>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )}
+      </div>
+    </div>
+  </article>
+  <script type="application/ld+json" set:html={ld} />
+</BaseLayout>
+
+<style>
+  .od__hero { padding-block: clamp(2.25rem, 6vw, 4rem); }
+  .od__back { margin: 0 0 var(--space-4); }
+  .od__back a { color: var(--inverse-accent); font-weight: 700; text-decoration: none; }
+  .od__back a:hover { text-decoration: underline; }
+  .od__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); color: var(--inverse-muted); font-size: 0.92rem; }
+  .od__meta .badge { text-decoration: none; }
+  .od__title { color: var(--inverse-text); margin: 0 0 var(--space-3); font-size: clamp(1.7rem, 2.5vw + 1rem, 2.6rem); overflow-wrap: anywhere; }
+  .od__lead { color: var(--inverse-muted); font-size: 1.1rem; margin: 0; }
+  .od__primjer { padding: var(--space-3) var(--space-4); border: 2px dashed var(--color-missing-border); background: var(--color-missing-bg); color: var(--color-missing-text); border-radius: var(--radius-md); }
+  .od__img { width: 100%; height: auto; border-radius: var(--radius-lg); margin-bottom: var(--space-5); }
+  .od__body { max-width: none; overflow-wrap: anywhere; }
+  .od__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+  .od__ostala { margin-top: var(--space-7); padding-top: var(--space-5); border-top: 1px solid var(--color-border); }
+  .od__ostala h2 { font-size: 1.2rem; }
+  .od__ostala ul { padding-left: 1.2em; display: grid; gap: var(--space-2); }
+</style>

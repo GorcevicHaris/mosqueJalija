@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import Lista from './_Lista.astro';
+import { izObavjestenja, obavjestenjaTipa, vijestiONovimSnimcima } from '../../lib/obavjestenja';
+import { url } from '../../lib/url';
+
+const stavke = [...obavjestenjaTipa('obavjestenje').map(izObavjestenja), ...vijestiONovimSnimcima(3)].sort(
+  (a, b) => b.datum.localeCompare(a.datum) || Number(a.automatski) - Number(b.automatski),
+);
+---
+<BaseLayout title="Obavještenja" description="Najave, vijesti i obavještenja Džamije na Jaliji: halke, mekteb, predavanja, džuma i aktivnosti džemata.">
+  <PageHero eyebrow="Aktuelno" title="Obavještenja" subtitle="Najave, programi i vijesti iz naše džamije." />
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      <Lista stavke={stavke} prazno="Obavještenja džemata biće objavljena ovdje." />
+      <p class="ob-dalje muted">Pogledajte i <a href={url('/objave')}>objave iz džemata</a> i <a href={url('/predavanja')}>sva predavanja</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .ob-dalje { margin-top: var(--space-6); text-align: center; font-size: 0.92rem; }
+</style>

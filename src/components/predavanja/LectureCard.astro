@@ -1,8 +1,136 @@
 ---
 // UGOVOR: props { predavanje: Predavanje }. Vlasnik: agent Funkcionalnosti.
+// Opcionalno: headingLevel (2 ili 3, podrazumijevano 3).
+// Markup dolazi iz kartica.ts (isti HTML iscrtava i klijentski filter), zato su stilovi globalni
+// ali imenovani prefiksom .lcard.
 import type { Predavanje } from '../../lib/types';
 import { url } from '../../lib/url';
-interface Props { predavanje: Predavanje }
-const { predavanje } = Astro.props;
+import { karticaHTML } from './kartica.ts';
+import { karticaPodaci } from '../../lib/predavanja';
+interface Props {
+  predavanje: Predavanje;
+  headingLevel?: 2 | 3;
+}
+const { predavanje, headingLevel = 3 } = Astro.props;
+const html = karticaHTML(
+  karticaPodaci(predavanje),
+  url(`/predavanja/${predavanje.id}`),
+  headingLevel === 2 ? 'h2' : 'h3',
+);
 ---
-<a href={url(`/predavanja/${predavanje.id}`)}>{predavanje.naslovCist}</a>
+<Fragment set:html={html} />
+
+<style is:global>
+  .lcard {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+  }
+  .lcard:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-border-strong);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lcard:hover { transform: translateY(-2px); }
+  }
+  .lcard:focus-within {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+  .lcard__link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+  .lcard__link:focus-visible { outline: none; }
+  .lcard__thumb {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface-2);
+    overflow: hidden;
+  }
+  .lcard__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lcard:hover .lcard__thumb img { transform: scale(1.03); }
+  }
+  .lcard__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(12 59 46 / 0.78);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity var(--transition), transform var(--transition);
+  }
+  .lcard:hover .lcard__play,
+  .lcard:focus-within .lcard__play { opacity: 1; transform: scale(1); }
+  .lcard__dur {
+    position: absolute;
+    right: var(--space-2);
+    bottom: var(--space-2);
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-sm);
+    background: rgb(0 0 0 / 0.78);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.5;
+  }
+  .lcard__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-4) var(--space-5);
+    flex: 1;
+  }
+  .lcard__badges { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); }
+  .lcard__title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.08rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--color-text);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+  .lcard__link:hover .lcard__title { color: var(--color-primary); }
+  .lcard__meta {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.6rem;
+    font-size: 0.86rem;
+    color: var(--color-text-muted);
+  }
+  .lcard__imam { font-weight: 600; color: var(--color-text); }
+  .lcard__imam + time::before { content: '·'; margin-right: 0.6rem; color: var(--color-text-muted); }
+</style>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Lista from './obavjestenja/_Lista.astro';
+import { izObavjestenja, obavjestenjaTipa } from '../lib/obavjestenja';
+import { url } from '../lib/url';
+
+const stavke = obavjestenjaTipa('objava').map(izObavjestenja);
+---
+<BaseLayout title="Objave" description="Objave iz džemata Džamije na Jaliji — zapisi, fotografije i vijesti o aktivnostima.">
+  <PageHero eyebrow="Iz našeg džemata" title="Objave" subtitle="Zapisi i vijesti o aktivnostima džemata." />
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      <Lista stavke={stavke} prazno="Objave iz džemata biće dodane ovdje." />
+      <p class="ob-dalje muted">Najave i rasporede pratite na stranici <a href={url('/obavjestenja')}>Obavještenja</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .ob-dalje { margin-top: var(--space-6); text-align: center; font-size: 0.92rem; }
+</style>
