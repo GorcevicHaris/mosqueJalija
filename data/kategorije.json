@@ -1,1 +1,37 @@
-[{ "slug": "predavanje", "naziv": "Predavanje", "opis": null }, { "slug": "hutba", "naziv": "Hutba (džuma)", "opis": null }]
+[
+  {
+    "slug": "hutba",
+    "naziv": "Hutba (džuma)",
+    "opis": "Petkove hutbe održane u džamiji na džuma-namazu."
+  },
+  {
+    "slug": "predavanje",
+    "naziv": "Predavanje",
+    "opis": "Predavanja i vazovi na različite teme iz vjere i svakodnevnog života."
+  },
+  {
+    "slug": "tefsir",
+    "naziv": "Tefsir",
+    "opis": "Tumačenje kur'anskih sura i ajeta, kao ramazanski serijal tefsira sure Jusuf."
+  },
+  {
+    "slug": "halka-hadisa",
+    "naziv": "Halka hadisa",
+    "opis": "Kružoci (halke) u kojima se čitaju i objašnjavaju hadisi Allahovog Poslanika ﷺ."
+  },
+  {
+    "slug": "ucenje-kurana",
+    "naziv": "Učenje Kur'ana",
+    "opis": "Kratki snimci učenja (kiraeta) kur'anskih sura."
+  },
+  {
+    "slug": "kratki-video",
+    "naziv": "Kratki video",
+    "opis": "Kratki isječci (YouTube Shorts) sa kanala džamije."
+  },
+  {
+    "slug": "ostalo",
+    "naziv": "Ostalo",
+    "opis": "Obavještenja i ostali snimci sa kanala džamije."
+  }
+]

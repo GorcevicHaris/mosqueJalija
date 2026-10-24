@@ -1,3 +1,68 @@
 [
-  { "slug": "admir-jasarevic", "punoIme": "Hfz. Admir ef. Jašarević", "aliasi": ["Admir ef. Jašarević", "Admir ef.Jašarević", "Admir Jašarević"] }
+  {
+    "slug": "admir-jasarevic",
+    "punoIme": "Hfz. Admir ef. Jašarević",
+    "aliasi": [
+      "Admir ef. Jašarević",
+      "Admir Jašarević",
+      "Hfz.Admir ef. Jašarević",
+      "Hfz.Admir ef.Jašarević",
+      "Hfz Admir ef Jašarević",
+      "Hfz Admir ef. Jašarević",
+      "Hfz Admir Jašarević",
+      "hfz. Admir ef. Jašarević"
+    ]
+  },
+  {
+    "slug": "abdurahman-kujevic",
+    "punoIme": "Muftija hfz. Abdurahman ef. Kujević",
+    "aliasi": [
+      "Abdurahman ef. Kujević",
+      "Abdurrahman Kujević",
+      "muftija hfz.Abdurahman ef. Kujević",
+      "Muftija hfz.Abdurrahman Kujević",
+      "M.hfz.Abdurahman Kujević",
+      "Muftija hfz. Abdurrahman Kujević"
+    ]
+  },
+  {
+    "slug": "edin-redzepovic",
+    "punoIme": "Hfz. Edin Redžepović",
+    "aliasi": [
+      "hfz. Edin Redžepović"
+    ]
+  },
+  {
+    "slug": "edin-salihovic",
+    "punoIme": "Edin ef. Salihović",
+    "aliasi": [
+      "Edin ef. Salihovic"
+    ]
+  },
+  {
+    "slug": "muhamed-metjahic",
+    "punoIme": "Muhamed Metjahić",
+    "aliasi": []
+  },
+  {
+    "slug": "dzenan-kamesnicanin",
+    "punoIme": "Prof. Dženan ef. Kamešničanin",
+    "aliasi": [
+      "prof.Dženan ef. Kamešničanin"
+    ]
+  },
+  {
+    "slug": "ferid-fijuljanin",
+    "punoIme": "Hfz. Ferid Fijuljanin",
+    "aliasi": [
+      "Hfz.Ferid Fijuljanin"
+    ]
+  },
+  {
+    "slug": "zikret-mustafic",
+    "punoIme": "Hfz. Zikret Mustafić",
+    "aliasi": [
+      "hfz Zikret Mustafić"
+    ]
+  }
 ]

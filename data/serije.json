@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "slug": "tefsir-sure-jusuf",
+    "naziv": "Tefsir sure Jusuf",
+    "opis": "Ramazanski serijal hfz. Admira ef. Jašarevića (ramazan 2026), svakog jutra prije sabahskog farza: tumačenje sure Jusuf i kazivanja o Jusufu, alejhisselam, u 25 dijelova."
+  },
+  {
+    "slug": "duhovna-opskrba-vjernika",
+    "naziv": "Duhovna opskrba vjernika",
+    "opis": "Sedmično predavanje hfz. Admira ef. Jašarevića, petkom poslije jacija-namaza."
+  },
+  {
+    "slug": "djela-koja-uvode-u-dzennet",
+    "naziv": "Djela koja uvode u Džennet",
+    "opis": "Hutbe hfz. Admira ef. Jašarevića u dva dijela (novembar 2025)."
+  },
+  {
+    "slug": "sura-el-kijame",
+    "naziv": "Učenje sure El-Kijame",
+    "opis": "Učenje sure El-Kijame (Smak svijeta) u dva dijela: ajeti 1–19 i 20–40."
+  }
+]
