@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import PretragaApp from '../components/extras/PretragaApp.astro';
+---
+<BaseLayout
+  title="Pretraga"
+  description="Pretražite predavanja, hutbe, obavještenja, dove, imame i stranice sajta Džamije na Jaliji."
+>
+  <PageHero
+    eyebrow="Pretraga"
+    title="Pretraži sajt"
+    subtitle="Predavanja, hutbe, obavještenja, dove, imami i stranice — na jednom mjestu."
+  />
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      <PretragaApp />
+    </div>
+  </section>
+</BaseLayout>

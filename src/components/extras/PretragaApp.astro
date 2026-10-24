@@ -1,0 +1,349 @@
+---
+// Pretraga cijelog sajta. Indeks se ugrađuje pri buildu; pretraga radi u pregledaču.
+// ?q=… u adresi (dijeljiv link; zaglavlje može voditi na /pretraga?q=…).
+import Icon from '../ui/Icon.astro';
+import { url } from '../../lib/url';
+import { indeksJson, napraviIndeks } from '../../lib/extras/pretraga-indeks';
+
+const ix = napraviIndeks();
+const prijedlozi = ['Ramazan', 'hutba', 'dova', 'vaktija', 'tefsir', 'džuma', 'mekteb', 'kalendar'];
+const imamiPrijedlozi = ix.m
+  .slice()
+  .sort((a, b) => b[4] - a[4])
+  .slice(0, 3)
+  .map((m) => m[1].trim().split(/\s+/).pop() ?? '') // prezime
+  .filter(Boolean);
+const ukupno = ix.p.length + ix.o.length + ix.d.length + ix.m.length + ix.s.length;
+---
+<div class="sr" data-sr>
+  <form class="sr-form" role="search" action={url('/pretraga')} method="get" data-sr-form>
+    <label for="sr-q" class="sr-form__label">Pretraži sajt</label>
+    <div class="sr-form__row">
+      <span class="sr-form__icon" aria-hidden="true"><Icon name="search" /></span>
+      <input
+        id="sr-q"
+        class="input sr-form__input"
+        type="search"
+        name="q"
+        autocomplete="off"
+        spellcheck="false"
+        enterkeyhint="search"
+        placeholder="Npr. tefsir sure Jusuf, Ramazan, dova za roditelje…"
+        aria-describedby="sr-help"
+        aria-controls="sr-results"
+        data-sr-input
+      />
+      <button type="submit" class="btn btn--primary sr-form__btn">Traži</button>
+    </div>
+    <p id="sr-help" class="sr-form__help muted">
+      Pretraga ne pravi razliku između č/ć/c, š/s, ž/z i đ/dj. Tipka <kbd>/</kbd> fokusira polje,
+      strelice <kbd>↑</kbd> <kbd>↓</kbd> biraju rezultat, <kbd>Esc</kbd> briše upit.
+    </p>
+  </form>
+
+  <div class="sr-filters" data-sr-filters hidden>
+    <ul class="chips" role="list" aria-label="Filtriraj po vrsti"></ul>
+  </div>
+
+  <p class="sr-status" role="status" aria-live="polite" data-sr-status></p>
+
+  <div id="sr-results" class="sr-results" data-sr-results></div>
+
+  <div class="sr-empty card" data-sr-intro>
+    <h2 class="sr-empty__title">Šta tražite?</h2>
+    <p class="muted">Pretražuje se {ukupno} stavki: predavanja i hutbe, obavještenja, dove, imami i stranice sajta.</p>
+    <p class="sr-empty__label">Česte pretrage:</p>
+    <ul class="chips" role="list">
+      {[...prijedlozi, ...imamiPrijedlozi].map((p) => (
+        <li><a class="chip" href={`${url('/pretraga')}?q=${encodeURIComponent(p)}`} data-sr-suggest={p}>{p}</a></li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="sr-empty card" data-sr-none hidden>
+    <h2 class="sr-empty__title">Nema rezultata</h2>
+    <p class="muted" data-sr-none-text></p>
+    <ul class="sr-tips">
+      <li>Provjerite da li je riječ ispravno napisana ili pokušajte sa kraćim upitom (npr. samo prezime imama).</li>
+      <li>Pretražujte po temi: „namaz“, „post“, „dženaza“, „sabur“…</li>
+      <li>Pregledajte sva <a href={url('/predavanja')}>predavanja</a> ili <a href={url('/dove')}>dove</a>.</li>
+    </ul>
+  </div>
+
+  <noscript>
+    <p class="sr-empty card">Za pretragu je potreban JavaScript. Sadržaj možete pregledati preko glavnog menija.</p>
+  </noscript>
+
+  <script type="application/json" data-sr-index set:html={indeksJson()} />
+</div>
+
+<script>
+  import { GRUPE, fmtDatum, oznaci, pretrazi, raspakuj, type Grupa, type Rezultat, type Stavka } from '../../lib/extras/pretraga-pretrazi';
+  import type { PretragaIndeks } from '../../lib/extras/pretraga-indeks';
+
+  const root = document.querySelector<HTMLElement>('[data-sr]');
+  if (root) {
+    const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+    const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const input = $<HTMLInputElement>('[data-sr-input]');
+    const form = $<HTMLFormElement>('[data-sr-form]');
+    const status = $('[data-sr-status]');
+    const results = $('[data-sr-results]');
+    const intro = $('[data-sr-intro]');
+    const none = $('[data-sr-none]');
+    const filters = $('[data-sr-filters]');
+    const ix = JSON.parse($('[data-sr-index]').textContent || '{}') as PretragaIndeks;
+    const stavke: Stavka[] = raspakuj(ix);
+    const PO_GRUPI = 6;
+    let filter: Grupa | 'sve' = 'sve';
+    let zadnji: Rezultat[] = [];
+
+    const rijec = (n: number) => (n % 10 === 1 && n % 100 !== 11 ? 'rezultat' : 'rezultata');
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+    const fromUrl = () => new URLSearchParams(location.search).get('q') ?? '';
+
+    function renderFilters(po: Map<Grupa, Rezultat[]>, ukupno: number) {
+      const ul = filters.querySelector('ul')!;
+      const chip = (k: string, naziv: string, n: number) =>
+        `<li><button type="button" class="chip" data-f="${k}" aria-pressed="${filter === k}">${naziv} <span class="chip__count">${n}</span></button></li>`;
+      ul.innerHTML =
+        chip('sve', 'Sve', ukupno) +
+        GRUPE.filter((g) => po.get(g.kljuc)?.length).map((g) => chip(g.kljuc, g.naziv, po.get(g.kljuc)!.length)).join('');
+      filters.hidden = po.size < 2 && filter === 'sve';
+    }
+
+    function stavkaHtml(r: Rezultat, q: string) {
+      const s = r.s;
+      const meta = [s.meta, s.datum ? fmtDatum(s.datum) : ''].filter(Boolean);
+      return (
+        `<li class="sr-item"><a class="sr-link" href="${esc(BASE + s.url)}">` +
+        `<span class="sr-item__title">${oznaci(s.naslov, q)}</span>` +
+        (meta.length ? `<span class="sr-item__meta">${meta.map((m) => oznaci(m, q)).join(' · ')}</span>` : '') +
+        (s.opis ? `<span class="sr-item__desc">${oznaci(s.opis, q)}</span>` : '') +
+        `</a></li>`
+      );
+    }
+
+    function render(q: string) {
+      const upit = q.trim();
+      if (!upit) {
+        results.innerHTML = '';
+        status.textContent = '';
+        filters.hidden = true;
+        none.hidden = true;
+        intro.hidden = false;
+        zadnji = [];
+        return;
+      }
+      intro.hidden = true;
+      zadnji = pretrazi(stavke, upit);
+      const po = new Map<Grupa, Rezultat[]>();
+      for (const r of zadnji) po.set(r.s.g, [...(po.get(r.s.g) ?? []), r]);
+      if (filter !== 'sve' && !po.get(filter)?.length) filter = 'sve';
+
+      if (!zadnji.length) {
+        results.innerHTML = '';
+        filters.hidden = true;
+        none.hidden = false;
+        $('[data-sr-none-text]').textContent = `Ništa nije pronađeno za „${upit}“.`;
+        status.textContent = `Nema rezultata za „${upit}“.`;
+        return;
+      }
+      none.hidden = true;
+      renderFilters(po, zadnji.length);
+      status.textContent = `${zadnji.length} ${rijec(zadnji.length)} za „${upit}“`;
+
+      const grupe = GRUPE.filter((g) => (filter === 'sve' || filter === g.kljuc) && po.get(g.kljuc)?.length);
+      results.innerHTML = grupe
+        .map((g) => {
+          const lista = po.get(g.kljuc)!;
+          const prikaz = filter === 'sve' ? lista.slice(0, PO_GRUPI) : lista;
+          const vise = lista.length - prikaz.length;
+          return (
+            `<section class="sr-group" aria-labelledby="sr-g-${g.kljuc}">` +
+            `<h2 class="sr-group__title" id="sr-g-${g.kljuc}">${g.naziv} <span class="badge badge--muted">${lista.length}</span></h2>` +
+            `<ol class="sr-list">${prikaz.map((r) => stavkaHtml(r, upit)).join('')}</ol>` +
+            (vise > 0
+              ? `<button type="button" class="btn btn--ghost btn--sm sr-more" data-f="${g.kljuc}">Prikaži sve (${lista.length})</button>`
+              : '') +
+            `</section>`
+          );
+        })
+        .join('');
+    }
+
+    let timer = 0;
+    function syncUrl(q: string) {
+      const u = new URL(location.href);
+      if (q.trim()) u.searchParams.set('q', q.trim());
+      else u.searchParams.delete('q');
+      history.replaceState(null, '', u);
+    }
+
+    input.addEventListener('input', () => {
+      filter = 'sve';
+      render(input.value);
+      clearTimeout(timer);
+      timer = window.setTimeout(() => syncUrl(input.value), 250);
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      syncUrl(input.value);
+      render(input.value);
+      const first = results.querySelector<HTMLAnchorElement>('.sr-link');
+      if (first && document.activeElement === input) first.focus();
+    });
+    root.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      const f = t.closest<HTMLElement>('[data-f]');
+      if (f) {
+        filter = f.dataset.f as Grupa | 'sve';
+        render(input.value);
+        const btn = filters.querySelector<HTMLElement>(`[data-f="${filter}"]`);
+        if (t.closest('.sr-more')) results.querySelector<HTMLElement>('.sr-link')?.focus();
+        else btn?.focus();
+        return;
+      }
+      const sug = t.closest<HTMLAnchorElement>('[data-sr-suggest]');
+      if (sug) {
+        e.preventDefault();
+        input.value = sug.dataset.srSuggest!;
+        syncUrl(input.value);
+        render(input.value);
+        input.focus();
+      }
+    });
+
+    // Navigacija tastaturom
+    const linkovi = () => [...results.querySelectorAll<HTMLAnchorElement>('.sr-link')];
+    root.addEventListener('keydown', (e) => {
+      const ev = e as KeyboardEvent;
+      const akt = document.activeElement as HTMLElement | null;
+      if (ev.key === 'Escape' && akt === input && input.value) {
+        ev.preventDefault();
+        input.value = '';
+        render('');
+        syncUrl('');
+        return;
+      }
+      if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return;
+      const l = linkovi();
+      if (!l.length) return;
+      const i = akt ? l.indexOf(akt as HTMLAnchorElement) : -1;
+      if (akt === input) {
+        if (ev.key === 'ArrowDown') { ev.preventDefault(); l[0].focus(); }
+        return;
+      }
+      if (i === -1) return;
+      ev.preventDefault();
+      if (ev.key === 'ArrowDown') l[Math.min(i + 1, l.length - 1)].focus();
+      else if (i === 0) input.focus();
+      else l[i - 1].focus();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+      const t = e.target as HTMLElement;
+      if (t.closest('input, textarea, select, [contenteditable="true"]')) return;
+      e.preventDefault();
+      input.focus();
+      input.select();
+    });
+    window.addEventListener('popstate', () => {
+      input.value = fromUrl();
+      render(input.value);
+    });
+
+    input.value = fromUrl();
+    render(input.value);
+    if (!input.value && matchMedia('(min-width: 760px)').matches) input.focus();
+  }
+</script>
+
+<style is:global>
+  .sr { display: grid; gap: var(--space-5); }
+  .sr [hidden] { display: none !important; }
+  .sr-form__label { display: block; font-weight: 700; margin-bottom: var(--space-2); }
+  .sr-form__row { position: relative; display: flex; gap: var(--space-2); }
+  .sr-form__icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    display: flex;
+  }
+  .sr-form__icon svg { width: 20px; height: 20px; }
+  .sr-form__input {
+    flex: 1;
+    min-width: 0;
+    min-height: 52px;
+    padding-left: 2.75rem;
+    font-size: 1.08rem;
+  }
+  .sr-form__btn { flex: none; min-height: 52px; }
+  @media (max-width: 479px) { .sr-form__btn { padding-inline: 0.9rem; } }
+  .sr-form__help { font-size: 0.85rem; margin: var(--space-2) 0 0; }
+  .sr kbd {
+    font-family: var(--font-sans);
+    font-size: 0.8em;
+    padding: 0.05em 0.4em;
+    border: 1px solid var(--color-border-strong, var(--color-border));
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    background: var(--color-surface);
+  }
+  .sr-status { margin: 0; font-weight: 700; color: var(--color-text-muted); min-height: 1.5em; }
+  .sr-results { display: grid; gap: var(--space-6); }
+  .sr-group__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 1.2rem;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .sr-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  .sr-link {
+    display: grid;
+    gap: 0.2rem;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  }
+  .sr-link:hover { border-color: var(--color-primary); box-shadow: var(--shadow-sm); color: var(--color-text); }
+  .sr-link:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-color: var(--color-primary);
+  }
+  .sr-item__title { font-weight: 700; font-size: 1.04rem; color: var(--color-primary); overflow-wrap: anywhere; }
+  .sr-item__meta { font-size: 0.86rem; color: var(--color-text-muted); }
+  .sr-item__desc {
+    font-size: 0.92rem;
+    color: var(--color-text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .sr mark {
+    background: var(--color-accent-soft);
+    color: inherit;
+    border-radius: 3px;
+    padding: 0 0.08em;
+    box-shadow: inset 0 -2px 0 var(--color-accent-bright, var(--color-accent));
+  }
+  .sr-more { margin-top: var(--space-3); }
+  .sr-empty { padding: var(--space-5); }
+  .sr-empty__title { font-size: 1.3rem; margin-bottom: var(--space-2); }
+  .sr-empty__label { font-weight: 700; margin: var(--space-4) 0 var(--space-2); }
+  .sr-empty .chip { text-decoration: none; }
+  .sr-tips { margin: 0; padding-left: 1.2em; display: grid; gap: var(--space-2); }
+</style>

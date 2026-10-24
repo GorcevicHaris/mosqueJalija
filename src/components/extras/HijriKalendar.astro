@@ -1,0 +1,368 @@
+---
+// Hidžretski kalendar: odbrojavanje, mjesečni prikaz (gregorijanski + hidžretski), važni datumi.
+// Početni prikaz se generiše pri buildu (radi i bez JS-a); skripta ga ponovo iscrtava za stvarni
+// današnji dan korisnika i omogućava navigaciju (?m=GGGG-MM u adresi).
+import Icon from '../ui/Icon.astro';
+import { danasDayNum, formatGreg, formatHijri, fromDayNum, hijri } from '../../lib/extras/hidzra';
+import {
+  naslovMjeseca,
+  renderMjesec,
+  renderMjesecLegenda,
+  renderOdbrojavanje,
+  renderVazniDatumi,
+} from '../../lib/extras/kalendar-render';
+
+const danas = danasDayNum();
+const g = fromDayNum(danas);
+const naslov = naslovMjeseca(g.y, g.m);
+---
+<div class="hk" data-hk>
+  <section class="hk-today card" aria-labelledby="hk-today-title">
+    <div class="hk-today__date">
+      <p class="eyebrow" id="hk-today-title">Danas je</p>
+      <p class="hk-today__hijri" data-hk-today-h>{formatHijri(hijri(danas))}</p>
+      <p class="hk-today__greg muted" data-hk-today-g>{formatGreg(danas)}</p>
+      <p class="hk-today__note">Hidžretski dan počinje zalaskom sunca (akšamom), pa se uveče već računa sljedeći datum.</p>
+    </div>
+    <div class="hk-cd" data-hk-countdown aria-live="polite" set:html={renderOdbrojavanje(danas)} />
+  </section>
+
+  <section class="hk-month" aria-labelledby="hk-month-title">
+    <div class="hk-month__bar">
+      <button type="button" class="btn btn--ghost btn--sm hk-nav" data-hk-prev aria-label="Prethodni mjesec">
+        <Icon name="chevron-left" />
+        <span class="hk-nav__txt">Prethodni</span>
+      </button>
+      <div class="hk-month__titles">
+        <h2 id="hk-month-title" class="hk-month__title" data-hk-title aria-live="polite">{naslov.greg}</h2>
+        <p class="hk-month__hijri" data-hk-htitle>{naslov.hijri}</p>
+      </div>
+      <button type="button" class="btn btn--ghost btn--sm hk-nav" data-hk-next aria-label="Sljedeći mjesec">
+        <span class="hk-nav__txt">Sljedeći</span>
+        <Icon name="chevron-right" />
+      </button>
+    </div>
+    <div class="hk-month__tools">
+      <button type="button" class="btn btn--sm btn--primary" data-hk-today hidden>
+        <Icon name="calendar" /> Ovaj mjesec
+      </button>
+      <p class="hk-month__hint muted">Velikim brojem je gregorijanski, manjim hidžretski datum. Strelice ← → mijenjaju mjesec.</p>
+    </div>
+    <div class="hk-grid" data-hk-grid set:html={renderMjesec(g.y, g.m, danas)} />
+    <div data-hk-legend set:html={renderMjesecLegenda(g.y, g.m, danas)} />
+  </section>
+
+  <section class="hk-important" aria-labelledby="hk-important-title">
+    <h2 id="hk-important-title">Važni datumi</h2>
+    <div class="hk-disclaimer" role="note">
+      <Icon name="info" />
+      <p>
+        <strong>Datumi su izračunati</strong> (kalendar Umm al-Qura) i služe samo kao orijentacija.
+        Zvanične datume početka mjeseci, Ramazana i bajrama objavljuje Rijaset, odnosno Mešihat Islamske
+        zajednice — moguće je odstupanje od <strong>±1 dan</strong>. Noći (lejle) se obilježavaju uveče,
+        uoči navedenog hidžretskog datuma.
+      </p>
+    </div>
+    <div class="hk-years" data-hk-important set:html={renderVazniDatumi(danas)} />
+  </section>
+</div>
+
+<script>
+  import { danasDayNum, formatGreg, formatHijri, fromDayNum, hijri } from '../../lib/extras/hidzra';
+  import {
+    naslovMjeseca,
+    renderMjesec,
+    renderMjesecLegenda,
+    renderOdbrojavanje,
+    renderVazniDatumi,
+  } from '../../lib/extras/kalendar-render';
+
+  const root = document.querySelector<HTMLElement>('[data-hk]');
+  if (root) {
+    const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const danas = danasDayNum();
+    const t = fromDayNum(danas);
+    let y = t.y;
+    let m = t.m;
+
+    const fromUrl = new URLSearchParams(location.search).get('m');
+    const match = fromUrl?.match(/^(\d{4})-(\d{1,2})$/);
+    if (match) {
+      const yy = +match[1];
+      const mm = +match[2];
+      if (yy >= 1940 && yy <= 2170 && mm >= 1 && mm <= 12) {
+        y = yy;
+        m = mm;
+      }
+    }
+
+    // Stvarni "danas" (stranica je možda generisana ranije).
+    $('[data-hk-today-h]').textContent = formatHijri(hijri(danas));
+    $('[data-hk-today-g]').textContent = formatGreg(danas);
+    $('[data-hk-countdown]').innerHTML = renderOdbrojavanje(danas);
+    $('[data-hk-important]').innerHTML = renderVazniDatumi(danas);
+
+    const draw = (pushUrl: boolean) => {
+      const n = naslovMjeseca(y, m);
+      $('[data-hk-title]').textContent = n.greg;
+      $('[data-hk-htitle]').textContent = n.hijri;
+      $('[data-hk-grid]').innerHTML = renderMjesec(y, m, danas);
+      $('[data-hk-legend]').innerHTML = renderMjesecLegenda(y, m, danas);
+      $('[data-hk-today]').hidden = y === t.y && m === t.m;
+      if (pushUrl) {
+        const u = new URL(location.href);
+        if (y === t.y && m === t.m) u.searchParams.delete('m');
+        else u.searchParams.set('m', `${y}-${String(m).padStart(2, '0')}`);
+        history.replaceState(null, '', u);
+      }
+    };
+    const shift = (d: number) => {
+      m += d;
+      if (m < 1) { m = 12; y--; }
+      if (m > 12) { m = 1; y++; }
+      draw(true);
+    };
+
+    $('[data-hk-prev]').addEventListener('click', () => shift(-1));
+    $('[data-hk-next]').addEventListener('click', () => shift(1));
+    $('[data-hk-today]').addEventListener('click', () => {
+      y = t.y;
+      m = t.m;
+      draw(true);
+      $<HTMLButtonElement>('[data-hk-next]').focus();
+    });
+    $('.hk-month').addEventListener('keydown', (e) => {
+      const ev = e as KeyboardEvent;
+      if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+      if ((ev.target as HTMLElement).closest('input, textarea, select')) return;
+      if (ev.key === 'ArrowLeft' || ev.key === 'PageUp') { ev.preventDefault(); shift(-1); }
+      if (ev.key === 'ArrowRight' || ev.key === 'PageDown') { ev.preventDefault(); shift(1); }
+    });
+    draw(false);
+  }
+</script>
+
+<style is:global>
+  .hk { display: grid; gap: var(--space-7); }
+
+  /* Danas + odbrojavanje */
+  .hk-today {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    padding: clamp(var(--space-4), 3vw, var(--space-6));
+  }
+  @media (min-width: 820px) { .hk-today { grid-template-columns: 1fr 1fr; } }
+  .hk-today .eyebrow { margin-bottom: var(--space-2); }
+  .hk-today__hijri {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 2.4vw + 1rem, 2.3rem);
+    line-height: 1.15;
+    color: var(--color-primary);
+    margin: 0 0 var(--space-1);
+  }
+  .hk-today__greg { margin: 0 0 var(--space-3); font-weight: 600; }
+  .hk-today__note { font-size: 0.88rem; color: var(--color-text-muted); margin: 0; }
+
+  .hk-cd {
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    text-align: center;
+  }
+  .hk-cd__label { font-weight: 700; color: var(--color-accent); margin: 0; letter-spacing: 0.02em; }
+  .hk-cd__value { margin: var(--space-1) 0; line-height: 1; }
+  .hk-cd__num {
+    font-family: var(--font-serif);
+    font-size: clamp(2.6rem, 6vw, 3.6rem);
+    font-weight: 600;
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .hk-cd__num--word { font-size: clamp(2rem, 4vw, 2.6rem); }
+  .hk-cd__unit { font-size: 1.15rem; font-weight: 700; color: var(--color-text-muted); }
+  .hk-cd__date { font-size: 0.9rem; color: var(--color-text-muted); margin: var(--space-2) 0 0; }
+  .hk-cd__more {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: var(--space-3) 0 0;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2) var(--space-5);
+    font-size: 0.92rem;
+  }
+  .hk-cd__mini-label { color: var(--color-text-muted); }
+
+  /* Mjesec */
+  .hk-month__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+  .hk-month__titles { text-align: center; min-width: 0; }
+  .hk-month__title { margin: 0; font-size: clamp(1.4rem, 2vw + 0.9rem, 2rem); }
+  .hk-month__hijri { margin: var(--space-1) 0 0; color: var(--color-accent); font-weight: 700; font-size: 0.95rem; }
+  .hk-nav { flex: none; }
+  @media (max-width: 559px) {
+    .hk-nav__txt { display: none; }
+    .hk-nav { padding-inline: 0.6rem; }
+  }
+  .hk-month__tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-4);
+    text-align: center;
+  }
+  .hk-month__hint { font-size: 0.85rem; margin: 0; }
+  .hk-month__tools [hidden] { display: none; }
+
+  .hk-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 3px;
+  }
+  @media (min-width: 640px) { .hk-table { border-spacing: 6px; } }
+  .hk-table th {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    padding: var(--space-1) 0;
+  }
+  .hk-table abbr { text-decoration: none; }
+  .hk-cell {
+    position: relative;
+    vertical-align: top;
+    height: 3.6rem;
+    padding: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+  @media (min-width: 640px) { .hk-cell { height: 5.6rem; } }
+  .hk-cell--empty { background: transparent; border-color: transparent; }
+  .hk-cell__in {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0.3rem 0.35rem;
+    overflow: hidden;
+  }
+  @media (min-width: 640px) { .hk-cell__in { padding: 0.45rem 0.55rem; } }
+  .hk-g { font-weight: 700; font-size: 1rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  @media (min-width: 640px) { .hk-g { font-size: 1.2rem; } }
+  .hk-h {
+    margin-top: auto;
+    align-self: flex-end;
+    font-size: 0.78rem;
+    color: var(--color-accent);
+    font-weight: 700;
+    text-align: right;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+  }
+  .hk-h__m { display: none; font-weight: 600; }
+  @media (min-width: 640px) {
+    .hk-h { font-size: 0.85rem; }
+    .hk-h__m { display: inline; }
+  }
+  .hk-ev {
+    display: none;
+    font-size: 0.72rem;
+    line-height: 1.2;
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-top: 0.15rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (min-width: 900px) { .hk-ev { display: block; } }
+  .hk-cell--friday { background: color-mix(in srgb, var(--color-primary) 5%, var(--color-surface)); }
+  .hk-cell--hstart { border-color: var(--color-accent-bright); }
+  .hk-cell--event::after {
+    content: '';
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--radius-full);
+    background: var(--color-accent-bright);
+  }
+  .hk-cell--today {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-on-primary);
+    box-shadow: var(--shadow-md);
+  }
+  .hk-cell--today .hk-h,
+  .hk-cell--today .hk-ev { color: var(--color-on-primary); }
+  .hk-cell--today.hk-cell--event::after { background: var(--color-on-primary); }
+
+  .hk-legend {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-5) 0 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+  .hk-legend li {
+    display: grid;
+    gap: 0 var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    border-left: 3px solid var(--color-accent-bright);
+    background: var(--color-surface);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  @media (min-width: 640px) { .hk-legend li { grid-template-columns: 16rem 1fr; } }
+  .hk-legend time { font-weight: 600; color: var(--color-text-muted); font-size: 0.92rem; }
+  .hk-legend li.is-past { opacity: 0.65; }
+
+  /* Važni datumi */
+  .hk-important > h2 { margin-bottom: var(--space-4); }
+  .hk-disclaimer {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-4);
+    margin-bottom: var(--space-6);
+    background: var(--color-missing-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-missing-border);
+    border-radius: var(--radius-md);
+  }
+  .hk-disclaimer svg { flex: none; width: 22px; height: 22px; color: var(--color-missing-text); margin-top: 0.1rem; }
+  .hk-disclaimer p { margin: 0; }
+  .hk-years { display: grid; gap: var(--space-6); }
+  @media (min-width: 1000px) { .hk-years { grid-template-columns: 1fr 1fr; } }
+  .hk-year__title { font-size: 1.25rem; margin-bottom: var(--space-3); color: var(--color-primary); }
+  .hk-dates { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  .hk-date {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .hk-date__when { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0 var(--space-3); font-size: 0.88rem; }
+  .hk-date__when time { font-weight: 700; }
+  .hk-date__h { color: var(--color-accent); font-weight: 600; }
+  .hk-date__what strong { font-size: 1.02rem; }
+  .hk-date__note { display: block; font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.15rem; }
+  .hk-date__status { align-self: center; white-space: nowrap; }
+  .hk-date.is-past { opacity: 0.6; }
+  .hk-date.is-next { border-color: var(--color-primary); box-shadow: 0 0 0 1px var(--color-primary), var(--shadow-sm); }
+</style>

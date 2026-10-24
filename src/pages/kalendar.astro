@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import HijriKalendar from '../components/extras/HijriKalendar.astro';
+---
+<BaseLayout
+  title="Islamski kalendar"
+  description="Hidžretski (islamski) kalendar uporedo sa gregorijanskim: važni datumi (Ramazan, bajrami, mubarek noći) i odbrojavanje do sljedećeg."
+>
+  <PageHero
+    eyebrow="Takvim"
+    title="Islamski kalendar"
+    subtitle="Gregorijanski i hidžretski datumi uporedo, važni dani tekuće i sljedeće godine i odbrojavanje do Ramazana i bajrama."
+    arabic="التقويم الهجري"
+  />
+  <section class="section section--tight">
+    <div class="container">
+      <HijriKalendar />
+    </div>
+  </section>
+</BaseLayout>
