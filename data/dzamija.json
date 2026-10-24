@@ -1,16 +1,73 @@
 {
   "naziv": "Džamija na Jaliji",
   "nazivArapski": null,
-  "grad": null,
-  "drzava": null,
-  "adresa": null,
-  "koordinate": { "lat": 43.1367, "lng": 20.5122, "potvrdjeno": false },
-  "kratakOpis": null,
-  "historija": [],
-  "cinjenice": [],
-  "kontakt": { "email": null, "telefon": null, "napomena": null },
-  "drustveneMreze": { "youtube": "https://www.youtube.com/@D%C5%BEamijanaJaliji", "facebook": null, "instagram": null },
-  "donacije": { "primalac": null, "banka": null, "racun": null, "iban": null, "swift": null, "svrha": null, "napomena": null },
-  "dzuma": { "vrijeme": null, "napomena": null },
-  "izvori": []
+  "grad": "Novi Pazar",
+  "drzava": "Srbija",
+  "adresa": "Jalija 69, 36300 Novi Pazar",
+  "koordinate": { "lat": 43.148048, "lng": 20.524462, "potvrdjeno": true },
+  "kratakOpis": "Džamija na Jaliji nalazi se u istoimenom naselju u Novom Pazaru, u ulici Jalija. Svečano je otvorena 8. marta 2024. godine, uoči ramazana 1445. h. g., a danas je mjesto namaza, džume, halki Kur'ana i predavanja za džematlije svih uzrasta.",
+  "historija": [
+    {
+      "naslov": "Vakuf i početak gradnje",
+      "tekst": "Zemljište na kojem je podignuta džamija uvakufio je Ferid Šehović. Na svečanosti otvaranja predsjednik Mešihata Islamske zajednice u Srbiji istakao je da je džemat na ostvarenje ovog projekta čekao punih sedam godina, dok je sama gradnja pokrenuta 2022. godine.",
+      "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/"
+    },
+    {
+      "naslov": "Izgradnja zahvaljujući vakifima",
+      "tekst": "Glavni vakif, brat muftije novosadskog hfz. Nedžada ef. Hasanovića, odlučio je oko dvije godine prije otvaranja da finansira objekat na četiri etaže, u koji je uloženo više od 200.000 eura. Zahvalnice za finansijsku podršku uručene su i Seadu Hasanoviću, Mersadu Dragolovčaninu i Aldinu Kaliću, a zahvalnost je izražena i Vakufskoj direkciji, pravnoj službi Mešihata te Medžlisu Islamske zajednice Novi Pazar.",
+      "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/"
+    },
+    {
+      "naslov": "Svečano otvaranje — 8. mart 2024.",
+      "tekst": "Džamiju je, uz otkrivanje ploče i presijecanje vrpce, otvorio predsjednik Mešihata Islamske zajednice u Srbiji muftija dr. Mevlud ef. Dudić, koji je u njoj održao i prvu hutbu uoči ramazana. Prisutnima su se obratili muftija novosadski hfz. Nedžad ef. Hasanović i muftija sandžački hfz. Abdurrahman ef. Kujević, a program je vodio glavni imam Medžlisa IZ Novi Pazar Dženan ef. Kamešničanin.",
+      "izvor": "https://sandzak.tv/svecano-otvorena-dzamija-na-jaliji/"
+    },
+    {
+      "naslov": "Džemat danas",
+      "tekst": "Od jula 2025. džemat na svom YouTube kanalu objavljuje džumanske hutbe i predavanja, među kojima su ramazanski serijal tefsira sure Jusuf (učen svakog jutra prije sabahskog farza), serijal „Duhovna opskrba vjernika” i halka hadisa. U oktobru 2026. u novoopremljenoj učionici džamije počeli su halka hifza Amme džuza za muškarce, škola Kur'ana za žene i djecu te kursevi sufare.",
+      "izvor": "https://www.instagram.com/dzamija_na_jaliji/"
+    }
+  ],
+  "cinjenice": [
+    { "oznaka": "Adresa", "vrijednost": "Jalija 69, Novi Pazar", "izvor": "https://www.openstreetmap.org/way/1443189625" },
+    { "oznaka": "Svečano otvorena", "vrijednost": "8. mart 2024. (ramazan 1445. h. g.)", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+    { "oznaka": "Početak gradnje", "vrijednost": "2022. godine", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+    { "oznaka": "Objekat", "vrijednost": "četiri etaže", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+    { "oznaka": "Vakif zemljišta", "vrijednost": "Ferid Šehović", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+    { "oznaka": "Ulaganje glavnog vakifa", "vrijednost": "više od 200.000 €", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+    { "oznaka": "Otvorio", "vrijednost": "Mešihat Islamske zajednice u Srbiji (muftija dr. Mevlud ef. Dudić)", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+    { "oznaka": "YouTube kanal džemata", "vrijednost": "od 23. jula 2025.", "izvor": "https://www.youtube.com/@D%C5%BEamijanaJaliji/about" }
+  ],
+  "kontakt": {
+    "email": null,
+    "telefon": null,
+    "napomena": "Zvanični e-mail i telefon džamije nisu javno objavljeni. Za informacije pišite džematu preko zvaničnih Instagram ili Facebook stranica; brojevi za prijave na kurseve navedeni su na plakatima u objavama."
+  },
+  "drustveneMreze": {
+    "youtube": "https://www.youtube.com/@D%C5%BEamijanaJaliji",
+    "facebook": "https://www.facebook.com/p/D%C5%BEamija-na-Jaliji-61557235081713/",
+    "instagram": "https://www.instagram.com/dzamija_na_jaliji/"
+  },
+  "donacije": {
+    "primalac": null,
+    "banka": null,
+    "racun": null,
+    "iban": null,
+    "swift": null,
+    "svrha": null,
+    "napomena": "Podaci za uplatu nisu javno objavljeni. Prije bilo kakve uplate zatražite važeće instrukcije direktno od džemata ili Medžlisa Islamske zajednice Novi Pazar."
+  },
+  "dzuma": {
+    "vrijeme": null,
+    "napomena": "Tačno vrijeme džume nije javno objavljeno. U džamijama Islamske zajednice džuma se uobičajeno klanja u vrijeme podne-namaza — provjerite kod džemata."
+  },
+  "izvori": [
+    { "naziv": "Mešihat IZ u Srbiji — Svečano otvorena džamija na Jaliji (8. 3. 2024.)", "url": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+    { "naziv": "Sandžak TV / SANA — Svečano otvorena džamija na Jaliji (8. 3. 2024.)", "url": "https://sandzak.tv/svecano-otvorena-dzamija-na-jaliji/" },
+    { "naziv": "OpenStreetMap — objekat džamije, Jalija 69 (way 1443189625)", "url": "https://www.openstreetmap.org/way/1443189625" },
+    { "naziv": "Wikipedia (sr) — Spisak džamija u Srbiji (Džamija na Jaliji, Jalija 69)", "url": "https://sr.wikipedia.org/sr-el/Списак_џамија_у_Србији" },
+    { "naziv": "YouTube kanal „Džamija na Jaliji”", "url": "https://www.youtube.com/@D%C5%BEamijanaJaliji" },
+    { "naziv": "Instagram @dzamija_na_jaliji", "url": "https://www.instagram.com/dzamija_na_jaliji/" },
+    { "naziv": "Facebook — Džamija na Jaliji (zvanična stranica)", "url": "https://www.facebook.com/p/D%C5%BEamija-na-Jaliji-61557235081713/" }
+  ]
 }

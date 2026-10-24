@@ -1,1 +1,81 @@
-{}
+{
+  "admir-jasarevic": {
+    "uloga": "Hatib i predavač u Džamiji na Jaliji",
+    "bio": "Hafiz Kur'ana. Drži većinu džumanskih hutbi objavljenih na kanalu Džamije na Jaliji, kao i serijale predavanja — ramazanski tefsir sure Jusuf (2026., svakog jutra prije sabahskog farza) i „Duhovna opskrba vjernika”. Od oktobra 2026. u džamiji vodi halku hifza Amme džuza za muškarce metodom telkina, uz tefsir.",
+    "slika": null,
+    "potvrdjeno": true,
+    "izvori": [
+      { "naziv": "YouTube kanal „Džamija na Jaliji”", "url": "https://www.youtube.com/@D%C5%BEamijanaJaliji/videos" },
+      { "naziv": "Instagram @dzamija_na_jaliji — plakat „Hifz Amme džuza” (11. 10. 2026.)", "url": "https://www.instagram.com/dzamija_na_jaliji/p/DeWbvqEqdf2/" }
+    ]
+  },
+  "abdurahman-kujevic": {
+    "uloga": "Gost hatib i predavač (halka hadisa)",
+    "bio": "Hafiz, rođen 1982. u Rožajama. Završio je medresu Gazi Isa-beg u Novom Pazaru i Fakultet hadisa i islamskih nauka na Islamskom univerzitetu u Medini (2006.). Mešihat Islamske zajednice u Srbiji imenovao ga je 2016. za vršioca dužnosti muftije sandžačkog, a na otvaranju Džamije na Jaliji 2024. obratio se kao muftija sandžački. U džamiji drži hutbe i halku hadisa.",
+    "slika": null,
+    "potvrdjeno": true,
+    "izvori": [
+      { "naziv": "Wikipedia — Abdurahman Kujević", "url": "https://en.wikipedia.org/wiki/Abdurahman_Kujevi%C4%87" },
+      { "naziv": "Mešihat IZ u Srbiji — Vršilac dužnosti muftije sandžačkog (7. 3. 2016.)", "url": "https://mesihat.org/2016/03/07/vrsilac-duznosti-muftija-sandzacki-je-hfz-abdurahman-ef-kujevic/" },
+      { "naziv": "Mešihat IZ u Srbiji — Svečano otvorena džamija na Jaliji (8. 3. 2024.)", "url": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" }
+    ]
+  },
+  "edin-redzepovic": {
+    "uloga": "Gost hatib",
+    "bio": "Hafiz Kur'ana. Drži džumanske hutbe u Džamiji na Jaliji, a predavanja i u Hasan Čelebi (Arap) džamiji u Novom Pazaru.",
+    "slika": null,
+    "potvrdjeno": true,
+    "izvori": [
+      { "naziv": "YouTube — hutba „Razumijevanje ibadeta u islamu” (25. 9. 2026.)", "url": "https://www.youtube.com/watch?v=uOrHIm0Tmc0" },
+      { "naziv": "Hasan Čelebi (Arap) džamija — Predavanja", "url": "https://www.arapdzamija.rs/predavanja" }
+    ]
+  },
+  "dzenan-kamesnicanin": {
+    "uloga": "Gost hatib",
+    "bio": "Glavni imam Medžlisa Islamske zajednice Novi Pazar u vrijeme otvaranja Džamije na Jaliji (mart 2024.), kada je vodio program svečanosti. U džamiji je održao džumansku hutbu „Kulturološka pripadnost islamu” (29. 8. 2025.).",
+    "slika": null,
+    "potvrdjeno": true,
+    "izvori": [
+      { "naziv": "Mešihat IZ u Srbiji — Svečano otvorena džamija na Jaliji (8. 3. 2024.)", "url": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
+      { "naziv": "YouTube — Hutba 29. 8. 2025.", "url": "https://www.youtube.com/watch?v=_9qWe3pe_k8" }
+    ]
+  },
+  "ferid-fijuljanin": {
+    "uloga": "Gost hatib",
+    "bio": "Hafiz Kur'ana. Održao je džumansku hutbu u Džamiji na Jaliji (25. 7. 2025.), a hutbe drži i u Hasan Čelebi (Arap) džamiji u Novom Pazaru.",
+    "slika": null,
+    "potvrdjeno": true,
+    "izvori": [
+      { "naziv": "YouTube — Hutba 25. 7. 2025.", "url": "https://www.youtube.com/watch?v=XyZ9pCBpPB0" },
+      { "naziv": "Hasan Čelebi (Arap) džamija — Hutbe", "url": "https://www.arapdzamija.rs/hutbe" }
+    ]
+  },
+  "zikret-mustafic": {
+    "uloga": "Gost predavač",
+    "bio": "Hafiz Kur'ana. Održao je predavanje „Opasnost javnog razvrata” u Džamiji na Jaliji (2025.), a predaje i u Hasan Čelebi (Arap) džamiji u Novom Pazaru.",
+    "slika": null,
+    "potvrdjeno": true,
+    "izvori": [
+      { "naziv": "YouTube — Opasnost javnog razvrata", "url": "https://www.youtube.com/watch?v=43grkcWOjiQ" },
+      { "naziv": "Hasan Čelebi (Arap) džamija — Predavanja", "url": "https://www.arapdzamija.rs/predavanja" }
+    ]
+  },
+  "muhamed-metjahic": {
+    "uloga": "Gost hatib",
+    "bio": null,
+    "slika": null,
+    "potvrdjeno": false,
+    "izvori": [
+      { "naziv": "YouTube — hutba „Osnovni emanet” (18. 9. 2026.)", "url": "https://www.youtube.com/watch?v=Sqw2IPRsP24" }
+    ]
+  },
+  "edin-salihovic": {
+    "uloga": "Gost hatib",
+    "bio": null,
+    "slika": null,
+    "potvrdjeno": false,
+    "izvori": [
+      { "naziv": "YouTube — hutba „Vjernik je ogledalo vjerniku” (31. 7. 2026.)", "url": "https://www.youtube.com/watch?v=aFCBrBJYZik" }
+    ]
+  }
+}

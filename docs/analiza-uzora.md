@@ -99,3 +99,12 @@ prvo pokazuju "Učitavanje…"), ikonice Lucide, fontovi Cormorant Garamond (nas
 - Kategorije sa dijakritikom i lijepim nazivima ("Džuma", "Dobročinstvo").
 - Mapa: OSM embed + linkovi Google Maps / Apple Maps / "Navigacija do džamije".
 - Jasne placeholder oznake gdje džemat treba dostaviti podatke (fotografije, račun, raspored).
+
+## Specifično za Jaliju (iz istraživanja, vidi `docs/istrazivanje.md`)
+- Džamija je u **Novom Pazaru** (Jalija 69), kao i uzor (~1,1 km od Arap džamije) → isti grad za vaktiju
+  (vaktija.ba lokacija 110). Koordinate u `data/dzamija.json` su potvrđene (OSM).
+- Džamija je nova (otvorena 8. 3. 2024.) → umjesto stranice „Obnova” ima smisla sekcija „Izgradnja i otvaranje”
+  (vakifi, svečanost) unutar `/o-dzamiji`.
+- Jalija trenutno nema e-mail ni račun za donacije javno → kontakt i donacije preko Instagram/Facebook linkova + placeholder.
+- Stvarne aktivnosti (10/2026): škola Kur'ana za žene i djecu, hifz Amme džuza za muškarce, sufara → `/mekteb` stranica
+  može prikazati te halke iz `data/obavjestenja.json` (kategorija „Halke”).
