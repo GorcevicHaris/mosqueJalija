@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "update-videos": "node scripts/update-videos.mjs"
+    "update-videos": "node scripts/update-videos.mjs",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -21,5 +22,9 @@
     "@fontsource/aref-ruqaa": "^5.3.0",
     "adhan": "^4.4.6",
     "astro": "^7.4.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^6.0.3"
   }
 }
