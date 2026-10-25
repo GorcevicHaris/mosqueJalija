@@ -232,12 +232,9 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     white-space: nowrap;
     vertical-align: bottom;
   }
-  .pd__grid { display: grid; gap: var(--space-6); }
-  .pd__grid:not(:has(.pd__aside)) { max-width: 980px; }
-  @media (min-width: 1024px) {
-    .pd__grid:has(.pd__aside) { grid-template-columns: minmax(0, 1fr) 360px; align-items: start; }
-    .pd__aside { position: sticky; top: calc(var(--header-h, 72px) + var(--space-4)); }
-  }
+  /* jedna kolona: video i tekst, pa lista dijelova serije ispod (bez bočne kolone) */
+  .pd__grid { display: grid; gap: var(--space-7); max-width: 900px; margin-inline: auto; }
+  .pd__crumbs { max-width: 900px; margin-inline: auto; }
   .pd__main { min-width: 0; }
   .pd__head { margin-top: var(--space-5); }
   .pd__badges { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
@@ -268,7 +265,7 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
   .pd__imam :global(.avatar) { box-shadow: 0 0 0 2px var(--color-accent-bright); }
   .pd__nepotvrdjeno { cursor: help; }
   .pd__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-  .pd__h2 { font-size: 1.3rem; margin: var(--space-7) 0 var(--space-3); }
+  .pd__h2 { font-size: 1.2rem; margin: var(--space-7) 0 var(--space-3); }
   .pd__opis :global(.prose) { overflow-wrap: anywhere; }
   .pd__serija-nav {
     display: grid;
@@ -296,7 +293,7 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     .pd__sn--next { grid-column: auto; }
   }
   .pd__serija { padding: var(--space-5); }
-  .pd__serija-title { font-size: 1.3rem; margin: 0 0 var(--space-2); }
+  .pd__serija-title { font-size: var(--card-title-size); font-weight: 600; margin: 0 0 var(--space-2); }
   .pd__serija-opis { font-size: 0.9rem; margin: 0 0 var(--space-4); }
   .pd__dijelovi {
     list-style: none;

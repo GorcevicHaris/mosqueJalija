@@ -22,42 +22,47 @@ const izvor = VAKTIJA_CONFIG.zvanicniIzvor;
   />
 
   <section class="section section--tight">
-    <div class="container vk">
+    <div class="container container--narrow vk">
       <div class="vk__today">
         <h2 class="vk__h2">Danas</h2>
         <VaktijaToday />
       </div>
 
-      <aside class="vk__info" aria-label="Napomene">
-        <div class="card vk__card">
-          <h3 class="vk__h3">Sabah-namaz u džamiji</h3>
-          {VAKTIJA_CONFIG.sabahNapomena ? (
-            <p>{VAKTIJA_CONFIG.sabahNapomena}</p>
-          ) : (
-            <Placeholder label="vrijeme klanjanja sabah-namaza u džamiji" hint="džemat treba potvrditi (npr. koliko minuta prije izlaska sunca)" />
-          )}
+      <h2 class="visually-hidden">Napomene</h2>
+      <dl class="vk__info">
+        <div>
+          <dt>Sabah u džamiji</dt>
+          <dd>
+            {VAKTIJA_CONFIG.sabahNapomena ? (
+              <p>{VAKTIJA_CONFIG.sabahNapomena}</p>
+            ) : (
+              <Placeholder label="vrijeme klanjanja sabah-namaza u džamiji" hint="džemat treba potvrditi (npr. koliko minuta prije izlaska sunca)" />
+            )}
+          </dd>
         </div>
-        <div class="card vk__card">
-          <h3 class="vk__h3">Džuma-namaz</h3>
-          {dzamija.dzuma.vrijeme ? (
-            <p><strong>{dzamija.dzuma.vrijeme}</strong>{dzamija.dzuma.napomena && <> — {dzamija.dzuma.napomena}</>}</p>
-          ) : (
-            <>
-              <p>Džuma se klanja petkom u vrijeme podne-namaza (u tabeli označeno sa <span class="badge">Džuma</span>).</p>
-              {dzamija.dzuma.napomena ? <p class="muted">{dzamija.dzuma.napomena}</p> : <Placeholder label="tačno vrijeme hutbe i džume u džamiji" inline />}
-            </>
-          )}
+        <div>
+          <dt>Džuma-namaz</dt>
+          <dd>
+            {dzamija.dzuma.vrijeme ? (
+              <p><strong>{dzamija.dzuma.vrijeme}</strong>{dzamija.dzuma.napomena && <> — {dzamija.dzuma.napomena}</>}</p>
+            ) : (
+              <>
+                <p>Petkom u vrijeme podne-namaza (u tabeli: <span class="badge">Džuma</span>).</p>
+                {dzamija.dzuma.napomena ? <p class="muted">{dzamija.dzuma.napomena}</p> : <Placeholder label="tačno vrijeme hutbe i džume u džamiji" inline />}
+              </>
+            )}
+          </dd>
         </div>
-        <div class="card vk__card vk__card--note">
-          <h3 class="vk__h3">O tačnosti</h3>
-          <p>
-            Vremena se računaju u vašem pregledaču za {grad}, po parametrima usklađenim sa zvaničnom
-            vaktijom Islamske zajednice. Moguće je odstupanje do <strong>±1–2 minute</strong>.
-            Za ibadet se oslonite na zvaničnu vaktiju:
-            <a href={izvor.url} target="_blank" rel="noopener">{izvor.naziv}</a>.
-          </p>
+        <div>
+          <dt>Tačnost</dt>
+          <dd>
+            <p>
+              Vremena se računaju za {grad} po parametrima zvanične vaktije Islamske zajednice; odstupanje je
+              moguće do <strong>±1–2 minute</strong>. Za ibadet se oslonite na zvaničnu vaktiju: <a href={izvor.url} target="_blank" rel="noopener">{izvor.naziv}</a>.
+            </p>
+          </dd>
         </div>
-      </aside>
+      </dl>
     </div>
   </section>
 
@@ -70,17 +75,21 @@ const izvor = VAKTIJA_CONFIG.zvanicniIzvor;
 
 <style>
   .vk { display: grid; gap: var(--space-6); }
-  @media (min-width: 1000px) {
-    .vk { grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr); align-items: start; }
+  .vk__h2 { font-size: clamp(1.4rem, 1.1vw + 1.1rem, 1.75rem); margin: 0 0 var(--space-3); }
+  .vk__info { margin: 0; border-top: 1px solid var(--color-border); }
+  .vk__info > div {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: var(--space-1) var(--space-4);
+    align-items: baseline;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border);
   }
-  .vk__h2 { font-size: 1.4rem; margin: 0 0 var(--space-3); }
-  .vk__info { display: grid; gap: var(--space-4); }
-  @media (min-width: 1000px) { .vk__info { margin-top: calc(1.4rem * 1.3 + var(--space-3)); } }
-  .vk__card { padding: var(--space-4) var(--space-5); gap: var(--space-2); }
-  .vk__card p { margin: 0; }
-  .vk__h3 { font-size: 1.05rem; margin: 0 0 var(--space-1); }
-  .vk__card--note { background: var(--color-surface-2); box-shadow: none; }
+  @media (max-width: 560px) { .vk__info > div { grid-template-columns: 1fr; } }
+  .vk__info dt { font-weight: 700; font-size: 0.9rem; color: var(--color-text-muted); }
+  .vk__info dd { margin: 0; display: grid; gap: var(--space-2); font-size: 0.96rem; }
+  .vk__info p { margin: 0; }
   @media print {
-    .vk__info, .vk__today, :global(.page-hero) { display: none !important; }
+    .vk, :global(.page-hero) { display: none !important; }
   }
 </style>

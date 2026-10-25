@@ -102,7 +102,13 @@ const kolone = [
   </div>
 
   <div class="container site-footer__bottom">
-    <p>© {godina} Džamija na Jaliji</p>
+    <p class="site-footer__copy">
+      <span>© {godina} Džamija na Jaliji</span>
+      <a class="site-footer__admin" href={url('/admin')} rel="nofollow">
+        <Icon name="lock" size={13} />
+        <span>Prijava za urednike</span>
+      </a>
+    </p>
     <p class="site-footer__note">
       Oznake <span class="badge badge--warn">Podatak nedostaje</span> označavaju informacije koje džemat tek treba potvrditi.
     </p>
@@ -169,5 +175,19 @@ const kolone = [
     font-size: 0.85rem;
   }
   .site-footer__bottom p { margin: 0; }
+  .site-footer__copy { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-4); }
+  /* diskretan ulaz za urednike: sitno i prigušeno, ali čitljivo (AA) i ≥ 40 px za dodir */
+  .site-footer__admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    min-height: 40px;
+    color: var(--inverse-muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+  .site-footer__admin :global(svg) { flex: none; opacity: 0.8; }
+  .site-footer__admin:hover { color: var(--inverse-accent); opacity: 1; text-decoration: underline; }
   .site-footer__note .badge { font-size: 0.72rem; }
 </style>

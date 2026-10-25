@@ -33,7 +33,7 @@ const opis =
 ---
 <BaseLayout title={imam.punoIme} description={opis} image={imam.slika ?? undefined}>
   <section class="im-hero theme-inverse pattern-bg">
-    <div class="container im-hero__inner">
+    <div class="container container--narrow im-hero__inner">
       <figure class="im-hero__foto">
         <ImamAvatar punoIme={imam.punoIme} slika={imam.slika} size={128} eager />
         {fotoTekst && (
@@ -52,7 +52,7 @@ const opis =
   </section>
 
   <section class="section section--tight">
-    <div class="container im-body">
+    <div class="container container--narrow im-body">
       <div class="im-bio">
         <h2 class="im-h2">O predavaču</h2>
         {imam.bio ? (
@@ -72,17 +72,18 @@ const opis =
         )}
       </div>
       {poKategoriji.length > 0 && (
-        <aside class="im-kat card" aria-labelledby="im-kat-naslov">
-          <h2 class="im-h3" id="im-kat-naslov">Po kategorijama</h2>
-          <ul>
+        <nav class="im-kat" aria-labelledby="im-kat-naslov">
+          <h2 class="im-h3" id="im-kat-naslov">Snimci po kategorijama</h2>
+          <ul role="list">
             {poKategoriji.map(([k, n]) => (
               <li>
-                <a href={url(`/predavanja${filterQuery({ imam: imam.slug, kategorija: k })}`)}>{getKategorija(k)?.naziv ?? k}</a>
-                <span class="badge badge--muted">{n}</span>
+                <a class="im-kat__link" href={url(`/predavanja${filterQuery({ imam: imam.slug, kategorija: k })}`)}>
+                  {getKategorija(k)?.naziv ?? k} <span class="im-kat__n">{n}</span>
+                </a>
               </li>
             ))}
           </ul>
-        </aside>
+        </nav>
       )}
     </div>
   </section>
@@ -117,16 +118,27 @@ const opis =
   .im-hero__name { color: var(--inverse-text); margin: var(--space-1) 0; font-size: clamp(1.8rem, 3vw + 1rem, 2.8rem); }
   .im-hero__role { color: var(--inverse-muted); margin: 0; font-size: 1.08rem; }
   .im-hero__count { color: var(--inverse-accent); margin: var(--space-2) 0 0; font-weight: 700; }
-  .im-body { display: grid; gap: var(--space-6); }
-  @media (min-width: 900px) { .im-body { grid-template-columns: minmax(0, 1fr) 300px; align-items: start; } }
-  .im-h2 { margin-top: 0; }
-  .im-h3 { font-size: 1.1rem; margin: 0 0 var(--space-3); }
+  .im-body { display: grid; gap: var(--space-7); }
+  .im-h2 { margin-top: 0; font-size: clamp(1.4rem, 1.1vw + 1.1rem, 1.75rem); }
+  .im-h3 { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 var(--space-3); }
   .im-izvori { margin-top: var(--space-6); font-size: 0.9rem; }
   .im-izvori h3 { font-size: 1rem; margin-bottom: var(--space-2); }
   .im-izvori ul { padding-left: 1.2em; margin: 0; display: grid; gap: var(--space-1); }
-  .im-kat ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
-  .im-kat li a { display: inline-flex; align-items: center; min-height: 40px; }
-  .im-kat li { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+  .im-kat { padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
+  .im-kat ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .im-kat__link {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    min-height: 40px; padding: 0.3rem 0.5rem 0.3rem 0.95rem;
+    border: 1px solid var(--color-border); border-radius: var(--radius-full);
+    background: var(--color-surface);
+    color: var(--color-text); font-size: 0.9rem; font-weight: 600; text-decoration: none;
+  }
+  .im-kat__link:hover { border-color: var(--color-primary); color: var(--color-primary); }
+  .im-kat__n {
+    display: inline-grid; place-items: center; min-width: 1.75rem; height: 1.75rem; padding: 0 0.4rem;
+    border-radius: var(--radius-full); background: var(--color-surface-2);
+    font-size: 0.78rem; font-weight: 700; color: var(--color-text-muted);
+  }
   .im-pred-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-5); }
   .im-pred-head h2 { margin: 0; }
 </style>

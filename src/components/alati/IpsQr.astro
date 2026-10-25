@@ -64,16 +64,17 @@ const iznosi = [500, 1000, 2000, 5000];
 
 <style>
   .ips { display: grid; gap: var(--space-5); }
-  @media (min-width: 720px) { .ips { grid-template-columns: 1fr minmax(220px, 280px); align-items: start; } }
+  /* jedna kolona: obrazac, pa QR kod ispod (centriran) */
   .ips__form { display: grid; gap: var(--space-4); }
-  .ips__h { font-size: 1.2rem; margin: 0; }
+  .ips__h { font-size: var(--card-title-size); font-weight: 600; margin: 0; }
   .ips__quick { display: flex; flex-wrap: wrap; gap: var(--space-2); }
   .ips__dl { margin: 0; display: grid; gap: 0; font-size: 0.92rem; }
   .ips__dl div { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); }
   .ips__dl dt { color: var(--color-text-muted); }
   .ips__dl dd { margin: 0; text-align: right; font-weight: 600; }
   .ips__mono { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
-  .ips__qr { display: grid; gap: var(--space-3); justify-items: center; }
+  .ips__qr { display: grid; gap: var(--space-3); justify-items: center; padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+  .ips__how { max-width: 52ch; text-align: center; }
   .ips__box {
     width: min(100%, 260px);
     aspect-ratio: 1;

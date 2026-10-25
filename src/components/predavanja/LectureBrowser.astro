@@ -65,7 +65,7 @@ const uid = zakljucanaKategorija ? `lb-${zakljucanaKategorija}` : 'lb';
         <label class="visually-hidden" for={`${uid}-q`}>{oznakaPretrage}</label>
         <svg class="lb__search-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
         <input
-          class="input lb__q"
+          class="lb__q"
           type="search"
           id={`${uid}-q`}
           name="q"
@@ -78,56 +78,56 @@ const uid = zakljucanaKategorija ? `lb-${zakljucanaKategorija}` : 'lb';
       </div>
       <button
         type="button"
-        class="btn btn--ghost lb__toggle"
+        class="lb__toggle"
         aria-expanded="false"
         aria-controls={`${uid}-panel`}
         data-lb-toggle
       >
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 12h3M11 12h9M4 17h11M19 17h1"></path><circle cx="16" cy="7" r="2"></circle><circle cx="9" cy="12" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>
         Filteri<span class="lb__toggle-count" data-lb-toggle-count></span>
       </button>
     </div>
 
     <div class="lb__panel" id={`${uid}-panel`} data-lb-panel>
       {opcijeImam.length > 0 && (
-        <div class="field lb__field">
-          <label for={`${uid}-imam`}>Imam / predavač</label>
-          <select class="select" id={`${uid}-imam`} name="imam" data-lb-facet="imam">
+        <div class="lb__field lb__field--facet">
+          <label class="lb__label" for={`${uid}-imam`}>Imam / predavač</label>
+          <select class="lb__select" id={`${uid}-imam`} name="imam" data-lb-facet="imam">
             <option value="">Svi predavači</option>
             {opcijeImam.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
           </select>
         </div>
       )}
       {!zakljucanaKategorija && opcijeKategorija.length > 0 && (
-        <div class="field lb__field">
-          <label for={`${uid}-kategorija`}>Kategorija</label>
-          <select class="select" id={`${uid}-kategorija`} name="kategorija" data-lb-facet="kategorija">
+        <div class="lb__field lb__field--facet">
+          <label class="lb__label" for={`${uid}-kategorija`}>Kategorija</label>
+          <select class="lb__select" id={`${uid}-kategorija`} name="kategorija" data-lb-facet="kategorija">
             <option value="">Sve kategorije</option>
             {opcijeKategorija.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
           </select>
         </div>
       )}
       {opcijeSerija.length > 0 && (
-        <div class="field lb__field">
-          <label for={`${uid}-serija`}>Serija</label>
-          <select class="select" id={`${uid}-serija`} name="serija" data-lb-facet="serija">
+        <div class="lb__field lb__field--facet">
+          <label class="lb__label" for={`${uid}-serija`}>Serija</label>
+          <select class="lb__select" id={`${uid}-serija`} name="serija" data-lb-facet="serija">
             <option value="">Sve serije</option>
             {opcijeSerija.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
           </select>
         </div>
       )}
       {opcijeGodina.length > 1 && (
-        <div class="field lb__field lb__field--sm">
-          <label for={`${uid}-godina`}>Godina</label>
-          <select class="select" id={`${uid}-godina`} name="godina" data-lb-facet="godina">
+        <div class="lb__field lb__field--facet lb__field--sm">
+          <label class="lb__label" for={`${uid}-godina`}>Godina</label>
+          <select class="lb__select" id={`${uid}-godina`} name="godina" data-lb-facet="godina">
             <option value="">Sve godine</option>
             {opcijeGodina.map((o) => <option value={o.v} data-label={o.l}>{o.l} ({o.n})</option>)}
           </select>
         </div>
       )}
-      <div class="field lb__field lb__field--sm">
-        <label for={`${uid}-sort`}>Poredak</label>
-        <select class="select" id={`${uid}-sort`} name="sort" data-lb-sort>
+      <div class="lb__field lb__field--sort lb__field--sm">
+        <label class="lb__label lb__label--sort" for={`${uid}-sort`}>Poredak</label>
+        <select class="lb__select" id={`${uid}-sort`} name="sort" data-lb-sort>
           <option value="najnovije">Najnovije</option>
           <option value="najstarije">Najstarije</option>
           {imaPreglede && <option value="najgledanije">Najgledanije</option>}
@@ -140,8 +140,8 @@ const uid = zakljucanaKategorija ? `lb-${zakljucanaKategorija}` : 'lb';
     <p class="lb__count" aria-live="polite" aria-atomic="true" data-lb-count>
       Ukupno {lista.length} {oblikRijeci(lista.length)}{lista.length > PAGE ? ` · prikazano ${PAGE}` : ''}
     </p>
-    <ul class="chips lb__active" data-lb-active aria-label="Aktivni filteri"></ul>
-    <button type="button" class="btn btn--sm btn--ghost lb__reset" data-lb-reset hidden>Poništi filtere</button>
+    <ul class="lb__active" data-lb-active aria-label="Aktivni filteri"></ul>
+    <button type="button" class="lb__reset" data-lb-reset hidden>Poništi sve</button>
   </div>
 
   <h2 class="visually-hidden">Rezultati</h2>
@@ -176,68 +176,208 @@ const uid = zakljucanaKategorija ? `lb-${zakljucanaKategorija}` : 'lb';
 </div>
 
 <style>
-  .lb { display: grid; gap: var(--space-5); }
-  .lb__controls {
-    display: grid;
-    gap: var(--space-4);
-    padding: var(--space-4);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-  }
-  .lb__searchrow { display: flex; gap: var(--space-3); align-items: stretch; }
+  .lb { display: grid; gap: var(--space-4); }
+
+  /* ---------- Pretraga + filteri (kompaktno) ---------- */
+  .lb__controls { display: grid; gap: var(--space-3); }
+  .lb__searchrow { display: flex; gap: var(--space-2); align-items: stretch; }
   .lb__search { position: relative; flex: 1; min-width: 0; }
   .lb__search-icon {
     position: absolute;
-    left: 0.85rem;
+    left: 1.1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--color-text-muted);
     pointer-events: none;
   }
-  .lb__q { padding-left: 2.6rem; }
-  .lb__toggle { display: none; flex: none; }
+  .lb__q {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.6rem 1.2rem 0.6rem 3rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 1.02rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .lb__q::placeholder { color: var(--color-text-muted); opacity: 1; }
+  .lb__q:hover { border-color: var(--color-primary); }
+  .lb__q:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-color: var(--color-primary); }
+
+  .lb__toggle {
+    display: none;
+    flex: none;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 52px;
+    padding: 0 1.1rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  .lb__toggle:hover { border-color: var(--color-primary); }
+  .lb__toggle[aria-expanded='true'] { border-color: var(--color-primary); background: var(--color-surface-2); }
   .lb__toggle-count:not(:empty) {
     display: inline-grid;
     place-items: center;
-    min-width: 1.4em;
-    height: 1.4em;
-    padding: 0 0.3em;
+    min-width: 1.45em;
+    height: 1.45em;
+    padding: 0 0.35em;
     border-radius: var(--radius-full);
     background: var(--color-primary);
     color: var(--color-on-primary);
-    font-size: 0.78rem;
+    font-size: 0.75rem;
   }
-  .lb__panel {
-    display: grid;
-    gap: var(--space-3);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+
+  /* filteri kao red kompaktnih "pilula" */
+  .lb__panel { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+  .lb__field { position: relative; display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
+  .lb__field--sort { margin-left: auto; }
+  .lb__label { font-size: 0.85rem; font-weight: 700; color: var(--color-text-muted); }
+  .lb__select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-height: 40px;
+    max-width: 17rem;
+    field-sizing: content; /* širina prema izabranoj opciji (gdje je podržano) */
+    padding: 0.35rem 2.1rem 0.35rem 1rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: border-color var(--transition), background-color var(--transition);
   }
-  .lb__field label { font-size: 0.85rem; }
+  .lb__select:hover { border-color: var(--color-primary); }
+  .lb__select:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  /* strelica (boja iz teme) */
+  .lb__field::after {
+    content: '';
+    position: absolute;
+    right: 0.85rem;
+    top: 50%;
+    width: 0.7rem;
+    height: 0.7rem;
+    transform: translateY(-50%);
+    background: var(--color-text-muted);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat;
+    pointer-events: none;
+  }
+  /* izabran filter: pilula u boji teme */
+  .lb__field--facet:not(:has(option[value='']:checked)) .lb__select {
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface));
+    color: var(--color-primary);
+  }
+  .lb__field--facet:not(:has(option[value='']:checked))::after { background: var(--color-primary); }
+  .lb__field--sort .lb__select { border-color: transparent; background-color: transparent; padding-left: 0.6rem; }
+  .lb__field--sort .lb__select:hover { border-color: var(--color-border); }
+
+  /* desktop: oznake polja su skrivene (prva opcija "Svi predavači" itd. je natpis), osim "Poredak" */
+  @media (min-width: 768px) {
+    .lb__field--facet .lb__label {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+  }
+
+  /* ---------- Status: broj, aktivni filteri, poništi ---------- */
   .lb__status {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-2) var(--space-3);
     min-height: 40px;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
   }
-  .lb__count { margin: 0; font-weight: 700; color: var(--color-text); }
+  .lb__count { margin: 0; font-size: 0.9rem; font-weight: 600; color: var(--color-text-muted); }
+  .lb__active { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
   .lb__active:empty { display: none; }
-  .lb__active :global(.lb__chip) { min-height: 40px; padding: 0.25rem 0.75rem; font-size: 0.86rem; }
-  .lb__active :global(.lb__chip-x) { font-size: 1.1em; line-height: 1; }
+  .lb__active :global(.lb__chip) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 30px;
+    padding: 0.15rem 0.5rem 0.15rem 0.75rem;
+    border-radius: var(--radius-full);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+    background: color-mix(in srgb, var(--color-primary) 9%, var(--color-surface));
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  /* veća površina za dodir (≥ 40 px) bez povećanja izgleda */
+  .lb__active :global(.lb__chip)::before { content: ''; position: absolute; inset: -5px -2px; }
+  .lb__active :global(.lb__chip:hover) { border-color: var(--color-primary); }
+  .lb__active :global(.lb__chip-x) {
+    display: inline-grid;
+    place-items: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .lb__active :global(.lb__chip:hover .lb__chip-x) { background: color-mix(in srgb, var(--color-primary) 16%, transparent); }
+  .lb__reset {
+    min-height: 40px;
+    padding: 0 var(--space-1);
+    border: 0;
+    background: none;
+    color: var(--color-primary);
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .lb__reset:hover { color: var(--color-primary-hover); }
+
+  .lb__grid { margin-top: var(--space-2); }
   .lb__empty { align-items: center; text-align: center; gap: var(--space-2); padding: var(--space-7) var(--space-5); }
-  .lb__empty-title { font-family: var(--font-serif); font-size: 1.3rem; margin: 0; }
-  .lb__more { display: flex; justify-content: center; }
+  .lb__empty-title { font-family: var(--font-serif); font-size: var(--card-title-size); font-weight: 600; margin: 0; }
+  .lb__more { display: flex; justify-content: center; margin-top: var(--space-3); }
   .lb :global([hidden]) { display: none !important; }
   .lb__noscript ul { columns: 2 320px; padding-left: 1.2em; }
 
+  /* ---------- Mobilno: dugme "Filteri" otvara jednostavan panel ---------- */
   @media (max-width: 767px) {
-    .lb__controls { padding: var(--space-3); }
-    .lb__toggle { display: inline-flex; }
-    .lb__panel { display: none; grid-template-columns: 1fr 1fr; }
-    .lb__panel > :global(.lb__field:not(.lb__field--sm)) { grid-column: 1 / -1; }
-    .lb__panel[data-open] { display: grid; }
+    .lb__q { min-height: 48px; font-size: 1rem; }
+    .lb__toggle { display: inline-flex; min-height: 48px; padding: 0 0.9rem; }
+    .lb__panel {
+      display: none;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    .lb__panel[data-open] { display: flex; }
+    .lb__field { display: grid; gap: var(--space-1); }
+    .lb__field--sort { margin-left: 0; padding-top: var(--space-3); border-top: 1px solid var(--color-border); }
+    .lb__select { max-width: none; width: 100%; min-height: 44px; border-radius: var(--radius-md); border-color: var(--color-border-strong); }
+    .lb__field--sort .lb__select { border-color: var(--color-border-strong); background-color: var(--color-surface); padding-left: 1rem; }
+    .lb__field::after { top: auto; bottom: calc(22px - 0.35rem); transform: none; }
   }
 </style>
 

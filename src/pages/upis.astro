@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
-import Icon from '../components/ui/Icon.astro';
 import PrijavaForma from '../components/obrasci/PrijavaForma.astro';
 import { GRUPE, PROGRAMI } from '../lib/obrasci/programi';
 import { url } from '../lib/url';
@@ -15,29 +14,32 @@ const grupe = GRUPE.filter((g) => g !== 'Ostalo')
   description="Online prijava za mekteb, Školu Kur'ana, halke hifza i kurseve sufare u Džamiji na Jaliji (Novi Pazar)."
 >
   <PageHero eyebrow="Mekteb · Škola Kur'ana · Halke" title="Online upis" subtitle="Prijavite sebe ili dijete na nastavu u džamiji — javićemo vam se radi potvrde.">
-    <a class="btn btn--gold up__skok" href="#prijava-naslov">Na obrazac za prijavu</a>
-    <a class="btn btn--ghost up__skok-raspored" href={url('/raspored')}>Sedmični raspored</a>
+    <a class="btn btn--gold" href="#prijava-naslov">Na obrazac za prijavu</a>
   </PageHero>
 
-  <section class="section section--tight">
-    <div class="container up">
-      <div class="up__programi">
-        <h2 class="up__h">Programi</h2>
-        <p class="muted up__lead">
-          Termini su preuzeti iz <a href={url('/obavjestenja')}>obavještenja</a> džamije. Nastava je besplatna, osim ako
-          u obavještenju nije drugačije navedeno.
+  <div class="section">
+    <div class="container container--narrow flow">
+      <section class="flow__sec" aria-labelledby="programi-naslov">
+        <h2 class="flow__h" id="programi-naslov">Programi</h2>
+        <p class="flow__lead">
+          Nastava je besplatna, osim ako u <a href={url('/obavjestenja')}>obavještenju</a> nije drugačije navedeno.
+          Svi termini po danima: <a href={url('/raspored')}>sedmični raspored</a>.
         </p>
         {grupe.map(({ g, lista }) => (
           <section class="up__grupa" aria-labelledby={`grupa-${g.replace(/[^a-z]/gi, '')}`}>
-            <h3 class="up__gh" id={`grupa-${g.replace(/[^a-z]/gi, '')}`}>{g}</h3>
+            <h3 class="flow__h3" id={`grupa-${g.replace(/[^a-z]/gi, '')}`}>{g}</h3>
             <ul class="up__lista" role="list">
               {lista.map((p) => (
-                <li class="card up__kartica">
-                  <h4 class="up__naziv">{p.naziv}</h4>
-                  <p class="up__meta"><Icon name="users" size={16} /> {p.zaKoga}</p>
-                  <p class="up__meta"><Icon name="clock" size={16} /> {p.termin ?? 'Termin još nije objavljen'}</p>
-                  {p.predavac && <p class="up__meta"><Icon name="graduation" size={16} /> {p.predavac}</p>}
-                  {p.napomena && <p class="up__napomena">{p.napomena}</p>}
+                <li class="up__stavka">
+                  <div class="up__tijelo">
+                    <p class="up__naziv">{p.naziv}</p>
+                    <p class="up__meta">
+                      <span>{p.zaKoga}</span>
+                      <span>{p.termin ?? 'Termin još nije objavljen'}</span>
+                      {p.predavac && <span>{p.predavac}</span>}
+                    </p>
+                    {p.napomena && <p class="up__napomena">{p.napomena}</p>}
+                  </div>
                   <a class="link-arrow up__link" href={`?program=${p.id}#prijava`} data-up-program={p.id}>
                     Prijavi se<span class="visually-hidden">: {p.naziv}</span>
                   </a>
@@ -46,34 +48,36 @@ const grupe = GRUPE.filter((g) => g !== 'Ostalo')
             </ul>
           </section>
         ))}
-        <p class="muted up__small">Sedmični raspored svih termina: <a href={url('/raspored')}>raspored halki i mekteba</a>.</p>
-      </div>
+      </section>
 
-      <div class="up__forma">
-        <div class="card up__card">
-          <h2 class="up__h" id="prijava-naslov">Prijava</h2>
+      <section class="flow__sec" aria-labelledby="prijava-naslov">
+        <h2 class="flow__h" id="prijava-naslov">Prijava</h2>
+        <div class="card up__card flow__wide">
           <PrijavaForma id="prijava" />
         </div>
-      </div>
+      </section>
     </div>
-  </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .up { display: grid; gap: var(--space-6); }
-  @media (min-width: 1000px) { .up { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; } .up__forma { position: sticky; top: calc(var(--header-h) + var(--space-4)); } }
-  .up__h { margin: 0 0 var(--space-3); font-size: clamp(1.4rem, 1.5vw + 1rem, 1.8rem); }
-  .up__lead { margin: 0 0 var(--space-4); }
-  .up__grupa + .up__grupa { margin-top: var(--space-5); }
-  .up__gh { font-size: 1.05rem; margin: 0 0 var(--space-3); color: var(--color-accent); font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.06em; }
-  .up__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
-  .up__kartica { padding: var(--space-4); gap: var(--space-1); }
-  .up__naziv { margin: 0 0 var(--space-1); font-size: 1.05rem; font-family: var(--font-sans); font-weight: 700; }
-  .up__meta { margin: 0; display: flex; gap: var(--space-2); align-items: center; font-size: 0.9rem; color: var(--color-text-muted); }
-  .up__meta :global(svg) { flex: none; color: var(--color-accent); }
+  .up__grupa + .up__grupa { margin-top: var(--space-2); }
+  .up__lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-border); }
+  .up__stavka {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-4);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .up__tijelo { flex: 1 1 18rem; min-width: 0; }
+  .up__naziv { margin: 0; font-weight: 700; line-height: 1.4; }
+  .up__meta { margin: 0; display: flex; flex-wrap: wrap; gap: 0 var(--space-2); font-size: 0.9rem; color: var(--color-text-muted); }
+  .up__meta span + span::before { content: '·'; margin-right: var(--space-2); }
   .up__napomena { margin: var(--space-1) 0 0; font-size: 0.85rem; color: var(--color-missing-text); }
-  .up__link { align-self: flex-start; margin-top: var(--space-1); font-weight: 700; }
-  .up__small { margin: var(--space-5) 0 0; font-size: 0.9rem; }
+  .up__link { flex: none; font-size: 0.95rem; }
   .up__card { padding: clamp(var(--space-4), 3vw, var(--space-6)); }
 </style>
 

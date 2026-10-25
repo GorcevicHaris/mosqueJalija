@@ -1,16 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
-import SectionHeading from '../components/ui/SectionHeading.astro';
 import Icon from '../components/ui/Icon.astro';
-import PrijavaForma from '../components/obrasci/PrijavaForma.astro';
 import RasporedSedmica from '../components/obrasci/RasporedSedmica.astro';
-import { imaSupabase } from '../lib/obrasci/supabase-rest';
 import { url } from '../lib/url';
-import { dzamija, obavjestenja, imami, predavanja, formatDatum, tekstStranice, tekstoviStranica } from '../lib/data';
+import { obavjestenja, imami, predavanja, formatDatum, tekstStranice, tekstoviStranica } from '../lib/data';
 
-const email = dzamija.kontakt.email;
-const imaDm = Boolean(dzamija.drustveneMreze.instagram || dzamija.drustveneMreze.facebook);
 // Uvodni tekst iz admina (Tekstovi stranica → mekteb); prazno = ugrađeni tekst ispod.
 const tekst = tekstStranice('mekteb');
 const naslovStranice = tekstoviStranica['mekteb']?.naslov?.trim() || 'Mekteb i halke';
@@ -20,134 +15,98 @@ const imamDzamije = imami.filter((i) => i.potvrdjeno && i.uloga && /imam (ove )?
 const halkeSnimci = predavanja.filter((p) => p.kategorija === 'halka-hadisa').length;
 
 const uci = [
-  { naslov: "Kur'an i sufara", opis: "Arapsko pismo, harekati i pravilno učenje Kur'ana — od sufare do mushafa.", ikona: 'book-quran' as const },
-  { naslov: 'Ibadet', opis: 'Abdest, namaz i osnovni propisi — kroz praksu i primjer.', ikona: 'droplet' as const },
-  { naslov: 'Akaid', opis: 'Temelji vjerovanja: imanski i islamski šarti.', ikona: 'star8' as const },
+  { naslov: "Kur'an i sufara", opis: 'Arapsko pismo, harekati i pravilno učenje — od sufare do mushafa.', ikona: 'book-quran' as const },
+  { naslov: 'Ibadet', opis: 'Abdest, namaz i osnovni propisi.', ikona: 'droplet' as const },
+  { naslov: 'Akaid', opis: 'Imanski i islamski šarti.', ikona: 'star8' as const },
   { naslov: 'Ahlak', opis: 'Lijepo ponašanje prema roditeljima, prijateljima i komšijama.', ikona: 'heart' as const },
-  { naslov: 'Sure i dove', opis: 'Kratke sure i dove za svakodnevni život.', ikona: 'hands' as const },
-  { naslov: 'Siret', opis: 'Život Allahovog Poslanika ﷺ i kazivanja o poslanicima.', ikona: 'book' as const },
+  { naslov: 'Sure i dove', opis: 'Kratke sure i dove za svaki dan.', ikona: 'hands' as const },
+  { naslov: 'Siret', opis: 'Život Allahovog Poslanika ﷺ.', ikona: 'book' as const },
 ];
 ---
 <BaseLayout title={naslovStranice} description="Mekteb za djecu i halke za odrasle u Džamiji na Jaliji — šta se uči, raspored i prijava.">
-  <PageHero eyebrow="Znanje i odgoj" title={naslovStranice} subtitle="Vjerska pouka za najmlađe članove džemata i halke (kružoci) za odrasle." />
+  <PageHero eyebrow="Znanje i odgoj" title={naslovStranice} subtitle="Vjerska pouka za djecu i halke za odrasle." />
 
-  <section class="section">
-    <div class="container grid-2 grid-2--wide-left">
-      <div>
-      <div class="prose">
-        <h2>Mekteb</h2>
+  <div class="section">
+    <div class="container container--narrow flow">
+      <section class="flow__sec" aria-labelledby="mekteb-naslov">
+        <h2 id="mekteb-naslov" class="flow__h">Mekteb za djecu</h2>
         {tekst ? (
           tekst.paragrafi.map((par) => <p>{par}</p>)
         ) : (
-          <Fragment>
-            <p>
-              Mekteb je mjesto gdje djeca stiču prva vjerska znanja: uče čitati Kur'an, upoznaju osnove vjerovanja i
-              ibadeta, i kroz druženje u džamiji grade ljubav prema vjeri i džematu.
-            </p>
-            <p>
-              Nastava se prilagođava uzrastu djeteta. Roditelji su dobrodošli da prate napredak i budu dio odgoja — jer
-              mekteb, porodica i džamija zajedno odgajaju generacije.
-            </p>
-          </Fragment>
-        )}
-      </div>
-        <div class="not-prose">
-          <RasporedSedmica naslovId="raspored-mekteb" />
-        </div>
-      </div>
-
-      <aside class="enroll card" aria-labelledby="prijava-naslov">
-        <span class="card__icon"><Icon name="graduation" size={24} /></span>
-        <h2 id="prijava-naslov" class="enroll__title">Prijava za mekteb</h2>
-        <p class="muted">
-          {imaSupabase
-            ? 'Popunite obrazac — prijava stiže direktno džematu, a mi vas kontaktiramo. Za druge programe (halke, Škola Kur\'ana, sufara) izaberite program u obrascu.'
-            : email
-            ? 'Prijava se šalje e-mailom džematu. Poruka je već pripremljena — samo dopunite podatke.'
-            : imaDm
-              ? 'Prijava se šalje privatnom porukom džematu. Tekst prijave je pripremljen — samo dopunite podatke.'
-              : 'Upis se najavljuje u obavještenjima i objavama džemata.'}
-        </p>
-        <PrijavaForma id="prijava-mekteb" program="mekteb" />
-        <a class="btn btn--ghost btn--block" href={url('/upis')}>Svi programi i online upis</a>
-        {imamDzamije.length > 0 && (
-          <p class="enroll__imam">
-            <Icon name="users" size={18} />
-            <span>Imam: {imamDzamije.map((i, n) => <>{n > 0 && ', '}<a href={url(`/imami/${i.slug}`)}>{i.punoIme}</a></>)}</span>
+          <p>
+            U mektebu djeca uče čitati Kur'an i upoznaju osnove vjerovanja i ibadeta. Nastava se prilagođava
+            uzrastu, a roditelji su dobrodošli da prate napredak.
           </p>
         )}
-      </aside>
-    </div>
-  </section>
 
-  <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="uci-naslov">
-    <div class="container">
-      <SectionHeading id="uci-naslov" eyebrow="Program" title="Šta djeca uče u mektebu" lead="Tradicionalni mektebski program, prilagođen uzrastu." />
-      <ul class="grid-cards" role="list">
-        {uci.map((u) => (
-          <li class="card">
-            <span class="card__icon"><Icon name={u.ikona} size={24} /></span>
-            <h3 class="card__title">{u.naslov}</h3>
-            <p class="muted">{u.opis}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+        <h3 class="flow__h3">Šta djeca uče</h3>
+        <ul class="flow-list mk-uci" role="list">
+          {uci.map((u) => (
+            <li>
+              <span class="flow-list__icon"><Icon name={u.ikona} /></span>
+              <span class="flow-list__body">
+                <span class="flow-list__t">{u.naslov}</span>
+                <span class="flow-list__d">{u.opis}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
 
-  <section class="section" aria-labelledby="halke-naslov">
-    <div class="container grid-2">
-      <div class="prose">
-        <p class="eyebrow">Za odrasle</p>
-        <h2 id="halke-naslov" style="margin-top:0">Halke</h2>
+        <div class="flow__cta">
+          <a class="btn btn--primary" href={url('/upis?program=mekteb')}>
+            <Icon name="graduation" size={18} /> Prijavi dijete u mekteb
+          </a>
+          {imamDzamije.length > 0 && (
+            <span class="mk-imam">
+              Imam: {imamDzamije.map((i, n) => <>{n > 0 && ', '}<a href={url(`/imami/${i.slug}`)}>{i.punoIme}</a></>)}
+            </span>
+          )}
+        </div>
+      </section>
+
+      <section class="flow__sec">
+        <RasporedSedmica naslovId="raspored-mekteb" nivo={2} naslovKlasa="flow__h" />
+      </section>
+
+      <section class="flow__sec" aria-labelledby="halke-naslov">
+        <h2 id="halke-naslov" class="flow__h">Halke za odrasle</h2>
         <p>
-          Halka (kružok) je zajedničko učenje u džamiji: čitanje i objašnjavanje hadisa, tefsira i drugih vjerskih
-          tema, uz mogućnost pitanja i razgovora sa imamom.
+          Halka je zajedničko učenje u džamiji — hadis, tefsir i druge teme, uz pitanja i razgovor sa imamom.
+          Termini su u <a href={url('/raspored')}>sedmičnom rasporedu</a>.
         </p>
         {halkeSnimci > 0 && (
-          <p>Snimke halki možete pogledati među <a href={url('/predavanja')}>predavanjima</a> ({halkeSnimci} snimaka u kategoriji „Halka hadisa“).</p>
+          <p class="flow__lead">
+            Snimke halki pogledajte među <a href={url('/predavanja?kategorija=halka-hadisa')}>predavanjima</a> ({halkeSnimci}).
+          </p>
         )}
-        <h3>Raspored halki</h3>
-        <p>Dani i termini halki su u <a href={url('/raspored')}>sedmičnom rasporedu</a> (filter: muškarci, žene, djeca).</p>
-        <p class="halke-akcije">
-          <a class="btn btn--ghost" href={url('/upis?program=hifz-amme-muskarci')}>Upit za halku</a>
-          <a class="btn btn--ghost" href={url('/raspored')}>Sedmični raspored</a>
-        </p>
-      </div>
-      <div>
-        <h3>Najave mekteba i halki</h3>
+        <div class="flow__cta">
+          <a class="btn btn--ghost" href={url('/upis')}>Prijava za halke i kurseve</a>
+        </div>
+      </section>
+
+      <section class="flow__sec" aria-labelledby="najave-naslov">
+        <h2 id="najave-naslov" class="flow__h">Najave</h2>
         {vezana.length ? (
-          <ul class="mini-news" role="list">
+          <ul class="link-list" role="list">
             {vezana.map((o) => (
-              <li class="card card--link">
-                <span class="card__meta"><time datetime={o.datum}>{formatDatum(o.datum)}</time> · {o.kategorija}</span>
-                <h4 class="card__title"><a href={url(`/obavjestenja/${o.slug}`)}>{o.naslov}</a></h4>
-                {o.placeholder && <span class="badge badge--warn">Primjer sadržaja</span>}
+              <li>
+                <a href={url(`/obavjestenja/${o.slug}`)}>{o.naslov}</a>
+                <span class="link-list__meta">
+                  <time datetime={o.datum}>{formatDatum(o.datum)}</time>
+                  {o.placeholder && <> · <span class="badge badge--warn">Primjer sadržaja</span></>}
+                </span>
               </li>
             ))}
           </ul>
         ) : (
           <p class="muted">Trenutno nema najava. Pratite <a href={url('/obavjestenja')}>obavještenja</a>.</p>
         )}
-      </div>
+      </section>
     </div>
-  </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .enroll { gap: var(--space-3); align-self: start; border-top: 4px solid var(--color-accent-bright); }
-  .enroll .card__icon { margin-bottom: 0; }
-  .enroll__title { font-size: 1.5rem; margin: 0; }
-  .enroll p { margin: 0; }
-  .enroll__imam { display: flex; gap: var(--space-2); align-items: center; font-size: 0.92rem; margin-top: var(--space-2) !important; }
-  .not-prose { margin-top: var(--space-6); }
-  .not-prose :global(h3) { margin-top: 0; }
-  .halke-akcije { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-  .grid-cards { list-style: none; margin: 0; padding: 0; }
-  .grid-cards p { margin: 0; }
-    .small { font-size: 0.88rem; }
-  .mini-news { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
-  .mini-news .card { padding: var(--space-4); }
-  .mini-news .card__title { font-size: 1.08rem; margin: var(--space-1) 0 0; }
-  .mini-news .badge { margin-top: var(--space-2); align-self: flex-start; }
+  .mk-uci { gap: var(--space-3); }
+  .mk-imam { font-size: 0.92rem; color: var(--color-text-muted); }
 </style>

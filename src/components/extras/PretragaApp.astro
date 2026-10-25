@@ -23,27 +23,26 @@ const stavkiRijec = (n: number) => {
 ---
 <div class="sr" data-sr>
   <form class="sr-form" role="search" action={url('/pretraga')} method="get" data-sr-form>
-    <label for="sr-q" class="sr-form__label">Pretraži sajt</label>
+    <label for="sr-q" class="visually-hidden">Pretraži sajt</label>
     <div class="sr-form__row">
       <span class="sr-form__icon" aria-hidden="true"><Icon name="search" /></span>
       <input
         id="sr-q"
-        class="input sr-form__input"
+        class="sr-form__input"
         type="search"
         name="q"
         autocomplete="off"
         spellcheck="false"
         enterkeyhint="search"
-        placeholder="Npr. tefsir sure Jusuf, Ramazan, dova za roditelje…"
+        placeholder="Npr. tefsir sure Jusuf, Ramazan, dova…"
         aria-describedby="sr-help"
         aria-controls="sr-results"
         data-sr-input
       />
-      <button type="submit" class="btn btn--primary sr-form__btn">Traži</button>
+      <button type="submit" class="btn btn--primary btn--sm sr-form__btn">Traži</button>
     </div>
-    <p id="sr-help" class="sr-form__help muted">
-      Pretraga ne pravi razliku između č/ć/c, š/s, ž/z i đ/dj. Tipka <kbd>/</kbd> fokusira polje,
-      strelice <kbd>↑</kbd> <kbd>↓</kbd> biraju rezultat, <kbd>Esc</kbd> briše upit.
+    <p id="sr-help" class="sr-form__help">
+      Č/ć/c, š/s, ž/z i đ/dj se ne razlikuju. Prečice: <kbd>/</kbd> fokus, <kbd>↑</kbd> <kbd>↓</kbd> izbor, <kbd>Esc</kbd> briše.
     </p>
   </form>
 
@@ -311,11 +310,10 @@ const stavkiRijec = (n: number) => {
 <style is:global>
   .sr { display: grid; gap: var(--space-5); }
   .sr [hidden] { display: none !important; }
-  .sr-form__label { display: block; font-weight: 700; margin-bottom: var(--space-2); }
-  .sr-form__row { position: relative; display: flex; gap: var(--space-2); }
+  .sr-form__row { position: relative; display: flex; align-items: center; }
   .sr-form__icon {
     position: absolute;
-    left: 0.9rem;
+    left: 1.1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--color-text-muted);
@@ -325,14 +323,26 @@ const stavkiRijec = (n: number) => {
   .sr-form__icon svg { width: 20px; height: 20px; }
   .sr-form__input {
     flex: 1;
+    width: 100%;
     min-width: 0;
-    min-height: 52px;
-    padding-left: 2.75rem;
-    font-size: 1.08rem;
+    min-height: 56px;
+    padding: 0.6rem 6.25rem 0.6rem 3rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 1.05rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition), box-shadow var(--transition);
   }
-  .sr-form__btn { flex: none; min-height: 52px; }
-  @media (max-width: 479px) { .sr-form__btn { padding-inline: 0.9rem; } }
-  .sr-form__help { font-size: 0.85rem; margin: var(--space-2) 0 0; }
+  .sr-form__input::placeholder { color: var(--color-text-muted); opacity: 1; }
+  .sr-form__input:hover { border-color: var(--color-primary); }
+  .sr-form__input:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-color: var(--color-primary); }
+  .sr-form__btn { position: absolute; right: 7px; top: 50%; transform: translateY(-50%); min-height: 42px; }
+  .sr-form__btn:active { transform: translateY(-50%); }
+  .sr-form__help { font-size: 0.82rem; margin: var(--space-2) 0 0; padding-left: 1.1rem; color: var(--color-text-muted); }
+  .sr-filters .chip { min-height: 40px; padding: 0.3rem 0.9rem; border-width: 1px; border-color: var(--color-border); font-size: 0.88rem; }
+  .sr-filters .chip[aria-pressed='true'] { border-color: var(--color-primary); }
   .sr kbd {
     font-family: var(--font-sans);
     font-size: 0.8em;
@@ -348,7 +358,7 @@ const stavkiRijec = (n: number) => {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    font-size: 1.2rem;
+    font-size: var(--card-title-size);
     margin-bottom: var(--space-3);
     padding-bottom: var(--space-2);
     border-bottom: 1px solid var(--color-border);
@@ -390,7 +400,7 @@ const stavkiRijec = (n: number) => {
   }
   .sr-more { margin-top: var(--space-3); }
   .sr-empty { padding: var(--space-5); }
-  .sr-empty__title { font-size: 1.3rem; margin-bottom: var(--space-2); }
+  .sr-empty__title { font-size: var(--card-title-size); font-weight: 600; margin-bottom: var(--space-2); }
   .sr-empty__label { font-weight: 700; margin: var(--space-4) 0 var(--space-2); }
   .sr-empty .chip { text-decoration: none; }
   .sr-tips { margin: 0; padding-left: 1.2em; display: grid; gap: var(--space-2); }

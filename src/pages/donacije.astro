@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
 import Placeholder from '../components/ui/Placeholder.astro';
 import CopyButton from '../components/ui/CopyButton.astro';
-import SectionHeading from '../components/ui/SectionHeading.astro';
 import Icon from '../components/ui/Icon.astro';
 import IpsQr from '../components/alati/IpsQr.astro';
 import { url } from '../lib/url';
@@ -36,17 +35,19 @@ const namjene = [
 <BaseLayout title={naslovStranice} description="Podržite rad Džamije na Jaliji — održavanje džamije, mekteb i aktivnosti džemata. Zvanični podaci za uplatu.">
   <PageHero eyebrow="Sadaka i vakuf" title={naslovStranice} subtitle="Vaša sadaka pomaže da džamija ostane otvorena, uređena i puna znanja." arabic="مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ" />
 
-  <section class="section">
-    <div class="container">
+  <section class="section" aria-labelledby="namjena-naslov">
+    <div class="container container--narrow">
       <p class="hadith-note muted">„Sadaka ne umanjuje imetak.“ — hadis, bilježi Muslim</p>
-      <UvodStranice kljuc="donacije" class="uvod-centar" />
-      <SectionHeading eyebrow="Namjena" title="Za šta se koriste donacije" />
-      <ul class="grid-cards" role="list">
+      <UvodStranice kljuc="donacije" />
+      <h2 id="namjena-naslov" class="flow__h">Za šta se koriste donacije</h2>
+      <ul class="flow-list" role="list">
         {namjene.map((n) => (
-          <li class="card">
-            <span class="card__icon"><Icon name={n.ikona} size={24} /></span>
-            <h3 class="card__title">{n.naslov}</h3>
-            <p class="muted">{n.opis}</p>
+          <li>
+            <span class="flow-list__icon"><Icon name={n.ikona} /></span>
+            <span class="flow-list__body">
+              <span class="flow-list__t">{n.naslov}</span>
+              <span class="flow-list__d">{n.opis}</span>
+            </span>
           </li>
         ))}
       </ul>
@@ -103,13 +104,11 @@ const namjene = [
 </BaseLayout>
 
 <style>
-  .hadith-note { font-family: var(--font-serif); font-size: 1.15rem; text-align: center; margin-bottom: var(--space-7); }
-  .grid-cards { list-style: none; margin: 0; padding: 0; }
-  .grid-cards p { margin: 0; }
+  .hadith-note { font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: var(--space-6); }
   .bank { padding: clamp(1.25rem, 4vw, 2.25rem); border-top: 4px solid var(--color-accent-bright); }
   .bank__head { display: flex; gap: var(--space-4); align-items: flex-start; margin-bottom: var(--space-5); }
   .bank__head .card__icon { margin: 0; flex: none; }
-  .bank__title { font-size: 1.6rem; margin-bottom: var(--space-1); }
+  .bank__title { font-size: clamp(1.4rem, 1.1vw + 1.1rem, 1.75rem); margin-bottom: var(--space-1); }
   .bank__head p { margin: 0; }
   .bank__list { margin: 0; display: grid; }
   .bank__row {

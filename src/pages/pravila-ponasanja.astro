@@ -45,7 +45,7 @@ const pravila: { naslov: string; tekst: string; ikona: IconName }[] = [
           <li class="rule card">
             <div class="rule__top">
               <span class="card__icon"><Icon name={p.ikona} size={24} /></span>
-              <span class="rule__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span class="card__num rule__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             </div>
             <h2 class="card__title">{p.naslov}</h2>
             <p>{p.tekst}</p>
@@ -80,8 +80,10 @@ const pravila: { naslov: string; tekst: string; ikona: IconName }[] = [
     gap: var(--space-4);
   }
   .rule p { margin: 0; color: var(--color-text-muted); }
-  .rule__top { display: flex; justify-content: space-between; align-items: flex-start; }
-  .rule__num { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 600; color: var(--color-accent); line-height: 1; }
+  .rule { gap: 0; }
+  .rule p { font-size: 0.95rem; }
+  .rule__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); }
+  .rule__top .card__icon { margin-bottom: 0; }
   .disclaimer {
     display: flex;
     gap: var(--space-3);

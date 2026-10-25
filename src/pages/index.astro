@@ -7,7 +7,6 @@ import Placeholder from '../components/ui/Placeholder.astro';
 import StatTile from '../components/ui/StatTile.astro';
 import Icon from '../components/ui/Icon.astro';
 import StarEmblem from '../components/ui/StarEmblem.astro';
-import Logo from '../components/ui/Logo.astro';
 import AjetHadisDana from '../components/ui/AjetHadisDana.astro';
 import SocialLinks from '../components/ui/SocialLinks.astro';
 import DanasUDzamiji from '../components/obrasci/DanasUDzamiji.astro';
@@ -44,12 +43,14 @@ const inicijali = (ime: string) =>
 const mjesto = [dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
 
 const korisno = [
-  { naslov: 'Mekteb i halke', opis: 'Vjerska pouka za djecu i halke za odrasle — informacije i prijava.', href: '/mekteb', ikona: 'graduation' as const },
-  { naslov: 'Dove', opis: 'Dove iz Kur\'ana i sunneta sa arapskim tekstom, transliteracijom i prevodom.', href: '/dove', ikona: 'hands' as const },
-  { naslov: "Kur'an i hadisi", opis: 'Ajet i hadis dana, sa jasno navedenim izvorima.', href: '/kuran-hadisi', ikona: 'book-quran' as const },
-  { naslov: "Učenje Kur'ana", opis: 'Provjereni izvori za čitanje, slušanje i učenje tedžvida.', href: '/ucenje-kurana', ikona: 'book' as const },
-  { naslov: 'Pravila ponašanja', opis: 'Adab u džamiji — kako se ponašati u kući Allahovoj.', href: '/pravila-ponasanja', ikona: 'door' as const },
-  { naslov: 'Mediji', opis: 'YouTube kanal džamije i ostale zvanične mreže.', href: '/mediji', ikona: 'youtube' as const },
+  { naslov: 'Mekteb i halke', opis: 'Vjerska pouka za djecu i halke za odrasle.', href: '/mekteb', ikona: 'graduation' as const },
+  { naslov: 'Online upis', opis: "Prijava u mekteb, halke, Školu Kur'ana ili sufaru.", href: '/upis', ikona: 'check' as const },
+  { naslov: 'Sedmični raspored', opis: 'Termini halki, mekteba i kurseva po danima.', href: '/raspored', ikona: 'calendar' as const },
+  { naslov: 'Pitaj imama', opis: 'Postavite pitanje o vjeri — i anonimno.', href: '/pitaj-imama', ikona: 'message' as const },
+  { naslov: 'Dove', opis: "Dove iz Kur'ana i sunneta, sa prevodom.", href: '/dove', ikona: 'hands' as const },
+  { naslov: "Kur'an i hadisi", opis: 'Ajet i hadis dana, sa izvorima.', href: '/kuran-hadisi', ikona: 'book-quran' as const },
+  { naslov: "Učenje Kur'ana", opis: 'Koraci za početnike i provjereni izvori.', href: '/ucenje-kurana', ikona: 'book' as const },
+  { naslov: 'Pravila ponašanja', opis: 'Adab u džamiji.', href: '/pravila-ponasanja', ikona: 'door' as const },
 ];
 ---
 <BaseLayout title="Džamija na Jaliji" image={dzamija.naslovnaSlika && /^https?:/.test(dzamija.naslovnaSlika) ? dzamija.naslovnaSlika : undefined}>
@@ -132,86 +133,79 @@ const korisno = [
     </div>
   </section>
 
-  <!-- ================= AKTUELNO + AJET DANA ================= -->
+  <!-- ================= AKTUELNO ================= -->
   <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="aktuelno-naslov">
-    <div class="container grid-2 grid-2--wide-left">
-      <div>
-        <SectionHeading id="aktuelno-naslov" eyebrow="Aktuelno" title="Obavještenja">
-          <a slot="action" class="link-arrow" href={url('/obavjestenja')}>Sva obavještenja</a>
-        </SectionHeading>
-        <div data-news>
-        {aktuelno.length ? (
-          <ul class="news" role="list">
-            {aktuelno.map((o) => (
-              <li class="news__item card card--link">
-                <div class="news__meta">
-                  <time datetime={o.datum}>{formatDatum(o.datum)}</time>
-                  <span class="badge">{o.kategorija}</span>
-                  {o.placeholder && <span class="badge badge--warn">Primjer sadržaja</span>}
-                </div>
-                <h3 class="card__title news__title">
-                  <a href={url(`/obavjestenja/${o.slug}`)}>{o.naslov}</a>
-                </h3>
-                <p class="news__excerpt">{o.sazetak}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div class="card empty">
-            <Icon name="bell" size={28} />
-            <p><strong>Trenutno nema novih obavještenja.</strong></p>
-            <p class="muted">Najave predavanja, halki i aktivnosti džemata objavljivaće se ovdje.</p>
-            <a class="link-arrow" href={url('/objave')}>Pogledajte objave</a>
-          </div>
-        )}
+    <div class="container">
+      <SectionHeading id="aktuelno-naslov" eyebrow="Aktuelno" title="Obavještenja">
+        <a slot="action" class="link-arrow" href={url('/obavjestenja')}>Sva obavještenja</a>
+      </SectionHeading>
+      <div data-news>
+      {aktuelno.length ? (
+        <ul class="news" role="list">
+          {aktuelno.map((o) => (
+            <li class="news__item card card--link">
+              <div class="news__meta">
+                <time datetime={o.datum}>{formatDatum(o.datum)}</time>
+                <span class="badge">{o.kategorija}</span>
+                {o.placeholder && <span class="badge badge--warn">Primjer sadržaja</span>}
+              </div>
+              <h3 class="card__title news__title">
+                <a href={url(`/obavjestenja/${o.slug}`)}>{o.naslov}</a>
+              </h3>
+              <p class="news__excerpt">{o.sazetak}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="card empty">
+          <Icon name="bell" size={28} />
+          <p><strong>Trenutno nema novih obavještenja.</strong></p>
+          <p class="muted">Najave predavanja, halki i aktivnosti džemata objavljivaće se ovdje.</p>
+          <a class="link-arrow" href={url('/objave')}>Pogledajte objave</a>
         </div>
-      </div>
-      <div class="ahd-col">
-        <AjetHadisDana naslov="Ajet / hadis dana" />
-        <a class="link-arrow ahd-col__link" href={url('/kuran-hadisi')}>Kur'an i hadisi</a>
+      )}
       </div>
     </div>
   </section>
 
+  <!-- ================= AJET / HADIS DANA ================= -->
+  <section class="section section--tight" aria-label="Ajet / hadis dana">
+    <div class="container container--narrow ahd-col">
+      <AjetHadisDana naslov="Ajet / hadis dana" />
+      <a class="link-arrow ahd-col__link" href={url('/kuran-hadisi')}>Kur'an i hadisi</a>
+    </div>
+  </section>
+
   <!-- ================= O DŽAMIJI ================= -->
-  <section class="section" aria-labelledby="o-dzamiji-naslov">
-    <div class="container grid-2 about">
-      <div class="about__text">
-        <p class="eyebrow">O džamiji</p>
-        <h2 id="o-dzamiji-naslov">Kuća namaza, znanja i zajedništva</h2>
-        {prvaHistorija ? (
-          <p>{prvaHistorija.tekst.length > 420 ? prvaHistorija.tekst.slice(0, 420).replace(/\s\S*$/, '') + '…' : prvaHistorija.tekst}</p>
-        ) : (
-          <Placeholder label="historija džamije (godina izgradnje, graditelj, obnove)" hint="sa izvorima" />
-        )}
-        {cinjenice.length ? (
-          <div class="about__stats">
-            {cinjenice.map((c) => <StatTile value={c.vrijednost} label={c.oznaka} source={c.izvor} />)}
-          </div>
-        ) : null}
-        <div class="about__links">
-          <a class="btn btn--primary" href={url('/o-dzamiji')}>Historija džamije</a>
-          <a class="btn btn--ghost" href={url('/galerija')}><Icon name="image" size={18} /> Galerija</a>
+  <section class="section section--tint" aria-labelledby="o-dzamiji-naslov">
+    <div class="container container--narrow about">
+      <p class="eyebrow">O džamiji</p>
+      <h2 id="o-dzamiji-naslov">Kuća namaza, znanja i zajedništva</h2>
+      {prvaHistorija ? (
+        <p class="about__p">{prvaHistorija.tekst.length > 420 ? prvaHistorija.tekst.slice(0, 420).replace(/\s\S*$/, '') + '…' : prvaHistorija.tekst}</p>
+      ) : (
+        <Placeholder label="historija džamije (godina izgradnje, graditelj, obnove)" hint="sa izvorima" />
+      )}
+      {cinjenice.length ? (
+        <div class="about__stats">
+          {cinjenice.map((c) => <StatTile value={c.vrijednost} label={c.oznaka} source={c.izvor} />)}
         </div>
-      </div>
-      <div class="about__visual">
-        <div class="arch-frame">
-          {naslovnaSlika ? (
-            <img src={galSrc(naslovnaSlika.src)} alt={naslovnaSlika.alt} loading="lazy" decoding="async" width="600" height="760" />
-          ) : (
-            <div class="arch-frame__ornament theme-inverse pattern-bg" aria-hidden="true">
-              <Logo size={150} inverse decorative />
-            </div>
-          )}
-        </div>
-        {!naslovnaSlika && <p class="about__caption muted">Fotografije džamije biće dodate u <a href={url('/galerija')}>galeriju</a>.</p>}
+      ) : null}
+      {naslovnaSlika && (
+        <figure class="about__photo">
+          <img src={galSrc(naslovnaSlika.src)} alt={naslovnaSlika.alt} loading="lazy" decoding="async" width="600" height="760" />
+        </figure>
+      )}
+      <div class="about__links">
+        <a class="btn btn--primary" href={url('/o-dzamiji')}>Historija džamije</a>
+        <a class="btn btn--ghost" href={url('/galerija')}><Icon name="image" size={18} /> Galerija</a>
       </div>
     </div>
   </section>
 
   <!-- ================= IMAMI ================= -->
   {istaknutiImami.length > 0 && (
-    <section class="section section--tint" aria-labelledby="imami-naslov">
+    <section class="section" aria-labelledby="imami-naslov">
       <div class="container">
         <SectionHeading id="imami-naslov" eyebrow="Imami i predavači" title="Ko drži predavanja">
           <a slot="action" class="link-arrow" href={url('/imami')}>Svi imami i predavači</a>
@@ -238,9 +232,9 @@ const korisno = [
   )}
 
   <!-- ================= KORISNO ================= -->
-  <section class="section" aria-labelledby="korisno-naslov">
+  <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="korisno-naslov">
     <div class="container">
-      <SectionHeading id="korisno-naslov" eyebrow="Edukacija" title="Mekteb, halke i korisni sadržaji" align="center" lead="Vjerska pouka, učenje Kur'ana i korisni sadržaji za svaki uzrast." />
+      <SectionHeading id="korisno-naslov" eyebrow="Edukacija" title="Mekteb, halke i korisni sadržaji" align="center" lead="Vjerska pouka, prijave i korisni sadržaji za svaki uzrast." />
       <ul class="grid-cards korisno" role="list">
         {korisno.map((k) => (
           <li class="card card--link">
@@ -249,39 +243,6 @@ const korisno = [
             <p class="muted">{k.opis}</p>
           </li>
         ))}
-      </ul>
-    </div>
-  </section>
-
-  <!-- ================= UPIS + PITAJ IMAMA ================= -->
-  <section class="section section--tint section--tight" aria-labelledby="cta-naslov">
-    <div class="container">
-      <h2 id="cta-naslov" class="visually-hidden">Prijave i pitanja</h2>
-      <ul class="cta-grid" role="list">
-        <li class="card card--link cta">
-          <span class="card__icon"><Icon name="graduation" size={24} /></span>
-          <div class="cta__body">
-            <h3 class="card__title"><a href={url('/upis')}>Online upis</a></h3>
-            <p class="muted">Prijavite sebe ili dijete u mekteb, halke, Školu Kur'ana ili sufaru — za par minuta, bez odlaska u džamiju.</p>
-          </div>
-          <span class="cta__go link-arrow" aria-hidden="true">Prijava</span>
-        </li>
-        <li class="card card--link cta">
-          <span class="card__icon"><Icon name="message" size={24} /></span>
-          <div class="cta__body">
-            <h3 class="card__title"><a href={url('/pitaj-imama')}>Pitaj imama</a></h3>
-            <p class="muted">Postavite pitanje o vjeri — i anonimno. Odgovori koje imam objavi dostupni su svima.</p>
-          </div>
-          <span class="cta__go link-arrow" aria-hidden="true">Postavi pitanje</span>
-        </li>
-        <li class="card card--link cta">
-          <span class="card__icon"><Icon name="calendar" size={24} /></span>
-          <div class="cta__body">
-            <h3 class="card__title"><a href={url('/raspored')}>Sedmični raspored</a></h3>
-            <p class="muted">Kada su halke, mekteb i kursevi — po danima u sedmici, za muškarce, žene i djecu.</p>
-          </div>
-          <span class="cta__go link-arrow" aria-hidden="true">Raspored</span>
-        </li>
       </ul>
     </div>
   </section>
@@ -303,7 +264,6 @@ const korisno = [
       </div>
       <div class="donate__actions">
         <a class="btn btn--gold" href={url('/donacije')}><Icon name="heart" size={18} /> Doniraj</a>
-        <a class="btn btn--ghost" href={url('/kontakt')}>Kontaktirajte nas</a>
       </div>
     </div>
   </section>
@@ -495,57 +455,38 @@ const korisno = [
   }
 
   /* ---------- Obavještenja ---------- */
-  .news { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
-  .news__item { padding: var(--space-5); }
-  .news__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); font-size: 0.86rem; color: var(--color-text-muted); margin-bottom: var(--space-2); }
-  .news__title { font-size: 1.25rem; }
-  .news__excerpt { margin: 0; color: var(--color-text-muted); }
+  /* :global — stavke dodaje i skripta (nova obavještenja iz admina) bez Astro atributa opsega */
+  [data-news] :global(.news) {
+    list-style: none; margin: 0; padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+    gap: var(--space-5);
+  }
+  [data-news] :global(.news__item) { padding: var(--space-5); }
+  [data-news] :global(.news__meta) { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); font-size: 0.86rem; color: var(--color-text-muted); margin-bottom: var(--space-2); }
+  [data-news] :global(.news__excerpt) { margin: 0; color: var(--color-text-muted); font-size: 0.95rem; }
   .empty { align-items: flex-start; gap: var(--space-2); }
   .empty :global(svg) { color: var(--color-accent-bright); margin-bottom: var(--space-2); }
   .empty p { margin: 0; }
   .empty .link-arrow { margin-top: var(--space-3); }
-  .ahd-col { display: flex; flex-direction: column; gap: var(--space-4); }
-  @media (min-width: 900px) { .ahd-col { padding-top: calc(0.78rem * 1.6 + var(--space-3) + 0.5rem); } }
+  .ahd-col { display: flex; flex-direction: column; gap: var(--space-3); }
   .ahd-col__link { align-self: flex-start; }
 
-  /* ---------- O džamiji ---------- */
-  .about { align-items: center; }
-  .about__text :global(.placeholder) { margin-bottom: var(--space-5); }
-  .about__stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-3); margin: var(--space-5) 0; }
-  .about__links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
-  .about__visual { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
-  .arch-frame {
-    width: min(100%, 420px);
-    aspect-ratio: 4 / 5;
-    padding: 10px;
-    border-radius: 210px 210px var(--radius-lg) var(--radius-lg);
-    border: 1.5px solid var(--color-accent-bright);
-    position: relative;
-  }
-  .arch-frame::before {
-    content: '';
-    position: absolute;
-    top: -12px; left: 50%;
-    width: 24px; height: 24px;
-    transform: translateX(-50%);
-    background: var(--color-accent-bright);
-    -webkit-mask: var(--ornament-star) center / contain no-repeat;
-    mask: var(--ornament-star) center / contain no-repeat;
-  }
-  .arch-frame > img,
-  .arch-frame__ornament {
+  /* ---------- O džamiji (jedna kolona) ---------- */
+  .about__p { max-width: var(--measure); }
+  .about :global(.placeholder) { margin-bottom: var(--space-5); }
+  .about__stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-3); margin: var(--space-5) 0; }
+  .about__photo { margin: var(--space-5) 0 0; }
+  .about__photo img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 16 / 7;
     object-fit: cover;
-    border-radius: 200px 200px calc(var(--radius-lg) - 4px) calc(var(--radius-lg) - 4px);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    background: var(--color-surface-2);
   }
-  .arch-frame__ornament {
-    display: grid;
-    place-items: center;
-    background: radial-gradient(circle at 50% 45%, #1b6b52, var(--inverse-bg) 70%);
-    --ornament-opacity: 0.16;
-  }
-  .about__caption { font-size: 0.9rem; text-align: center; margin: 0; }
+  .about__links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
 
   /* ---------- Imami ---------- */
   .imami { list-style: none; margin: 0; padding: 0; }
@@ -569,37 +510,28 @@ const korisno = [
     -webkit-mask: var(--ornament-star) center / contain no-repeat;
     mask: var(--ornament-star) center / contain no-repeat;
   }
-  .imam__name { font-size: 1.1rem; }
   .imam__role { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-1); font-size: 0.92rem; }
   .imam .card__meta { margin: 0; }
 
   /* ---------- Korisno ---------- */
-  .korisno { list-style: none; margin: 0; padding: 0; }
+  .korisno { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: var(--space-4); }
+  .korisno .card { padding: var(--space-4) var(--space-5); }
+  .korisno .card__icon { margin-bottom: var(--space-2); }
+  .korisno .card__title { margin-bottom: var(--space-1); }
   .korisno p { margin: 0; }
-
-  /* ---------- Upis / Pitaj imama ---------- */
-  .cta-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
-  @media (min-width: 760px) { .cta-grid { grid-template-columns: repeat(3, 1fr); } }
-  .cta { gap: var(--space-3); }
-  .cta .card__icon { margin-bottom: 0; }
-  .cta__body { flex: 1; }
-  .cta__body p { margin: 0; }
-  .cta__go { font-weight: 700; color: var(--color-primary); }
 
   /* ---------- Donacije ---------- */
   .donate { padding-block: clamp(3rem, 7vw, 4.5rem); }
-  .donate__inner { display: grid; gap: var(--space-6); align-items: center; }
-  @media (min-width: 860px) { .donate__inner { grid-template-columns: 1.6fr 1fr; } }
+  .donate__inner { display: grid; gap: var(--space-5); justify-items: center; text-align: center; max-width: calc(var(--container-narrow) + 2 * var(--space-5)); }
   .donate h2 { color: var(--inverse-text); }
-  .donate__text > p { color: var(--inverse-muted); max-width: 56ch; }
-  .donate__hadith { margin: var(--space-5) 0 0; padding-left: var(--space-4); border-left: 3px solid var(--inverse-accent); }
+  .donate__text > p { color: var(--inverse-muted); max-width: 56ch; margin-inline: auto; }
+  .donate__text .eyebrow { justify-content: center; }
+  .donate__hadith { margin: var(--space-5) 0 0; }
   .donate__hadith blockquote { margin: 0; }
   .donate__hadith p { margin: 0; font-family: var(--font-serif); font-size: 1.2rem; color: var(--inverse-text); }
-  .donate__hadith .donate__ar { font-family: var(--font-arabic); font-size: 1.6rem; color: var(--inverse-accent); text-align: left; }
+  .donate__hadith .donate__ar { font-family: var(--font-arabic); font-size: 1.6rem; color: var(--inverse-accent); text-align: center; }
   .donate__hadith figcaption { font-size: 0.85rem; color: var(--inverse-muted); margin-top: var(--space-1); }
-  .donate__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-  @media (min-width: 860px) { .donate__actions { justify-content: flex-end; } }
-  .donate__actions .btn--ghost { --btn-fg: var(--inverse-text); --btn-border: rgb(246 239 221 / 0.4); }
+  .donate__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
 
   /* ---------- Posjetite nas ---------- */
   .visit {

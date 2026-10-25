@@ -19,7 +19,7 @@ const najnovija = obavjestenja.filter((o) => !o.placeholder).slice(0, 3);
 >
   <PageHero eyebrow="Sedmični raspored" title="Raspored halki i mekteba" subtitle="Termini nastave u džamiji po danima u sedmici." />
 
-  <section class="section section--tight">
+  <section class="section">
     <div class="container container--narrow">
       <div class="rs-alati" data-rs-alati hidden={redovi.length === 0}>
         <ul class="chips" role="list" aria-label="Za koga" data-rs-filteri>
@@ -51,9 +51,9 @@ const najnovija = obavjestenja.filter((o) => !o.placeholder).slice(0, 3);
         )}
       </div>
 
-      <div class="rs-cta card">
-        <p><strong>Želite se uključiti?</strong> Prijavite sebe ili dijete online.</p>
-        <a class="btn btn--primary btn--sm" href={url('/upis')}>Online upis</a>
+      <div class="rs-cta">
+        <p>Želite se uključiti? Prijavite sebe ili dijete online.</p>
+        <a class="btn btn--primary" href={url('/upis')}>Online upis</a>
       </div>
     </div>
   </section>
@@ -62,27 +62,45 @@ const najnovija = obavjestenja.filter((o) => !o.placeholder).slice(0, 3);
 <style>
   .rs-alati { margin-bottom: var(--space-5); }
   .rs-alati[hidden], .rs-prazno[hidden], .rs-nema[hidden] { display: none; }
-  .rs { display: grid; gap: var(--space-5); }
+  .rs { display: grid; gap: var(--space-4); }
   .rs:empty { display: none; }
+  .rs :global(.rs-dan) {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5) var(--space-2);
+  }
   .rs :global(.rs-dan[hidden]) { display: none; }
-  .rs :global(.rs-dan__naslov) { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); font-size: 1.3rem; }
+  .rs :global(.rs-dan__naslov) {
+    display: flex; align-items: center; gap: var(--space-2);
+    margin: 0 0 var(--space-1);
+    font-size: var(--card-title-size); font-weight: 600;
+  }
+  .rs :global(.rs-dan--danas) { border-color: var(--color-primary); box-shadow: inset 4px 0 0 var(--color-primary); }
   .rs :global(.rs-dan--danas .rs-dan__naslov) { color: var(--color-primary); }
-  .rs :global(.rs-dan--danas .rs-stavka) { border-color: var(--color-primary); border-left-width: 4px; }
-  .rs :global(.rs-lista) { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
-  .rs :global(.rs-stavka) { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--space-3); padding: var(--space-4); }
+  .rs :global(.rs-lista) { list-style: none; margin: 0; padding: 0; display: grid; }
+  /* stavke dana su redovi (ne zasebne kartice) */
+  .rs :global(.rs-stavka) {
+    display: grid; grid-template-columns: 8.5rem 1fr; gap: var(--space-3);
+    padding: var(--space-3) 0;
+    background: none; border: 0; border-radius: 0; box-shadow: none;
+    border-top: 1px solid var(--color-border);
+  }
+  .rs :global(.rs-stavka:first-child) { border-top: 0; }
+  .rs :global(.rs-stavka:hover) { box-shadow: none; }
   .rs :global(.rs-stavka[hidden]) { display: none; }
   @media (max-width: 420px) { .rs :global(.rs-stavka) { grid-template-columns: 1fr; gap: var(--space-1); } }
-  .rs :global(.rs-stavka__vrijeme) { margin: 0; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-accent); line-height: 1.35; }
-  .rs :global(.rs-stavka__tijelo) { display: grid; gap: var(--space-1); min-width: 0; }
-  .rs :global(.rs-stavka__naziv) { margin: 0; font-size: 1.05rem; font-family: var(--font-sans); font-weight: 700; }
-  .rs :global(.rs-stavka__opis) { margin: 0; font-size: 0.92rem; color: var(--color-text-muted); }
-  .rs :global(.rs-stavka__za) { justify-self: start; }
+  .rs :global(.rs-stavka__vrijeme) { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--color-accent); line-height: 1.45; font-size: 0.95rem; }
+  .rs :global(.rs-stavka__tijelo) { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-2); min-width: 0; }
+  .rs :global(.rs-stavka__naziv) { margin: 0; font-size: 1rem; font-family: var(--font-sans); font-weight: 700; line-height: 1.45; }
+  .rs :global(.rs-stavka__opis) { margin: 0; flex-basis: 100%; order: 3; font-size: 0.9rem; color: var(--color-text-muted); }
+  .rs :global(.rs-stavka__za) { order: 2; }
   .rs-nema { margin: 0; }
   .rs-prazno { display: grid; gap: var(--space-4); }
   .rs-obav { display: grid; gap: var(--space-2); }
   .rs-obav__h { font-size: 1.15rem; margin: 0; }
   .rs-obav__lista { margin: 0; padding-left: 1.2em; display: grid; gap: var(--space-2); }
-  .rs-cta { margin-top: var(--space-6); flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) var(--space-5); }
+  .rs-cta { margin-top: var(--space-7); padding-top: var(--space-6); border-top: 1px solid var(--color-border); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-5); }
   .rs-cta p { margin: 0; }
 </style>
 

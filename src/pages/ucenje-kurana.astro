@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
-import SectionHeading from '../components/ui/SectionHeading.astro';
 import Placeholder from '../components/ui/Placeholder.astro';
 import LectureCard from '../components/predavanja/LectureCard.astro';
 import Icon from '../components/ui/Icon.astro';
@@ -13,89 +12,74 @@ const naslovStranice = tekstoviStranica['ucenje-kurana']?.naslov?.trim() || "Uč
 const snimci = predavanja.filter((p) => p.kategorija === 'ucenje-kurana');
 
 const koraci = [
-  { naslov: 'Sufara', tekst: 'Arapsko pismo, harfovi i harekati — temelj pravilnog čitanja.' },
-  { naslov: 'Učenje iz mushafa', tekst: 'Polagano i pravilno učenje uz učitelja koji ispravlja izgovor.' },
-  { naslov: 'Tedžvid', tekst: 'Pravila lijepog učenja: mahredži, medd, gunne i stajanja.' },
-  { naslov: 'Hifz i ponavljanje', tekst: 'Učenje kratkih sura napamet i redovno ponavljanje.' },
+  { naslov: 'Sufara', tekst: 'Arapsko pismo, harfovi i harekati.' },
+  { naslov: 'Učenje iz mushafa', tekst: 'Polagano učenje uz učitelja koji ispravlja izgovor.' },
+  { naslov: 'Tedžvid', tekst: 'Mahredži, medd, gunne i stajanja.' },
+  { naslov: 'Hifz i ponavljanje', tekst: 'Kratke sure napamet i redovno ponavljanje.' },
 ];
 
 const izvori = [
-  { naziv: 'Quran.com', url: 'https://quran.com', opis: "Kur'anski tekst, audio poznatih učača i prevodi značenja, uključujući bosanski prevod Besima Korkuta." },
-  { naziv: 'Tanzil', url: 'https://tanzil.net', opis: "Provjeren digitalni tekst Kur'ana sa više prevoda i preciznim prikazom harekata." },
-  { naziv: 'QuranicAudio', url: 'https://quranicaudio.com', opis: "Velika zbirka snimaka cijelog Kur'ana u izvedbi poznatih hafiza." },
-  { naziv: 'EveryAyah', url: 'https://everyayah.com', opis: 'Učenje ajet po ajet — korisno za ponavljanje i hifz.' },
+  { naziv: 'Quran.com', url: 'https://quran.com', opis: 'Tekst, audio i prevodi (i bosanski, Besim Korkut).' },
+  { naziv: 'Tanzil', url: 'https://tanzil.net', opis: 'Provjeren digitalni tekst sa harekatima.' },
+  { naziv: 'QuranicAudio', url: 'https://quranicaudio.com', opis: 'Snimci cijelog Kur\'ana poznatih hafiza.' },
+  { naziv: 'EveryAyah', url: 'https://everyayah.com', opis: 'Ajet po ajet — za ponavljanje i hifz.' },
 ];
 ---
 <BaseLayout title={naslovStranice} description="Snimci učenja Kur'ana iz Džamije na Jaliji, koraci u učenju i provjereni izvori za čitanje, slušanje i tedžvid.">
   <PageHero eyebrow="Korisno" title={naslovStranice} subtitle="Snimci učenja iz naše džamije, koraci za početnike i provjereni izvori za čitanje i slušanje." arabic="وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا" />
 
-  <section class="section" aria-labelledby="snimci-naslov">
-    <div class="container">
+  <div class="section">
+    <div class="container container--narrow flow">
       <UvodStranice kljuc="ucenje-kurana" />
-      <SectionHeading id="snimci-naslov" eyebrow="Iz džamije" title="Snimci učenja Kur'ana" lead="Kiraet imama i hafiza naše džamije.">
-        {snimci.length > 0 && <a slot="action" class="link-arrow" href={url('/predavanja')}>Sva predavanja</a>}
-      </SectionHeading>
-      {snimci.length ? (
-        <div class="grid-cards">{snimci.map((p) => <LectureCard predavanje={p} />)}</div>
-      ) : (
-        <Placeholder label="snimci učenja Kur'ana" hint="biće prikazani automatski kada se na kanalu pojave snimci u kategoriji „Učenje Kur'ana“" />
-      )}
-    </div>
-  </section>
 
-  <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="koraci-naslov">
-    <div class="container">
-      <SectionHeading id="koraci-naslov" eyebrow="Za početnike" title="Kako početi" align="center" />
-      <ol class="steps" role="list">
-        {koraci.map((k, i) => (
-          <li class="step card">
-            <span class="step__num" aria-hidden="true">{i + 1}</span>
-            <h3 class="card__title">{k.naslov}</h3>
-            <p class="muted">{k.tekst}</p>
-          </li>
-        ))}
-      </ol>
-      <p class="steps__cta">
-        Najbolje se uči uz učitelja. Pogledajte <a href={url('/mekteb')}>mekteb i halke</a> u našoj džamiji.
-      </p>
-    </div>
-  </section>
+      <section class="flow__sec" aria-labelledby="koraci-naslov">
+        <h2 id="koraci-naslov" class="flow__h">Kako početi</h2>
+        <ol class="flow-list" role="list">
+          {koraci.map((k, i) => (
+            <li>
+              <span class="flow-list__num" aria-hidden="true">{i + 1}</span>
+              <span class="flow-list__body">
+                <span class="flow-list__t">{k.naslov}</span>
+                <span class="flow-list__d">{k.tekst}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        <p class="uk-cta">Najbolje se uči uz učitelja — pogledajte <a href={url('/mekteb')}>mekteb i halke</a>.</p>
+      </section>
 
-  <section class="section" aria-labelledby="izvori-naslov">
-    <div class="container">
-      <SectionHeading id="izvori-naslov" eyebrow="Na internetu" title="Provjereni izvori" lead="Vanjski sajtovi otvaraju se u novom prozoru." />
-      <ul class="grid-cards" role="list">
-        {izvori.map((s) => (
-          <li class="card card--link">
-            <h3 class="card__title"><a href={s.url} target="_blank" rel="noopener">{s.naziv}<span class="visually-hidden"> (otvara se u novom prozoru)</span></a></h3>
-            <p class="muted">{s.opis}</p>
-            <span class="ext"><Icon name="external" size={16} /> {new URL(s.url).hostname}</span>
-          </li>
-        ))}
-      </ul>
+      <section class="flow__sec" aria-labelledby="snimci-naslov">
+        <div class="uk-head flow__wide">
+          <h2 id="snimci-naslov" class="flow__h">Snimci iz džamije</h2>
+          {snimci.length > 0 && <a class="link-arrow" href={url('/predavanja?kategorija=ucenje-kurana')}>Svi snimci</a>}
+        </div>
+        {snimci.length ? (
+          <div class="grid-cards flow__wide">{snimci.slice(0, 4).map((p) => <LectureCard predavanje={p} />)}</div>
+        ) : (
+          <Placeholder label="snimci učenja Kur'ana" hint="biće prikazani automatski kada se na kanalu pojave snimci u kategoriji „Učenje Kur'ana“" />
+        )}
+      </section>
+
+      <section class="flow__sec" aria-labelledby="izvori-naslov">
+        <h2 id="izvori-naslov" class="flow__h">Provjereni izvori</h2>
+        <ul class="link-list" role="list">
+          {izvori.map((s) => (
+            <li>
+              <a href={s.url} target="_blank" rel="noopener">
+                {s.naziv}<Icon name="external" size={14} class="uk-ext" /><span class="visually-hidden"> (otvara se u novom prozoru)</span>
+              </a>
+              <span class="link-list__meta">{s.opis}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
-  </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .grid-cards { list-style: none; margin: 0; padding: 0; }
-  .grid-cards p { margin: 0 0 var(--space-3); }
-  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
-  .step p { margin: 0; }
-  .step__num {
-    display: grid;
-    place-items: center;
-    width: 46px;
-    height: 46px;
-    margin-bottom: var(--space-3);
-    background: var(--color-primary);
-    color: var(--color-on-primary);
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 1.2rem;
-    -webkit-mask: var(--ornament-star) center / contain no-repeat;
-    mask: var(--ornament-star) center / contain no-repeat;
-  }
-  .steps__cta { text-align: center; margin: var(--space-6) 0 0; }
-  .ext { display: inline-flex; align-items: center; gap: var(--space-1); margin-top: auto; font-size: 0.85rem; font-weight: 700; color: var(--color-primary); }
+  .uk-cta { margin: var(--space-5) 0 0; color: var(--color-text-muted); }
+  .uk-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); margin-bottom: var(--space-4); }
+  .uk-head .flow__h { margin: 0; }
+  .flow__sec :global(.uk-ext) { margin-left: 0.35em; opacity: 0.7; }
 </style>

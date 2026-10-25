@@ -10,8 +10,13 @@ interface Props {
   zaKoga?: TerminRasporeda['zaKoga'][];
   naslovId?: string;
   naslov?: string;
+  /** nivo naslova (podrazumijevano h3) */
+  nivo?: 2 | 3;
+  /** dodatna klasa naslova (npr. 'flow__h') */
+  naslovKlasa?: string;
 }
-const { zaKoga = [], naslovId = 'raspored-sedmica', naslov = 'Sedmični raspored' } = Astro.props;
+const { zaKoga = [], naslovId = 'raspored-sedmica', naslov = 'Sedmični raspored', nivo = 3, naslovKlasa } = Astro.props;
+const H = `h${nivo}` as 'h2' | 'h3';
 const termini = raspored.filter((t) => !zaKoga.length || zaKoga.includes(t.zaKoga) || t.zaKoga === 'svi');
 const poDanu = [1, 2, 3, 4, 5, 6, 7]
   .map((dan) => ({ dan, lista: termini.filter((t) => t.dan === dan) }))
@@ -19,7 +24,7 @@ const poDanu = [1, 2, 3, 4, 5, 6, 7]
 ---
 <section class="rsd" aria-labelledby={naslovId} data-rsd>
   <div class="rsd__head">
-    <h3 id={naslovId} class="rsd__title">{naslov}</h3>
+    <H id={naslovId} class:list={['rsd__title', naslovKlasa]}>{naslov}</H>
     <a class="link-arrow" href={url('/raspored')}>Cijeli raspored</a>
   </div>
   {poDanu.length ? (

@@ -101,9 +101,11 @@ const email = dzamija.kontakt.email;
         })}
       </ul>
       <div class="site-nav__footer">
-        <a class="btn btn--ghost btn--block" href={url('/pretraga')}>
-          <Icon name="search" size={18} /> Pretraga
-        </a>
+        <form class="nav-search" role="search" action={url('/pretraga')} method="get">
+          <label class="visually-hidden" for="nav-q">Pretraži sajt</label>
+          <span class="nav-search__icon" aria-hidden="true"><Icon name="search" size={18} /></span>
+          <input id="nav-q" class="nav-search__input" type="search" name="q" placeholder="Pretraži sajt…" autocomplete="off" enterkeyhint="search" />
+        </form>
         <a class="btn btn--gold btn--block" href={url('/donacije')}>
           <Icon name="heart" size={18} /> Doniraj
         </a>
@@ -270,6 +272,23 @@ const email = dzamija.kontakt.email;
     transition: background-color var(--transition), border-color var(--transition);
   }
   .icon-btn:hover { background: var(--color-surface-2); border-color: var(--color-border); }
+  /* pretraga: isti jezik kao polje pretrage na stranicama (obrub-pilula) */
+  .search-btn { border-color: var(--color-border); }
+  .search-btn:hover { border-color: var(--color-primary); }
+  .nav-search { position: relative; }
+  .nav-search__icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); display: flex; color: var(--color-text-muted); pointer-events: none; }
+  .nav-search__input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.5rem 1rem 0.5rem 2.75rem;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 1rem;
+  }
+  .nav-search__input::placeholder { color: var(--color-text-muted); opacity: 1; }
+  .nav-search__input:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-color: var(--color-primary); }
 
   .theme-toggle :global(.theme-toggle__sun) { display: none; }
   :global([data-theme='dark']) .theme-toggle :global(.theme-toggle__sun) { display: block; }
@@ -552,7 +571,7 @@ const email = dzamija.kontakt.email;
 
   function focusables(): HTMLElement[] {
     if (!nav) return [];
-    return Array.from(nav.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')).filter(
+    return Array.from(nav.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), input:not([disabled])')).filter(
       (el) => el.offsetParent !== null,
     );
   }

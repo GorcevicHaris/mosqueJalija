@@ -20,7 +20,7 @@ const opcije = [
   <PageHero eyebrow="Korisno" title="Kur'an i hadisi" subtitle="Ajet i hadis dana — svaki dan novi, sa arapskim tekstom, prevodom i jasno navedenim izvorom." arabic="وَقُل رَّبِّ زِدْنِي عِلْمًا" />
 
   <section class="section">
-    <div class="container">
+    <div class="container container--narrow">
       <div class="daily">
         <AjetHadisDana tip="ajet" variant="feature" />
         <AjetHadisDana tip="hadis" variant="feature" />
@@ -59,7 +59,6 @@ const opcije = [
 
 <style>
   .daily { display: grid; gap: var(--space-5); }
-  @media (min-width: 900px) { .daily { grid-template-columns: 1fr 1fr; } }
   .note { display: flex; align-items: center; gap: var(--space-2); font-size: 0.88rem; margin: var(--space-5) 0 0; }
   .ah-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
   .ah { gap: var(--space-3); align-items: flex-start; }

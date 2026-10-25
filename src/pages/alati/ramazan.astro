@@ -23,7 +23,7 @@ import { url } from '../../lib/url';
   </section>
 
   <section class="section section--tight section--tint no-print" aria-labelledby="teravih-naslov">
-    <div class="container grid-2">
+    <div class="container container--narrow stacked">
       <div class="prose">
         <h2 id="teravih-naslov">Teravih-namaz u džamiji</h2>
         <p>
@@ -44,3 +44,6 @@ import { url } from '../../lib/url';
   </section>
   <OstaliAlati trenutni="ramazan" />
 </BaseLayout>
+<style>
+  .stacked { display: grid; gap: var(--space-7); }
+</style>

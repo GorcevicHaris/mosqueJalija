@@ -19,7 +19,7 @@ const isUrl = source ? /^(https?:)?\/\//.test(source) || source.startsWith('/') 
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
-    padding: var(--space-5);
+    padding: var(--space-4) var(--space-5);
     border-radius: var(--radius-lg);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -27,13 +27,13 @@ const isUrl = source ? /^(https?:)?\/\//.test(source) || source.startsWith('/') 
   }
   .stat__value {
     font-family: var(--font-serif);
-    font-size: clamp(1.6rem, 2vw + 1rem, 2.3rem);
+    font-size: 1.3rem;
     font-weight: 600;
-    line-height: 1.1;
+    line-height: 1.2;
     color: var(--color-primary);
   }
-  .stat__value--long { font-size: clamp(1.15rem, 0.8vw + 0.95rem, 1.4rem); line-height: 1.25; }
-  .stat__label { font-weight: 600; }
+  .stat__value--long { font-size: 1.15rem; line-height: 1.25; }
+  .stat__label { font-weight: 600; font-size: 0.92rem; color: var(--color-text-muted); }
   .stat__source { font-size: 0.82rem; color: var(--color-text-muted); margin-top: var(--space-2); overflow-wrap: anywhere; }
   /* veća površina za dodir bez promjene rasporeda */
   .stat__source a { position: relative; }

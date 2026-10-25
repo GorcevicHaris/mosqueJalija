@@ -29,29 +29,30 @@ const faq = redovi.length
   {faq && <script is:inline type="application/ld+json" set:html={JSON.stringify(faq).replace(/</g, '\\u003c')} />}
   <PageHero eyebrow="Pitanja i odgovori" title="Pitaj imama" subtitle="Imate pitanje o vjeri, ibadetu ili životu džemata? Pitajte — i anonimno." />
 
-  <section class="section section--tight">
-    <div class="container pq">
-      <div class="pq__forma">
-        <div class="card pq__card">
-          <h2 class="pq__h">Postavite pitanje</h2>
-          <div class="pq__napomena" role="note">
-            <Icon name="info" size={20} />
-            <div>
-              <p><strong>Odgovori se objavljuju nakon što ih imam pregleda</strong> — zato odgovor može potrajati nekoliko dana. Ne objavljujemo sva pitanja.</p>
-              <p>Za hitna ili lična pitanja (dženaza, vjenčanje, porodične situacije) obratite se džematu direktno — preko <a href={url('/kontakt')}>kontakt stranice</a> ili lično u džamiji.</p>
-            </div>
+  <div class="section">
+    <div class="container container--narrow flow">
+      <section class="flow__sec" aria-labelledby="pitanje-naslov">
+        <h2 class="flow__h" id="pitanje-naslov">Postavite pitanje</h2>
+        <div class="flow-note" role="note">
+          <Icon name="info" size={18} />
+          <div>
+            <p>Odgovor se objavljuje nakon što ga imam pregleda — to može potrajati nekoliko dana. Ne objavljujemo sva pitanja.</p>
+            <p>Za hitna i lična pitanja (dženaza, vjenčanje, porodica) obratite se džematu <a href={url('/kontakt')}>direktno</a>.</p>
           </div>
+        </div>
+        <div class="card pq__card flow__wide">
           <PitanjeForma id="pitanje" />
         </div>
-      </div>
+      </section>
 
-      <div class="pq__odgovori">
-        <h2 class="pq__h" id="odgovori-naslov">Objavljeni odgovori</h2>
+      <section class="flow__sec pq__odgovori" aria-labelledby="odgovori-naslov">
+        <h2 class="flow__h" id="odgovori-naslov">Objavljeni odgovori</h2>
 
-        <div class="pq__alati" data-pq-alati hidden={redovi.length === 0}>
-          <div class="field">
-            <label for="pq-trazi">Pretraži pitanja i odgovore</label>
-            <input class="input" id="pq-trazi" type="search" placeholder="npr. namaz, zekat, abdest" autocomplete="off" data-pq-trazi />
+        <div class="pq__alati flow__wide" data-pq-alati hidden={redovi.length === 0}>
+          <div class="pq__trazi">
+            <label class="visually-hidden" for="pq-trazi">Pretraži pitanja i odgovore</label>
+            <Icon name="search" size={18} class="pq__trazi-ikona" />
+            <input class="input pq__trazi-input" id="pq-trazi" type="search" placeholder="Pretraži odgovore (npr. namaz, zekat)" autocomplete="off" data-pq-trazi />
           </div>
           <ul class="chips" role="list" aria-label="Kategorija" data-pq-kategorije hidden={kategorije.length < 2}>
             <li><button type="button" class="chip" aria-pressed="true" data-value="">Sve</button></li>
@@ -60,36 +61,25 @@ const faq = redovi.length
           <p class="muted pq__broj" aria-live="polite" data-pq-broj></p>
         </div>
 
-        <ul class="pq__lista" role="list" aria-labelledby="odgovori-naslov" data-pq-lista><Fragment set:html={renderPitanja(redovi)} /></ul>
+        <ul class="pq__lista flow__wide" role="list" aria-labelledby="odgovori-naslov" data-pq-lista><Fragment set:html={renderPitanja(redovi)} /></ul>
 
-        <div class="pq__prazno" data-pq-prazno hidden={redovi.length > 0}>
-          <Icon name="message" size={28} />
+        <div class="pq__prazno flow__wide" data-pq-prazno hidden={redovi.length > 0}>
+          <Icon name="message" size={24} />
           <p><strong>Još nema objavljenih odgovora.</strong></p>
-          <p class="muted">Budite prvi koji će postaviti pitanje — odgovori će se pojaviti ovdje.</p>
+          <p class="muted">Odgovori će se pojaviti ovdje.</p>
         </div>
         <p class="muted pq__nema-rez" data-pq-nema-rez hidden>Nijedno pitanje ne odgovara pretrazi.</p>
         <p class="muted pq__greska" data-pq-greska hidden></p>
-      </div>
+      </section>
     </div>
-  </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .pq { display: grid; gap: var(--space-6); }
-  @media (min-width: 1000px) { .pq { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: start; } }
-  .pq__h { margin: 0 0 var(--space-3); font-size: clamp(1.4rem, 1.5vw + 1rem, 1.8rem); }
-  .pq__card { padding: clamp(var(--space-4), 3vw, var(--space-6)); gap: var(--space-4); }
-  .pq__card .pq__h { margin: 0; }
-  .pq__napomena {
-    display: grid; grid-template-columns: auto 1fr; gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-md);
-    background: var(--color-accent-soft);
-    font-size: 0.92rem;
-  }
-  .pq__napomena :global(svg) { color: var(--color-accent); margin-top: 2px; }
-  .pq__napomena p { margin: 0; }
-  .pq__napomena p + p { margin-top: var(--space-2); }
+  .pq__card { margin-top: var(--space-5); padding: clamp(var(--space-4), 3vw, var(--space-6)); }
+  .pq__trazi { position: relative; }
+  .pq__trazi :global(.pq__trazi-ikona) { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
+  .pq__trazi-input { padding-left: 2.6rem; border-radius: var(--radius-full); }
   .pq__alati { display: grid; gap: var(--space-3); margin-bottom: var(--space-4); }
   .pq__alati[hidden], [data-pq-kategorije][hidden], .pq__prazno[hidden], .pq__nema-rez[hidden], .pq__greska[hidden] { display: none; }
   .pq__broj { margin: 0; font-size: 0.88rem; }
@@ -97,8 +87,8 @@ const faq = redovi.length
   .pq__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
   .pq__prazno {
     display: grid; justify-items: center; text-align: center; gap: var(--space-2);
-    padding: var(--space-6) var(--space-4);
-    border: 2px dashed var(--color-border-strong);
+    padding: var(--space-5) var(--space-4);
+    border: 1.5px dashed var(--color-border-strong);
     border-radius: var(--radius-lg);
     color: var(--color-text-muted);
   }

@@ -22,7 +22,7 @@ import OstaliAlati from '../../components/alati/OstaliAlati.astro';
   </section>
 
   <section class="section section--tight section--tint zekat-info">
-    <div class="container grid-2">
+    <div class="container container--narrow stacked">
       <div class="prose">
         <h2>Ukratko o zekatu</h2>
         <ul>
@@ -41,5 +41,6 @@ import OstaliAlati from '../../components/alati/OstaliAlati.astro';
   <OstaliAlati trenutni="zekat" />
 </BaseLayout>
 <style>
+  .stacked { display: grid; gap: var(--space-7); }
   .zekat-info .prose h2 { margin-top: 0; }
 </style>
