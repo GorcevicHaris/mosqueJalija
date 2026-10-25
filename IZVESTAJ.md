@@ -62,16 +62,27 @@ razgovoru: https://www.youtube.com/@D%C5%BEamijanaJaliji (ID kanala `UCyw1ppQVij
 | **RSS, aplikacija** | RSS za predavanja i obavještenja; sajt se može instalirati na telefon kao aplikacija |
 
 ### Admin panel (`/admin`)
-Ima 15 sekcija i u njima se mijenja **sve**:
+U adminu se mijenja **sve** što je sadržaj sajta:
+- **traka na vrhu sajta** za hitna obavještenja (npr. dženaza, promjena termina); pojavi se odmah;
 - obavještenja i objave sa slikama;
 - podaci o džamiji: kontakt, donacije, džuma, društvene mreže, opis, historija i činjenice, naslovna fotografija;
 - imami: dodavanje novih, biografija, fotografija;
 - galerija;
 - dove, ajeti i hadisi;
-- kategorije i serije predavanja, te ispravke predavanja (imam, kategorija, serija, naslov);
-- sedmični raspored i uvodni tekstovi stranica;
+- **predavanja:** sakrivanje bilo kog videa, ručno dodavanje videa preko YouTube linka, ispravke
+  (imam, kategorija, serija, naslov), kategorije i serije;
+- **transkripti:** ispravka bilo koje rečenice, na bosanskom i na engleskom, uz „vrati original“;
+- **mekteb:** programi za online upis, sedmični raspored;
+- **kartice na stranicama:** 14 pravila ponašanja, „Šta djeca uče“, koraci i izvori za učenje Kur'ana;
+- **tekstovi stranica:** početna, podnožje, donacije, kontakt, mekteb, pravila, učenje Kur'ana, dove,
+  Kur'an i hadisi, mediji, galerija i svi islamski alati;
 - inbox za poruke, prijave za upis (sa izvozom u CSV) i pitanja imamu (odgovor i objava);
 - urednici, za administratora.
+
+Samo dvije stvari se ne mijenjaju kroz admin, i to namjerno:
+- **meni i dizajn sajta**, jer su dio koda;
+- **novi videi**: dolaze automatski sa YouTube kanala svakog ponedjeljka, a admin ih može sakriti
+  ili dodati ručno.
 
 Kad se nešto sačuva u adminu, nova obavještenja se na sajtu vide odmah. Ostale izmjene se pojavljuju
 za ~15–20 minuta, jer se sajt automatski obnavlja iz baze svakih 15 minuta.
