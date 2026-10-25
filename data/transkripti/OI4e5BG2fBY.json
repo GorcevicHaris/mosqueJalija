@@ -1,0 +1,484 @@
+{
+ "id": "OI4e5BG2fBY",
+ "jezik": "bs",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T02:36:38.225Z",
+ "automatski": true,
+ "segmenti": [
+  {
+   "od": 0.5,
+   "do": 40,
+   "tekst": "[arapski / nije transkribovano]"
+  },
+  {
+   "od": 40,
+   "do": 71.7,
+   "tekst": "Wa ala alihi wa sahbihi ajme'in Zahvala pripada di na uzvišenom Allahu subhanehu ve te'ala gospodaru svih svjetova Zahvala njemu što nas je večeras okupio ovdje da izučavamo njegovu vjeru da samo njegov obožavamo da slijedimo njegovog Poslanika Muhammadu sallallahu alejhi ve sellem neke Allaho zadovolstvo na ashaabe Poslanika Muhammadu sallallahu alejhi ve sellem i na sve onaj koji slijede njihov put."
+  },
+  {
+   "od": 72.1,
+   "do": 82.2,
+   "tekst": "Amin. Ja rabel alemin. Na prošlom predavanju, draga braćeo, smo govorili o važnosti obožavanja samo Allaha jednoga jedinoga."
+  },
+  {
+   "od": 85,
+   "do": 104,
+   "tekst": "Pa smo rekli da svaki Poslanik koji je poslan je pozivao prvo u vjerovanje, to jest u obožavanje Allaha subhanehu ve te'ala jednoga jedinoga. I to je bila njihova prva zadaća ili njihov prvi zadatak."
+  },
+  {
+   "od": 104.9,
+   "do": 139.1,
+   "tekst": "Kako kaže Allah subhanahu ta'ala u Kur'anu وَمَا أَرْسَلْنَا مِنْ قَبْلِكَ مِنْ رَسُولٍ إِلَّا نُوحِي إِلَيْهِ أَنَّهُ لَا إِلَاهَ إِلَّا أَنَ فَعْبُدُونَ A nismo prije tebe poslali Poslanika, a da mu nismo objavili da nema božanstva koje zaslužuje da bude obožavano osim mene, kaže Allah subhanu wa ta'ala, pa me obožavajte."
+  },
+  {
+   "od": 139.1,
+   "do": 163.2,
+   "tekst": "Pa me obožavajte. Pa je glavna zadaća svakog Poslanika bila da poziva u obožavanje Allaha subhanu wa ta'ala jednog jedinog. Također smo spomenuli i hadis Poslanika sallahu alihi wa salame, gde se govori o pravu Allaha subhanu wa ta'ala kod njegovih robova."
+  },
+  {
+   "od": 164.7,
+   "do": 189,
+   "tekst": "Pa Allah ovo pravo kod nas da ga obožavamo i da mu ne činimo širk, da mu ne pripisujemo saučesnika. A pravo naše kod naše gospodara jeste da ne kazni onoga ko kaže la ilaha illa Allah tražeći njegovo zadovoljstvo, tražeći da vidi njegovo lice u džennetu."
+  },
+  {
+   "od": 190.1,
+   "do": 212.7,
+   "tekst": "Tako ovdje smo spomenuli da nije od ibadeta samo čovjek da pade na seđdu, Allah subhanehu ve te'ala. Nije samo to od ibadeta. Ima puno ibadeta koje čovjek ne smije da radi ili da upućuje nekom drugom mimo Allah subhanehu ve te'ala."
+  },
+  {
+   "od": 213.7,
+   "do": 246.7,
+   "tekst": "Od tih ibadeta jeste, draga braćo, l-isti'adatu ili traženje zaštite. Pa možemo reći da terminološke označenje za ovo el-isti'ade jeste okretanje Allahu, oslanjanje i čvrsto pribjegavanje njemu, traženje utočišta, zaštite kod njega, od svih zala, štete koje mogu zadjesiti jednog čovjeka."
+  },
+  {
+   "od": 246.7,
+   "do": 256.3,
+   "tekst": "Zbog čega spominjamo l-isti'adhe? Zbog toga što je vaj termin l-isti'adhe spominjeno to Kur'anu i Sunnetu."
+  },
+  {
+   "od": 258.9,
+   "do": 307,
+   "tekst": "Pa ga nije dozvoleno, to jest nije dozvoleno tražiti zaštitu od šerra, od šeitana ili od drugi istvari osim od Allah subhanu wa ta'ala. Kaže Allah subhanu wa ta'ala u Kur'anu Poslaniće, Muhammede, ako te šeitan bude nagovarao na kakvo zlo ili bude ubacivao sumnju u tvoja prsa ili ljutnu, traži zaštitu kod koga? Kod Allaha subhanehu ve te'ala."
+  },
+  {
+   "od": 307,
+   "do": 325.6,
+   "tekst": "Ne kod nekog evlije, niti kod nekog kipa ili tako dalje, već kod koga? Kod Allaha subhanehu ve te'ala, innahu sami'un alim, doista on sve čuje i sve zna."
+  },
+  {
+   "od": 326.5,
+   "do": 368.1,
+   "tekst": "Također, ajet koji dokazuje da je ovo ibadet i da se ne smije činiti ili upućivati nekome drugome, Mimo Allah subhanehu ve te'ala jeste ajet De kaže Allah subhanehu ve te'ala Wa qur rabbi a'udhu bika min hamazati shayatim Wa a'udhu bika rabbi an yehudurun I reci Muhammada Tražim zaštitu kod Allaha od nagovaranja šajtanski Od njegovih nagovaranja, od njegovih vesvesa Wa a'udhu bika an yehudurun"
+  },
+  {
+   "od": 368.1,
+   "do": 392.5,
+   "tekst": "I tražim od tebe zaštitu, gospodaru moj, od njihovog prisustva. Kako su lijepi ajeti da ih čovjek nauči kako bi tražio zaštitu od Allaha subhanehu ve te'ala. Također, sure, draga braća koje svi znamo, koje je Allah subhanehu ve te'ala poslao Poslaniku Muhammedu s.a.v. kao lijek."
+  },
+  {
+   "od": 393.8,
+   "do": 411.4,
+   "tekst": "Vi znate svi da je Poslanik s.a.v. bio psihira. Znati svi da je po sanji sallallahu alaihi wasallam bi opsihrio. I nije ga mi mu išlo nikakvo iskušenje. A sve ovo da bi mi kao njegov umet imali koristi od toga."
+  },
+  {
+   "od": 412.2,
+   "do": 453.6,
+   "tekst": "Da bi mi kao njegov umet imali koristi od toga. Pa ga je opsihrio jevrij pod imenom Labib sa svojim čerkama. Allah subhanehu ve te'ala posla udhviya sura Qul a'udhu bi rabbi al-falq Qul a'udhu bi rabbi al-naas Išta kaja Allah subhanehu ve te'ala U suri falq Qul ratsi muhammada A'udhu bi rabbi al-falq Tarajim zaštitu Kod gospodara svitana Min sharri ma khalq Ot sharra il izla"
+  },
+  {
+   "od": 453.6,
+   "do": 470.5,
+   "tekst": "Kwae keon storija Wa min sharri ghasik Iza waqab I od šera ili zla noći kada razastre tminu. Pa vi znate, vidite kako ovdje precizno noć."
+  },
+  {
+   "od": 471.2,
+   "do": 487.6,
+   "tekst": "Većina zla se događa baš u noćima. To je kada je noć. I stvarno kada pane noć, onda tad se zlo širi. Jer ljudi se jednostavno ne vide, kriju se."
+  },
+  {
+   "od": 488.1,
+   "do": 504.2,
+   "tekst": "I onda rade svakako zla. Pa, kaže Allah subhanehu ve te'ala, u ovde poručuje s Pasaniku Muhammadu s.a.w. Da se, da traži zaštitu od svakoga zla kod njega. O min šerri ghasikini iza waqab."
+  },
+  {
+   "od": 504.6,
+   "do": 520,
+   "tekst": "O min šerri nafathati fil uqat. I tražim zaštitu kod tebe, gospodaru, od oni sihirbazica koje pušu učvarove. A mi ne, mi danas."
+  },
+  {
+   "od": 520,
+   "do": 536.9,
+   "tekst": "To jest, vallahu danas se to dosta iščistilo. Nekada vi znate ovi istari, pa ode pa mu lije stravu. Lije mu stravu ili liječi ga žena koja ne zna tako mi Allaha jedan harf da izgovori kako treba."
+  },
+  {
+   "od": 538.6,
+   "do": 558.2,
+   "tekst": "Ali zato izgovara neke riječi koje se i ne razumiju. Pa onda traži, ne znam, sliku, traži parče od djeće i tako dalje. A to su sve znaci da ta osoba sihirbas."
+  },
+  {
+   "od": 558.8,
+   "do": 574.1,
+   "tekst": "I da radi sa džinnima šajtanima. Pa nas je Allah subhanu wa ta'ala preko njegovog Poslanika ovdje naučio kako da se štitimo ovih zala. U min šerrin nefathati fil uqad, u min šerri hasidin ida hasad."
+  },
+  {
+   "od": 574.4,
+   "do": 595.2,
+   "tekst": "I od šera i od zla, zavidnika, ali nije svakog zavidnika. Onoga koji zavidi, imate ljudi koji zavide, ali ne žele zlo. Ne prelazi ta zavis njegova na druge. A imate zavidnik koji zavidi i želi da uništi onoga kome zavidi."
+  },
+  {
+   "od": 596.3,
+   "do": 620.4,
+   "tekst": "Kako je Allah subhanehu ve te'ala ovom surom obuhvatio, kako je Allah subhanehu ve te'ala ovu suru poslao kao lijek čovjeku preko Poslanika Muhammeda sallallahu alejhi ve sellem. I ja nikako, braga braćo, ne razumijemo ne lude, dođe čovjek iz Sanđaka, iz Bosne do Medine i šta u radi?"
+  },
+  {
+   "od": 622.7,
+   "do": 642.2,
+   "tekst": "Počinje širk, nevjerstvo kod mezara Poslanika Muhammada s.a.v. Tražeći od Poslanika zaštitu ili tražeći od mrtvoga našega Poslanika da se zauzima za nje. To je nevjerovatno. Pa Poslanik s.a.v. da je mogao samoga sebe da izliječi."
+  },
+  {
+   "od": 642.9,
+   "do": 664.7,
+   "tekst": "Ne bi mu Allah s.a.v. slavio u usuru. Već bi Poslanik s.a.v. samoga sebe izliječio. Ali ne. Poslanik sallallahu alaihi wasallam kao i mi ne može sebi da pribavi nikakvu korist niti da otkloni štetu."
+  },
+  {
+   "od": 665.3,
+   "do": 681.8,
+   "tekst": "Osim ono liko koliko mu je Allah subhanu wa ta'ala propisao i nama također. Također suru nas, također lik. Kaže Allah subhanu wa ta'ala, obraći se Poslaniku, a i njegovom umetu, Qul, a'udhu bi rabbin nas."
+  },
+  {
+   "od": 683.2,
+   "do": 707.7,
+   "tekst": "Reci o Muhammede, tražim zaštitu kod gospodara ludi, melikin nas, vladara ludi, ilahin nas, njihovo božanstva, min šerri il vaswasil khannas, od šerra, od zla, šeitana, koji kada se Allahovo ime spomeni, brzo pobegne, ne stane."
+  },
+  {
+   "od": 708.2,
+   "do": 723.4,
+   "tekst": "Pa vidimo ovde, nači dokezje, da kada se Allahovo ime spomene, šeitan brzo, brzo pobegne. El-le-di vas vi su fija suduri nas, koji ubacuje sumnju u prsa ljudi."
+  },
+  {
+   "od": 726.6,
+   "do": 759.2,
+   "tekst": "Sumnju, nevjerstvo i tako dalje. Minel džinneti un nas, od džinaj ljudi. Također, ovdje imamo dokaz da imaju ljudi šeitani i džini šeitani. Pa će neko da se zapita kako imamo šer ili kako imamo da se dešava u mjesecu Ramazanu od šera ono što se dešava kada su šeitani povezani."
+  },
+  {
+   "od": 760.4,
+   "do": 777.2,
+   "tekst": "Jer nas nije Poslanik Muhammed s.a. obavijestio da se šeitani povežu prije mjeseca Ramazana. Jeste. Ali imate ostaju ovi šeitani ljudi. Šeitani ljudi. Šeitani ljudi koji hodaju."
+  },
+  {
+   "od": 777.6,
+   "do": 809.2,
+   "tekst": "Pa kada je Poslanik s.a. bio upitan kaže imaju li ljudi šeitani? Kaže Poslanik imaju. Imaju. Pa čovjek treba da uči ove dvije sure kao lijek i da traži zaštitu samo od Allah subhanehu ve te'ala. Prenesi se u hadisu kojeg bileži, to jest kojeg prenosi Abdullah ibn Abbas, a bileži ga Buhari, da ih je Poslanik s.a.v. učio dovom, kaže učio nas je ovom dovom kao što nas je učio Suri Bekara."
+  },
+  {
+   "od": 810.1,
+   "do": 825.2,
+   "tekst": "Koja je to doba, draga braća? To je doba koja se uči na kraju svakog namaza. Kaže po sanjih s.a.v. Kulu recite, Allahume inna ne'udhubike min azabi jahennem."
+  },
+  {
+   "od": 825.7,
+   "do": 843.1,
+   "tekst": "Allahu moj, tražim ko tebe zaštitu od jahennemske, od jahennemske kazne. Od jahennemske kazne. Kako vode? Znači prvo sanjih s.a.s. kaže da tražimo zaštitu od djehanemske vatre."
+  },
+  {
+   "od": 843.6,
+   "do": 861.8,
+   "tekst": "Od koga da tražimo zaštitu? Allah subhanehu ve te'ala. Ne moramo da tražimo zaštitu od nekoga drugog, od djehanemske vatre. Vate, verujete, ljudi koji traže zaštitu od djehanemske vatre, od nekog evlije, od nekog djinna, od nekog petog, devetog."
+  },
+  {
+   "od": 861.9,
+   "do": 880.6,
+   "tekst": "Zaboravljuju Allah subhanehu ve te'ala. A zaboravljuju, a zaboravljuju Allah subhanehu ve te'ala. A prvo čovjek zač treba da traži, zač je, jest jehennem. I to je osobi na pametnih ludih, kako to kaje Allah subhanehu ve te'ala u Kur'anu. الذina yedhkorun Allah qiyama wa ku'udan wa ala junubim."
+  },
+  {
+   "od": 881.1,
+   "do": 923.5,
+   "tekst": "Oni kaje, koy izpominju Allah subhanehu ve te'ala, istoyeci i sedet, i sedetci i na bokovima. ويتفكرون في خلق السماوات والأرض ارزميش ليو أصفاراني نباسي زملة اشتا قوري ربنا ما خلقت هذا باطلة غصفو دارو موي تيو نيسي ستوريو سمو اناكو نيسي سمو ستوريو بزنكو كراز لغا بيش اما راز لغا البكتغاسي ستوريو نباسي زملة ربنا ما خلقت هذا باطلة سبحانك نكاسي سلابلن فقنا عذاب النار"
+  },
+  {
+   "od": 923.5,
+   "do": 964.6,
+   "tekst": "Tražimo od tebe zaštitu Od jehanemske vatre Druga stvar Koju spominje P.S. Kaže I kaže tražimo Kod tebe zaštitu Od iskušenja Ili kazne Kaburske Ili patnje Kaburske Pa je kaburska patnja Jedna od najvećih iskušenja Za čovjeka Jedna od najvećih iskušenja Za čovjeka Kada dođu munkiri neki i budu upitali čovjeka nakon što se njegova porodica,"
+  },
+  {
+   "od": 964.7,
+   "do": 979.8,
+   "tekst": "Njegovi prijatelji udale od mezarija, dođu munkiri neki i upitaju ga tri stvari. Prva stvar jeste, ko ti je bio gospodara? Koga si obožavao na ome, Dunja Luku? Druga stvar jeste, koja ti je bila vjera?"
+  },
+  {
+   "od": 980.7,
+   "do": 995.8,
+   "tekst": "Trća stvar jeste, ko ti je bio Poslanik? Znate, mi nekad mislimo, lako će mi to da odgovorimo. I nekad mislimo, lako ćemo mi to da odgovorimo. Sad, bilo koga od nas ovdje da pitate, sigurno će odgovoriti."
+  },
+  {
+   "od": 996.4,
+   "do": 1015.8,
+   "tekst": "To jest, bit će tačan odgovor. Ali ne, u kaburu čovjek neće odgovarati onako kako bi odgovorio na ovome dunjaluku. Nego shodno njegovim dijelima i njegovom vjerovanju. Znači, shodno onako kako smo radili, tako ćemo i da odgovorimo u kaburu."
+  },
+  {
+   "od": 1015.8,
+   "do": 1032.3,
+   "tekst": "Pa je to jedna od njih većih iskušenja za čovjeka. A čovjek treba da traži zaštitu. Vite kako je Poslanik, sallallahu alaihi wa sallam, koji je bio ni bolje stvorenje, traži zaštitu od kaburske patnje."
+  },
+  {
+   "od": 1033,
+   "do": 1050.7,
+   "tekst": "Pa šta onda da radi u mi, druga braća? Ove to treba čovjek da nauči. Ti kaže, Poslanik, sallallahu alaihi wa sallam, učio ih u ovim stvarima, kao što ih je podučavao suri Bekare. Mi znamo da je sura Bekare najveća sura u Kur'anu. I da u suri Bekare ima najbolji ajet, najviličstvini ajet, ajet ul-kursi."
+  },
+  {
+   "od": 1051,
+   "do": 1066.9,
+   "tekst": "Ili kao što mi govorimo te svih doba. Također, kaže Pasanih srcina, وَنَعُوذُ بِكَ مِنْ فِتْنَةِ الْمَسِيحِ الْدَجَالِ I kaže, naučite da tražite zaštitu kod Allaha od fitne ili iskušenja Dajjala."
+  },
+  {
+   "od": 1067.6,
+   "do": 1085.3,
+   "tekst": "Svi znamo ko je Dajjala. Dajjala je prvi preznak, veliki preznak od predznaka sudnjeg dana. Pa kaže Pasanih sallallahu alaihi wa sallam da je to niv veće iskušenje čovječanstvu od Adema do kraja svijeta."
+  },
+  {
+   "od": 1085.4,
+   "do": 1113.9,
+   "tekst": "To je nije veće iskušenje, ovo do najdruško iskušenje. Pa je Poslanik, s.a.v. tražio zaštitu od Dejala, koji će prekrivati istinu neistinu, koji će se predstavljati kao božanstvo, kojeg će slijediti jevreji i, naravno, najviše njegovi sredbenika će biti od žena."
+  },
+  {
+   "od": 1115.5,
+   "do": 1132.6,
+   "tekst": "Kako se spominje u predajima. I na kraj kaže Poslanik sallallahu alaihi wa sallam وَنَعُوذُ بِكَ مِنْ فِتْنَةِ الْمَحْيَاءِ وَالْمَمَاتِ I kaže, utičem se ili tražim zaštitu od tebe gospodaru moj od života i smrti."
+  },
+  {
+   "od": 1133.9,
+   "do": 1149.7,
+   "tekst": "Šta ovo znači, držav braće? Ovo znači da čovjek treba da traži zaštitu od iskušenja koje će ga pogoditi u životu. A vi znate, tokom života čovjeka razne iskušenja. Ovaj, pogađi."
+  },
+  {
+   "od": 1151.3,
+   "do": 1167.6,
+   "tekst": "Imate iskušenja ispred kojih čovjek stoji, a to su grijesi. Pa su grijesi nekim ljudima iskušenje. Ili nije tako? Kada mu dođe lijepa žena, kada mu dođe alkohol, i tako dalje, sve to je iskušenje."
+  },
+  {
+   "od": 1168.1,
+   "do": 1190.9,
+   "tekst": "Pa čovjek treba. Nekome je novac iskušenje. Nekome je nešto drugo iskušenje. Pa čovjek jeste na njemu da traži zaštitu od ovih stvari. Od koga? Od Allaha subhanehu ve te'ala. Također, također kaže iskušenje i da tražimo zaštitu od iskušenja, iskušenja smrti."
+  },
+  {
+   "od": 1191.5,
+   "do": 1214.1,
+   "tekst": "Šta ovo znači da bih baća? Da tražimo zaštitu od iskušenja kada dođe melek, kada dođe melek smrti. A to je veliko iskušenje. Na negdje će iskušenja kada dođe melek smrti. Hće li čovjek u tim trenucima reći la ilaha illallah i preseliti kao vjernik ili će preseliti kao nevjernik?"
+  },
+  {
+   "od": 1214.1,
+   "do": 1238,
+   "tekst": "Vi znate da će doći vrijeme pred krajem ovog svijeta kada će čovjek zanočiti kao vjernik, a probuditi se kao nevjernik. Verite da ga braćeo, ja sam to viđao, viđao sam takve ljude da nauče da ga braćeo po dvaje džuzjeva Kur'ana i samo odjednom nema."
+  },
+  {
+   "od": 1238.2,
+   "do": 1260,
+   "tekst": "Zanevjeruje u Allah s.w. njegov postojanje u sve. Zbog toga je mnogo bitno da čovjek nauči u dovu da zna od čega da traži zaštitu. Također od ibadeta od ibadeta, draga braćo, jeste traženje, traženje pomoći, traženje pomoći."
+  },
+  {
+   "od": 1260.2,
+   "do": 1301.3,
+   "tekst": "Ovdje ne govorimo, draga braćo, o pomoći koju svako od nas traži od svoga brata muslimana, koji je u mogućnosti da mu pomogne već ovdje govorimo o nečemu što ne može čovjeku da pribavi osim Allah subhanehu ve te'ala pa ili može neko da da produži naš život osim Allah subhanehu ve te'ala, ne može čovjek ako traži to od nekog drugog onda ili da ga sačuva djehanem skevat to može samo Allah subhanehu ve te'ala pa dokaz dokaz da je ovo ibadat jeste i ajed kojeg svakodnevno učimo Če nema rećata da ga nemočimo I ja ke na'abudu"
+  },
+  {
+   "od": 1301.3,
+   "do": 1342,
+   "tekst": "Samo tebe obožava Ili ne obožavamo nikoga drugoga Osim tebe I ja ke nesta'in I samo od tebe pomoć tražimo Pala subhanehu ve te'ala Da nije teo da tražimo pomoć Od Nega on nam ne bi objavio ove ajete A ovo se u Arabskom naziva Al-Hasr To je ograničenje Da samo od Allaha subhanehu ve te'ala Tražimo, tražimo, tražimo pa ova prva rečenica ija ke na abudu jeste odricanje od lažnji božanstava ija ke nesta'in i od tebe pomoć rađimo jeste odricanje"
+  },
+  {
+   "od": 1342,
+   "do": 1368.2,
+   "tekst": "Od svoje moći od svoje snage i prepuštanje sebe samoga Allah subhanehu ve te'ala također hadis koji ukazuje da je ovo ibadet ili traženje pomoći od Allaha jeste i hadis prelijep hadis koje trebamo da učivimo svoju djecu kojeg prenosi Abdullah ibn Abbas."
+  },
+  {
+   "od": 1368.8,
+   "do": 1386.6,
+   "tekst": "Kaže, bio sam iza posanika Muhamada s.a.m. To je, išao sam iza posanika Muhamada s.a.m. Abbas bio mali, skroz. Pa mi danas, kada hoćemo nešto našoj djeci, da kažemo, kaže, nekega on je mali. Kaže, nekega on je mali još je on. Kaže, neće on to da razumije."
+  },
+  {
+   "od": 1387.8,
+   "do": 1403.2,
+   "tekst": "I onda dođe vakat kada poraste, da baš neće da razumije. Ne želi da razumije. Zato, draga braća, djece se vaspitavaju od malih nogu. Pa vidimo, ovo je primjer, primjer Poslanika s.a.v. Nema lepši primjer od primjera Poslanika Mohameda s.a.v. Šta mu kaže Poslanika s.a.v.?"
+  },
+  {
+   "od": 1403.2,
+   "do": 1419.7,
+   "tekst": "Kaže, o dječače, kaže, naučit ću te riječima. Prvo, što ga uči Poslanika s.a.v. Kaže, ihfavu illaha, ihfavu. Čuvaj Allaha, Allah će tebe čuvat."
+  },
+  {
+   "od": 1419.8,
+   "do": 1439.7,
+   "tekst": "Šta znači, draga braća? Kaže Poslanik, to jest kaže, kaže ulema, Ovo znači, čuvaj Allahove granice. Drži se onoga što ti je Allah subhanehu ve te'ala naredio i kloni se onoga što ti je zabranio. On će te čuvati."
+  },
+  {
+   "od": 1443,
+   "do": 1461.6,
+   "tekst": "Čuvaj Allaha, naći ćeš ga pored sebe. To je naći ćeš ga kao pomagača u svakoj situaciji. Ako budeš čuvao njegove granice i ne budeš prelazio njegove granice, On će te pomagati u svakoj situaciji."
+  },
+  {
+   "od": 1462.4,
+   "do": 1477.5,
+   "tekst": "Pa je ovo obećanje Allaha subhanehu ve te'ala. Ovo je obećanje Allaha subhanehu ve te'ala preko njegovoga Poslanika. A on ne govori, tj. Poslanik s.a.v. ne govori po svome nahodženju."
+  },
+  {
+   "od": 1478,
+   "do": 1493.9,
+   "tekst": "Već je to objava koja mu se objavljuje od njegovog gospodara. Šta kaže dalje? Poslanik s.a.v. Kaže, ako tražiš nešto, traži od Allaha. Zbog čega? Zbog toga je što je Allah subhanehu ve te'ala."
+  },
+  {
+   "od": 1494,
+   "do": 1516.6,
+   "tekst": "Najbolji onaj koji daje i najbolji onaj od koga se traži nešto. Allah subhanehu ve te'ala neće vratiti ruke frazne vjernika koji ga moli. Pa ako mu ne da na ome dunja luku, a Allah zna zbog čega mu ne da neku stvar, on će mu je sigurno dati na onome svijetu."
+  },
+  {
+   "od": 1516.6,
+   "do": 1557.2,
+   "tekst": "Kaže, dalje, وَإِذَا اصْتَعَنْتَ فَاسْتَعِنْ بِاللَّهِ ihobi dolazima ikaže kada tražiš pomoć traži je samo od Allah zbog čega dolazi objašnjenje nakonoga kaja wa'alam anna l'umma ta lau ijtama'a ta'ala an yanfa'uke bi şey'in lam yanfa'uke illa bi şey'in qad ketabahu Allahu lak i zna'y i zna'y da kada bi se cijo dunja sakupio da ti kakvu korist"
+  },
+  {
+   "od": 1557.2,
+   "do": 1579.5,
+   "tekst": "Pribavi, ne bi ti je mogli pribaviti osim ona liko koliko ti je Allah propisao. Dokazi, draga braća, ona naša sestra koja je preselila prije nekoliko. Jer se nismo svi sakupili da joj pomognemo u bolesti, da joj olakšamo, da ode na operaciju."
+  },
+  {
+   "od": 1581.9,
+   "do": 1590.8,
+   "tekst": "Ali gotovo, Allah joj nije propisao. Džaba što smo se mi sakupili, Pukupili novac."
+  },
+  {
+   "od": 1593.7,
+   "do": 1612.6,
+   "tekst": "Jednostavno, Allah nije propisao. I tako kaže, dalje? Wa ini jtama'u ala an yadurruke bi şeyin lem yadurruke bi şeyin ila qad ketabahu Allah lak. I kaže, kada bi se sestavili? Svi, da ti načine kakvu shtetu."
+  },
+  {
+   "od": 1613.4,
+   "do": 1624.9,
+   "tekst": "Kaže, ne bi ti je mogli načiniti osim oneliko koliko ti je Allah subhanehu ve te'ala to propisao. Ne može. Propisao je Allah, zapisao."
+  },
+  {
+   "od": 1627.7,
+   "do": 1644.3,
+   "tekst": "Podignuta su pera, a listovi su se osušili. To je, Allah je zapisao sudbinu čovjeka 50.000 godina prije negolije stvorio nebes i zemlje."
+  },
+  {
+   "od": 1644.9,
+   "do": 1670.1,
+   "tekst": "Pa čovjek ne mora i ne smije da se plaši za budućnost. Ima, verite, ljudi se plaši, kaže, šta ću ja kad ostavim? Hoće li ostati sam? Hoće li me dece na pusti? Prvo, ko nam objećava, hoćemo li da dočekamo starost? Drugo, ko nam kaže ili od čega strada će nas deca napustiti ili hanuma, ili da ćemo ostati sami da živimo, tako dalje."
+  },
+  {
+   "od": 1670.4,
+   "do": 1694.8,
+   "tekst": "To čovjek ne treba da razviša tome. Zbog toga sve ovo, sve ovo, da se čovjek osloni na Allaha i da traži pomoć od Allaha i zaštitu od Allaha subhanehu ve te'ala. Također, da ga baće, jedan od lijepih ibadeta jeste prinošenje kurbana."
+  },
+  {
+   "od": 1695.5,
+   "do": 1721.6,
+   "tekst": "Prinošenje kurbana jedino Allahu subhanehu ve te'ala. Pa je to jedan niljepši ibadeta. To je jedan niljepši ibadeta. Kaže, Allah subhanehu ve te'ala obraći svome Poslaniku, Pošto vi znate da su mušrici prinosili kurban ili žrtvu svojim kipovima."
+  },
+  {
+   "od": 1722.9,
+   "do": 1763.7,
+   "tekst": "Svojim kipovima. Njima se klanjali. Pa Allah subhanehu ve te'ala poručuje svom Poslaniku da prenese kurejšijama mušricima ove riječi. قل رسي محمد inna salati doista moi namaz ونسuki i moje i moi kurban moje prinošenje žrtve ومحيaje i moi život ومماتي i moja smrt لله رب العالمين pripadaju sama Allah subhanehu ve te'ala لا شريك له"
+  },
+  {
+   "od": 1763.7,
+   "do": 1803.8,
+   "tekst": "ني ما مساوچasnika Wa bi dhalike umirtu i ovom je naređeno Wa ane awvalu muslimin, a ja sam prvi musliman o tovok umeta Baj pa sallim sallim prvi musliman o tovok umeta Vidimo ovde, ovde kako je Allah subhanehu ve te'ala Nakon namaza spomenuo planje kurbana I to je dokaz koliko je to velik i lijep ibadet I verujte, draga braćo, da mi je jedan niljepši trenutaka u godini kada za vrijeme kurban"
+  },
+  {
+   "od": 1803.8,
+   "do": 1844.8,
+   "tekst": "Bairama želim da prinesem Allahu subhanehu ve te'ala žrtvu zajedno sa svojom porodicom to je njepši trenutak pa čovjek ne smije da kole žrtvu kurban nekome drugome mimo Allahu subhanehu ve te'ala ako to uradi onda je on mušnik, nevjernik gotovo sa njim gotovo, gotovo, gotovo sa njim druga vraću također mnogo je bitno kad čovjek Kole, kurban Ili ne samo kurban Bilo šta drugo Znači ako čovjek kole, ne znam"
+  },
+  {
+   "od": 1844.8,
+   "do": 1886.6,
+   "tekst": "Kravu kako bi prehranio svoju porodicu Znači mora da spomene Allahume Da to bude rad Allah Što kaže Allah subhanehu ve te'ala I kaže nemoj da jedete ono Koje je zaklano A nije spomenuto Allahovo ime Wa innahu lafisq Doista to ne pokornost To je ne pokornost Allah subhanehu ve te'ala Zato ni također učima Suru inna a'tayna kelkawthar Doista smutimidali riyaku akawthar"
+  },
+  {
+   "od": 1886.6,
+   "do": 1931.8,
+   "tekst": "Ujennetu Fasalli ya Rabbike Pasa Allahumali To jest obavla imu namaz I kurban koli To jest prinosimu jrtvu Vedim ujavda Allah subhanehu ve te'ala Posle namaz Spomenuo prinošen jrtve To jest kurban Koliko je to lijep, prelijep, prelijep ibadet Prins se od Abu Tufayla O Abu Tufayl on je bio sahab A mnogo se družio sa Alijom To jest učio je od Alija radijallahu ta'ala Pa ga upita jedna je prilike ovoj Abu Tufayl Aliju radijallahu ta'ala Kaže Alija je vam Allah subhanehu ve te'ala Vama ili tebi isporodice njegove"
+  },
+  {
+   "od": 1931.8,
+   "do": 1964.8,
+   "tekst": "Dao neko znanje mimo drugih ljudi Jer vi znate nešto što drugi ljudi ne znaju, što drugi ashabi ne znaju. Zbog čega ovo pitanje, drga braća? Vi znate da šije, rafidije, neki idu toliko daleko da obožavaju Aliju i misle da je Poslanik Muhammed s.a.v. dao Aliji neko znanje koje nije dao drugim ashabima."
+  },
+  {
+   "od": 1964.8,
+   "do": 2001,
+   "tekst": "To je da mu je Poslanik Muhammed s.a.v. nešto ispričao što nije ispričao drugim ashabima. Pa Alija, r.a. pobija ove tvrde, kaže nije, osim jednu stvar, osim jednu stvar, pa kaže izvadi papir iz korice svoje sablje, na kojoj piše, kaže Kaže Allah je prokleo onoga ko zakole ili prinese kurban nekome drugome mimo Allah."
+  },
+  {
+   "od": 2001.5,
+   "do": 2018.3,
+   "tekst": "Zbog čega Ali je ovo kaže? Zbog kada je on čuo hadis od Poslanika Ali je bio jedan nejučenija sahaba. Jedan nejučenija jer on je bio mlad kada je došla objev od Poslanika srce pa je brzo pamtio."
+  },
+  {
+   "od": 2020,
+   "do": 2062.3,
+   "tekst": "Brzo je pamtio i hadisi i sve. I onda kaže Allah je prokleno ga, kaže Ko zakole nešto U nečije Drugo ime, a ne u Allahovo U Allahovo ime Pa je prinošenje Kurbana Ibadet, draga braća I zadnja stvar koju ćemo danas Ako Bog da spomenuti Jeste zavjet Zavjet Zavjet ili ovaj nadhr u islamu jeste ono čovjek što sam sebe stavi u obavezu"
+  },
+  {
+   "od": 2062.3,
+   "do": 2083.3,
+   "tekst": "Od pokornosti. Znači nije mu Allah subhanu wa ta'ala stavio u obavezu to. Već je čovjek sam sebi stavio to u obavezu. Kao na primjer čovjek da kaže zavjetujem se ako mi Allah izliječi ovo moje dijete da ću postiti svaki dan."
+  },
+  {
+   "od": 2086.1,
+   "do": 2096.4,
+   "tekst": "Mora da postim. Oto je, zavjetujem se. Pa nije dozvoljno da čovjek daje zavjet nekom drugom mimo Allahu subhanehu ve te'ala."
+  },
+  {
+   "od": 2099.7,
+   "do": 2115.2,
+   "tekst": "Ne možeš da kažeš zavjetujem se ako mi ovaj evlija ili taj ukaburu izliči i dijete ja ću da te s tim svakve. Ne možeš. Znači mora da kažeš ovo samo pripada Allahu subhanehu ve te'ala."
+  },
+  {
+   "od": 2116.5,
+   "do": 2158.7,
+   "tekst": "Čovjek kada da zavjet Allahu subhanehu ve te'ala mora da ga izpuni. A svi smo mi možda nekad dali neki zavjet Allahu subhanehu ve te'ala. Allah subhanehu ve te'ala fali te ljudi u Kur'anu, kaže jufuna bin nadver kaže ispunjavaju obećanje wajahafuna jav men kane šarruhu mustatira i takvi ljudi, kaže, se boje dana čiji će ovaj dana kada će njegov šer ili šer tog dana ili zlo tog dana biti rasprastalniho, to je sudni dan strahote sudnjeg dana pa se ti ljudi boje strahota sudnjeg sudnjeg dana I ispunjavaju svoje zavjet"
+  },
+  {
+   "od": 2158.7,
+   "do": 2186.3,
+   "tekst": "Prinset Aisha radijallahu ta'ala Da kaže Man nadara an yutija Allaha Fel yutija Kaže onaj ko se zavjetuje Da je pokoran Allah subhanehu ve te'ala Kao primer Kojeg smo malo spomenuli Malo prije spomenuli Kaže neka ga slijedi Neka mu je pokoran A kaže onaj ko se zavjetuje Da mu bude nepokoran ili da mu griješi, ne mojkeš to da radi."
+  },
+  {
+   "od": 2186.5,
+   "do": 2202.5,
+   "tekst": "Pa ako čovjek zavjetuje da bude nepokoran Allah subhanehu ve te'ala, ne smije to da ispuni. Kao čovjek zavjetuje da će da uradi neki grije. Uradit ću taj i taj grije, ako se mi desi to i to. Zavjetujem se Allah. Ne može tako. To je neispravno."
+  },
+  {
+   "od": 2203.1,
+   "do": 2226.3,
+   "tekst": "I to je neispravna zavjet i čovjek treba toga da se klonje. Danas smo, drga vrećo, završili sa jednim mnogo bitnim A to je poglavlje koje govori o bitnosti ibadeta i obožavanja samo Allah subhanehu ve te'ala."
+  },
+  {
+   "od": 2227.6,
+   "do": 2255.4,
+   "tekst": "Ako Bog da sljedeće hefte nastavljamo i to će biti ujedno i zadnje predavanje prije mjeseca Ramazana. O mjestu Ramazana imamo svoje aktivnosti gdje ćemo imati prije svakog sabaha jedno kratko predavanje, a nakon ako Bog da Ramazana nastavljamo sa ovom prelijepom knjigom koja govori o osnovama vjere."
+  },
+  {
+   "od": 2255.4,
+   "do": 2280.9,
+   "tekst": "Ja razumijem da možda je nekad čovjeku ove stvari, posebno kad dođu fikski stvari ili stvari vezane za abdez, za namaz ili tako dalje, možda će nekome biti malo i dosadno iz razloga što većina ljudi, to je većina nas, zna te stvari, ali te stvari su mnogo bitne da ih čovjek malo bolje utvrdi kako bi sutra mogao svoju porodicu da poduči."
+  },
+  {
+   "od": 2280.9,
+   "do": 2303.1,
+   "tekst": "Ovo, draga vraća, što naučite ovde ili ovo što čujete ovde, ovo bi trebao čovjek da zapamti pa sutra da upozori nekoga iz svoje porodice ili nekoga od svojih bližnjih. Jer svi smo mi, draga vraća, pozivači u Allahu vjeru. Šta nas je ovde? Šaka, što bi rekli naši, šaka duša."
+  },
+  {
+   "od": 2303.4,
+   "do": 2323,
+   "tekst": "Šaka duša, koliko ima ljudi koji su trenutno napolje, koje ne zanima ni vjera, ni džamija, ni ništa ga ne zanima. Zbog toga, da ga braću, mi smo ti koji trebamo, trebamo da podučavamo ljude ovim stvarima kada izađemo napolje."
+  },
+  {
+   "od": 2323.6,
+   "do": 2349.1,
+   "tekst": "Kada izađemo napolje da predoćimo ljudima ovo u najlepšem svetlom. I svi smo mi, svi smo mi pozivači i svi smo mi svjedoci da sam ja ovo vama prenio pa i vi prenesite drugim, molim Allah subhanehu ve te'ala da nas učini od njegovih iskreni dobro morim o njegovu uzvišenog da nas sačuva džernemske vatre morim o njegovu uzvišenog da samo njega obažavamo amin, ya rabel alemin"
+  }
+ ]
+}

@@ -4,6 +4,7 @@ import LectureCard from '../../components/predavanja/LectureCard.astro';
 import YouTubeFacade from '../../components/predavanja/YouTubeFacade.astro';
 import ShareButton from '../../components/predavanja/ShareButton.astro';
 import ImamAvatar from '../../components/predavanja/ImamAvatar.astro';
+import Transkript from '../../components/predavanja/Transkript.astro';
 import { predavanja, getImam, getKategorija, getSerija, formatDatum } from '../../lib/data';
 import { dijeloviSerije, filterQuery, opisHTML, srodnaPredavanja } from '../../lib/predavanja';
 import { brojTekst, oblik, trajanjeISO, trajanjeTekst } from '../../lib/format';
@@ -141,6 +142,8 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
               <div class="prose" set:html={opisHTML(p.opis)} />
             </section>
           )}
+
+          <Transkript id={p.id} naslov={punNaslov} />
 
           {serija && (prethodni || sljedeci) && (
             <nav class="pd__serija-nav" aria-label={`Navigacija kroz seriju ${serija.naziv}`}>

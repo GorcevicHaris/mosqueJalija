@@ -1,0 +1,111 @@
+{
+ "id": "YFpo1trv5JM",
+ "jezik": "bs",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T01:41:21.880Z",
+ "automatski": true,
+ "lektorisano": true,
+ "lektura": "2026-10-25",
+ "segmenti": [
+  {
+   "od": 0.5,
+   "do": 41,
+   "tekst": "إن الحمد لله نحمده ونستعينه ونستغفره"
+  },
+  {
+   "od": 41,
+   "do": 83.7,
+   "tekst": "ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فلا مضل له ومن يضلل فلا هادي له، وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده ورسوله، أرسله الله بالحق بشيرا ونذيرا وسراجا منيرا، لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين"
+  },
+  {
+   "od": 83.7,
+   "do": 125.1,
+   "tekst": "وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ. قال الله في كتابه الكريم: يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. أَمَّا بَعْدُ. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana, Gospodaru džinna i ljudi. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put,"
+  },
+  {
+   "od": 125.1,
+   "do": 167.5,
+   "tekst": "put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem. Draga braćo, cijenjene džematlije, u ovom svijetu punome nepravde i zuluma, veći broj ljudi misli da je opravdan svojom šutnjom i da, ako ne govori neistinu, ne snosi nikakvu odgovornost, niti grijeh."
+  },
+  {
+   "od": 167.5,
+   "do": 196.4,
+   "tekst": "Što je pogrešno? Što je pogrešno mišljenje. Opisujući Jevreje, u Kur'anu kaže Allah, subhanehu ve te'ala: „Semma'une lil-kezibi ekkalune lis-suht“ – i slušali su laži i proždirali su ono što je zabranjeno, što je haram."
+  },
+  {
+   "od": 196.4,
+   "do": 227.2,
+   "tekst": "Kur'anski ajet jasno ukazuje da su oni šutnjom odobravali neistinu. Zbog čega? Zbog neke dunjalučke koristi, zbog neke kratke koristi, bilo to da je položaj, imetak i tako dalje."
+  },
+  {
+   "od": 227.6,
+   "do": 253.6,
+   "tekst": "Nažalost, ta praksa i danas postoji. Da čovjek zbog ovodunjalučke koristi prešuti nešto što se dešava u zajednici, neka nepravda ili nešto više od toga. Zbog čega? Zbog ovodunjalučke koristi."
+  },
+  {
+   "od": 253.6,
+   "do": 285.8,
+   "tekst": "Da mi ne bi zatvorili radnju, da mi ne bi dali otkaz, da se ne bih nekom zamjerio, i tako, i tako dalje. Pa je šutnja ljudi u vremenu, u vremenu zuluma, nepravde, kada je ta nepravda očita – primjer onoga koji šuti tada je primjer onoga, to je isti primjer onoga koji govori neistinu."
+  },
+  {
+   "od": 286.8,
+   "do": 310.7,
+   "tekst": "I isti grijeh, posebno ljudi koji imaju uticaj u zajednici, u društvu. Draga moja braćo, naš voljeni grad, Pazar, se suočava sa jednim, možda najvećim izazovom zadnjih decenija."
+  },
+  {
+   "od": 311.8,
+   "do": 338.3,
+   "tekst": "A taj izazov jeste rudarenje na planini Rogozni. Jeste rudarenje na planini Rogozni. Ovakva vrsta rudarenja, draga braćo, nosi sa sobom velike posljedice, a te posljedice su vidljive u cijelome svijetu."
+  },
+  {
+   "od": 338.6,
+   "do": 358.5,
+   "tekst": "U Rumuniji se 2000. godine izlila velika količina vode pomiješane sa hemikalijom cijanidom, koji rastvara, i to je, topi zlato i odvaja ga od rude."
+  },
+  {
+   "od": 360,
+   "do": 378.6,
+   "tekst": "Pa ako ta hemikalija dođe u dodir sa vodom, ekosistem bude u raspadu. Dolazi do velike ekološke katastrofe, kao što se desila tada u Rumuniji 2000. godine, u mjestu, to jest u gradu Baja Mare."
+  },
+  {
+   "od": 379.6,
+   "do": 422.2,
+   "tekst": "Također, imamo primjer u Gani, u Kanadi, u Britanskoj Kolumbiji, na puno mjesta, u Peruu. U „lijepe namjere“ onih kompanija ogromnih koje dolaze da traže naše rude smo se svi uvjerili, a onaj ko se nije uvjerio može lahko da ode do naše planine Rogozne da pogleda kako su oni to odradili, na koji način su to odradili."
+  },
+  {
+   "od": 422.2,
+   "do": 433.4,
+   "tekst": "Preko dvjesta bušotina, nepravilno odlaganje otpada – bukvalno nam uništavaju netaknutu, netaknutu prirodu."
+  },
+  {
+   "od": 436.3,
+   "do": 452.3,
+   "tekst": "Zato, draga braćo, ne smijemo nikako da šutimo na ovu nepravdu. Jer ako budemo šutjeli na ovu nepravdu, na ovo što nam se dešava, neće ni vama koristiti taj vaš posao, ni meni ovaj."
+  },
+  {
+   "od": 452.7,
+   "do": 473.7,
+   "tekst": "Morat ćemo se bukvalno svi iseliti sa ovih prostora. Pa nam šutnja neće donijeti nikakvu korist. Ne samo što se tiče Rogozne, već i ostalih stvari koje se dešavaju u našem gradu, a mi šutimo, gledamo nijemo."
+  },
+  {
+   "od": 474.5,
+   "do": 508.5,
+   "tekst": "Kaže: „Nije to moj posao da se ja miješam, nije moj posao“ – nije ničiji posao, a ljudi obavljaju poslove od kojih imaju lične koristi, a zajednica trpi. Pa je svakome haram, grijeh da šuti na nepravdu koja se čini u društvu, i trebamo biti složni kada su ovakve stvari u pitanju, da ne dozvolimo da se ovo čini."
+  },
+  {
+   "od": 508.9,
+   "do": 527.1,
+   "tekst": "Allah nam to zabranjuje riječima: „I nemojte sami sebe ubijati.“ A mi ćemo ovakvim potezima sami sebe da ubijemo, da protjeramo, i tako, i tako."
+  },
+  {
+   "od": 527.6,
+   "do": 568.5,
+   "tekst": "Molim Allaha, subhanehu ve te'ala, da budemo složni, da budemo kao jedna ruka, da ne dozvolimo da nam drugi čine nepravdu, da budemo pravi vjernici, da budemo Allahovi dobri robovi, da čuvamo sami sebe, naše buduće generacije, da imamo nešto da im ostavimo, da im nešto obezbijedimo, da obožavamo Allaha, subhanehu ve te'ala, onako kako nam je naredio. Amin, ja Rabbel-alemin. Barekallahu li ve lekum fil-Kur'anil-azim, وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ"
+  },
+  {
+   "od": 568.5,
+   "do": 574.9,
+   "tekst": "أَقُولُ قَوْلِي هَذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ"
+  }
+ ]
+}

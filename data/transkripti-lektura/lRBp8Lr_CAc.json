@@ -1,0 +1,431 @@
+{
+ "id": "lRBp8Lr_CAc",
+ "jezik": "bs",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T03:02:04.704Z",
+ "automatski": true,
+ "lektorisano": true,
+ "lektura": "2026-10-25",
+ "segmenti": [
+  {
+   "od": 0.5,
+   "do": 41.5,
+   "tekst": "Elhamdulillahi Rabbil-alemin, ves-salatu ves-selamu ala nebijjina Muhammedin ve ala alihi ve sahbihi edžmein."
+  },
+  {
+   "od": 41.5,
+   "do": 58.6,
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svjetova. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put, put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem."
+  },
+  {
+   "od": 58.8,
+   "do": 67.5,
+   "tekst": "Na prošlom predavanju smo govorili o imanu i temeljima imana."
+  },
+  {
+   "od": 71.2,
+   "do": 90.9,
+   "tekst": "Pa smo rekli da je iman da čovjek vjeruje u Allaha, subhanehu ve te'ala, da vjeruje u knjige, da vjeruje u poslanike, da vjeruje u meleke, da vjeruje u Sudnji dan i da vjeruje u Allahovu, subhanehu ve te'ala… [nejasno]"
+  },
+  {
+   "od": 91,
+   "do": 107.6,
+   "tekst": "To su stubovi imana. Također smo spomenuli hadis kojeg je također spominjao ovaj muftija Abdurrahman na prošlom predavanju, s tim što ga je on spominjao, govorio u kontekstu traženja znanja,"
+  },
+  {
+   "od": 108.1,
+   "do": 148.2,
+   "tekst": "a mi smo ovdje komentarisali sa strane imana. Pa smo spominjali da je ona delegacija Abdul-Kajsa, plemena Abdul-Kajs, došla do Poslanika Muhammeda, sallallahu alejhi ve sellem, pa su ga upitali da im nešto oporuči, s čime će se vratiti svome narodu, kako bi ušli svi zajedno u Džennet. Šta im kaže Poslanik, sallallahu alejhi ve sellem? Kaže: „Naredit ću vam četiri stvari, a zabranit ću vam četiri stvari.“ Pa četiri stvari koje je Poslanik, sallallahu alejhi ve sellem, naredio jesu: šehadet –"
+  },
+  {
+   "od": 149,
+   "do": 172.9,
+   "tekst": "da svjedoče da nema drugog božanstva koje zaslužuje biti obožavano osim Allaha, subhanehu ve te'ala, da je Poslanik Muhammed, sallallahu alejhi ve sellem, Njegov Poslanik – da obavljaju namaz, daju zekat, poste, to jest poste ramazan, obavljaju hadž i da daju petinu od svoga ratnoga plijena."
+  },
+  {
+   "od": 172.9,
+   "do": 190.5,
+   "tekst": "Pa vidimo ovdje, draga braćo, da su i djela od imana: da nije iman samo da čovjek svjedoči srcem i da kaže to jezikom, da izgovori to jezikom, već da implementuje, ili da implementira, to djelima."
+  },
+  {
+   "od": 190.6,
+   "do": 207.2,
+   "tekst": "To jest, da dokaže djelima to vjerovanje. Jer vjerovanje bez djela – ništa. To je isto kao kada čovjek kaže svojoj hanumi: „Ja te volim“, a maltretira je, maltretira joj porodicu."
+  },
+  {
+   "od": 207.2,
+   "do": 231.4,
+   "tekst": "Kako je to ljubav? To nije ljubav. Već čovjek treba, kada kaže da vjeruje, da voli Allaha, subhanehu ve te'ala, Njegovog Poslanika, treba to i da dokaže. Pa smo također spomenuli da je osobina imana da se iman povećava i smanjuje, što je i logično i što i možete svi da osjetite,"
+  },
+  {
+   "od": 231.5,
+   "do": 267.7,
+   "tekst": "shodno čovjekovim djelima. Pa ako čovjek griješi, onda iman opada. Ako čovjek griješi, iman opada. Ako čini dobra djela, onda se iman iz dana u dan povećava. Također, draga braćo, od imana je, od imana je da čovjek voli svoga brata muslimana. Mnogo bitna stavka, mnogo bitna stavka i mnogo bitna tačka u današnjem svijetu, ili u ovome trenutku."
+  },
+  {
+   "od": 268.1,
+   "do": 294.9,
+   "tekst": "Mnogo bitna stavka. I nema jače veze od imanske veze, ona je jača i od krvne veze. Imanska veza je najjača veza. Kaže Allah, subhanehu ve te'ala: i kaže, „čvrsto se Allahovog užeta držite i nemojte se razjedinjavati.“"
+  },
+  {
+   "od": 294.9,
+   "do": 311.3,
+   "tekst": "Šta je Allahovo uže? Allahovo uže jesu Kur'an i sunnet, jesu Kur'an i sunnet. Pa onaj ko zna dobro Kur'an i ko zna sunnet Poslanika Muhammeda, sallallahu alejhi ve sellem, neće se razjediniti sa svojim bratom."
+  },
+  {
+   "od": 311.4,
+   "do": 326.4,
+   "tekst": "Nema šanse. A ja ne vidim razloga današnjeg razjedinjenja muslimana osim toga da su se neki… to jest, da su ostavili Kur'an i sunnet."
+  },
+  {
+   "od": 326.4,
+   "do": 344,
+   "tekst": "Pa kada muslimani ostave Kur'an i sunnet, onda dolazi razjedinjenje. Šta kaže Poslanik Muhammed, sallallahu alejhi ve sellem? „Innallahe jerfe'u bi hazel-kitabi akvamen ve jeda'u bihi aharin.“ Kaže: doista Allah sa ovom knjigom, sa ovim Kur'anom, uzdiže jedan narod,"
+  },
+  {
+   "od": 344.1,
+   "do": 360,
+   "tekst": "uzdiže jedan narod, a, kaže, druge unizi, ili spušta. Zbog čega? Zbog toga što su ostavili Kur'an i sunnet. I kada god čovjek ostavi Kur'an i sunnet, on je dolje. I to vidimo kroz istoriju."
+  },
+  {
+   "od": 360.3,
+   "do": 402.4,
+   "tekst": "Kada god je islamsko carstvo bilo, ili islamska država bila najjača, ljudi su se držali Kur'ana i sunneta. Čim su ostavili Kur'an i sunnet, onda ide sve niz brdo. Kaže dalje Allah, subhanehu ve te'ala: „وَاذْكُرُوا نِعْمَتَ اللَّهِ عَلَيْكُمْ إِذْ كُنْتُمْ أَعْدَاءً فَأَلَّفَ بَيْنَ قُلُوبِكُمْ فَأَصْبَحْتُمْ بِنِعْمَتِهِ إِخْوَانًا“ – i kaže, obraća se ashabima, ovdje se Allah, subhanehu ve te'ala, obraća ashabima, kaže: „Sjetite se Allahove milosti, kada ste bili neprijatelji, pa vam je Allah, subhanehu ve te'ala, zbližio srca,"
+  },
+  {
+   "od": 402.4,
+   "do": 417.9,
+   "tekst": "pa ste milošću Njegovom postali prijatelji“, to jest braća. Braća. Mi smo braća. „Doista su vjernici braća.“ I mi nemamo prečih jedni od drugih."
+  },
+  {
+   "od": 418.1,
+   "do": 433.4,
+   "tekst": "Nema. Mi smo braća. I tako treba jedni prema drugima, jedni prema drugima, jedni prema drugima da se ophodimo. Pa vidite kako su Arapi tada bili jedni drugima neprijatelji."
+  },
+  {
+   "od": 433.9,
+   "do": 452.9,
+   "tekst": "Bili su jedni drugima neprijatelji. Desi se u noći da jedno pleme napadne drugo i uzme im sve, porobi im žene, djecu, pobije muškarce, uzme im imetak. Pa je Allah, subhanehu ve te'ala, poslao Muhammeda, sallallahu alejhi ve sellem, sa ovom vjerom, pa je zbližio njihova srca. Šta kaže Allah, subhanehu ve te'ala, u drugom ajetu?"
+  },
+  {
+   "od": 452.9,
+   "do": 493.9,
+   "tekst": "Kaže Poslaniku, sallallahu alejhi ve sellem, obraćajući se Poslaniku, kaže: „Lev enfakte ma fil-erdi džemi'an ma ellefte bejne kulubihim ve lakinnallahe ellefe bejnehum“ – da si, kaže, sve na ovome dunjaluku udijelio kako bi zbližio njihova srca, kaže, to ne bi mogao da uradiš. Nema šanse. I vjerujte, kada se ljudska srca zbliže zbog interesa, prva neka mala greškica – odmah raspad: raspad prijateljstva, raspad ljubavi. Kako Allah, subhanehu ve te'ala, vjernike, vjernike, to jest njihova srca, zbližava!"
+  },
+  {
+   "od": 493.9,
+   "do": 527.3,
+   "tekst": "Šta ih zbližava? Vjerovanje u Njega, to jest iman. I nećete vidjeti da se dva čovjeka raziđu, oni koji istinski vjeruju u Allaha, subhanehu ve te'ala, i Njegovog Poslanika. Također kaže Allah, subhanehu ve te'ala: i kaže, „potpomažite se u bogobojaznosti i u birru, dobročinstvu.“"
+  },
+  {
+   "od": 528.5,
+   "do": 565.8,
+   "tekst": "Znači, da se ljudi potpomažu u bogobojaznosti, u bogobojaznosti: da čovjeka savjetuješ, ako ga vidiš da čini neki grijeh, ili nešto čime Allah, subhanehu ve te'ala, nije zadovoljan – da ga savjetuješ. To jest, da ga potpomažeš u bogobojaznosti i u dobročinstvu, kako bi čovjek činio, činio, činio dobra djela. Također znamo, draga braćo, da će oni koji su se voljeli radi Allaha, subhanehu ve te'ala, biti u hladu Arša, u hladu Allahovog Arša na Sudnjem danu, na Sudnjem danu, na Sudnjem danu."
+  },
+  {
+   "od": 565.8,
+   "do": 608.9,
+   "tekst": "Također, kada Allah, subhanehu ve te'ala, opisuje ashabe ensarije – mnogo zanimljiv primjer, mnogo zanimljiv i lijep primjer, veličanstven primjer – kaže Allah, subhanehu ve te'ala: „وَالَّذِينَ تَبَوَّءُوا الدَّارَ وَالْإِيمَانَ مِنْ قَبْلِهِمْ“ – kaže: i oni koji su nastanili Medinu prije Muhammeda, sallallahu alejhi ve sellem, i prije muhadžira. Muhadžiri su oni koji su učinili hidžru iz Mekke u Medinu. Ensarije su oni koji su živjeli u Medini i oni koji su povjerovali prije, prije nego što je Muhammed, sallallahu alejhi ve sellem, došao u Medinu."
+  },
+  {
+   "od": 608.9,
+   "do": 637,
+   "tekst": "„Juhibbune men hadžere ilejhim“ – kaže: vole one koji su učinili hidžru, koji su emigrirali u Medinu. Vole. A danas je malo… nije baš tako. Jer, vidite, čovjek, jedan musliman, ode u Tursku, ode u Saudijsku Arabiju, ili negdje, bilo gdje u neko drugo mjesto – nažalost, ljudi ga ne vole."
+  },
+  {
+   "od": 637.2,
+   "do": 654.7,
+   "tekst": "To jest, ti muslimani u tim mjestima ga baš i ne vole. Ne pratimo sunnet naših prethodnika, naših ensarija. Kaže: vole one koji učine hidžru, to jest one koji su učinili hidžru u Medinu."
+  },
+  {
+   "od": 654.7,
+   "do": 673.1,
+   "tekst": "I kaže: ne osjećaju, kaže, u prsima svojim zavist zbog onoga što im je dato od ratnog plijena. Pa je Poslanik, sallallahu alejhi ve sellem, davao ratni plijen muhadžirima. Zbog čega? Zbog toga što su bili siromašni."
+  },
+  {
+   "od": 673.1,
+   "do": 703.3,
+   "tekst": "I niko nije od ensarija došao i rekao: „Poslaniče, ti nisi ovo dobro podijelio“, nego nisu imali zavisti. Znači, da voliš onoga koji je došao tebi da traži pomoć, da nema čovjek, da vjernik prema vjerniku zavisti. Kaže: „وَيُؤْثِرُونَ عَلَى أَنْفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌ“ – i kaže: davali su prednost muhadžirima nad sobom,"
+  },
+  {
+   "od": 704.2,
+   "do": 723.2,
+   "tekst": "iako su, kaže, bili, iako su bili u potrebi. Ovo su ensarije. Ovo su, draga braćo, ensarije. Mnogo lijep primjer, gdje se prije bitke na Bedru Poslanik, sallallahu alejhi ve sellem, savjetuje sa muhadžirima:"
+  },
+  {
+   "od": 723.5,
+   "do": 733,
+   "tekst": "kako će i šta će. Jer dolazi karavana iz Šama, iz Sirije, kreće ka Mekki, a spremaju se Kurejšije da je presretnu…"
+  },
+  {
+   "od": 735.6,
+   "do": 755.5,
+   "tekst": "A Poslanik, sallallahu alejhi ve sellem, je napravio ugovor sa ensarijama da ga brane, ali samo u Medini, u granicama Medine. I onda neko kaže to, neko to, i onda ustaje vođa, vođa ensarija, Sa'd ibn Muaz. Šta kaže?"
+  },
+  {
+   "od": 756,
+   "do": 771.2,
+   "tekst": "Kaže: „Poslaniče, mi smo“, kaže, „povjerovali u tebe, posvjedočili smo za tebe i zavjetovali smo se da ćemo te štititi. Tako mi Allaha, ako bi krenuo u more, mi bismo krenuli za tobom.“"
+  },
+  {
+   "od": 771.2,
+   "do": 787.5,
+   "tekst": "Ovo su istorijske, znači, jedne riječi, to jest riječi koje su zapisane zlatnim slovima u istoriji islama. Kaže: „Ako bi krenuo u more, mi bismo krenuli za tobom."
+  },
+  {
+   "od": 787.5,
+   "do": 808.3,
+   "tekst": "I, Poslaniče“, kaže, „nećemo ti reći kao što je narod Musaa rekao Musau, alejhis-selam: ‘Izheb ente ve Rabbuke fe katila inna hahuna ka'idun’ – idi i ti, ti i Gospodar tvoj, pa se borite, mi ćemo ovdje da sjedimo.“"
+  },
+  {
+   "od": 808.5,
+   "do": 827.8,
+   "tekst": "Tako su Jevreji rekli Musau, alejhis-selam. „Nego ti kažemo: idi ti i tvoj Gospodar, a mi ćemo se, a mi ćemo za vama – borit ćemo se.“ Pa su, pa su ensarije krenule, krenule u bitku, u bitku na Bedru, gdje su muslimani, gdje su muslimani pobijedili, gdje su muslimani pobijedili."
+  },
+  {
+   "od": 829.3,
+   "do": 852.3,
+   "tekst": "Također, prenosi se od Ebu Hurejre, radijallahu te'ala anhu – hadis bilježi Muslim u svojoj zbirci – da je Poslanik, sallallahu alejhi ve sellem, rekao… kako lijep je hadis! Kaže: „Nećete ući u Džennet sve dok ne budete vjerovali.“"
+  },
+  {
+   "od": 852.6,
+   "do": 868.1,
+   "tekst": "Znači, šta je uslov? Da čovjek vjeruje. „A“, kaže, „nećete vjerovati“, ili neće vam iman biti potpun, „sve dok se ne budete voljeli“, sve dok se ne budete međusobno voljeli."
+  },
+  {
+   "od": 868.1,
+   "do": 885.1,
+   "tekst": "Pa je ovo uslov – uslov da bi čovjek bio dobar mu'min, da bi bio potpunog imana – da voli svoga brata. Kaže Poslanik dalje, kaže: „E ve la edullukum ala šej'in iza fe'altumuhu tehabebtum?“ –"
+  },
+  {
+   "od": 885.6,
+   "do": 905,
+   "tekst": "kaže: „Hoćete li da vas uputim na nešto? Ako budete radili“, kaže, „voljet ćete se. Efšus-selam“ – kaže: „širite selam.“ Ali nije samo da čovjek širi selam, a da bratu muslimanu radi iza leđa,"
+  },
+  {
+   "od": 905.7,
+   "do": 930.4,
+   "tekst": "nego da čovjek primijeni u praksi taj selam. Šta kaže Poslanik, sallallahu alejhi ve sellem? „El-muslimu men selimel-muslimune min lisanihi ve jedih“ – pravi musliman, ili musliman, jeste onaj od čije ruke i jezika su sigurni – šta? – ostali muslimani."
+  },
+  {
+   "od": 930.9,
+   "do": 946.4,
+   "tekst": "Ostali muslimani – to je pravi musliman. Da si ti siguran od moje ruke i od mog jezika, i ja od tvoje ruke i tvog jezika – to je pravi musliman. To je, draga braćo, pravi islam."
+  },
+  {
+   "od": 947.6,
+   "do": 966.5,
+   "tekst": "I da jedni druge ne ismijavamo. Šta kaže Allah, subhanehu ve te'ala, u Kur'anu: „O vjernici“, kaže, „neka se jedan narod od vas ne ismijava drugima“, to jest drugom narodu, ili drugim ljudima."
+  },
+  {
+   "od": 966.9,
+   "do": 987.7,
+   "tekst": "„Možda su oni kojima se vi ismijavate“ – ili oni kojima se ismijavaju – „bolji od ovih drugih.“ Možda su oni kojima se mi ismijavamo, možda su bolji od nas, možda su bolji od nas. Također kaže Allah, subhanehu ve te'ala: „Nemojte jedni druge da uhodite.“"
+  },
+  {
+   "od": 988.4,
+   "do": 1004.4,
+   "tekst": "Vjerujte, kod nas imate ljude koji hoće da znaju sve: i gdje si, i šta si, i čiji si bio, i kud si bio, i šta si radio. Allah, subhanehu ve te'ala, nam je to zabranio: „Ve la tedžessesu.“ Zbog čega nam to zabranjuje? Zbog toga što to ruši bratsku ljubav."
+  },
+  {
+   "od": 1004.4,
+   "do": 1019.6,
+   "tekst": "Jer ako ti mene ugnjetavaš, ili ja tebe, i pratim te i tako dalje, onda to uništava, ili urušava, našu ljubav."
+  },
+  {
+   "od": 1021.4,
+   "do": 1039.4,
+   "tekst": "Također, draga braćo, od stvari koje su od imana jeste naređivanje dobra, a odvraćanje od zla. I to je jedna od najljepših osobina ummeta Muhammeda, sallallahu alejhi ve sellem."
+  },
+  {
+   "od": 1039.4,
+   "do": 1055.3,
+   "tekst": "To je jedna od najljepših osobina, jedna od glavnih osobina, i možemo direktno, slobodno… zaštitni znak ummeta Muhammeda, sallallahu alejhi ve sellem. Kaže Allah, subhanehu ve te'ala: „Kuntum hajre ummetin uhridžet lin-nasi.“"
+  },
+  {
+   "od": 1056.5,
+   "do": 1068.9,
+   "tekst": "Vi ste, o ummete Muhammedov, najbolji ljudi. Zbog čega? Zbog čega su najbolji ljudi? Zbog čega smo mi najbolji ummet?"
+  },
+  {
+   "od": 1074.5,
+   "do": 1095.3,
+   "tekst": "Naređujete da se čini dobro, a odvraćate od onoga lošeg. Ovdje „el-ma'ruf“ znači sve ono što je šerijatski, ili šerijatom, potvrđeno da je dobro, i razumom; također i loše:"
+  },
+  {
+   "od": 1096.2,
+   "do": 1111.9,
+   "tekst": "sve ono što je šerijat rekao da je loše i ono što razum potvrđuje da je to loše. Pa mi smo najbolji ummet baš zbog ovoga, zbog ove osobine:"
+  },
+  {
+   "od": 1112.3,
+   "do": 1132.6,
+   "tekst": "naređujemo da se čini dobro, a odvraćamo od zla. Zbog toga ja često spominjem i kažem da nije dovoljno samo da čovjek dolazi u džamiju. U džamiju je obred – to je obred, namaz je obred koji je obavezan u džematu, posebno za muškarce."
+  },
+  {
+   "od": 1133.6,
+   "do": 1151.8,
+   "tekst": "Znači, obred za muškarce. To je obred, ali to ne znači cijela vjera. Nego vjera je kada izađeš iz džamije: je li te taj namaz promijenio? Kako je uticao na tebe, na mene taj namaz –"
+  },
+  {
+   "od": 1151.8,
+   "do": 1160.2,
+   "tekst": "je li u pozitivnom ili negativnom smislu? Šta za nas predstavlja namaz, džemat?"
+  },
+  {
+   "od": 1163.2,
+   "do": 1173.4,
+   "tekst": "Čovjek treba stalno da radi na sebi. Stalno treba da radi na sebi, da popravlja svoju ličnost, sebe."
+  },
+  {
+   "od": 1176,
+   "do": 1189.3,
+   "tekst": "Također, kaže Allah, subhanehu ve te'ala: „وَالْمُؤْمِنُونَ وَالْمُؤْمِنَاتُ بَعْضُهُمْ أَوْلِيَاءُ بَعْضٍ“ – i vjernici i vjernice su jedni drugima zaštitnici, pomagači –"
+  },
+  {
+   "od": 1193,
+   "do": 1222.2,
+   "tekst": "„يَأْمُرُونَ بِالْمَعْرُوفِ وَيَنْهَوْنَ عَنِ الْمُنْكَرِ“ – naređuju dobro, a odvraćaju, a odvraćaju od zla. Pa vidimo da su vjernici, vjernici jedni drugima, jedni drugima pomagači. I nema vjerniku drugog pomagača osim Allaha, subhanehu ve te'ala, pa onda vjernika."
+  },
+  {
+   "od": 1222.8,
+   "do": 1244,
+   "tekst": "Šta kaže Allah, subhanehu ve te'ala, u drugom ajetu? „O vi koji vjerujete, nemojte“, kaže, „uzimati Jevreje i kršćane za zaštitnike. Oni, to jest, jedni drugima su, jedni drugima su zaštitnici“, jedni drugima su pomagači, i tako je do dan-danas."
+  },
+  {
+   "od": 1244,
+   "do": 1269.9,
+   "tekst": "I vidimo to i dan-danas, da su oni jedni drugima pomagači, a vjernici treba da budu jedni drugima pomagači i jedni drugima zaštitnici. Također se prenosi u hadisu kojeg prenosi Ebu Se'id el-Hudri da je Poslanik Muhammed, sallallahu alejhi ve sellem, rekao – u hadisu kojeg bilježi Muslim u svojoj zbirci:"
+  },
+  {
+   "od": 1271.6,
+   "do": 1286.7,
+   "tekst": "„Men ra'a minkum munkeren fel-jugajjirhu bi jedih“ – kaže: ako neko od vas vidi nešto loše, neka ga promijeni, ili neka zaustavi to svojom rukom."
+  },
+  {
+   "od": 1287.2,
+   "do": 1303.3,
+   "tekst": "Kako to? Pa onaj koji ima vlast, onaj koji ima moć. Ako čovjek ima moć, ili onaj koji je na vlasti, a vidi da se nešto loše radi, onda mu je obaveza da to promijeni rukom,"
+  },
+  {
+   "od": 1304.3,
+   "do": 1320.8,
+   "tekst": "to jest da primijeni silu. Ako ne može, onda jezikom. Mi danas mnogo stvari ne možemo rukom da otklonimo, ali možemo, hvala Allahu, jezikom."
+  },
+  {
+   "od": 1322,
+   "do": 1362.4,
+   "tekst": "Možemo. Posebno mi, imami, sa hutbi. Ne mogu ja, draga braćo, sada vama da pričam o Džennetu i Džehennemu, o bratskoj ljubavi i tako dalje, a da to ne povežem sa realnošću. Ljudi to neće da prihvate. Čovjek treba, treba da se bori, treba, kako kaže muftija Abdurrahman, da izgara na Allahovom putu. Čovjek treba da izgara na Allahovom putu. Kaže dalje Poslanik, sallallahu alejhi ve sellem: „Fe in lem jestati' fe bi kalbih“ – kaže: ako čovjek ne može,"
+  },
+  {
+   "od": 1362.4,
+   "do": 1386,
+   "tekst": "ako čovjek ne može nikako, baš nikako, niti rukom, niti jezikom, kaže, neka to negira svojim srcem. I kaže: „to je najslabiji dio imana.“ Pa su nekad muslimani, vjerujte, samo tako i mogli da negiraju – srcem – u vrijeme komunizma. Jednostavno ne možeš."
+  },
+  {
+   "od": 1387.2,
+   "do": 1418.2,
+   "tekst": "U opasnosti si i ti i tvoja porodica i tako dalje. Jednostavno, nekad samo srce može da negira neke stvari. Kada čovjek spozna ove stvari, kada čovjek spozna iman, kada čovjek spozna vjerovanje u Allaha, subhanehu ve te'ala, neminovno je, draga braćo, da će da osjeti slast imana."
+  },
+  {
+   "od": 1418.6,
+   "do": 1440.7,
+   "tekst": "Neminovno je da će da osjeti slast i ljepotu imana. Kaže Poslanik Muhammed, sallallahu alejhi ve sellem, u hadisu kojeg prenosi el-Abbas ibn Abdul-Muttalib, a bilježi ga Muslim: „Zaka ta'mel-imani men radije billahi Rabben.“"
+  },
+  {
+   "od": 1440.7,
+   "do": 1450.8,
+   "tekst": "Kaže: osjetit će slast imana onaj ko je zadovoljan da mu je Allah, subhanehu ve te'ala, Gospodar."
+  },
+  {
+   "od": 1455.8,
+   "do": 1473,
+   "tekst": "Kako ćemo mi da osjetimo zadovoljstvo da nam je Allah, subhanehu ve te'ala, Gospodar? Pa tako što ćemo upoznati svoga Gospodara. Čovjek, da bi volio nekoga, mora da ga upozna. I to mi radimo večeras ovdje:"
+  },
+  {
+   "od": 1473.4,
+   "do": 1489.5,
+   "tekst": "upoznajemo se sa vjerom, učimo o Allahu, subhanehu ve te'ala, o imanu. Pa ko bude zadovoljan da mu je Allah, subhanehu ve te'ala, Gospodar, osjetit će slast imana."
+  },
+  {
+   "od": 1489.5,
+   "do": 1512,
+   "tekst": "„Ve bil-islami dinen“ – i ko bude zadovoljan da mu je islam vjera. Vjerujte, ima dosta ljudi koji se pripisuju islamu, ali nisu zadovoljni da im je islam vjera. Pa kaže: „Šta je ovo ovako, pa šta je ovo islam ovako, pa šta je ovo naređeno onako“, i tako, i tako dalje."
+  },
+  {
+   "od": 1512.2,
+   "do": 1529.3,
+   "tekst": "Nije zadovoljan islamom kao vjerom. Šta kaže Allah, subhanehu ve te'ala, u Kur'anu: „وَمَنْ يَبْتَغِ غَيْرَ الْإِسْلَامِ دِينًا فَلَنْ يُقْبَلَ مِنْهُ“ – kaže: ako bude tražio neku drugu vjeru mimo islama, neće mu biti primljena –"
+  },
+  {
+   "od": 1530,
+   "do": 1547.6,
+   "tekst": "„وَهُوَ فِي الْآخِرَةِ مِنَ الْخَاسِرِينَ“ – a, kaže, na ahiretu će biti od onih koji su propali. To jest, neće ući u Džennet onaj ko nije zadovoljan islamom kao vjerom."
+  },
+  {
+   "od": 1548.2,
+   "do": 1563.4,
+   "tekst": "I na kraju: „ve bi Muhammedin resula“ – i da čovjek bude zadovoljan da mu je Muhammed, sallallahu alejhi ve sellem, Poslanik. Nije samo dovoljno, dragi brate, da kaže čovjek: „Allah, ja sam zadovoljan da mi je Poslanik Muhammed“,"
+  },
+  {
+   "od": 1564.1,
+   "do": 1585.2,
+   "tekst": "i okrene glavu, ne slijedi Poslanika Muhammeda, sallallahu alejhi ve sellem, nego treba čovjek da svjedoči, da potvrđuje ono sa čime im je došao Poslanik Muhammed, sallallahu alejhi ve sellem, a onda da to praktikuje, da primijeni u svome životu."
+  },
+  {
+   "od": 1585.2,
+   "do": 1620.1,
+   "tekst": "I tako će voljeti Poslanika Muhammeda, sallallahu alejhi ve sellem, i Allaha i Njegovu vjeru. Također, kaže Poslanik Muhammed, sallallahu alejhi ve sellem, u hadisu kojeg prenosi Enes ibn Malik, a koji bilježe i Buhari i Muslim: „Selasun men kunne fihi vedžede halavetel-iman“ – tri stvari, ako se nađu kod čovjeka, osjetit će slast, slatkoću, slatkoću imana. Šta kaže"
+  },
+  {
+   "od": 1621.2,
+   "do": 1665.6,
+   "tekst": "Poslanik Muhammed, sallallahu alejhi ve sellem, na prvom mjestu? „En jekunallahu ve resuluhu ehabbe ilejhi mimma sivahuma“ – da mu Allah, subhanehu ve te'ala, i Njegov Poslanik… to jest, da voli Allaha i Njegovog Poslanika najviše, da mu oni budu najdraži, da mu Allah, subhanehu ve te'ala, i Njegov Poslanik budu najdraži, i od svoje djece, i od svoje hanume, i od svojih roditelja. Pa mi znamo najpoznatiji hadis, kad je Omer, radijallahu te'ala anhu, došao do Poslanika, sallallahu alejhi ve sellem, i onda, kad on i Poslanik, sallallahu alejhi ve sellem, imaju konverzaciju,"
+  },
+  {
+   "od": 1665.6,
+   "do": 1683.2,
+   "tekst": "i kaže Omer: „Ja volim i tebe, Poslaniče, i ovu vjeru, ali, bogami“, kaže, „najviše volim sebe.“ Kaže Poslanik: „Iman ti nije potpun.“"
+  },
+  {
+   "od": 1685.6,
+   "do": 1707.7,
+   "tekst": "Nakon toga dolazi Omer, kaže: „Poslaniče“, kaže, „ti si mi najdraži, ti si mi najdraži.“ Kaže: „El-ane, ja Omer, el-ane“ – kaže: „sada. Sada ti se upotpunio, upotpunio iman“, to jest sada, kada su ti Allah, subhanehu ve te'ala, i Njegov Poslanik najpreči i najviše ih voliš, tada ti se upotpunio iman."
+  },
+  {
+   "od": 1708,
+   "do": 1724.4,
+   "tekst": "Pa to je prvo, znači, prva stvar, da bi čovjek osjetio slast imana, jeste da voli Allaha i Njegovog Poslanika najviše. Druga stvar jeste, kaže: „En juhibbel-mer'e la juhibbuhu illa lillah“ – jeste da čovjek voli svoga brata muslimana radi Allaha."
+  },
+  {
+   "od": 1727.2,
+   "do": 1746.5,
+   "tekst": "Vjerujte, u današnjem svijetu, u ovom svijetu interesa – ovo je svijet, ovo je svijet interesa – kada ljudi, većina ljudi, vole jedni druge zbog interesa, zbog novca ili zbog nekog drugog interesa,"
+  },
+  {
+   "od": 1747.1,
+   "do": 1763.8,
+   "tekst": "ovaj hadis je savršen: da čovjek voli svoga brata muslimana, ali samo radi Allaha. Da se čovjek sjeti onog hadisa koji smo spomenuli malo prije: da će čovjek biti sa svojim bratom u hladu Arša na Sudnjem danu – onog brata kojeg je volio u ime Allaha."
+  },
+  {
+   "od": 1765.5,
+   "do": 1800.9,
+   "tekst": "Da voli svoga brata u ime Allaha. I treća stvar, kaže Poslanik, sallallahu alejhi ve sellem: da mrzi čovjek da bude vraćen u nevjerstvo kao što mrzi da bude bačen u vatru. Znači, da toliko mrzi grijeh, i ono nevjerstvo, i onu neposlušnost prema Allahu i Njegovom Poslaniku, kao da mrzi da bude bačen u vatru."
+  },
+  {
+   "od": 1800.9,
+   "do": 1826.1,
+   "tekst": "I tek kada čovjek bude kod sebe imao ove tri osobine, ove tri stvari, osjetit će slast, osjetit će slast imana. I vjerujte, draga braćo, čovjek treba da radi, da primjenjuje ove stvari koje smo već [nejasno] naučili."
+  },
+  {
+   "od": 1826.1,
+   "do": 1849.1,
+   "tekst": "Jer, koliko god se mi razlikovali po nekim, ajmo reći, po vanjskom izgledu, ili načinu obavljanja ibadeta, ili tako dalje, svi svjedočimo da nema božanstva koje zaslužuje biti obožavano osim Allaha, subhanehu ve te'ala, i da je Muhammed, sallallahu alejhi ve sellem, Njegov Poslanik."
+  },
+  {
+   "od": 1849.1,
+   "do": 1877.4,
+   "tekst": "Zato treba jedni druge da volimo, jedni druge da poštujemo, jedni druge da ne uhodimo, jedni druge da ne ismijavamo, jedni druge da ne ogovaramo. I tako, samo tako ćemo uspjeti, inšaAllah, i kao džemat i kao muslimani na ovim prostorima. I samo tako ćemo, ako Bog da, ako Bog da, zajedno ući u Džennet. Amin."
+  }
+ ]
+}

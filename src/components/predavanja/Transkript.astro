@@ -1,0 +1,395 @@
+---
+// Automatski transkript predavanja (whisper.cpp). Tekst se renderuje na serveru unutar <details>
+// (indeksira ga Google, Ctrl+F ga otvara), a JS samo dodaje pretragu, kopiranje i preuzimanje —
+// tekst se ne šalje dvaput. Klik na vrijeme šalje window CustomEvent 'jalija:seek' {sekunde};
+// ako player na stranici to ne podržava (nema [data-ytf-seek]), link otvara YouTube na tom mjestu.
+import { brojRijeci, getTranskript, vrijemeTekst } from '../../lib/transkripti';
+
+interface Props {
+  id: string;
+  /** naslov za ime .txt fajla i zaglavlje teksta */
+  naslov?: string;
+}
+const { id, naslov } = Astro.props;
+const t = getTranskript(id);
+const rijeci = t ? brojRijeci(t) : 0;
+const minutaCitanja = Math.max(1, Math.round(rijeci / 200));
+const yt = (s: number) => `https://www.youtube.com/watch?v=${encodeURIComponent(id)}&t=${Math.floor(s)}s`;
+const datumGen = t ? new Date(t.generisano) : null;
+const datumTekst =
+  datumGen && !Number.isNaN(datumGen.getTime())
+    ? `${datumGen.getUTCDate()}. ${datumGen.getUTCMonth() + 1}. ${datumGen.getUTCFullYear()}.`
+    : '';
+const naslovSekcije = !t
+  ? ''
+  : !t.automatski
+    ? 'Transkript'
+    : t.lektorisano
+      ? 'Automatski transkript (lektorisan)'
+      : 'Automatski transkript';
+const uid = `tr-${id.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+---
+{t && (
+  <section class="tr card" aria-labelledby={`${uid}-h`} data-tr data-id={id} data-naslov={naslov ?? ''}>
+    <details class="tr__details" data-tr-details>
+      <summary class="tr__summary">
+        <span class="tr__summary-main">
+          <svg class="tr__ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M8 13h8M8 17h5"></path></svg>
+          <h2 id={`${uid}-h`} class="tr__title">{naslovSekcije}</h2>
+        </span>
+        <span class="tr__summary-meta muted">
+          {rijeci.toLocaleString('bs')} riječi · oko {minutaCitanja} min čitanja
+        </span>
+        <svg class="tr__chev" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+      </summary>
+
+      <div class="tr__body">
+        {t.automatski ? (
+          <p class="tr__notice" role="note">
+            <strong>Mašinski generisan tekst.</strong> Transkript je automatski napravljen iz zvuka snimka
+            (prepoznavanje govora){t.lektorisano ? ' i naknadno lektorisan (ispravljene očigledne greške), ali nije provjeren uz slušanje' : ' i nije ručno provjeren'}
+            — može sadržavati pogrešno prepoznate riječi, imena i naročito arapske citate (ajete, hadise, dove).
+            Mjerodavan je video.
+          </p>
+        ) : (
+          <p class="tr__notice tr__notice--ok" role="note">
+            Transkript je ručno pregledan{t.ispravio ? ` (${t.ispravio})` : ''}. Mjerodavan je video.
+          </p>
+        )}
+
+        <div class="tr__tools" data-tr-tools hidden>
+          <div class="tr__search">
+            <label class="visually-hidden" for={`${uid}-q`}>Pretraži transkript</label>
+            <svg class="tr__search-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input
+              id={`${uid}-q`}
+              class="input tr__input"
+              type="search"
+              placeholder="Pretraži u transkriptu…"
+              autocomplete="off"
+              spellcheck="false"
+              enterkeyhint="search"
+              aria-controls={`${uid}-list`}
+              data-tr-q
+            />
+          </div>
+          <div class="tr__btns">
+            <button type="button" class="btn btn--ghost btn--sm" data-tr-copy>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"></path></svg>
+              Kopiraj tekst
+            </button>
+            <button type="button" class="btn btn--ghost btn--sm" data-tr-txt>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>
+              Preuzmi .txt
+            </button>
+          </div>
+        </div>
+        <p class="tr__status muted" role="status" aria-live="polite" data-tr-status></p>
+
+        <ol class="tr__list" id={`${uid}-list`} data-tr-list>
+          {t.segmenti.map((s) => (
+            <li class="tr__seg" id={`t-${Math.floor(s.od)}`} data-od={Math.floor(s.od)}>
+              <a class="tr__time" href={yt(s.od)} target="_blank" rel="noopener" data-sek={Math.floor(s.od)} aria-label={`Pusti od ${vrijemeTekst(s.od)}`}>
+                {vrijemeTekst(s.od)}
+              </a>
+              <p class:list={['tr__txt', { 'tr__txt--ar': /^\[|[؀-ۿ]/.test(s.tekst) }]} dir="auto">{s.tekst}</p>
+            </li>
+          ))}
+        </ol>
+
+        <p class="tr__foot muted">
+          Model: {t.model}{datumTekst && ` · generisano ${datumTekst}`}. Uočili ste grešku? Javite nam preko stranice za kontakt.
+        </p>
+      </div>
+    </details>
+  </section>
+)}
+
+<script>
+  import { normalizujSaMapom, tokeni } from '../../lib/extras/normalizuj';
+  import { kopirajTekst } from '../../lib/kopiraj';
+
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  /** HTML sa <mark> oko pogodaka; null ako neki token ne postoji (svi tokeni moraju biti nađeni). */
+  function oznaci(original: string, toks: string[]): string | null {
+    const opsezi: [number, number][] = [];
+    const nadjeni = new Set<string>();
+    for (const dj of ['dj', 'd'] as const) {
+      if (dj === 'd' && !/[đĐ]/.test(original)) continue;
+      const { tekst, mapa } = normalizujSaMapom(original, dj);
+      for (const t of toks) {
+        let i = tekst.indexOf(t);
+        if (i !== -1) nadjeni.add(t);
+        while (i !== -1) {
+          opsezi.push([mapa[i], mapa[i + t.length - 1] + 1]);
+          i = tekst.indexOf(t, i + t.length);
+        }
+      }
+    }
+    if (nadjeni.size < toks.length) return null;
+    opsezi.sort((a, b) => a[0] - b[0]);
+    let html = '';
+    let pos = 0;
+    for (const [a, b] of opsezi) {
+      if (b <= pos) continue;
+      const od = Math.max(a, pos);
+      html += esc(original.slice(pos, od)) + '<mark>' + esc(original.slice(od, b)) + '</mark>';
+      pos = b;
+    }
+    return html + esc(original.slice(pos));
+  }
+
+  const smanjiPokret = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function init(root: HTMLElement) {
+    const details = root.querySelector<HTMLDetailsElement>('[data-tr-details]')!;
+    const tools = root.querySelector<HTMLElement>('[data-tr-tools]')!;
+    const input = root.querySelector<HTMLInputElement>('[data-tr-q]')!;
+    const status = root.querySelector<HTMLElement>('[data-tr-status]')!;
+    const segs = [...root.querySelectorAll<HTMLLIElement>('.tr__seg')];
+    const txts = segs.map((li) => li.querySelector<HTMLElement>('.tr__txt')!);
+    const izvorni = txts.map((p) => p.textContent || '');
+    const vremena = segs.map((li) => li.querySelector('.tr__time')?.textContent?.trim() || '');
+    tools.hidden = false;
+
+    // ---- pretraga unutar transkripta ----
+    let tajmer = 0;
+    function trazi() {
+      const toks = tokeni(input.value).filter((t) => t.length >= 2 || /\d/.test(t));
+      if (!toks.length) {
+        segs.forEach((li, i) => {
+          li.hidden = false;
+          txts[i].textContent = izvorni[i];
+        });
+        status.textContent = '';
+        return;
+      }
+      let n = 0;
+      segs.forEach((li, i) => {
+        const html = oznaci(izvorni[i], toks);
+        li.hidden = html === null;
+        if (html === null) txts[i].textContent = izvorni[i];
+        else {
+          txts[i].innerHTML = html;
+          n++;
+        }
+      });
+      const d = n % 10, s = n % 100;
+      const oblik =
+        d === 1 && s !== 11 ? 'odlomak sadrži' : d >= 2 && d <= 4 && (s < 12 || s > 14) ? 'odlomka sadrže' : 'odlomaka sadrži';
+      status.textContent = n ? `${n} ${oblik} traženi pojam.` : 'Nema pogodaka u transkriptu.';
+    }
+    input.addEventListener('input', () => {
+      clearTimeout(tajmer);
+      tajmer = window.setTimeout(trazi, 120);
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && input.value) {
+        e.preventDefault();
+        input.value = '';
+        trazi();
+      }
+    });
+
+    // ---- tekst za kopiranje/preuzimanje (iz DOM-a, bez dupliranja u HTML-u) ----
+    const naslov = root.dataset.naslov || '';
+    const link = location.href.split('#')[0];
+    const tekst = () =>
+      [
+        naslov,
+        link,
+        'Automatski transkript (može sadržavati greške).',
+        '',
+        ...izvorni.map((t, i) => `[${vremena[i]}] ${t}`),
+      ]
+        .filter((x, i) => x || i > 1)
+        .join('\n');
+
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-tr-copy]')!;
+    copyBtn.addEventListener('click', async () => {
+      const ok = await kopirajTekst(tekst());
+      status.textContent = ok ? 'Tekst transkripta je kopiran.' : 'Kopiranje nije uspjelo.';
+    });
+
+    root.querySelector<HTMLButtonElement>('[data-tr-txt]')!.addEventListener('click', () => {
+      const blob = new Blob([tekst() + '\n'], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      const ime = (naslov || root.dataset.id || 'transkript')
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .replace(/đ/gi, 'dj')
+        .replace(/[^a-zA-Z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 80)
+        .toLowerCase();
+      a.href = URL.createObjectURL(blob);
+      a.download = `transkript-${ime || 'predavanje'}.txt`;
+      document.body.append(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    });
+
+    // ---- vremenske oznake → premotavanje playera ----
+    root.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-sek]');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      const player = document.querySelector<HTMLElement>('[data-ytf][data-ytf-seek]');
+      if (!player) return; // player ne podržava premotavanje → otvori YouTube (href)
+      e.preventDefault();
+      const sekunde = Number(a.dataset.sek) || 0;
+      window.dispatchEvent(new CustomEvent('jalija:seek', { detail: { sekunde } }));
+      segs.forEach((li) => li.classList.toggle('is-active', li === a.closest('li')));
+      const r = player.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > innerHeight) {
+        player.scrollIntoView({ behavior: smanjiPokret() ? 'auto' : 'smooth', block: 'center' });
+      }
+    });
+
+    // ---- link na odlomak: /predavanja/<id>#t-123 ----
+    const otvoriHash = () => {
+      const m = /^#t-(\d+)$/.exec(location.hash);
+      if (!m) return;
+      const li = root.querySelector<HTMLElement>(`#t-${m[1]}`) ??
+        segs.filter((s) => Number(s.dataset.od) <= Number(m[1])).pop();
+      if (!li) return;
+      details.open = true;
+      segs.forEach((s) => s.classList.toggle('is-active', s === li));
+      // poslije otvaranja <details> i nakon što pregledač završi vlastito skrolovanje na hash
+      const skroluj = () => li.scrollIntoView({ block: 'start' });
+      setTimeout(skroluj, 60);
+      if (document.readyState !== 'complete') addEventListener('load', () => setTimeout(skroluj, 0), { once: true });
+    };
+    otvoriHash();
+    addEventListener('hashchange', otvoriHash);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-tr]').forEach(init);
+</script>
+
+<style>
+  .tr {
+    margin-top: var(--space-7);
+    padding: 0;
+    overflow: clip;
+  }
+  .tr [hidden] { display: none !important; }
+  .tr__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    cursor: pointer;
+    list-style: none;
+    min-height: 56px;
+  }
+  .tr__summary::-webkit-details-marker { display: none; }
+  .tr__summary:hover .tr__title { color: var(--color-primary); }
+  .tr__summary:focus-visible { outline: 3px solid var(--color-focus); outline-offset: -3px; border-radius: inherit; }
+  .tr__summary-main { display: flex; align-items: center; gap: var(--space-2); flex: 1 1 auto; min-width: 0; }
+  .tr__ico { color: var(--color-primary); flex: none; }
+  .tr__title { font-size: 1.2rem; margin: 0; transition: color var(--transition); }
+  .tr__summary-meta { font-size: 0.86rem; }
+  .tr__chev { flex: none; color: var(--color-text-muted); transition: transform var(--transition); }
+  .tr__details[open] .tr__chev { transform: rotate(180deg); }
+  @media (max-width: 479px) {
+    .tr__summary { padding: var(--space-3) var(--space-4); }
+    .tr__summary-meta { order: 3; flex-basis: 100%; padding-left: calc(20px + var(--space-2)); }
+  }
+
+  .tr__body { padding: 0 var(--space-5) var(--space-5); border-top: 1px solid var(--color-border); }
+  @media (max-width: 479px) { .tr__body { padding: 0 var(--space-4) var(--space-4); } }
+  .tr__notice {
+    margin: var(--space-4) 0;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-missing-bg);
+    color: var(--color-missing-text);
+    border: 1px dashed var(--color-missing-border);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .tr__notice--ok {
+    background: color-mix(in srgb, var(--color-success) 10%, transparent);
+    color: var(--color-text);
+    border-color: var(--color-success);
+  }
+
+  .tr__tools {
+    position: sticky;
+    top: calc(var(--header-h, 72px) + var(--space-2));
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    padding: var(--space-2) 0;
+    background: var(--color-surface);
+  }
+  .tr__search { position: relative; flex: 1 1 220px; min-width: 0; }
+  .tr__search-ico {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+  .tr__input { width: 100%; padding-left: 2.4rem; min-height: 44px; }
+  .tr__btns { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .tr__btns .btn { min-height: 44px; }
+  .tr__status { min-height: 1.4em; margin: var(--space-1) 0 var(--space-2); font-size: 0.88rem; font-weight: 600; }
+
+  .tr__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .tr__seg {
+    display: grid;
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: baseline;
+    padding: var(--space-2) var(--space-2);
+    border-radius: var(--radius-sm);
+    /* zaglavlje sajta + ljepljiva traka sa pretragom */
+    scroll-margin-top: calc(var(--header-h, 72px) + 9rem);
+  }
+  .tr__seg:hover { background: var(--color-surface-2); }
+  .tr__seg.is-active { background: var(--color-accent-soft); box-shadow: inset 3px 0 0 var(--color-accent-bright); }
+  .tr__time {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    justify-self: start;
+  }
+  .tr__time:hover { border-color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 10%, transparent); }
+  .tr__time:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .tr__txt { margin: 0; line-height: 1.65; overflow-wrap: anywhere; }
+  .tr__txt--ar { color: var(--color-text-muted); font-style: italic; }
+  .tr__txt :global(mark) {
+    background: var(--color-accent-soft);
+    color: inherit;
+    border-radius: 3px;
+    padding: 0 0.08em;
+    box-shadow: inset 0 -2px 0 var(--color-accent-bright, var(--color-accent));
+  }
+  @media (max-width: 479px) {
+    .tr__seg { grid-template-columns: 1fr; gap: var(--space-1); padding-inline: 0; }
+  }
+  .tr__foot { margin: var(--space-4) 0 0; font-size: 0.82rem; }
+</style>

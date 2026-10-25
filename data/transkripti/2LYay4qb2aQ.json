@@ -1,0 +1,184 @@
+{
+ "id": "2LYay4qb2aQ",
+ "jezik": "bs",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T01:32:55.028Z",
+ "automatski": true,
+ "segmenti": [
+  {
+   "od": 0.5,
+   "do": 40.9,
+   "tekst": "الحمد لله نحمده ونستعينه ونستغفر"
+  },
+  {
+   "od": 40.9,
+   "do": 88.4,
+   "tekst": "ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا من يهده الله فلا مضل له ومن يضلل فلا هادي له وأشهد أن لا إله إلا الله وحده لا شريك له وأشهد أن محمدا عبده ورسوله أرسله الله بالحقه بشيرا ونذيرا وسراج منيرا لينذر من كان حيا وحقا القول على الكافرين صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهدات المهتدين وسلم تسليما كثيرا إلى يوم الدين قال الله في كتابه الكريم يا أيها الذين آمنوا اتقوا الله حق توقاته ولا تموتن إلا وأنتم مسلمون"
+  },
+  {
+   "od": 88.4,
+   "do": 130.9,
+   "tekst": "Zahvala pripada jedinom uzvišenom Allahu subhanehu ve te'ala gospodaru svih sjetova, gospodaru Dana Sudnjeg, gospodaru djina i ludih, nekej salavat i salam nego Poslanika milenika Muhammada Sallallahu Alaihi Wasallam na njegovu borodicu, na njegove drugove ashaabe i na sve one koji slijege put, put Kur'ana, put sunnata Muhammada Sallallahu Alaihi Wasallam Darga braćo cijene džematlije, naš Poslanik Muhammed s.a.v. je maksimalno nastojao da ovaj poziv dostavi ljudima."
+  },
+  {
+   "od": 134.2,
+   "do": 150.5,
+   "tekst": "Pa u početku objave Poslanik Muhammed s.a.v. pozivao tajna. I to nije bio problem mušricima, to je u tom periodu nije bilo puno problema."
+  },
+  {
+   "od": 152.3,
+   "do": 170.4,
+   "tekst": "Kada nastaje problem, kada Poslanik Muhammed s.a.v. počinje javno pozivati lude u Islam. Tada se javljaju progonstva, mučenja."
+  },
+  {
+   "od": 172.8,
+   "do": 189.7,
+   "tekst": "Nakon toga Poslanik Muhammed s.a.v. dozvoljava vjernicima da učine hijru, prvo u Abesiniu, a nakon toga i Medinu, gdje Islam ide, gdje Islam čini hijru."
+  },
+  {
+   "od": 191.6,
+   "do": 214.7,
+   "tekst": "Hijra, draga braćo, možemo slobodno reći da je najveći događaj u istoriji čovječanstva. Događaj koji je promijenio tok ljudske istorije. Događaj koji je pun povuka i poruka, a mi ćemo navesti nekoliko."
+  },
+  {
+   "od": 214.7,
+   "do": 230.7,
+   "tekst": "Prva povuka ili poruka hijre jeste da su nevjernički i neprijateljski pogledi ili strijele uvijek uprte u koga?"
+  },
+  {
+   "od": 231.1,
+   "do": 247.9,
+   "tekst": "One učene. One učene ljude. Pa vi znate da su mušnici htjeli ubiti Poslanika Muhammeda s.a.w. misleći da će dime ugaziti svjetlo Islama."
+  },
+  {
+   "od": 248.3,
+   "do": 273.6,
+   "tekst": "Nakon toga ubijstvo Omera, Osmana, Alije, sve najboljih i nejučenijih ljudi, tako imamo i kroz istoriju Islama, znati sami da su nakon drugog svjetskog rata na hađetu poubijani oni nejučeniji i nejboljih među nama."
+  },
+  {
+   "od": 274.5,
+   "do": 299.1,
+   "tekst": "Zbog čega? Zbog toga da bi se ugasilo svjetlo ove vjere. A i prije nekoliko godina znati sami u koga su bile uprte te strijele u rahmetni muftiju. Svi to znamo. Kada ugasimo jedno svjetlo, onda šta? Nastaje mrak."
+  },
+  {
+   "od": 299.1,
+   "do": 321.1,
+   "tekst": "Nastaje mrak. Zato vijernici treba da vole svoje učene, da poštuju svoje učene, svoju elitu, ali one koji su priznati među rudima, one koje vijernici vole istinski, a teško onima, draga braćo, koje vijernici ne vole."
+  },
+  {
+   "od": 321.7,
+   "do": 346.8,
+   "tekst": "Teško onima koje vjernici ne vole i ne prihvataju ih za svoje vođe. Druga pouka hijđe jeste da Allah subhanehu ve te'ala uzdigao svetost ove vjere iznad domovine, iznad imejetka, iznad svega."
+  },
+  {
+   "od": 348,
+   "do": 367.9,
+   "tekst": "Pa domovina, draga braćo, imejetak nema nikakvu vrijednost bez vjerni. Primjer toga jeste, primjer toga jeste hijdža Poslanika Muhamada s.a.s. Mi znamo da je neka najšljetije mjesto, ali je Poslanik s.a.s. napustio zbog čega?"
+  },
+  {
+   "od": 368.7,
+   "do": 390,
+   "tekst": "Zbog toga što nije mogao da obožava Allaha onako kako treba. Također od poluka jeste čistota ili čistoća srca i udaleno srca od ličnih protjeva."
+  },
+  {
+   "od": 390,
+   "do": 407.7,
+   "tekst": "Pa znamo da su Poslanik Muhammedu s.a.v. prije nego što učinio hijđu, nudili su mu i zlatoj da ga učine kraljem, nudili su mu i žene, nema šta mu nisu nudili, sve su mu nudili. Poslanih, sallallahu alejhi ve sellem, je to se odbija."
+  },
+  {
+   "od": 408.6,
+   "do": 423.8,
+   "tekst": "Zbog čega? Rad Allaha i rad ovog poziva, rad ove vjere. Danas, nažalost, imamo čovjek se za jedno radno mjesto proda. Za nekoliko novaca, dirhema, dinara, eura."
+  },
+  {
+   "od": 428.1,
+   "do": 450.2,
+   "tekst": "Čovjek treba da se uzdigne iznad ovih stvari i da zna šta je nevići cilj. Jer ovo život je kratak. Ovo život je, draga braćo, kratak treba ga proživjeti. dostojanstveno, i onako, i onako kako treba. Također, jedna od povuka hijdže jeste obaveznost oslanjanja na Allaha subhanehu ve te'ala."
+  },
+  {
+   "od": 451.1,
+   "do": 472.3,
+   "tekst": "Da se čovjek osloni na Allaha subhanehu ve te'ala. I da poduzme one propisane uzvrke. Povedio po sani Muhammed s.a.v. kada je učinio hijdžu, nije samo onako izašao i krenuo prema Medini, već je sa Ebu Bekrom radijallahu ta'ala dobro isplanirao put."
+  },
+  {
+   "od": 473,
+   "do": 488.6,
+   "tekst": "Kuda će da idu? Kako će da idu? Unajdnju je najbolje kvodičan. I tako i čovjek. Treba da preduzme sve što je do njega, a nakon toga da se osloni na Allah."
+  },
+  {
+   "od": 489,
+   "do": 506.6,
+   "tekst": "Također da ga vraćaju sabore. Poslanih sallahu alimu sallame deset godina saburao u Mekij. Mora saboreo. Kaže Allah subhanu wa ta'ala Doj se Allah sa onim koji su strpljivi. I jednim drugima preporučujte istinu Islama."
+  },
+  {
+   "od": 511.4,
+   "do": 527.5,
+   "tekst": "Strpljenje. Ne može bez strpljenja. Mora je vijenik da je strpljiv, da bi došao do cilja. A kada je vijenik strpljiv i ostavi rad Allaha nešto, Allah će mu dati bolje od toga i to je jedna od povuka."
+  },
+  {
+   "od": 528.9,
+   "do": 541.4,
+   "tekst": "Hijre. Vijednici su ostavili svoje imanje, svoje kuće, sve su ostavili. Rab Allah, pa im je Allah dao da nakon nekoliko godina osvoje i Perziju i Bizanti."
+  },
+  {
+   "od": 545.7,
+   "do": 565.8,
+   "tekst": "Također, od poluka i poruka hijdre jeste da vijednik treba da je umjeren i u blagodati i u tjeskomi. Pa znamo da je Poslanik sada Allahu alihum salama je dostojanstveno napustio meko."
+  },
+  {
+   "od": 566.8,
+   "do": 585,
+   "tekst": "Bez da ga i ko ponizi, bez da ga i ko kupi, potplati. Kada je ulazio u Meku, ušao je dostojanstveno. Ušao je dostojanstveno, bez da se i kome svijeti."
+  },
+  {
+   "od": 586.8,
+   "do": 607.3,
+   "tekst": "Nije se svijetio Poslanik sallahu alihi wa sallam. Nije uzvratio na zlo zlom. I to treba da bude povuka i povuka svakog vjernika. da na zlo ne uzvraća zlim, već dobri."
+  },
+  {
+   "od": 608.8,
+   "do": 624.3,
+   "tekst": "To je naša vjera, draga vraca. Pa Poslanik s.a.v. kaže, ko uđe u svoju kuću, siguran je. Pa je oprostio svima Poslanik Muhammed s.a.v. A mogao je sve da ubije, da pa ubija."
+  },
+  {
+   "od": 624.7,
+   "do": 653.6,
+   "tekst": "Ali nije teo, nije teo Poslanik Muhammed s.a.v. Ali to je poruka svima nama, da se okitimo tim. Vrli nama, koja je poslani Muhammed s.a.v. imao. I zadnja poruka ili poruka jeste, draga braću, da na ovome putu, putu istine, putu Islama, je potrebna žrtva."
+  },
+  {
+   "od": 654.8,
+   "do": 671.5,
+   "tekst": "Mora žrtva, draga braću. Bez žrtve ne može. Ko je mislio da će da obožava Allah subhanahu ta'ala onako kako treba i da uživa u životu, Neka to zaboravim. Uvijek će imati napada."
+  },
+  {
+   "od": 671.8,
+   "do": 688.8,
+   "tekst": "Prvo od svoje porodice. Što ovako, što tako. Što se pobadaš, što ovo, što ono. Što pustiš sa oni. Što govoriš tako, što govoriš onako."
+  },
+  {
+   "od": 689.8,
+   "do": 699.3,
+   "tekst": "Što iznosiš istinu. Čuti, boljeti je, čuti, zamerit ćeš se sa nekim. I tako dalje. Kaže Allah subhanehu ve te'ala."
+  },
+  {
+   "od": 703.8,
+   "do": 721.3,
+   "tekst": "Zar misle ljudi da ako kažu vjerujemo da će biti pušteni onako na miru, da uživaju? Neće, dragi braće, brate, biti pušteni da uživaš na miru. Kad si rekao vjerujemo, znaj da ćeš naići na iskušenje."
+  },
+  {
+   "od": 722.3,
+   "do": 755.1,
+   "tekst": "Na iskušenje i nema bez iskušenja na Dunjaluku. Ovaj Dunjaluk je protkan iskušenjima, trnje. A u džene tu je ako Bog da, ako Bog da uživanje. To su neke kratke poruke, ali ima ih puno, puno mogli bi danima da pričamo, ali ima samo neke kratke poruke da bi čovjek uzeo i pred pouku kako da se ponaša u teškim, kako da se ponaša u lijepim vremenima i tako i tako."
+  },
+  {
+   "od": 755.1,
+   "do": 772.1,
+   "tekst": "A dali, molim Allah subhanehu ve te'ala, da nas učeni od oni, koi slijede Poslanika Muhammada sallallahu alejhi ve sellem, istinski kako to treba, kako je nama vjerniku, dolikko je, molim njegov učenok, da nas pomomne, da nas sastavi u jennet."
+  },
+  {
+   "od": 772.8,
+   "do": 779.1,
+   "tekst": "Ameen, ya rabil alameen, a kulu qavlih hada, wa staghfirullah li, wa lakum fa staghfiruhu, innamu huwal ghafuru rahim."
+  }
+ ]
+}

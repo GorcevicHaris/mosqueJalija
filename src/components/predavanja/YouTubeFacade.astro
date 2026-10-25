@@ -15,7 +15,7 @@ const srcset = jeYt
   : undefined;
 const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}${start ? `&t=${start}s` : ''}`;
 ---
-<div class="ytf" data-ytf data-id={id} data-title={naslov} data-start={start ?? ''}>
+<div class="ytf" data-ytf data-ytf-seek data-id={id} data-title={naslov} data-start={start ?? ''}>
   <a class="ytf__btn" href={watch} target="_blank" rel="noopener" aria-label={`Pokreni video: ${naslov}`} data-ytf-btn>
     <img
       class="ytf__img"
@@ -79,25 +79,41 @@ const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}${start 
 </style>
 
 <script>
+  const ORIGIN = 'https://www.youtube-nocookie.com';
+
   function aktiviraj(root: HTMLElement) {
     const btn = root.querySelector<HTMLAnchorElement>('[data-ytf-btn]');
     if (!btn) return;
-    btn.addEventListener('click', (e) => {
-      // Ctrl/Cmd/srednji klik — pusti da se otvori YouTube u novom tabu
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
-      e.preventDefault();
-      const id = root.dataset.id!;
-      const start = Number(root.dataset.start) || 0;
-      const params = new URLSearchParams({ autoplay: '1', rel: '0', modestbranding: '1', playsinline: '1' });
+    function ucitaj(start: number) {
+      const params = new URLSearchParams({
+        autoplay: '1', rel: '0', modestbranding: '1', playsinline: '1', enablejsapi: '1', origin: location.origin,
+      });
       if (start) params.set('start', String(start));
       const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${params}`;
+      iframe.src = `${ORIGIN}/embed/${encodeURIComponent(root.dataset.id!)}?${params}`;
       iframe.title = root.dataset.title || 'YouTube video';
       iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
       iframe.allowFullscreen = true;
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-      btn.replaceWith(iframe);
+      root.querySelector('[data-ytf-btn]')?.replaceWith(iframe);
       iframe.focus();
+    }
+    btn.addEventListener('click', (e) => {
+      // Ctrl/Cmd/srednji klik — pusti da se otvori YouTube u novom tabu
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      ucitaj(Number(root.dataset.start) || 0);
+    });
+    // Transkript: klik na vrijeme premotava video (učitava ga ako još nije pokrenut)
+    window.addEventListener('jalija:seek', (e) => {
+      const s = Math.max(0, Math.floor(Number((e as CustomEvent<{ sekunde: number }>).detail?.sekunde) || 0));
+      const iframe = root.querySelector('iframe');
+      if (!iframe) return ucitaj(s);
+      const cmd = (func: string, args: unknown[] = []) =>
+        iframe.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args }), ORIGIN);
+      cmd('seekTo', [s, true]);
+      cmd('playVideo');
+      root.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
     // predučitaj veze kad korisnik pokaže namjeru (brži start)
     let warmed = false;

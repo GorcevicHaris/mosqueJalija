@@ -1,0 +1,269 @@
+{
+ "id": "Labn-lIyEos",
+ "jezik": "bs",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T03:28:15.914Z",
+ "automatski": true,
+ "segmenti": [
+  {
+   "od": 0.5,
+   "do": 40.7,
+   "tekst": "الحمد لله نحمده ونستعينه ونستغفره"
+  },
+  {
+   "od": 40.7,
+   "do": 83.8,
+   "tekst": "ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا من يهبه الله فلا مضل له ومن يضلل فلا هادي له وأشهد أن لا إله إلا الله وحده لا شريك له وأشهد أن محمدًا عبده ورسوله رسله الله بالحقه بشيرًا ونذيرًا وسراجه نيرًا لينذر من كان حيا وحق القول على الكافرين صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهدات المهتدين وسلم تسليما كثيرا إلى يوم الدين"
+  },
+  {
+   "od": 83.8,
+   "do": 123.7,
+   "tekst": "قال الله في كتابه الكريم يا أيها الذين آمنوا اتقوا الله حق تقاته ولا تموتن إلا وأنتم مصلمون Zahvala pripada jedinou uzvjušenom Allah subhanehu ve te'ala gospodaru svih světov, gospodaru dana sudnik, gospodaru dina i ludi, neke salavat i salamnego Poslanika milenika Muhammada sallallahu alejhi ve sellem na negu porodicu, na negove dugove, ashabi i na sve one koji slijede od Kur'ana, od sunnata Muhammada sallallahu alejhi ve sellem"
+  },
+  {
+   "od": 123.7,
+   "do": 143.5,
+   "tekst": "Cine džamatlije na pretplošloj hudbi smo govorili o dijelima koja uvode čovjeka u džanet, to je onaj koji bude radio, Allah će ga uvijesti u džanet."
+  },
+  {
+   "od": 143.5,
+   "do": 163.4,
+   "tekst": "Zbog njihove veličine i važnosti za pojedinca i društvo, da bismo bili boli vjernici, boli mukmini, da bismo bili boli članovi zajednice."
+  },
+  {
+   "od": 163.4,
+   "do": 179.3,
+   "tekst": "Od tih dijela koje uvode čovjeka u džennet jeste, draga braćo moja, dobročinjstvo prema roditeljima. Dobročinjstvo prema roditeljima."
+  },
+  {
+   "od": 179.3,
+   "do": 219.5,
+   "tekst": "Prensedeh ashab od imenom Jahmiya Došao do Poslanika Muhammeda sallallahu alaihi wa sallam Da se posavietoje sanim ili je želio da ide u borbu Šta mu kaže Poslanik Muhammed sallallahu alaihi wa sallam Kaže hallaka min um Kaže ima shrikimai Kaže ima boži poslanice Šta mu kaže Poslanik sallallahu alaihi wa sallam il zemha fa inna l-đanna inda riđleja kaže budi uz nju jer je džennet kod njenih nogu"
+  },
+  {
+   "od": 219.5,
+   "do": 260.8,
+   "tekst": "To jest dobročinstvo prema njoj će te uvesti u džennet dobročinstvo prema njoj će te uvesti u džennet tako odje se frenosi da neki čovjek došel kod posanika Muhammada sallallahu alejhi ve sellem pa ga upita Ko ima najviše prava Na moje dobročinstvo Na moje društvo Šta mu kaže Tvoja majka Pa kaže ko posle Boži posanče kaže tvoja majka"
+  },
+  {
+   "od": 260.8,
+   "do": 282.5,
+   "tekst": "Pa ko posle kaže tvoja majka Tri puta majka Pa kaže ko posle Boži posanče Kaže tvoj otac Tvoj otac Kaže Allah subhanehu ve te'ala U Kur'anu spominje da nas majka nosi iz slabosti u slabost."
+  },
+  {
+   "od": 285.5,
+   "do": 306.8,
+   "tekst": "Pa za vrijeme trudnoće je slaba, pa poslje trudnoće je slaba, pa te hrani, tako i tako dalje. Zbog toga majka koliko ne prespavani noći, ali nikako čovjek ne smije da zaboravi na oca, heroje svoje djecebe."
+  },
+  {
+   "od": 307.1,
+   "do": 325,
+   "tekst": "Zad niste čitali suru Jusuf? Šta kaže Jusuf, alaihissalam? وَإِذْ قَالَ يُوسُفُ لِأَبِيهِ يَا أَبَتِ إِنِّي رَأَيْتُ أَحَدَ عَشَرَ كَوْكَبًا وَالْشَمْسَ وَالْقَمَرَ رَأَيْتُهُمْ مِنْسَجِدُ O, babice, video sam usnu."
+  },
+  {
+   "od": 325.8,
+   "do": 343.3,
+   "tekst": "Yedanest zvijezda. Suunce in yesec kakumi tine sejdo. Ištamo kaje, yaakub negovotis. Kale, yaabuneya, laktaqsus rugiake ala ikhwatike fayakidu laka keidah."
+  },
+  {
+   "od": 343.9,
+   "do": 359.2,
+   "tekst": "Kaže, o, sinčiću moju. Kaže, nemoj da pričaš ove snove ili ono što si sadio svojoj braći. Kako ti ne bi smjestili?"
+  },
+  {
+   "od": 359.8,
+   "do": 376.3,
+   "tekst": "Ili nekakvu prevaru odnetnoj. To su očevi, draga braća. Zbog čega Jusuf, ali i salam, nije otišao kod majke? I zbog čega se ne spominje majka? Zbog toga što majka uvijek, pa ne, moje sine, to su tvoje braće i tako i tako."
+  },
+  {
+   "od": 376.4,
+   "do": 394.4,
+   "tekst": "A otac je čvrst. Znao svako o dijete, kakav mu je hala. Znao svako o dijete. I verujte, draga braćo, sve dok je otac živ, čovjek se osjeća da je ti jasno."
+  },
+  {
+   "od": 394.6,
+   "do": 433.6,
+   "tekst": "Osjeća se da je dijete još. Kad otac preseli, već se osjeća ta praznina u kući. Sve dok je otac živ, osjeća se čovjek drugačije. I otac je jedina osoba, jedina osoba, Koja želi da budeš bolji od njega, svi smo mi braća i tvoja, rođena braća i mi, kad dođe do toga jesi mi bolji ili nisi, svako ćete reći, hvala brate, hvala tebi svaka čas, ali ja želim da budem bolji od tebe, edino tvoj otac."
+  },
+  {
+   "od": 434.8,
+   "do": 453.6,
+   "tekst": "Zbog čega? Zbog toga što je tvoj uspjeh i njegov uspjeh. Šta kaže Allah subhanehu ve te'ala u Kur'anu? A Allah ti da naredjuje da ne obožavas nekog drugog osinjega."
+  },
+  {
+   "od": 454.1,
+   "do": 476.2,
+   "tekst": "Wa bilo li deyni ihsana i da se prema roditelima li je pophodish. Ima yebluhanna inda ken kibara ahaduhuma aukilahuma felatakullahuma uffi. Ako toi roditelji kod tebe dojive staros ili jedan od roditelja nemo im reči ni uff."
+  },
+  {
+   "od": 476.2,
+   "do": 495.2,
+   "tekst": "I kaže nemoj ih odbijat od sebe, nemoj ih kjerat od sebe. Šta mi radimo danas zagadaće? Valah je žalosno kada čuje da je nekome roditelj u starački dom."
+  },
+  {
+   "od": 496.7,
+   "do": 539,
+   "tekst": "Da je roditelj nekom u staračkom dom. A on se raširio kod kuće sa svojom dicom Anumom, uživa. A roditelj mu u staračkom dom. ili smo napravili roditelima neke sobice pored glavne kuće i tamo neki toalet deski roditeli imaju svoju sobu kao da su to ljubimci a ne roditelji kao da su ljubimci a ne roditelji da ne bi ne do Allah nešto rekli negovoj hanumi ili našim hanumama da ih ne bi nešto uvrijedili sada kaže Allah subhanehu ve te'ala"
+  },
+  {
+   "od": 539,
+   "do": 575,
+   "tekst": "Adara kaže, وقل لهuma قولen kirima I lijepo im se obraćate Lije pijem jezikom وخفض لهuma jenaha dhulli min arrahma I kaže, budite ponizi prema nima i milostini وقل رب رحم huma kema rabbe ja nasadira I recite, gospodar moj, smilujte im se Kao što su se oni nama smilovali kada smo bili mali Kako su nam se roditelji, draga vraćo, smirovali, smilovali kada smo bili mali."
+  },
+  {
+   "od": 575.2,
+   "do": 592,
+   "tekst": "Koliko smo puta zaspali na prsima svoje očeva. A sada kada smo porasni, veliki, ne vidimo njih. Ne vidimo svoje oče. Ne vidimo ono što nam oni govore. A oni su naši heroji. Valahi su oni naši heroji."
+  },
+  {
+   "od": 594.5,
+   "do": 612.7,
+   "tekst": "Nije oči i savjet kao savjet nekog drugoga. Nikad. Na prvome mjestu je njegov savjet. Pa deset frazih mjesta pa savjet nekog dugog. Tako treba da se pobhodimo prema našim očima i prema našim majkama."
+  },
+  {
+   "od": 613.1,
+   "do": 629.6,
+   "tekst": "Šta kaže posanik Muhammed s.a.w.? Kaže, propao je, propao je, propao je, tri puta. Kažu, pa savjeti ko Boži posaniče? Kaže, onaj ko dočeka starost svojih roditela ili jednog od svojih roditela, a šta?"
+  },
+  {
+   "od": 629.6,
+   "do": 645.1,
+   "tekst": "A ne zasluži džendet zbog dobročinstva prema njima. Kako nas, da ga vraća, islam uči samo lijepo, ništa drugo. Islam te navodi samo na lijepu."
+  },
+  {
+   "od": 645.7,
+   "do": 663.1,
+   "tekst": "I ono što čujemo od medija, nažalost mi danas muslimani, učimo o islamu iz medija. Ne učimo o islamu iz knjiga, od priznate u lema, nego iz medija koji nam placiraju svašta."
+  },
+  {
+   "od": 663.8,
+   "do": 685.1,
+   "tekst": "A ovo je lepota Islama, Islam je lijep, mnogo lijepa i praktična, i praktična vjera. Druga stvar koju ispominje Poslanik Muhammed s.a.w., a koja će uvijesti čovjeka u džennet, kaže sklanjanje sputa nečega što smeta ljudima."
+  },
+  {
+   "od": 686.3,
+   "do": 702.7,
+   "tekst": "Da čovjek skloni sputa nešto što smeta ljudima. Šta kaže Poslanik Muhammed s.a.w.? Kaže, video sam čovjeka u džennetu kako se prevrće. Šta se prevrće?"
+  },
+  {
+   "od": 703.4,
+   "do": 722.8,
+   "tekst": "Prevrće se i slada u hlad, uživajući u blagodatima dženneta. Uživajući u blagodatima dženneta. Pa šta je uradio Boži poslaniče? Kaže, mako je drvo ili otklonio je drvo s puta koje je smetalo ljudima."
+  },
+  {
+   "od": 722.8,
+   "do": 740.7,
+   "tekst": "Šta mi danas radi? Napada snijeg. Čovjek, da bi očistio svoju avliju, baca ili baci snijeg na sred ulice. Kako je to ponašanje? Kako je to oholost?"
+  },
+  {
+   "od": 742.1,
+   "do": 757.8,
+   "tekst": "Čovjek kopa temelj od puće. Šta radi? Baci zemlju na put. Ili pored puta, da ne može niko da se parkira, uzurbira. Hoćemo nešto da renoviramo. Sve ono smeće u prirodu."
+  },
+  {
+   "od": 758.1,
+   "do": 779,
+   "tekst": "A Islam nas uči suprotno tome, pa vidimo da ga vraću, koja je nagrada. Nažalost, mi naše sugrađane koji čiste ulice svakog dana nazivamo smećari."
+  },
+  {
+   "od": 780,
+   "do": 796.5,
+   "tekst": "Nažalost, nisu oni smećari, nego oni koji bacaju smeće na putu u prirodi, u rijekama, to su pravi smećari. A ovi ljudi koji kupu smeće, čiste naš grad, to su gospoda."
+  },
+  {
+   "od": 797.1,
+   "do": 814.8,
+   "tekst": "To su u stvari gospoda. Danas, ako bi uzeo nešto da makneš sa puta, ne do Allaha, ili nešto da počistiš, ljudi bi te ismijavali. Rekli bi, grada u budaka, poludeo, nema pameti i tako dalje."
+  },
+  {
+   "od": 816.1,
+   "do": 853.5,
+   "tekst": "A u stvari takav čovjek samo praktikuje sunet posanika Muhammada sallallahu alejhi ve sellem pa ako se bude nadao Allahove nagrdi Allah će mu dati nagrdu a to je džene. Sljedeća stvar koju spominje posanika Muhammada sallallahu alejhi ve sellem jeste činjenje ili obavljanje dobrovoli namazaha ili nafila pa ga ubita rabije vinkav kaže Boži posaniče volio bi da budem pored tebe u dženetu Šta mu kaže po samih srcu? Kaže povećaj broje seždije."
+  },
+  {
+   "od": 854,
+   "do": 873.5,
+   "tekst": "To je Allah učini puno seždije, dobrovoli namazat. Šta mi danas radimo? Mi danas što se završi fars, odmah sa farsu idemo. Svi ostanu dva, tri čoveka tu da klanio sa nama sunnet. Dođe tačno na fars, izlazi odmah sa farsu."
+  },
+  {
+   "od": 875,
+   "do": 897.3,
+   "tekst": "Nema ni zikra, ni sunneta, ništa. Zato Allah subhanehu ve te'ala ova djela su laka. Laka na prvi pogled. Ali nekim ljudima su teška. Mi ovde govorimo o onima koji klanjaju sunnete, a oni koji ne klanjaju nikako niti farsiti sunnete."
+  },
+  {
+   "od": 897.3,
+   "do": 912.4,
+   "tekst": "Ti su ljudi već posebna priča i posebna priča je za nije. Ovo nije priča za nije. Ovo je priča za one koji klanjaju fars, a ne klanjaju sunete ili dobrovoljne namaze."
+  },
+  {
+   "od": 912.4,
+   "do": 932.3,
+   "tekst": "Pa onaj ko bude činio što više seždu Allahu subhanehu ve te'ala, Allah mu objećava džennet preko svoga posanika. Sredeća stvar za koju posanik objećava nama džennet jeste lijepo ponašanje."
+  },
+  {
+   "od": 932.3,
+   "do": 948.6,
+   "tekst": "Pa, kaže Poslanik sada do sedem, ljude koje najviše voli među vama su ljudi, šta, najbolje ponašanje, najlepše ponašanje. I oni će biti pored mene, gdje je draga naće? U džene. Najpriži meni u džene."
+  },
+  {
+   "od": 950.3,
+   "do": 966.1,
+   "tekst": "Ovo je veliki podsvijek i podsvijek za one ljude da šalju djecu u mektu, draga naće. Da svoju djecu usmeravaju, vospitavaju kako treba. Jer čovjek kao 20 godina, 25 godina, ne možeš da vas pitaš."
+  },
+  {
+   "od": 966.2,
+   "do": 982.6,
+   "tekst": "Osim onome kome se Allah suhanahu ta'ala spiduje. Meni je žalosno kad odje čovjek i kaže, ne mogu da skolim, kaže sina, od 11-12 godina. Ne možeš. Pa on se hrani tvojim novcem. Spava kod tebe u kući."
+  },
+  {
+   "od": 983.2,
+   "do": 1002,
+   "tekst": "Ne mogu, kaže čerke, da zabranim izlas. Čerka mi ima 14-15 godina. Pa vrate moj, ona ide tvojim novcem ide u čašiju, polugola. Ne ide mojim novcem. Možeš da sprečiš ako hoćeš. Zato treba čovjek dijete da odgajat kako je malo."
+  },
+  {
+   "od": 1002.6,
+   "do": 1021.3,
+   "tekst": "Od svojih ranih godina. Da ga šalje u Mekte, da ga vospitava, da ga vodi sa sobom. Šta rade danas ljudi? Neće svoga sina da povede sa sobom. Kaže nekaj ga on sa svojim družbom. A dijete najbolje uči kad je sa starima na posetku, na kahvi."
+  },
+  {
+   "od": 1021.8,
+   "do": 1042.9,
+   "tekst": "Povede svoga sina i on tako uči od starijih kako da se ponaša, kako da bude čovjek. Ako ga bude stalo vodio ili puštao sa svojim drugojima, nema šta da nauči od njih. Oni su na istoj razini i onda dijete stagnira, stoji u mjestu."
+  },
+  {
+   "od": 1044.4,
+   "do": 1075.7,
+   "tekst": "Također, od stvari za koje Poslanik s.a.v. obećava nama džanet, jeste, jeste ko se bude brinuo o jetimu. Što kaže Poslanik Muhammed s.a.v. Kaže, ja i onaj ko se bude brinuo o jetimima, o jetimu, ćemo biti u dženetu, kaže, ko ova dva, kaže, prste, ovako, bliski."
+  },
+  {
+   "od": 1076.9,
+   "do": 1092.6,
+   "tekst": "Zbog čega da ga vraću tolika nagrada? Prvo, zbog toga što taj jetim nema svoje roditele, nema ko da se brine o njemu. A ti si preuzeo da se brineš o tome etimu i voliš ga kao što voli svoju djecu."
+  },
+  {
+   "od": 1092.8,
+   "do": 1108.3,
+   "tekst": "I kupuješ mu kao što kupuješ svoju djecu. A to je teško. A to je teško tako mi je Allah. To je samo lako onome kome se Allah subhanehu ve te'ala smiluje. Što kaže Allah subhanehu ve te'ala? Vala ta'kulu amualahum ila amualim."
+  },
+  {
+   "od": 1108.3,
+   "do": 1123.3,
+   "tekst": "I kaže nemoj, kaže da uzimate njihov novac, da ga trošite, to je da ga stavite u svoj novac. Ima ljudi, brine se o jetimu, a jetim ima nešto novce."
+  },
+  {
+   "od": 1123.9,
+   "do": 1139.7,
+   "tekst": "I on taj novac jetimov pomiješan sa svojim novcem i onda troši. To nije da ga vraća pravila, već da čuvaš njegov novac i da ne trošiš osim kada je nešto baš velika potreba."
+  },
+  {
+   "od": 1140.4,
+   "do": 1160.7,
+   "tekst": "Ovo su sve stvari da ga vraća na koje nas Islam poziva stvari koje su stvarno prelijedne. Stvari koje su prelijene, koje su korisne za zajednicu i za društvo. Pa to ih bude radio imat će džennet od Allaha subhanehu ve te'ala."
+  },
+  {
+   "od": 1160.9,
+   "do": 1169.7,
+   "tekst": "Molim Allaha subhanehu ve te'ala da nam oprosti grijaje grijaje naših roditela. Molim njega uzvišenog danas uvede u džennet. Amin."
+  }
+ ]
+}

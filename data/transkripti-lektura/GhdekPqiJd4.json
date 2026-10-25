@@ -1,0 +1,16 @@
+{
+ "id": "GhdekPqiJd4",
+ "jezik": "bs",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T03:22:55.795Z",
+ "automatski": true,
+ "lektorisano": true,
+ "lektura": "2026-10-25",
+ "segmenti": [
+  {
+   "od": 0.3,
+   "do": 7.6,
+   "tekst": "وَتَوَكَّلْ عَلَى اللَّهِ وَكَفَىٰ بِاللَّهِ وَكِيلًا"
+  }
+ ]
+}

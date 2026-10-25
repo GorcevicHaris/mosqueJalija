@@ -57,7 +57,7 @@ const stavkiRijec = (n: number) => {
 
   <div class="sr-empty card" data-sr-intro>
     <h2 class="sr-empty__title">Šta tražite?</h2>
-    <p class="muted">Pretražuje se {ukupno} {stavkiRijec(ukupno)}: predavanja i hutbe, obavještenja, dove, imami i stranice sajta.</p>
+    <p class="muted">Pretražuje se {ukupno} {stavkiRijec(ukupno)}: predavanja i hutbe, obavještenja, dove, imami, stranice sajta i transkripti predavanja.</p>
     <p class="sr-empty__label">Česte pretrage:</p>
     <ul class="chips" role="list">
       {[...prijedlozi, ...imamiPrijedlozi].map((p) => (
@@ -87,6 +87,7 @@ const stavkiRijec = (n: number) => {
   import { GRUPE, fmtDatum, oznaci, pretrazi, raspakuj, type Grupa, type Rezultat, type Stavka } from '../../lib/extras/pretraga-pretrazi';
   import type { PretragaIndeks } from '../../lib/extras/pretraga-indeks';
   import { saKosomCrtom } from '../../lib/url';
+  import { ucitajTranskripte, pretraziTranskripte } from '../../lib/transkripti-pretraga';
 
   const root = document.querySelector<HTMLElement>('[data-sr]');
   if (root) {
@@ -132,8 +133,46 @@ const stavkiRijec = (n: number) => {
       );
     }
 
+    // Transkripti nisu u ugrađenom indeksu (~1 MB) — učitavaju se tek kad korisnik pretražuje.
+    const trBox = document.createElement('section');
+    trBox.className = 'sr-group';
+    trBox.setAttribute('aria-labelledby', 'sr-g-tr');
+    results.after(trBox);
+    const naslovi = new Map(ix.p.map((p) => [p[0], p[1]] as const));
+    const vrijeme = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+    let trZahtjev = 0;
+    async function renderTranskripti(upit: string) {
+      const moj = ++trZahtjev;
+      if (upit.length < 3 || filter !== 'sve') {
+        trBox.innerHTML = '';
+        return;
+      }
+      const podaci = await ucitajTranskripte(import.meta.env.BASE_URL);
+      if (moj !== trZahtjev) return; // stigao je noviji upit
+      const pog = pretraziTranskripte(podaci, upit, 10).filter((p) => naslovi.has(p.id));
+      if (pog.length && !zadnji.length) {
+        none.hidden = true;
+        status.textContent = `Pronađeno samo u transkriptima predavanja (${pog.length}).`;
+      }
+      trBox.innerHTML = pog.length
+        ? `<h2 class="sr-group__title" id="sr-g-tr">Izgovoreno u predavanjima <span class="badge badge--muted">${pog.length}</span></h2>` +
+          `<ol class="sr-list">` +
+          pog
+            .map(
+              (p) =>
+                `<li class="sr-item"><a class="sr-link" href="${esc(saKosomCrtom(`${BASE}/predavanja/${p.id}`))}#t-${p.od}">` +
+                `<span class="sr-item__title">${esc(String(naslovi.get(p.id)))}</span>` +
+                `<span class="sr-item__meta">Transkript · od ${vrijeme(p.od)}${p.broj > 1 ? ` · ${p.broj} mjesta` : ''}</span>` +
+                `<span class="sr-item__desc">${oznaci(p.isjecak, upit)}</span></a></li>`,
+            )
+            .join('') +
+          `</ol>`
+        : '';
+    }
+
     function render(q: string) {
       const upit = q.trim();
+      void renderTranskripti(upit);
       if (!upit) {
         results.innerHTML = '';
         status.textContent = '';
@@ -223,7 +262,7 @@ const stavkiRijec = (n: number) => {
     });
 
     // Navigacija tastaturom
-    const linkovi = () => [...results.querySelectorAll<HTMLAnchorElement>('.sr-link')];
+    const linkovi = () => [...root.querySelectorAll<HTMLAnchorElement>('.sr-link')];
     root.addEventListener('keydown', (e) => {
       const ev = e as KeyboardEvent;
       const akt = document.activeElement as HTMLElement | null;

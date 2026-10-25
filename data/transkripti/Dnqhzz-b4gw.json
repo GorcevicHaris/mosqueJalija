@@ -1,0 +1,34 @@
+{
+ "id": "Dnqhzz-b4gw",
+ "jezik": "bs",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T03:22:52.274Z",
+ "automatski": true,
+ "segmenti": [
+  {
+   "od": 1,
+   "do": 38.7,
+   "tekst": "وورث سليمان داود وقال يا الناس علم ووتينا من كل شيء إن هذا لهو الفضل المبين Hjirani sülenni na njnudu min aljins"
+  },
+  {
+   "od": 42.1,
+   "do": 45.6,
+   "tekst": "Svobod djirifahum yuzehlu"
+  },
+  {
+   "od": 46,
+   "do": 73.9,
+   "tekst": "[arapski / nije transkribovano]"
+  },
+  {
+   "od": 73.9,
+   "do": 109.1,
+   "tekst": "Min suli atbes mazahika min qawliha وزعni أشكرني أنعمت علي"
+  },
+  {
+   "od": 109.1,
+   "do": 129.9,
+   "tekst": "وعنخبني برحمتك في عبادي الصالح"
+  }
+ ]
+}
