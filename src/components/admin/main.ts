@@ -4,6 +4,9 @@ import { SekcijaCrud } from './crud';
 import { SekcijaDzamija } from './dzamija';
 import { brojNovih, SekcijaPitanja, SekcijaPoruke, SekcijaPrijave } from './inbox';
 import { SekcijaIspravke } from './ispravke';
+import { SekcijaPredavanja } from './predavanja';
+import { SekcijaTraka } from './traka';
+import { SekcijaTranskripti } from './transkripti';
 import { SVI_ODJELJCI } from './odjeljci';
 import { adminUrl, sb, type SB } from './sb';
 import * as def from './sekcije';
@@ -12,6 +15,10 @@ import { porukaGreske, poruka, toast, uToku } from './util';
 
 interface Sekcija {
   aktiviraj(): Promise<void>;
+  /** CRUD: otvori formu za novi unos */
+  otvoriNovo?(): void;
+  /** Ispravke: otvori formu za predavanje */
+  otvoriZa?(id: string): Promise<void>;
 }
 
 const $ = <T extends HTMLElement = HTMLElement>(sel: string) => document.querySelector<T>(sel);
@@ -231,6 +238,12 @@ const TVORNICE: Record<string, (c: HTMLElement) => Sekcija> = {
   dove: (c) => new SekcijaCrud(def.dove, c),
   'ajeti-hadisi': (c) => new SekcijaCrud(def.ajetiHadisi, c),
   stranice: (c) => new SekcijaCrud(def.stranice, c),
+  kartice: (c) => new SekcijaCrud(def.kartice, c),
+  programi: (c) => new SekcijaCrud(def.programi, c),
+  'predavanja-rucna': (c) => new SekcijaCrud(def.predavanjaRucna, c),
+  predavanja: (c) => new SekcijaPredavanja(c),
+  transkripti: (c) => new SekcijaTranskripti(c),
+  traka: (c) => new SekcijaTraka(c),
   imami: (c) => new SekcijaCrud(def.imami, c),
   kategorije: (c) => new SekcijaCrud(def.kategorije, c),
   serije: (c) => new SekcijaCrud(def.serije, c),
@@ -247,7 +260,7 @@ function dozvoljen(id: string) {
   return !!o && (!o.samoAdmin || stanje.uloga === 'admin');
 }
 
-async function otvoriOdjeljak(id: string, fokus = true) {
+async function otvoriOdjeljak(id: string, fokus = true): Promise<Sekcija> {
   if (!dozvoljen(id)) id = 'obavjestenja';
   document.querySelectorAll<HTMLElement>('[data-sekcija]').forEach((s) => (s.hidden = s.dataset.sekcija !== id));
   document.querySelectorAll<HTMLElement>('[data-nav]').forEach((b) => {
@@ -268,7 +281,22 @@ async function otvoriOdjeljak(id: string, fokus = true) {
   }
   if (fokus) kontejner.querySelector<HTMLElement>('h2')?.focus();
   await inst.aktiviraj();
+  return inst;
 }
+
+/** Prečice između odjeljaka (npr. Predavanja → "Dodaj video" / "Uredi podatke"). */
+document.addEventListener('adm:otvori', (e) => {
+  const d = (e as CustomEvent<{ odjeljak: string; id?: string; novo?: boolean }>).detail;
+  void (async () => {
+    const inst = await otvoriOdjeljak(d.odjeljak);
+    if (d.novo) inst.otvoriNovo?.();
+    else if (d.id && inst.otvoriZa) await inst.otvoriZa(d.id);
+    else if (d.id) {
+      // CRUD: otvori postojeći zapis po ključu (dugme "Uredi" u listi)
+      document.querySelector<HTMLButtonElement>(`[data-sekcija="${CSS.escape(d.odjeljak)}"] [data-uredi="${CSS.escape(d.id)}"]`)?.click();
+    }
+  })();
+});
 
 function poveziNavigaciju() {
   document.querySelectorAll<HTMLButtonElement>('[data-nav]').forEach((b) => b.addEventListener('click', () => otvoriOdjeljak(b.dataset.nav!)));

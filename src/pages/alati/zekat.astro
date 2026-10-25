@@ -4,6 +4,9 @@ import PageHero from '../../components/ui/PageHero.astro';
 import ZekatKalkulator from '../../components/alati/ZekatKalkulator.astro';
 import SadekatulFitr from '../../components/alati/SadekatulFitr.astro';
 import OstaliAlati from '../../components/alati/OstaliAlati.astro';
+import { zaglavljeStranice } from '../../lib/data';
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('alati-zekat');
 ---
 <BaseLayout
   title="Kalkulator zekata"
@@ -11,8 +14,8 @@ import OstaliAlati from '../../components/alati/OstaliAlati.astro';
 >
   <PageHero
     eyebrow="Alati"
-    title="Kalkulator zekata"
-    subtitle="Unesite imovinu i aktuelnu cijenu zlata ili srebra — kalkulator računa nisab i zekat od 2,5 %. Podaci ostaju samo u vašem pregledaču."
+    title={zaglavlje.naslov}
+    subtitle={zaglavlje.podnaslov}
     arabic="الزكاة"
   />
   <section class="section section--tight">

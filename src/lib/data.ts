@@ -23,10 +23,14 @@ import type {
   Serija,
 } from './types';
 
-import { ucitajIzBaze, spojiDzamiju, spojiPoSlugu, primijeniIspravke } from './supabase/sadrzaj';
-import type { TerminRasporeda, StranicaTekst, JavnoPitanje } from './supabase/tipovi';
+import { ucitajIzBaze, spojiDzamiju, spojiPoSlugu, primijeniIspravke, dodajRucnaPredavanja } from './supabase/sadrzaj';
+import { trakaVidljiva } from './supabase/tipovi';
+import type { TerminRasporeda, StranicaTekst, JavnoPitanje, Traka, TranskriptIspravke } from './supabase/tipovi';
+import { PROGRAMI, type Program } from './obrasci/programi';
+import { UGRADJENE_KARTICE, type Kartica, type StranicaKartica } from './kartice';
+import { ugradjenTekst } from './tekstovi-stranica';
 
-export type { TerminRasporeda, StranicaTekst, JavnoPitanje } from './supabase/tipovi';
+export type { TerminRasporeda, StranicaTekst, JavnoPitanje, Traka, TranskriptIspravke } from './supabase/tipovi';
 
 // Sadržaj iz Supabase baze (admin panel). null = nema varijabli ili baza nije dostupna → data/*.json.
 // "Sve ili ništa": nikad mješavina baze i JSON-a (vidi docs/supabase.md).
@@ -42,13 +46,32 @@ export const serije: Serija[] = spojiPoSlugu(serijeJson as Serija[], baza?.serij
 const imamiOsnovno: ImamOsnovno[] = spojiPoSlugu(imamiJson as ImamOsnovno[], baza?.imami ?? []);
 
 // Redoslijed je bitan: kategorije/serije/imami prije predavanja (validacija ispravki iz baze).
-export const predavanja: Predavanje[] = primijeniIspravke(predavanjaJson as Predavanje[], baza?.ispravke ?? {}, {
+const poznato = {
   imami: new Set(imamiOsnovno.map((i) => i.slug)),
   kategorije: new Set(kategorije.map((k) => k.slug)),
   serije: new Set(serije.map((s) => s.slug)),
-})
+};
+const ispravkePredavanja = baza?.ispravke ?? {};
+/** Predavanja koja je urednik sakrio (ispravka "skriveno": true) — nema ih nigdje na sajtu. */
+export const skrivenaPredavanja: Set<string> = new Set(
+  Object.entries(ispravkePredavanja)
+    .filter(([, isp]) => isp?.skriveno === true)
+    .map(([id]) => id),
+);
+/** Ručno dodana predavanja (admin → Dodani videi); id-jevi, za oznaku u adminu. */
+export const rucnaPredavanja: Set<string> = new Set((baza?.predavanjaRucna ?? []).map((r) => r.id));
+
+/** SVA predavanja, i skrivena (samo za admin). Stranice koriste `predavanja`. */
+export const svaPredavanja: Predavanje[] = primijeniIspravke(
+  dodajRucnaPredavanja(predavanjaJson as Predavanje[], baza?.predavanjaRucna ?? [], poznato),
+  ispravkePredavanja,
+  poznato,
+)
   .slice()
   .sort((a, b) => b.datum.localeCompare(a.datum));
+
+/** Vidljiva predavanja (YouTube + ručno dodana, bez skrivenih), najnovija prva. */
+export const predavanja: Predavanje[] = svaPredavanja.filter((p) => !skrivenaPredavanja.has(p.id));
 
 const bio: Record<string, Partial<ImamBio>> = {
   ...(imamiBioJson as Record<string, Partial<ImamBio>>),
@@ -87,6 +110,44 @@ export const tekstStranice = (kljuc: string): StranicaTekst | null => {
   const t = tekstoviStranica[kljuc];
   return t && t.paragrafi.length ? t : null;
 };
+
+/**
+ * Naslov i podnaslov zaglavlja stranice: iz baze (Tekstovi stranica) kad nije prazno, inače ugrađeni
+ * (src/lib/tekstovi-stranica.ts) ili `rezerva` (za stranice čiji tekst zavisi od drugih podataka).
+ */
+export function zaglavljeStranice(kljuc: string, rezerva: { naslov?: string; podnaslov?: string } = {}): { naslov: string; podnaslov: string } {
+  const u = ugradjenTekst(kljuc);
+  const t = tekstoviStranica[kljuc];
+  return {
+    naslov: t?.naslov?.trim() || rezerva.naslov || u?.naslov || '',
+    podnaslov: t?.paragrafi.length ? t.paragrafi.join(' ') : rezerva.podnaslov ?? u?.sadrzaj ?? '',
+  };
+}
+
+/** Samostalan tekst iz baze (npr. 'pocetna-uvod', 'footer-o-nama') ili null = ugrađeni. */
+export const samostalanTekst = (kljuc: string): string | null => {
+  const t = tekstStranice(kljuc);
+  return t ? t.paragrafi.join(' ') : null;
+};
+
+/** Programi za online upis: iz baze kad tabela ima bar jedan red (samo aktivni), inače ugrađena lista. */
+export const programi: Program[] =
+  baza?.programi && baza.programi.length ? baza.programi.filter((p) => p.aktivno).map(({ aktivno: _a, ...p }) => p) : PROGRAMI;
+/** true = programi su iz baze (klijentska skripta ih tada smije osvježiti). */
+export const programiIzBaze = !!(baza?.programi && baza.programi.length);
+
+/** Kartice stranice: aktivne kartice iz baze ako ih ima, inače ugrađena lista (src/lib/kartice.ts). */
+export function karticeStranica(stranica: StranicaKartica): Kartica[] {
+  const izBaze = (baza?.kartice ?? []).filter((k) => k.stranica === stranica);
+  if (!izBaze.length) return UGRADJENE_KARTICE[stranica];
+  return izBaze.map((k) => ({ naslov: k.naslov, tekst: k.tekst, ikona: k.ikona as Kartica['ikona'], link: k.link }));
+}
+
+/** Ispravke transkripata iz baze (video → jezik → segment → tekst). Prazno bez baze/tabele. */
+export const transkriptIspravke: TranskriptIspravke = baza?.transkriptIspravke ?? {};
+
+/** Traka na vrhu sajta iz builda (null = nema / nije aktivna ili je istekla). Skripta je osvježava u pregledaču. */
+export const traka: Traka | null = trakaVidljiva(baza?.traka ?? null) ? baza!.traka : null;
 
 export const getImam = (slug: string | null) => imami.find((i) => i.slug === slug) ?? null;
 export const getKategorija = (slug: string | null) => kategorije.find((k) => k.slug === slug) ?? null;

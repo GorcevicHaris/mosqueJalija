@@ -5,8 +5,10 @@ import { PoljeGreska, type DefTabele, type Red, type SekcijaCrud } from './crud'
 import type { Opcija, Polje } from './polja';
 import { sb, type SB } from './sb';
 import { otpremiSliku } from './slike';
-import { osvjeziListe, stanje, ugradjeno } from './stanje';
-import { danas, el, esc, jedinstven, porukaGreske, slugify, slugImama, toast, uToku } from './util';
+import { osvjeziListe, opcijeImama, opcijeKategorija, opcijeSerija, nazivImama, stanje, ugradjeno } from './stanje';
+import { danas, el, esc, jedinstven, porukaGreske, potvrdi, slugify, slugImama, toast, uToku } from './util';
+import { GRUPE, PROGRAMI } from '../../lib/obrasci/programi';
+import { STRANICE_KARTICA, UGRADJENE_KARTICE } from '../../lib/kartice';
 
 const SLUG_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const jedinstveno = (a: (string | null | undefined)[]) => Array.from(new Set(a.filter((x): x is string => !!x && !!x.trim())));
@@ -264,30 +266,58 @@ export const ajetiHadisi: DefTabele = {
 // ---------------------------------------------------------------------------------------------
 // Tekstovi stranica
 // ---------------------------------------------------------------------------------------------
+const ugradjenaStranica = (kljuc: unknown) => ugradjeno().stranice.find((x) => x.kljuc === kljuc) ?? null;
+
 export const stranice: DefTabele = {
   id: 'stranice',
   tabela: 'stranice_tekstovi',
   pk: 'kljuc',
   naslov: 'Tekstovi stranica',
-  opis: 'Uvodni tekstovi stranica (mekteb, donacije, pravila ponašanja, učenje Kur\'ana). Prazan tekst = stranica prikazuje svoj ugrađeni tekst.',
-  novoTekst: 'Novi tekst stranice',
+  opis: 'Naslovi i uvodni tekstovi stranica, tekst ispod naslova na početnoj i tekst u podnožju. Prazno polje = stranica prikazuje svoj ugrađeni tekst (vidi „Ugrađeno“ u formi).',
+  novoTekst: 'Tekst za drugu stranicu',
   red: [['kljuc', true]],
+  // sve poznate stranice (i one koje još nemaju red u bazi), redom kao u src/lib/tekstovi-stranica.ts
+  async ucitaj(k: SB) {
+    const { data, error } = await k.from('stranice_tekstovi').select('*');
+    if (error) throw error;
+    const baza = new Map<string, Red>((data ?? []).map((r: Red) => [String(r.kljuc), r]));
+    const rez: Red[] = ugradjeno().stranice.map((u) => baza.get(u.kljuc) ?? { kljuc: u.kljuc, naslov: null, sadrzaj: null, samoUgradjeno: true });
+    for (const [kljuc, r] of baza) if (!ugradjenaStranica(kljuc)) rez.push(r);
+    return rez;
+  },
   polja: () => [
-    { k: 'kljuc', l: 'Stranica (ključ)', t: 'select', obavezno: true, slobodno: true, zakljucanoPriIzmjeni: true, max: 60, opcije: ugradjeno().stranice.map((s) => ({ v: s.kljuc, t: `${s.naziv} (${s.kljuc})` })) },
-    { k: 'naslov', l: 'Naslov stranice', t: 'text', max: 200, pomoc: 'Veliki naslov na vrhu stranice. Prazno = ugrađeni naslov.' },
-    { k: 'sadrzaj', l: 'Uvodni tekst', t: 'textarea', redovi: 12, pomoc: 'Prikazuje se na početku stranice (na Mektebu umjesto ugrađenog teksta o mektebu). Paragrafe odvojite praznim redom; linkovi (https://…) postaju klikabilni. Ostavite prazno da stranica koristi svoj ugrađeni tekst.' },
+    { k: 'kljuc', l: 'Stranica', t: 'select', obavezno: true, slobodno: true, zakljucanoPriIzmjeni: true, max: 60, opcije: ugradjeno().stranice.map((s) => ({ v: s.kljuc, t: `${s.naziv} (${s.putanja})` })) },
+    { k: 'naslov', l: 'Naslov (veliki naslov na vrhu stranice)', t: 'text', max: 200, pomoc: 'Prazno = ugrađeni naslov. Za početnu i podnožje se ne koristi.' },
+    { k: 'sadrzaj', l: 'Tekst', t: 'textarea', redovi: 8, pomoc: 'Uvodni tekst / podnaslov stranice. Kod uvodnih tekstova paragrafe odvojite praznim redom (linkovi https://… postaju klikabilni); podnaslov u zaglavlju je jedna rečenica. Prazno = ugrađeni tekst.' },
   ],
   prijeSnimanja: (p, stari, svi) => {
     p.kljuc = slugify(String(p.kljuc ?? ''));
-    if (!stari && svi.some((r) => r.kljuc === p.kljuc)) throw new PoljeGreska('kljuc', 'Tekst za ovu stranicu već postoji — uredite postojeći.');
+    if (!stari && svi.some((r) => r.kljuc === p.kljuc && !r.samoUgradjeno)) throw new PoljeGreska('kljuc', 'Tekst za ovu stranicu već postoji — uredite postojeći.');
     return provjeriSlug(p, stari, [], 'kljuc');
   },
-  prikaz: (r) => ({
-    naslov: String(r.naslov || r.kljuc),
-    meta: `/${r.kljuc}`,
-    znacke: r.sadrzaj ? [] : [{ t: 'Prazno — koristi ugrađeni tekst', v: 'muted' }],
-  }),
-  pretraga: (r) => `${r.kljuc} ${r.naslov} ${r.sadrzaj}`,
+  async snimi(k: SB, p: Red) {
+    const { error } = await k.from('stranice_tekstovi').upsert({ kljuc: p.kljuc, naslov: p.naslov ?? null, sadrzaj: p.sadrzaj ?? null }, { onConflict: 'kljuc' });
+    if (error) throw error;
+  },
+  mozeBrisati: (r) => (r.samoUgradjeno ? 'Ova stranica već prikazuje ugrađeni tekst — nema šta da se obriše.' : null),
+  potvrdaBrisanja: (r) => `Obrisati tekst za "${ugradjenaStranica(r.kljuc)?.naziv ?? r.kljuc}"? Stranica će ponovo prikazivati ugrađeni tekst.`,
+  pregled: (p) => {
+    const u = ugradjenaStranica(p.kljuc);
+    if (!u) return '<p class="muted">Nepoznata stranica — tekst se prikazuje samo ako ga stranica koristi.</p>';
+    return `<p class="adm-stavka__meta">${esc(u.naziv)} · ${esc(u.putanja)}</p>
+      <p><strong>Naslov:</strong> ${esc((p.naslov as string) || u.naslov || '—')}${p.naslov ? '' : ' <span class="badge badge--muted">ugrađeno</span>'}</p>
+      <p><strong>Tekst:</strong> ${esc((p.sadrzaj as string) || u.sadrzaj || (u.pomoc ?? 'ugrađeni tekst stranice'))}${p.sadrzaj ? '' : ' <span class="badge badge--muted">ugrađeno</span>'}</p>
+      ${u.pomoc ? `<p class="adm-pomoc">${esc(u.pomoc)}</p>` : ''}`;
+  },
+  prikaz: (r) => {
+    const u = ugradjenaStranica(r.kljuc);
+    return {
+      naslov: u?.naziv ?? String(r.naslov || r.kljuc),
+      meta: u ? `${u.putanja}${r.naslov ? ` · „${r.naslov}”` : ''}` : `/${r.kljuc}`,
+      znacke: r.sadrzaj || r.naslov ? [{ t: 'Izmijenjeno', v: 'primary' }] : [{ t: 'Ugrađeni tekst', v: 'muted' }],
+    };
+  },
+  pretraga: (r) => `${r.kljuc} ${ugradjenaStranica(r.kljuc)?.naziv ?? ''} ${r.naslov} ${r.sadrzaj}`,
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -469,7 +499,227 @@ export const urednici: DefTabele = {
   }),
 };
 
-export const SVE_CRUD: DefTabele[] = [obavjestenja, raspored, galerija, dove, ajetiHadisi, stranice, imami, kategorije, serije, urednici];
+// ---------------------------------------------------------------------------------------------
+// Programi za online upis (migracija 0005)
+// ---------------------------------------------------------------------------------------------
+const ZA_KOGA_PROGRAM: Opcija[] = [{ v: 'svi', t: 'Svi' }, { v: 'muškarci', t: 'Muškarci' }, { v: 'žene', t: 'Žene' }, { v: 'djeca', t: 'Djeca (traže se godine i roditelj)' }];
+const zaKogaIz = (oznaka: string): { za_koga: string; za_koga_tekst: string | null } => {
+  const c = oznaka.trim().toLowerCase();
+  if (['muškarci', 'žene', 'djeca', 'svi'].includes(c)) return { za_koga: c, za_koga_tekst: null };
+  const prva = c.split(/\s+/)[0];
+  return { za_koga: ['muškarci', 'žene', 'djeca', 'svi'].includes(prva) ? prva : 'svi', za_koga_tekst: oznaka };
+};
+
+export const programi: DefTabele = {
+  id: 'programi',
+  tabela: 'programi',
+  pk: 'slug',
+  naslov: 'Programi za upis',
+  opis: 'Programi koji se nude na stranici Online upis i u obrascu za prijavu. Nov ili izmijenjen program se na stranici Online upis vidi odmah. Isključite "Aktivno" kad upis za program ne traje.',
+  novoTekst: 'Novi program',
+  redoslijed: true,
+  red: [['redoslijed', true], ['slug', true]],
+  polja: () => [
+    { k: 'naziv', l: 'Naziv programa', t: 'text', obavezno: true, max: 120, pomoc: 'Ovako se program vidi u listi i u prijavama koje stižu u Inbox.' },
+    { k: 'slug', l: 'Oznaka u adresi (slug)', t: 'text', obavezno: true, max: 80, zakljucanoPriIzmjeni: true, pomoc: 'Za link /upis/?program=<slug>; pravi se automatski iz naziva i poslije se ne mijenja.' },
+    { k: 'grupa', l: 'Grupa', t: 'select', obavezno: true, slobodno: true, max: 60, pola: true, opcije: () => uOpcije(GRUPE) },
+    { k: 'za_koga', l: 'Za koga', t: 'select', obavezno: true, pola: true, opcije: ZA_KOGA_PROGRAM },
+    { k: 'za_koga_tekst', l: 'Za koga — tekst za prikaz (nije obavezno)', t: 'text', max: 80, pomoc: 'Npr. "Žene i djeca". Prazno = prema izboru iznad.' },
+    { k: 'termin', l: 'Termin', t: 'text', max: 200, pola: true, placeholder: 'npr. Srijeda i subota u 17:00', pomoc: 'Prazno = "Termin još nije objavljen".' },
+    { k: 'predavac', l: 'Predavač', t: 'text', max: 160, pola: true },
+    { k: 'opis', l: 'Kratak opis (nije obavezno)', t: 'textarea', redovi: 2, max: 2000 },
+    { k: 'napomena', l: 'Napomena za posjetioce', t: 'textarea', redovi: 2, max: 1000, pomoc: 'Npr. da je rok prijave prošao i da se prijava evidentira za sljedeću grupu.' },
+    { k: 'obavjestenje', l: 'Obavještenje sa detaljima', t: 'select', opcije: () => [{ v: '', t: '— bez obavještenja —' }, ...ugradjeno().obavjestenja.map((o) => ({ v: o.slug, t: o.naslov }))], pomoc: 'U obrascu se prikazuje link "Pročitajte obavještenje".' },
+    { k: 'aktivno', l: 'Aktivno (prikazuje se na sajtu)', t: 'checkbox' },
+  ],
+  autoSlug: { izvor: 'naziv', cilj: 'slug', fn: (s) => slugify(s, 60) },
+  novi: () => ({ grupa: 'Ostalo', za_koga: 'svi', aktivno: true }),
+  prijeSnimanja: (p, stari, svi) => provjeriSlug({ ...p, grupa: (p.grupa as string) || 'Ostalo' }, stari, svi),
+  porukaSacuvano: 'Sačuvano. Na stranici Online upis program se vidi odmah (osvježite stranicu); ostale stranice za otprilike 15–20 minuta.',
+  prikaz: (r) => ({
+    naslov: String(r.naziv ?? r.slug),
+    meta: `${r.grupa ?? ''} · ${r.za_koga_tekst || r.za_koga} · ${r.termin || 'termin nije objavljen'}`,
+    znacke: r.aktivno ? [] : [{ t: 'Neaktivno', v: 'warn' }],
+  }),
+  pretraga: (r) => `${r.naziv} ${r.slug} ${r.grupa} ${r.termin} ${r.predavac} ${r.za_koga}`,
+  filteri: [{ k: 'grupa', l: 'Grupa', opcije: () => uOpcije(GRUPE) }],
+  alatke(s: SekcijaCrud) {
+    const b = el('button', { type: 'button', class: 'btn btn--ghost btn--sm', text: 'Upiši ugrađenu listu' }) as HTMLButtonElement;
+    b.addEventListener('click', () =>
+      uToku(b, 'Upisujem…', async () => {
+        if (s.redovi.length) return toast('U bazi već postoje programi — ugrađena lista se upisuje samo u praznu tabelu.', 'info', 6000);
+        if (!potvrdi(`Upisati ${PROGRAMI.length} programa koji su sada na sajtu (ugrađena lista)?`)) return;
+        const k = await sb();
+        const redovi = PROGRAMI.map((p, i) => ({
+          slug: p.id, naziv: p.naziv, opis: p.opis ?? null, grupa: p.grupa, ...zaKogaIz(p.zaKoga), termin: p.termin, predavac: p.predavac,
+          napomena: p.napomena ?? null, obavjestenje: p.izvor, aktivno: true, redoslijed: i * 10,
+        }));
+        const { error } = await k.from('programi').upsert(redovi, { onConflict: 'slug', ignoreDuplicates: true });
+        if (error) return toast(porukaGreske(error), 'greska');
+        toast('Ugrađena lista programa je upisana u bazu.', 'uspjeh');
+        await s.ucitaj();
+      }),
+    );
+    return b;
+  },
+};
+
+// ---------------------------------------------------------------------------------------------
+// Kartice na stranicama (migracija 0005)
+// ---------------------------------------------------------------------------------------------
+const STRANICE_OPCIJE: Opcija[] = STRANICE_KARTICA.map((x) => ({ v: x.kljuc, t: x.naziv }));
+const nazivStraniceKartica = (k: unknown) => STRANICE_KARTICA.find((x) => x.kljuc === k)?.naziv ?? String(k ?? '');
+
+export const kartice: DefTabele = {
+  id: 'kartice',
+  tabela: 'kartice_stranica',
+  pk: 'id',
+  naslov: 'Kartice na stranicama',
+  opis: 'Kartice i stavke na stranicama Pravila ponašanja, Mekteb („Šta djeca uče“) i Učenje Kur\'ana (koraci i izvori). Stranica bez nijedne aktivne kartice ovdje prikazuje svoju ugrađenu listu — čim dodate prvu karticu za stranicu, prikazuju se samo kartice iz ove liste (zato prvo upišite ugrađene kartice).',
+  novoTekst: 'Nova kartica',
+  redoslijed: true,
+  redoslijedPo: 'stranica',
+  red: [['stranica', true], ['redoslijed', true], ['created_at', true]],
+  polja: () => [
+    { k: 'stranica', l: 'Stranica', t: 'select', obavezno: true, opcije: STRANICE_OPCIJE },
+    { k: 'naslov', l: 'Naslov', t: 'text', obavezno: true, max: 200 },
+    { k: 'tekst', l: 'Tekst', t: 'textarea', redovi: 3, max: 3000, prazanString: true },
+    { k: 'ikona', l: 'Ikonica', t: 'select', pola: true, opcije: () => [{ v: '', t: '— bez ikonice —' }, ...uOpcije(ugradjeno().ikone)], pomoc: 'Za Pravila ponašanja i Mekteb (bez ikonice = zvijezda).' },
+    { k: 'link', l: 'Link', t: 'text', max: 600, pola: true, placeholder: 'https://…', pomoc: 'Obavezno za „Provjerene izvore“; ostale stranice ga ne koriste.' },
+    { k: 'aktivno', l: 'Aktivno (prikazuje se na sajtu)', t: 'checkbox' },
+  ],
+  novi: () => ({ stranica: 'pravila-ponasanja', aktivno: true, tekst: '' }),
+  prijeSnimanja(p) {
+    const link = typeof p.link === 'string' ? p.link.trim() : '';
+    if (link && !/^(https?:\/\/|\/)/.test(link)) throw new PoljeGreska('link', 'Link mora početi sa https:// (ili / za stranicu ovog sajta).');
+    if (p.stranica === 'ucenje-kurana-izvori' && !link) throw new PoljeGreska('link', 'Za „Provjerene izvore“ link je obavezan.');
+    if (p.ikona && !ugradjeno().ikone.includes(String(p.ikona))) throw new PoljeGreska('ikona', 'Nepoznata ikonica.');
+    return { ...p, link: link || null, ikona: p.ikona || null, tekst: (p.tekst as string) ?? '' };
+  },
+  prikaz: (r) => ({
+    naslov: String(r.naslov ?? ''),
+    meta: `${nazivStraniceKartica(r.stranica)}${r.ikona ? ` · ikonica: ${r.ikona}` : ''}${r.link ? ` · ${r.link}` : ''}`,
+    znacke: r.aktivno ? [] : [{ t: 'Neaktivno', v: 'warn' }],
+  }),
+  pretraga: (r) => `${r.naslov} ${r.tekst} ${nazivStraniceKartica(r.stranica)} ${r.ikona ?? ''}`,
+  filteri: [
+    { k: 'stranica', l: 'Stranica', opcije: STRANICE_OPCIJE },
+    { k: 'aktivno', l: 'Aktivno', opcije: DA_NE, test: (r, v) => (v === 'da') === (r.aktivno === true) },
+  ],
+  porukaSacuvano: 'Sačuvano. Kartice se na sajtu pojavljuju za otprilike 15–20 minuta (automatsko osvježavanje).',
+  alatke(s: SekcijaCrud) {
+    const b = el('button', { type: 'button', class: 'btn btn--ghost btn--sm', text: 'Upiši ugrađene kartice' }) as HTMLButtonElement;
+    b.addEventListener('click', () =>
+      uToku(b, 'Upisujem…', async () => {
+        const prazne = STRANICE_KARTICA.filter((x) => !s.redovi.some((r) => r.stranica === x.kljuc));
+        if (!prazne.length) return toast('Sve stranice već imaju kartice u bazi.', 'info', 5000);
+        if (!potvrdi(`Upisati ugrađene kartice za: ${prazne.map((x) => x.naziv).join('; ')}?`)) return;
+        const k = await sb();
+        const redovi = prazne.flatMap((x) =>
+          UGRADJENE_KARTICE[x.kljuc].map((c, i) => ({ stranica: x.kljuc, naslov: c.naslov, tekst: c.tekst, ikona: c.ikona, link: c.link, aktivno: true, redoslijed: i * 10 })),
+        );
+        const { error } = await k.from('kartice_stranica').insert(redovi);
+        if (error) return toast(porukaGreske(error), 'greska');
+        toast(`Upisano kartica: ${redovi.length}.`, 'uspjeh');
+        await s.ucitaj();
+      }),
+    );
+    return b;
+  },
+};
+
+// ---------------------------------------------------------------------------------------------
+// Ručno dodana predavanja (YouTube link) — migracija 0005
+// ---------------------------------------------------------------------------------------------
+/** YouTube ID iz linka (watch?v=, youtu.be/, /shorts/, /live/, /embed/) ili samog ID-ja. */
+export function youtubeId(ulaz: string): string | null {
+  const s = ulaz.trim();
+  if (/^[A-Za-z0-9_-]{11}$/.test(s)) return s;
+  try {
+    const u = new URL(/^https?:\/\//i.test(s) ? s : `https://${s}`);
+    const host = u.hostname.replace(/^(www|m|music)\./, '');
+    let id: string | null = null;
+    if (host === 'youtu.be') id = u.pathname.slice(1).split('/')[0];
+    else if (host.endsWith('youtube.com') || host.endsWith('youtube-nocookie.com')) {
+      id = u.searchParams.get('v') ?? u.pathname.match(/^\/(?:shorts|live|embed|v)\/([^/?#]+)/)?.[1] ?? null;
+    }
+    return id && /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
+  } catch {
+    return null;
+  }
+}
+const trajanjeTekst = (sek: unknown): string => {
+  const n = Math.max(0, Math.floor(Number(sek) || 0));
+  if (!n) return '';
+  const h = Math.floor(n / 3600);
+  const m = Math.floor((n % 3600) / 60);
+  const ss = String(n % 60).padStart(2, '0');
+  return h ? `${h}:${String(m).padStart(2, '0')}:${ss}` : `${m}:${ss}`;
+};
+const trajanjeIz = (t: unknown): number | null => {
+  const s = String(t ?? '').trim();
+  if (!s) return 0;
+  if (!/^\d{1,3}(:\d{1,2}){0,2}$/.test(s)) return null;
+  return s.split(':').map(Number).reduce((a, x) => a * 60 + x, 0);
+};
+
+export const predavanjaRucna: DefTabele = {
+  id: 'predavanja-rucna',
+  tabela: 'predavanja_rucna',
+  pk: 'id',
+  naslov: 'Dodani videi',
+  opis: 'Predavanja koja nisu automatski stigla sa YouTube kanala džamije (npr. snimak sa drugog kanala). Zalijepite link videa. Video se na sajtu pojavljuje za otprilike 15–20 minuta, sa svojom stranicom.',
+  novoTekst: 'Dodaj video',
+  red: [['datum', false]],
+  async ucitaj(k: SB) {
+    const { data, error } = await k.from('predavanja_rucna').select('*').order('datum', { ascending: false });
+    if (error) throw error;
+    return (data ?? []).map((r: Red) => ({ ...r, trajanje_tekst: trajanjeTekst(r.trajanje) }));
+  },
+  polja: () => [
+    { k: 'id', l: 'YouTube link ili ID videa', t: 'text', obavezno: true, max: 300, zakljucanoPriIzmjeni: true, placeholder: 'https://www.youtube.com/watch?v=…' },
+    { k: 'naslov', l: 'Naslov (kao na YouTube-u)', t: 'text', obavezno: true, max: 300 },
+    { k: 'naslov_cist', l: 'Naslov na sajtu (nije obavezno)', t: 'text', max: 300, pomoc: 'Bez imena predavača i naziva kanala. Prazno = isti kao naslov.' },
+    { k: 'datum', l: 'Datum', t: 'datum', obavezno: true, pola: true },
+    { k: 'trajanje_tekst', l: 'Trajanje', t: 'text', max: 9, pola: true, placeholder: 'npr. 45:10 ili 1:02:05' },
+    { k: 'imam', l: 'Imam / predavač', t: 'select', pola: true, opcije: () => [{ v: '', t: '— nepoznat —' }, ...opcijeImama()] },
+    { k: 'kategorija', l: 'Kategorija', t: 'select', obavezno: true, pola: true, opcije: opcijeKategorija },
+    { k: 'serija', l: 'Serija', t: 'select', pola: true, opcije: () => [{ v: '', t: '— nije dio serije —' }, ...opcijeSerija()] },
+    { k: 'serija_dio', l: 'Dio serije', t: 'broj', min: 1, max: 999, pola: true },
+    { k: 'opis', l: 'Opis (nije obavezno)', t: 'textarea', redovi: 4, max: 5000 },
+  ],
+  novi: () => ({ datum: danas(), kategorija: 'predavanje' }),
+  prijeSnimanja(p, stari) {
+    const id = stari ? String(stari.id) : youtubeId(String(p.id ?? ''));
+    if (!id) throw new PoljeGreska('id', 'Ovo nije ispravan YouTube link (npr. https://www.youtube.com/watch?v=… ili https://youtu.be/…).');
+    if (!stari && ugradjeno().predavanja.some((x) => x.id === id && !x.rucno)) throw new PoljeGreska('id', 'Ovaj video je već na sajtu (stigao je sa YouTube kanala).');
+    const trajanje = trajanjeIz(p.trajanje_tekst);
+    if (trajanje === null || trajanje > 86400) throw new PoljeGreska('trajanje_tekst', 'Trajanje upišite kao minute:sekunde (npr. 45:10) ili sati:minute:sekunde.');
+    return {
+      id,
+      naslov: p.naslov,
+      naslov_cist: p.naslov_cist ?? null,
+      datum: p.datum,
+      trajanje,
+      imam: p.imam || null,
+      kategorija: p.kategorija || 'predavanje',
+      serija: p.serija || null,
+      serija_dio: p.serija ? (p.serija_dio ?? null) : null,
+      opis: p.opis ?? null,
+    };
+  },
+  porukaSacuvano: 'Sačuvano. Video se na sajtu pojavljuje za otprilike 15–20 minuta (automatsko osvježavanje).',
+  potvrdaBrisanja: (r) => `Ukloniti video "${r.naslov}" sa sajta? (Na YouTube-u ostaje.)`,
+  prikaz: (r) => ({
+    naslov: String(r.naslov_cist || r.naslov || r.id),
+    meta: `${r.datum ? datumTekst(String(r.datum)) : ''} · ${nazivImama(r.imam as string) || 'bez imama'} · ${r.id}`,
+    slika: `https://i.ytimg.com/vi/${encodeURIComponent(String(r.id))}/mqdefault.jpg`,
+    znacke: ugradjeno().predavanja.some((x) => x.id === r.id) ? [] : [{ t: 'Na sajtu poslije osvježavanja', v: 'muted' }],
+  }),
+  pretraga: (r) => `${r.naslov} ${r.naslov_cist} ${r.id} ${nazivImama(r.imam as string)}`,
+};
+
+export const SVE_CRUD: DefTabele[] = [obavjestenja, raspored, galerija, dove, ajetiHadisi, stranice, kartice, programi, predavanjaRucna, imami, kategorije, serije, urednici];
 
 export { uToku };
 export type { Polje };

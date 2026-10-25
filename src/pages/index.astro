@@ -12,7 +12,7 @@ import SocialLinks from '../components/ui/SocialLinks.astro';
 import DanasUDzamiji from '../components/obrasci/DanasUDzamiji.astro';
 import { naslovnaSlika as dajNaslovnu, varijanta } from '../lib/slike';
 import { url } from '../lib/url';
-import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum, punaAdresa } from '../lib/data';
+import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum, punaAdresa, samostalanTekst } from '../lib/data';
 
 const najnovija = predavanja.slice(0, 6);
 const brojHutbi = predavanja.filter((p) => p.kategorija === 'hutba').length;
@@ -24,6 +24,8 @@ const cinjenice = dzamija.cinjenice
   .slice(0, 3);
 const prvaHistorija = dzamija.historija[0] ?? null;
 const hero = dajNaslovnu();
+// Tekst ispod naslova: admin → Tekstovi stranica → "pocetna-uvod"; prazno = kratak opis džamije.
+const uvodPocetne = samostalanTekst('pocetna-uvod') ?? dzamija.kratakOpis;
 // Fotografija u okviru "O džamiji": prva iz galerije koja nije ista kao naslovna (dron-fotografija s otvaranja).
 const naslovnaSlika = galerija.find((g) => !/dzamija-iz-drona|dzamija-hero/.test(g.src) && g.src !== dzamija.naslovnaSlika) ?? galerija[0] ?? null;
 const imgSrc = (src: string) => (/^https?:/.test(src) ? src : url(src));
@@ -56,8 +58,8 @@ const korisno = [
         <p class="hero__bismillah calligraphy" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
         <p class="eyebrow">{mjesto ? `Džemat · ${mjesto}` : 'Dobro došli u naš džemat'}</p>
         <h1 id="hero-naslov" class="hero__title">Džamija <span>na Jaliji</span></h1>
-        {dzamija.kratakOpis ? (
-          <p class="hero__lead">{dzamija.kratakOpis}</p>
+        {uvodPocetne ? (
+          <p class="hero__lead">{uvodPocetne}</p>
         ) : (
           <>
             <p class="hero__lead">Predavanja i hutbe, vaktija, obavještenja i korisni sadržaji za džemat — na jednom mjestu.</p>

@@ -26,6 +26,9 @@ export interface DefTabele {
   select?: string;
   red?: [string, boolean][]; // [kolona, rastuće]
   redoslijed?: boolean; // kolona `redoslijed` + dugmad gore/dolje
+  /** redoslijed se računa unutar grupe (npr. 'stranica'): pomjeranje samo među stavkama iste grupe;
+   *  dozvoljeno i kad je izabran filter te kolone */
+  redoslijedPo?: string;
   prikaz(r: Red): { naslov: string; meta?: string; znacke?: Znacka[]; slika?: string | null };
   pretraga?(r: Red): string;
   filteri?: { k: string; l: string; opcije: Opcija[] | (() => Opcija[]); test?(r: Red, v: string): boolean }[];
@@ -144,16 +147,27 @@ export class SekcijaCrud {
     });
   }
 
+  /** Pomjeranje je dozvoljeno bez pretrage i bez filtera (osim filtera po koloni grupe redoslijeda). */
+  private mozePomjeranje(): boolean {
+    if (!this.def.redoslijed || this.pretraga.value.trim()) return false;
+    return Array.from(this.filteri.entries()).every(([k, sel]) => !sel.value || k === this.def.redoslijedPo);
+  }
+
+  /** Susjedi za pomjeranje: vidljive stavke iste grupe (ili sve, bez grupe). */
+  private grupaZa(r: Red, vidljivi: Red[]): Red[] {
+    const g = this.def.redoslijedPo;
+    return g ? vidljivi.filter((x) => x[g] === r[g]) : vidljivi;
+  }
+
   prikaziListu() {
     const redovi = this.filtrirani();
-    const filtrirano = redovi.length !== this.redovi.length;
-    const mozePomjeranje = !!this.def.redoslijed && !filtrirano;
+    const mozePomjeranje = this.mozePomjeranje();
     if (!redovi.length) {
       this.lista.replaceChildren(el('li', { class: 'adm-prazno muted', text: this.redovi.length ? 'Nema rezultata za ovu pretragu.' : 'Još nema unosa.' }));
       return;
     }
     this.lista.replaceChildren(
-      ...redovi.map((r, i) => {
+      ...redovi.map((r) => {
         const p = this.def.prikaz(r);
         const pkv = String(r[this.def.pk] ?? '');
         const li = el('li', { class: 'adm-stavka', 'data-pk': pkv });
@@ -171,8 +185,10 @@ export class SekcijaCrud {
         uredi.addEventListener('click', () => this.otvori(r));
         akcije.append(uredi);
         if (mozePomjeranje) {
-          const gore = el('button', { type: 'button', class: 'adm-ikona', text: '↑', 'aria-label': `Pomjeri gore: ${p.naslov}`, disabled: i === 0 }) as HTMLButtonElement;
-          const dolje = el('button', { type: 'button', class: 'adm-ikona', text: '↓', 'aria-label': `Pomjeri dolje: ${p.naslov}`, disabled: i === redovi.length - 1 }) as HTMLButtonElement;
+          const grupa = this.grupaZa(r, redovi);
+          const gi = grupa.indexOf(r);
+          const gore = el('button', { type: 'button', class: 'adm-ikona', text: '↑', 'aria-label': `Pomjeri gore: ${p.naslov}`, disabled: gi === 0 }) as HTMLButtonElement;
+          const dolje = el('button', { type: 'button', class: 'adm-ikona', text: '↓', 'aria-label': `Pomjeri dolje: ${p.naslov}`, disabled: gi === grupa.length - 1 }) as HTMLButtonElement;
           gore.addEventListener('click', () => this.pomjeri(r, -1));
           dolje.addEventListener('click', () => this.pomjeri(r, 1));
           akcije.append(gore, dolje);
@@ -187,12 +203,18 @@ export class SekcijaCrud {
   }
 
   private async pomjeri(r: Red, smjer: number) {
-    const i = this.redovi.indexOf(r);
+    const grupa = this.grupaZa(r, this.filtrirani());
+    const i = grupa.indexOf(r);
     const j = i + smjer;
-    if (j < 0 || j >= this.redovi.length) return;
+    if (i < 0 || j < 0 || j >= grupa.length) return;
+    const noviRed = grupa.slice();
+    [noviRed[i], noviRed[j]] = [noviRed[j], noviRed[i]];
+    // zamijeni mjesta i u punoj listi (da prikaz odmah odgovara)
     const novi = this.redovi.slice();
-    [novi[i], novi[j]] = [novi[j], novi[i]];
-    const izmjene = novi
+    const a = novi.indexOf(grupa[i]);
+    const b = novi.indexOf(grupa[j]);
+    [novi[a], novi[b]] = [novi[b], novi[a]];
+    const izmjene = noviRed
       .map((x, idx) => ({ x, nr: idx * 10 }))
       .filter(({ x, nr }) => Number(x.redoslijed) !== nr);
     try {
@@ -236,6 +258,11 @@ export class SekcijaCrud {
         toast(porukaGreske(e), 'greska');
       }
     });
+  }
+
+  /** Forma za novi unos (prečica iz drugog odjeljka). */
+  otvoriNovo() {
+    this.otvori(null);
   }
 
   otvori(r: Red | null) {

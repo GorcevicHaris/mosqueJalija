@@ -4,7 +4,7 @@ import PageHero from '../components/ui/PageHero.astro';
 import Placeholder from '../components/ui/Placeholder.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
-import { dzamija, galerija } from '../lib/data';
+import { dzamija, galerija, zaglavljeStranice } from '../lib/data';
 import { varijanta } from '../lib/slike';
 import type { GalerijaSlika } from '../lib/types';
 
@@ -24,9 +24,11 @@ const email = dzamija.kontakt.email;
 const mailto = email
   ? `mailto:${email}?subject=${encodeURIComponent('Fotografije za galeriju sajta')}&body=${encodeURIComponent('Selam alejkum,\n\nšaljem fotografije džamije za galeriju sajta. Autor fotografija: …\nDozvoljavam objavu na sajtu džamije.\n')}`
   : null;
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('galerija');
 ---
 <BaseLayout title="Galerija" description="Fotografije Džamije na Jaliji i aktivnosti džemata.">
-  <PageHero eyebrow="O džamiji" title="Galerija" subtitle="Fotografije džamije, mekteba i aktivnosti džemata." />
+  <PageHero eyebrow="O džamiji" title={zaglavlje.naslov} subtitle={zaglavlje.podnaslov} />
 
   <section class="section">
     <div class="container">

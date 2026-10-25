@@ -4,7 +4,7 @@ import PageHero from '../components/ui/PageHero.astro';
 import Placeholder from '../components/ui/Placeholder.astro';
 import CopyButton from '../components/ui/CopyButton.astro';
 import FilterChips from '../components/ui/FilterChips.astro';
-import { dove } from '../lib/data';
+import { dove, zaglavljeStranice } from '../lib/data';
 
 const slugify = (s: string) =>
   s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'dj').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -13,9 +13,11 @@ const kategorije = Array.from(new Set(dove.map((d) => d.kategorija))).map((k) =>
   label: k,
   count: dove.filter((d) => d.kategorija === k).length,
 }));
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('dove');
 ---
 <BaseLayout title="Dove" description="Dove iz Kur'ana i sunneta — arapski tekst, transliteracija, prevod i izvor.">
-  <PageHero eyebrow="Korisno" title="Dove" subtitle="Dove iz Kur'ana i sunneta sa arapskim tekstom, transliteracijom, prevodom i izvorom." arabic="رَبَّنَا تَقَبَّلْ مِنَّا" />
+  <PageHero eyebrow="Korisno" title={zaglavlje.naslov} subtitle={zaglavlje.podnaslov} arabic="رَبَّنَا تَقَبَّلْ مِنَّا" />
 
   <section class="section">
     <div class="container container--narrow">

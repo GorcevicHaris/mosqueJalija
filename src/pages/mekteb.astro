@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
-import Icon from '../components/ui/Icon.astro';
+import Icon, { icons, type IconName } from '../components/ui/Icon.astro';
 import RasporedSedmica from '../components/obrasci/RasporedSedmica.astro';
 import { url } from '../lib/url';
-import { obavjestenja, imami, predavanja, formatDatum, tekstStranice, tekstoviStranica } from '../lib/data';
+import { obavjestenja, imami, predavanja, formatDatum, karticeStranica, tekstStranice, tekstoviStranica } from '../lib/data';
 
 // Uvodni tekst iz admina (Tekstovi stranica → mekteb); prazno = ugrađeni tekst ispod.
 const tekst = tekstStranice('mekteb');
@@ -14,14 +14,12 @@ const vezana = obavjestenja.filter((o) => /mekteb|halk/i.test(o.kategorija)).sli
 const imamDzamije = imami.filter((i) => i.potvrdjeno && i.uloga && /imam (ove )?džamije|imam džamije na jaliji/i.test(i.uloga));
 const halkeSnimci = predavanja.filter((p) => p.kategorija === 'halka-hadisa').length;
 
-const uci = [
-  { naslov: "Kur'an i sufara", opis: 'Arapsko pismo, harekati i pravilno učenje — od sufare do mushafa.', ikona: 'book-quran' as const },
-  { naslov: 'Ibadet', opis: 'Abdest, namaz i osnovni propisi.', ikona: 'droplet' as const },
-  { naslov: 'Akaid', opis: 'Imanski i islamski šarti.', ikona: 'star8' as const },
-  { naslov: 'Ahlak', opis: 'Lijepo ponašanje prema roditeljima, prijateljima i komšijama.', ikona: 'heart' as const },
-  { naslov: 'Sure i dove', opis: 'Kratke sure i dove za svaki dan.', ikona: 'hands' as const },
-  { naslov: 'Siret', opis: 'Život Allahovog Poslanika ﷺ.', ikona: 'book' as const },
-];
+// "Šta djeca uče" iz admina (Kartice na stranicama → mekteb); bez kartica u bazi = ugrađena lista.
+const uci = karticeStranica('mekteb').map((k) => ({
+  naslov: k.naslov,
+  opis: k.tekst,
+  ikona: (k.ikona && k.ikona in icons ? k.ikona : 'star8') as IconName,
+}));
 ---
 <BaseLayout title={naslovStranice} description="Mekteb za djecu i halke za odrasle u Džamiji na Jaliji — šta se uči, raspored i prijava.">
   <PageHero eyebrow="Znanje i odgoj" title={naslovStranice} subtitle="Vjerska pouka za djecu i halke za odrasle." />

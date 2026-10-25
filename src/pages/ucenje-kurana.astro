@@ -6,24 +6,16 @@ import LectureCard from '../components/predavanja/LectureCard.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
 import UvodStranice from '../components/ui/UvodStranice.astro';
-import { predavanja, tekstoviStranica } from '../lib/data';
+import { karticeStranica, predavanja, tekstoviStranica } from '../lib/data';
 const naslovStranice = tekstoviStranica['ucenje-kurana']?.naslov?.trim() || "Učenje Kur'ana";
 
 const snimci = predavanja.filter((p) => p.kategorija === 'ucenje-kurana');
 
-const koraci = [
-  { naslov: 'Sufara', tekst: 'Arapsko pismo, harfovi i harekati.' },
-  { naslov: 'Učenje iz mushafa', tekst: 'Polagano učenje uz učitelja koji ispravlja izgovor.' },
-  { naslov: 'Tedžvid', tekst: 'Mahredži, medd, gunne i stajanja.' },
-  { naslov: 'Hifz i ponavljanje', tekst: 'Kratke sure napamet i redovno ponavljanje.' },
-];
-
-const izvori = [
-  { naziv: 'Quran.com', url: 'https://quran.com', opis: 'Tekst, audio i prevodi (i bosanski, Besim Korkut).' },
-  { naziv: 'Tanzil', url: 'https://tanzil.net', opis: 'Provjeren digitalni tekst sa harekatima.' },
-  { naziv: 'QuranicAudio', url: 'https://quranicaudio.com', opis: 'Snimci cijelog Kur\'ana poznatih hafiza.' },
-  { naziv: 'EveryAyah', url: 'https://everyayah.com', opis: 'Ajet po ajet — za ponavljanje i hifz.' },
-];
+// Koraci i izvori iz admina (Kartice na stranicama); bez kartica u bazi = ugrađene liste (src/lib/kartice.ts).
+const koraci = karticeStranica('ucenje-kurana').map((k) => ({ naslov: k.naslov, tekst: k.tekst }));
+const izvori = karticeStranica('ucenje-kurana-izvori')
+  .filter((k) => k.link)
+  .map((k) => ({ naziv: k.naslov, url: k.link!, opis: k.tekst }));
 ---
 <BaseLayout title={naslovStranice} description="Snimci učenja Kur'ana iz Džamije na Jaliji, koraci u učenju i provjereni izvori za čitanje, slušanje i tedžvid.">
   <PageHero eyebrow="Korisno" title={naslovStranice} subtitle="Snimci učenja iz naše džamije, koraci za početnike i provjereni izvori za čitanje i slušanje." arabic="وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا" />

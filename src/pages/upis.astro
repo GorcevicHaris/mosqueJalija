@@ -2,12 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
 import PrijavaForma from '../components/obrasci/PrijavaForma.astro';
-import { GRUPE, PROGRAMI } from '../lib/obrasci/programi';
+import { grupeZa, potpisPrograma } from '../lib/obrasci/programi';
+import { programi } from '../lib/data';
 import { url } from '../lib/url';
 
-const grupe = GRUPE.filter((g) => g !== 'Ostalo')
-  .map((g) => ({ g, lista: PROGRAMI.filter((p) => p.grupa === g) }))
-  .filter((x) => x.lista.length);
+// Programi iz baze (admin → Mekteb → Programi za upis) ili ugrađena lista; skripta ispod osvježava
+// listu iz baze u pregledaču. Grupa "Ostalo" se ne prikazuje u listi (samo u obrascu).
+const grupe = grupeZa(programi)
+  .filter((g) => g !== 'Ostalo')
+  .map((g) => ({ g, lista: programi.filter((p) => p.grupa === g) }));
 ---
 <BaseLayout
   title="Online upis"
@@ -25,6 +28,7 @@ const grupe = GRUPE.filter((g) => g !== 'Ostalo')
           Nastava je besplatna, osim ako u <a href={url('/obavjestenja')}>obavještenju</a> nije drugačije navedeno.
           Svi termini po danima: <a href={url('/raspored')}>sedmični raspored</a>.
         </p>
+        <div class="up__programi" data-up-programi data-potpis={potpisPrograma(programi)}>
         {grupe.map(({ g, lista }) => (
           <section class="up__grupa" aria-labelledby={`grupa-${g.replace(/[^a-z]/gi, '')}`}>
             <h3 class="flow__h3" id={`grupa-${g.replace(/[^a-z]/gi, '')}`}>{g}</h3>
@@ -33,6 +37,7 @@ const grupe = GRUPE.filter((g) => g !== 'Ostalo')
                 <li class="up__stavka">
                   <div class="up__tijelo">
                     <p class="up__naziv">{p.naziv}</p>
+                    {p.opis && <p class="up__opis">{p.opis}</p>}
                     <p class="up__meta">
                       <span>{p.zaKoga}</span>
                       <span>{p.termin ?? 'Termin još nije objavljen'}</span>
@@ -48,6 +53,7 @@ const grupe = GRUPE.filter((g) => g !== 'Ostalo')
             </ul>
           </section>
         ))}
+        </div>
       </section>
 
       <section class="flow__sec" aria-labelledby="prijava-naslov">
@@ -76,14 +82,18 @@ const grupe = GRUPE.filter((g) => g !== 'Ostalo')
   .up__naziv { margin: 0; font-weight: 700; line-height: 1.4; }
   .up__meta { margin: 0; display: flex; flex-wrap: wrap; gap: 0 var(--space-2); font-size: 0.9rem; color: var(--color-text-muted); }
   .up__meta span + span::before { content: '·'; margin-right: var(--space-2); }
+  .up__opis { margin: 0; font-size: 0.92rem; }
   .up__napomena { margin: var(--space-1) 0 0; font-size: 0.85rem; color: var(--color-missing-text); }
   .up__link { flex: none; font-size: 0.95rem; }
   .up__card { padding: clamp(var(--space-4), 3vw, var(--space-6)); }
 </style>
 
 <script>
+  import { grupeZa, potpisPrograma, type Program } from '../lib/obrasci/programi';
+  import { ucitajProgrameUzivo } from '../lib/obrasci/programi-klijent';
+
   // "Prijavi se" bez ponovnog učitavanja: odabere program u obrascu i prebaci fokus.
-  document.querySelectorAll<HTMLAnchorElement>('[data-up-program]').forEach((a) => {
+  function povezi(a: HTMLAnchorElement) {
     a.addEventListener('click', (e) => {
       const sel = document.querySelector<HTMLSelectElement>('#prijava-program');
       if (!sel) return; // bez Supabase-a — običan link
@@ -98,5 +108,58 @@ const grupe = GRUPE.filter((g) => g !== 'Ostalo')
       document.getElementById('prijava-naslov')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
       sel.focus({ preventScroll: true });
     });
-  });
+  }
+  document.querySelectorAll<HTMLAnchorElement>('[data-up-program]').forEach(povezi);
+
+  // Lista programa iz baze (bez čekanja na build) — iscrtava se istim markupom ako se razlikuje.
+  const omot = document.querySelector<HTMLElement>('[data-up-programi]');
+  if (omot) {
+    void ucitajProgrameUzivo().then((lista) => {
+      if (!lista || !lista.length || potpisPrograma(lista) === omot.dataset.potpis) return;
+      // Astro scoped CSS: novi elementi dobijaju isti data-astro-cid-* atribut kao omot
+      const cid = Array.from(omot.attributes).filter((x) => x.name.startsWith('data-astro-cid-'));
+      const e = <K extends keyof HTMLElementTagNameMap>(tag: K, klasa?: string, tekst?: string) => {
+        const n = document.createElement(tag);
+        if (klasa) n.className = klasa;
+        if (tekst !== undefined) n.textContent = tekst;
+        for (const a of cid) n.setAttribute(a.name, a.value);
+        return n;
+      };
+      const stavka = (p: Program) => {
+        const li = e('li', 'up__stavka');
+        const tijelo = e('div', 'up__tijelo');
+        tijelo.append(e('p', 'up__naziv', p.naziv));
+        if (p.opis) tijelo.append(e('p', 'up__opis', p.opis));
+        const meta = e('p', 'up__meta');
+        meta.append(e('span', undefined, p.zaKoga), e('span', undefined, p.termin ?? 'Termin još nije objavljen'));
+        if (p.predavac) meta.append(e('span', undefined, p.predavac));
+        tijelo.append(meta);
+        if (p.napomena) tijelo.append(e('p', 'up__napomena', p.napomena));
+        const a = e('a', 'link-arrow up__link', 'Prijavi se');
+        a.href = `?program=${encodeURIComponent(p.id)}#prijava`;
+        a.dataset.upProgram = p.id;
+        const skriveno = e('span', 'visually-hidden', `: ${p.naziv}`);
+        a.append(skriveno);
+        povezi(a);
+        li.append(tijelo, a);
+        return li;
+      };
+      const sekcije = grupeZa(lista)
+        .filter((g) => g !== 'Ostalo')
+        .map((g) => {
+          const id = `grupa-${g.replace(/[^a-z]/gi, '')}`;
+          const sec = e('section', 'up__grupa');
+          sec.setAttribute('aria-labelledby', id);
+          const h = e('h3', 'flow__h3', g);
+          h.id = id;
+          const ul = e('ul', 'up__lista');
+          ul.setAttribute('role', 'list');
+          ul.append(...lista.filter((p) => p.grupa === g).map(stavka));
+          sec.append(h, ul);
+          return sec;
+        });
+      omot.replaceChildren(...sekcije);
+      omot.dataset.potpis = potpisPrograma(lista);
+    });
+  }
 </script>

@@ -55,6 +55,7 @@ function opisIspravke(p: Podaci): string {
   if (p.serijaDio) d.push(`dio ${p.serijaDio}`);
   if (p.naslovCist) d.push(`naslov: „${p.naslovCist}”`);
   if (p.opis !== undefined) d.push('opis');
+  if (p.skriveno === true) d.push('skriveno sa sajta');
   return d.join(' · ') || '(prazno)';
 }
 
@@ -153,6 +154,12 @@ export class SekcijaIspravke {
     );
   }
 
+  /** Otvori formu za ispravku (poziva je i sekcija Predavanja). */
+  async otvoriZa(id: string) {
+    await this.aktiviraj();
+    this.otvori(id);
+  }
+
   private otvori(id: string) {
     const p = this.predavanje(id);
     const postojece = this.ispravke.get(id) ?? {};
@@ -208,7 +215,8 @@ export class SekcijaIspravke {
 
   private async obrisi(id: string) {
     const p = this.predavanje(id);
-    if (!potvrdi(`Ukloniti ispravku za "${p ? p.naslovCist || p.naslov : id}"? Vratiće se automatski prepoznati podaci.`)) return;
+    const skriveno = this.ispravke.get(id)?.skriveno === true;
+    if (!potvrdi(`Ukloniti ispravku za "${p ? p.naslovCist || p.naslov : id}"? Vratiće se automatski prepoznati podaci${skriveno ? ' i predavanje će ponovo biti vidljivo na sajtu' : ''}.`)) return;
     try {
       const k = await sb();
       const { error } = await k.from('predavanja_ispravke').delete().eq('video_id', id);

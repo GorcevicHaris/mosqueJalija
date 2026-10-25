@@ -14,6 +14,7 @@ import '../styles/global.css';
 
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import Traka from '../components/layout/Traka.astro';
 import { url } from '../lib/url';
 import { dzamija, adresaDijelovi } from '../lib/data';
 const adr = adresaDijelovi();
@@ -125,6 +126,7 @@ const jsonLd = {
   </head>
   <body>
     <a class="skip-link" href="#sadrzaj">Preskoči na sadržaj</a>
+    <Traka />
     <Header />
     <main id="sadrzaj" tabindex="-1">
       <slot />

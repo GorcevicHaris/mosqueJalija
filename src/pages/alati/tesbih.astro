@@ -3,6 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import Tesbih from '../../components/alati/Tesbih.astro';
 import OstaliAlati from '../../components/alati/OstaliAlati.astro';
+import { zaglavljeStranice } from '../../lib/data';
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('alati-tesbih');
 ---
 <BaseLayout
   title="Digitalni tesbih"
@@ -10,8 +13,8 @@ import OstaliAlati from '../../components/alati/OstaliAlati.astro';
 >
   <PageHero
     eyebrow="Alati"
-    title="Digitalni tesbih"
-    subtitle="Brojač zikra sa tesbihatom poslije namaza, vlastitim ciljem i vibracijom. Radi i bez interneta kada je stranica učitana."
+    title={zaglavlje.naslov}
+    subtitle={zaglavlje.podnaslov}
     arabic="سُبْحَانَ ٱللَّٰهِ"
   />
   <section class="section section--tight">

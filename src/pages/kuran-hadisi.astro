@@ -7,7 +7,7 @@ import SectionHeading from '../components/ui/SectionHeading.astro';
 import FilterChips from '../components/ui/FilterChips.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
-import { ajetiHadisi } from '../lib/data';
+import { ajetiHadisi, zaglavljeStranice } from '../lib/data';
 
 const brojAjeta = ajetiHadisi.filter((x) => x.tip === 'ajet').length;
 const brojHadisa = ajetiHadisi.filter((x) => x.tip === 'hadis').length;
@@ -15,9 +15,11 @@ const opcije = [
   ...(brojAjeta ? [{ value: 'ajet', label: 'Ajeti', count: brojAjeta }] : []),
   ...(brojHadisa ? [{ value: 'hadis', label: 'Hadisi', count: brojHadisa }] : []),
 ];
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('kuran-hadisi');
 ---
 <BaseLayout title="Kur'an i hadisi" description="Ajet dana i hadis dana sa arapskim tekstom, prevodom i jasno navedenim izvorom.">
-  <PageHero eyebrow="Korisno" title="Kur'an i hadisi" subtitle="Ajet i hadis dana — svaki dan novi, sa arapskim tekstom, prevodom i jasno navedenim izvorom." arabic="وَقُل رَّبِّ زِدْنِي عِلْمًا" />
+  <PageHero eyebrow="Korisno" title={zaglavlje.naslov} subtitle={zaglavlje.podnaslov} arabic="وَقُل رَّبِّ زِدْنِي عِلْمًا" />
 
   <section class="section">
     <div class="container container--narrow">

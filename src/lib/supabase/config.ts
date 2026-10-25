@@ -53,6 +53,11 @@ export const TABELE = {
   prijave: 'prijave',
   pitanja: 'pitanja',
   pitanjaJavna: 'pitanja_javna',
+  // migracija 0005 (opcione pri buildu: ako tabela još ne postoji, koristi se ugrađeni sadržaj)
+  programi: 'programi',
+  kartice: 'kartice_stranica',
+  transkriptIspravke: 'transkript_ispravke',
+  predavanjaRucna: 'predavanja_rucna',
 } as const;
 
 export const BUCKET_SLIKE = 'slike';

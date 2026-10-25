@@ -4,7 +4,7 @@ import PageHero from '../components/ui/PageHero.astro';
 import Placeholder from '../components/ui/Placeholder.astro';
 import KontaktSupabase from '../components/obrasci/KontaktSupabase.astro';
 import { url } from '../lib/url';
-import { dzamija } from '../lib/data';
+import { dzamija, zaglavljeStranice } from '../lib/data';
 
 const { lat, lng, potvrdjeno } = dzamija.koordinate;
 // Sve mape vode na Google Maps (ugrađena mapa, "Otvori" i navigacija).
@@ -19,9 +19,11 @@ const mreze = [
   { naziv: 'Facebook', url: m.facebook },
   { naziv: 'Instagram', url: m.instagram },
 ];
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('kontakt', { podnaslov: adresa || dzamija.naziv });
 ---
 <BaseLayout title="Kontakt" description={`Kontakt i lokacija: ${dzamija.naziv}${adresa ? `, ${adresa}` : ''}. Mapa, navigacija, društvene mreže i kontakt forma.`}>
-  <PageHero eyebrow="Kontakt i lokacija" title="Posjetite nas" subtitle={adresa || dzamija.naziv} />
+  <PageHero eyebrow="Kontakt i lokacija" title={zaglavlje.naslov} subtitle={zaglavlje.podnaslov} />
 
   <section class="section" aria-labelledby="adresa-naslov">
     <div class="container container--narrow kt">

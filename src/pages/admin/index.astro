@@ -3,7 +3,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AdminApp from '../../components/admin/AdminApp.astro';
 import type { Ugradjeno } from '../../components/admin/stanje';
-import { dove, dzamija, imami, kategorije, obavjestenja, predavanja, serije } from '../../lib/data';
+import { icons } from '../../components/ui/Icon.astro';
+import { dove, dzamija, imami, kategorije, obavjestenja, rucnaPredavanja, serije, skrivenaPredavanja, svaPredavanja } from '../../lib/data';
+import { TEKSTOVI_STRANICA } from '../../lib/tekstovi-stranica';
+import { getTranskriptEnOriginal, getTranskriptOriginal } from '../../lib/transkripti';
 
 // Podaci ugrađeni pri buildu: liste za padajuće menije i rezerva dok baza nema podatke.
 const podaci: Ugradjeno = {
@@ -19,7 +22,8 @@ const podaci: Ugradjeno = {
   })),
   kategorije: kategorije.map((k) => ({ slug: k.slug, naziv: k.naziv, opis: k.opis })),
   serije: serije.map((s) => ({ slug: s.slug, naziv: s.naziv, opis: s.opis })),
-  predavanja: predavanja.map((p) => ({
+  // sva predavanja, i skrivena (sekcije Predavanja, Ispravke, Transkripti); oznake samo kad su true
+  predavanja: svaPredavanja.map((p) => ({
     id: p.id,
     naslov: p.naslov,
     naslovCist: p.naslovCist,
@@ -28,16 +32,17 @@ const podaci: Ugradjeno = {
     kategorija: p.kategorija,
     serija: p.serija,
     serijaDio: p.serijaDio,
+    ...(skrivenaPredavanja.has(p.id) ? { skriveno: true } : {}),
+    ...(rucnaPredavanja.has(p.id) ? { rucno: true } : {}),
+    ...(getTranskriptOriginal(p.id) ? { tr: true } : {}),
+    ...(getTranskriptEnOriginal(p.id) ? { trEn: true } : {}),
   })),
   dzamija: dzamija as unknown as Record<string, unknown>,
   obavKategorije: [...new Set(obavjestenja.map((o) => o.kategorija))],
   doveKategorije: [...new Set(dove.map((d) => d.kategorija))],
-  stranice: [
-    { kljuc: 'mekteb', naziv: 'Mekteb i halke' },
-    { kljuc: 'donacije', naziv: 'Donacije' },
-    { kljuc: 'pravila-ponasanja', naziv: 'Pravila ponašanja' },
-    { kljuc: 'ucenje-kurana', naziv: "Učenje Kur'ana" },
-  ],
+  stranice: TEKSTOVI_STRANICA,
+  ikone: Object.keys(icons).sort(),
+  obavjestenja: obavjestenja.map((o) => ({ slug: o.slug, naslov: o.naslov })),
 };
 ---
 <BaseLayout title="Uređivanje sajta" description="Uređivanje sadržaja sajta Džamije na Jaliji (samo za urednike)." noindex>

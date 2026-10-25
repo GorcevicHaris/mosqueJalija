@@ -21,6 +21,22 @@ export interface UgradjenoPredavanje {
   kategorija: string;
   serija: string | null;
   serijaDio: number | null;
+  /** skriveno pri buildu (ispravka "skriveno": true) */
+  skriveno?: boolean;
+  /** ručno dodano (predavanja_rucna) */
+  rucno?: boolean;
+  /** ima transkript (bs) / engleski prevod */
+  tr?: boolean;
+  trEn?: boolean;
+}
+export interface UgradjenTekstStranice {
+  kljuc: string;
+  naziv: string;
+  putanja: string;
+  vrsta: 'uvod' | 'podnaslov' | 'tekst';
+  naslov: string | null;
+  sadrzaj: string | null;
+  pomoc?: string;
 }
 export interface Ugradjeno {
   imami: UgradjeniImam[];
@@ -30,7 +46,11 @@ export interface Ugradjeno {
   dzamija: Record<string, unknown>;
   obavKategorije: string[];
   doveKategorije: string[];
-  stranice: { kljuc: string; naziv: string }[];
+  stranice: UgradjenTekstStranice[];
+  /** nazivi ikonica iz src/components/ui/Icon.astro */
+  ikone: string[];
+  /** objavljena obavještenja (slug, naslov) — za vezu programa sa obavještenjem */
+  obavjestenja: { slug: string; naslov: string }[];
 }
 
 let _ugradjeno: Ugradjeno | null = null;

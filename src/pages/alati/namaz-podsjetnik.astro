@@ -4,6 +4,9 @@ import PageHero from '../../components/ui/PageHero.astro';
 import NamazPodsjetnik from '../../components/alati/NamazPodsjetnik.astro';
 import OstaliAlati from '../../components/alati/OstaliAlati.astro';
 import { url } from '../../lib/url';
+import { zaglavljeStranice } from '../../lib/data';
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('alati-namaz-podsjetnik');
 ---
 <BaseLayout
   title="Podsjetnik za namaz"
@@ -11,8 +14,8 @@ import { url } from '../../lib/url';
 >
   <PageHero
     eyebrow="Alati"
-    title="Podsjetnik za namaz"
-    subtitle="Obavještenje pred namaz dok je sajt otvoren, ili vaktija za cijeli mjesec u kalendaru telefona — tada vas podsjeća i kad je sajt zatvoren."
+    title={zaglavlje.naslov}
+    subtitle={zaglavlje.podnaslov}
   >
     <a class="btn btn--gold btn--sm" href={url('/vaktija')}>Današnja vaktija</a>
   </PageHero>

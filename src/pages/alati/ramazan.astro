@@ -5,6 +5,9 @@ import Placeholder from '../../components/ui/Placeholder.astro';
 import Imsakija from '../../components/alati/Imsakija.astro';
 import OstaliAlati from '../../components/alati/OstaliAlati.astro';
 import { url } from '../../lib/url';
+import { zaglavljeStranice } from '../../lib/data';
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('alati-ramazan');
 ---
 <BaseLayout
   title="Ramazan i imsakija"
@@ -12,8 +15,8 @@ import { url } from '../../lib/url';
 >
   <PageHero
     eyebrow="Alati"
-    title="Ramazan i imsakija"
-    subtitle="Vrijeme imsaka i iftara za svaki dan Ramazana, odbrojavanje i imsakija za štampu ili kalendar telefona."
+    title={zaglavlje.naslov}
+    subtitle={zaglavlje.podnaslov}
     arabic="رَمَضَان"
   />
   <section class="section section--tight">

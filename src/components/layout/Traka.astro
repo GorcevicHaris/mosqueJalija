@@ -1,0 +1,139 @@
+---
+// Traka na vrhu svake stranice (admin → Džamija → Traka na vrhu sajta; postavke, red 'traka').
+// Iscrtava se pri buildu (bez pomjeranja sadržaja kad je već aktivna), a skripta je pri svakom
+// učitavanju osvježava iz baze (keš 3 min u sessionStorage) — uključivanje/isključivanje se vidi
+// bez čekanja na build. Posjetilac je može sakriti (pamti se do kraja posjete, za taj tekst).
+import { traka } from '../../lib/data';
+import { url } from '../../lib/url';
+
+const href = traka?.link ? (/^https?:/.test(traka.link) ? traka.link : url(traka.link)) : null;
+const vanjski = !!href && /^https?:/.test(href);
+---
+<aside class="traka" data-traka data-vrsta={traka?.vrsta ?? 'info'} data-potpis={traka ? `${traka.vrsta}|${traka.tekst}|${traka.link ?? ''}` : ''} hidden={!traka} aria-label="Obavještenje">
+  <div class="container traka__red">
+    <p class="traka__tekst">
+      <span data-traka-tekst>{traka?.tekst}</span>
+      <a class="traka__link" data-traka-link href={href ?? '#'} hidden={!href} target={vanjski ? '_blank' : undefined} rel={vanjski ? 'noopener' : undefined}>Više<span class="visually-hidden"> o ovom obavještenju</span></a>
+    </p>
+    <button type="button" class="traka__zatvori" data-traka-zatvori aria-label="Sakrij obavještenje">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12" /></svg>
+    </button>
+  </div>
+</aside>
+
+<script>
+  import { restUrl, supabaseUkljucen, TABELE, zaglavlja } from '../../lib/supabase/config';
+  import { trakaIz, trakaVidljiva, type Traka } from '../../lib/supabase/tipovi';
+  import { url } from '../../lib/url';
+
+  const KES = 'dzamija-traka-v1';
+  const SAKRIVENO = 'dzamija-traka-sakriveno';
+  const TTL_MS = 3 * 60 * 1000;
+  const el = document.querySelector<HTMLElement>('[data-traka]');
+
+  const potpis = (t: Traka) => `${t.vrsta}|${t.tekst}|${t.link ?? ''}`;
+  const citaj = (k: string) => {
+    try {
+      return sessionStorage.getItem(k);
+    } catch {
+      return null;
+    }
+  };
+  const pisi = (k: string, v: string) => {
+    try {
+      sessionStorage.setItem(k, v);
+    } catch {
+      /* privatni režim — bez keša */
+    }
+  };
+
+  function prikazi(t: Traka | null) {
+    if (!el) return;
+    if (!trakaVidljiva(t) || citaj(SAKRIVENO) === potpis(t)) {
+      el.hidden = true;
+      return;
+    }
+    el.dataset.vrsta = t.vrsta;
+    el.dataset.potpis = potpis(t);
+    el.querySelector('[data-traka-tekst]')!.textContent = t.tekst;
+    const a = el.querySelector<HTMLAnchorElement>('[data-traka-link]')!;
+    if (t.link) {
+      const vanjski = /^https?:/.test(t.link);
+      a.href = vanjski ? t.link : url(t.link);
+      if (vanjski) {
+        a.target = '_blank';
+        a.rel = 'noopener';
+      } else {
+        a.removeAttribute('target');
+        a.removeAttribute('rel');
+      }
+      a.hidden = false;
+    } else a.hidden = true;
+    el.hidden = false;
+  }
+
+  async function ucitaj(): Promise<Traka | null | undefined> {
+    const kes = citaj(KES);
+    if (kes) {
+      try {
+        const { t, v } = JSON.parse(kes) as { t: number; v: unknown };
+        if (Date.now() - t < TTL_MS) return trakaIz(v);
+      } catch {
+        /* neispravan keš */
+      }
+    }
+    try {
+      const res = await fetch(restUrl(`${TABELE.postavke}?select=vrijednost&kljuc=eq.traka`), { headers: zaglavlja(), signal: AbortSignal.timeout(5000) });
+      if (!res.ok) return undefined; // greška → ostaje ono iz builda
+      const redovi = (await res.json()) as { vrijednost: unknown }[];
+      const v = Array.isArray(redovi) ? (redovi[0]?.vrijednost ?? null) : null;
+      pisi(KES, JSON.stringify({ t: Date.now(), v }));
+      return trakaIz(v);
+    } catch {
+      return undefined;
+    }
+  }
+
+  if (el) {
+    // sakrivena u ovoj posjeti → odmah sakrij i verziju iz builda
+    if (!el.hidden && el.dataset.potpis && citaj(SAKRIVENO) === el.dataset.potpis) el.hidden = true;
+    el.querySelector('[data-traka-zatvori]')?.addEventListener('click', () => {
+      pisi(SAKRIVENO, el.dataset.potpis ?? '');
+      el.hidden = true;
+      document.getElementById('sadrzaj')?.focus();
+    });
+    if (supabaseUkljucen) void ucitaj().then((t) => t !== undefined && prikazi(t));
+  }
+</script>
+
+<style>
+  .traka {
+    --traka-bg: var(--color-primary);
+    --traka-fg: var(--color-on-primary);
+    background: var(--traka-bg);
+    color: var(--traka-fg);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .traka[hidden] { display: none; }
+  .traka[data-vrsta='vazno'] { --traka-bg: var(--color-accent-bright, var(--color-accent)); --traka-fg: #1d1404; }
+  .traka[data-vrsta='dzenaza'] { --traka-bg: var(--color-text); --traka-fg: var(--color-bg); }
+  .traka__red { display: flex; align-items: center; gap: var(--space-3); padding-block: var(--space-2); }
+  .traka__tekst { margin: 0; flex: 1; min-width: 0; font-weight: 600; overflow-wrap: anywhere; }
+  .traka__link { margin-left: var(--space-2); color: inherit; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+  .traka__link[hidden] { display: none; }
+  .traka__zatvori {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    min-width: 40px;
+    min-height: 40px;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .traka__zatvori:hover { background: color-mix(in srgb, currentColor 14%, transparent); }
+  .traka a:focus-visible, .traka__zatvori:focus-visible { outline: 3px solid currentColor; outline-offset: 2px; }
+</style>

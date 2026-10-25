@@ -2,6 +2,11 @@
 // scripts/transkripcija/transkribuj.mjs). Ako postoji lektorisana verzija
 // (data/transkripti-lektura/<id>.json), koristi se ona. Samo za build — NE uvoziti iz klijentskih skripti
 // (import.meta.glob bi ugradio sve transkripte u JS). Za pregledač: ./transkripti-pretraga.ts.
+// Ispravke pojedinih segmenata iz admina (tabela transkript_ispravke, preko data.ts) zamjenjuju tekst
+// tog segmenta pri buildu: bs = prikazana (lektorisana ili automatska) verzija, en = prevod.
+// Originali (bez ispravki) ostaju dostupni preko getTranskriptOriginal / getTranskriptEnOriginal
+// (endpoint /transkripti/<id>.json za admin).
+import { transkriptIspravke } from './data';
 
 export interface TranskriptSegment {
   /** početak u sekundama */
@@ -70,15 +75,41 @@ for (const [put, t] of Object.entries(engleski)) {
   });
 }
 
-/** Engleski prevod transkripta ili null (nema ga za svaki video). */
-export function getTranskriptEn(id: string): Transkript | null {
-  return mapaEn.get(id) ?? null;
+/** Primijeni ispravke iz baze (indeks segmenta → tekst); nepostojeći indeksi se preskaču. */
+function saIspravkama(t: Transkript, isp: Record<number, string> | undefined): Transkript {
+  if (!isp || !Object.keys(isp).length) return t;
+  let promijenjeno = false;
+  const segmenti = t.segmenti.map((s, i) => {
+    const novi = isp[i];
+    if (typeof novi !== 'string' || !novi.trim() || novi === s.tekst) return s;
+    promijenjeno = true;
+    return { ...s, tekst: novi };
+  });
+  return promijenjeno ? { ...t, segmenti } : t;
 }
 
-/** Transkript za video ili null ako ne postoji. */
-export function getTranskript(id: string): Transkript | null {
-  return mapa.get(id) ?? null;
+const ispravljeno = new Map<string, Transkript>();
+const ispravljenoEn = new Map<string, Transkript>();
+for (const [id, isp] of Object.entries(transkriptIspravke)) {
+  const bs = mapa.get(id);
+  if (bs && isp.bs) ispravljeno.set(id, saIspravkama(bs, isp.bs));
+  const en = mapaEn.get(id);
+  if (en && isp.en) ispravljenoEn.set(id, saIspravkama(en, isp.en));
 }
+
+/** Engleski prevod transkripta (sa ispravkama iz admina) ili null (nema ga za svaki video). */
+export function getTranskriptEn(id: string): Transkript | null {
+  return ispravljenoEn.get(id) ?? mapaEn.get(id) ?? null;
+}
+
+/** Transkript za video (sa ispravkama iz admina) ili null ako ne postoji. */
+export function getTranskript(id: string): Transkript | null {
+  return ispravljeno.get(id) ?? mapa.get(id) ?? null;
+}
+
+/** Original iz JSON-a, bez ispravki iz baze (za admin). */
+export const getTranskriptOriginal = (id: string): Transkript | null => mapa.get(id) ?? null;
+export const getTranskriptEnOriginal = (id: string): Transkript | null => mapaEn.get(id) ?? null;
 
 export function imaTranskript(id: string): boolean {
   return mapa.has(id);
@@ -118,9 +149,11 @@ export interface TPretragaPodaci {
   t: TPretragaStavka[];
 }
 
-export function transkriptiZaPretragu(maxZnakova = 40_000): TPretragaPodaci {
+export function transkriptiZaPretragu(maxZnakova = 40_000, samo?: Set<string>): TPretragaPodaci {
   const t: TPretragaStavka[] = [];
-  for (const [id, tr] of mapa) {
+  for (const id of mapa.keys()) {
+    if (samo && !samo.has(id)) continue; // npr. skrivena predavanja
+    const tr = getTranskript(id)!;
     let znakova = 0;
     const seg: [number, string][] = [];
     for (const s of tr.segmenti) {

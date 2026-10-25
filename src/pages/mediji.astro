@@ -7,14 +7,16 @@ import Placeholder from '../components/ui/Placeholder.astro';
 import LectureCard from '../components/predavanja/LectureCard.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
-import { dzamija, predavanja } from '../lib/data';
+import { dzamija, predavanja, zaglavljeStranice } from '../lib/data';
 
 const yt = dzamija.drustveneMreze.youtube;
 const najnovije = predavanja.slice(0, 6);
 const subscribe = yt ? `${yt.replace(/\/$/, '')}?sub_confirmation=1` : null;
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('mediji');
 ---
 <BaseLayout title="Mediji" description="YouTube kanal Džamije na Jaliji, najnoviji snimci i zvanični profili na društvenim mrežama.">
-  <PageHero eyebrow="Pratite nas" title="Mediji" subtitle="Predavanja, hutbe i snimci sa YouTube kanala džamije i zvanični profili na društvenim mrežama." />
+  <PageHero eyebrow="Pratite nas" title={zaglavlje.naslov} subtitle={zaglavlje.podnaslov} />
 
   <section class="section">
     <div class="container">

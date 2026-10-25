@@ -3,10 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import KiblaKompas from '../../components/alati/KiblaKompas.astro';
 import OstaliAlati from '../../components/alati/OstaliAlati.astro';
-import { dzamija } from '../../lib/data';
+import { dzamija, zaglavljeStranice } from '../../lib/data';
 import { azimutKible, formatStepeni } from '../../lib/alati/kibla';
 
 const az = formatStepeni(azimutKible(dzamija.koordinate));
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const z0 = zaglavljeStranice('alati-kibla');
+const zaglavlje = { ...z0, podnaslov: z0.podnaslov.replaceAll('{azimut}', az) };
 ---
 <BaseLayout
   title="Kibla — pravac Kabe"
@@ -14,8 +17,8 @@ const az = formatStepeni(azimutKible(dzamija.koordinate));
 >
   <PageHero
     eyebrow="Alati"
-    title="Kibla — pravac Kabe"
-    subtitle={`Iz Novog Pazara kibla je na ${az} od sjevera, prema jugoistoku. Na telefonu možete uključiti živi kompas.`}
+    title={zaglavlje.naslov}
+    subtitle={zaglavlje.podnaslov}
     arabic="القبلة"
   />
   <section class="section section--tight">

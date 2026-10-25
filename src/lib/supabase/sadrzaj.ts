@@ -16,7 +16,9 @@ import type {
   Serija,
 } from '../types';
 import { restUrl, supabaseUkljucen, TABELE, zaglavlja } from './config';
-import type { IspravkaPredavanja, JavnoPitanje, StranicaTekst, TerminRasporeda, ZaKoga } from './tipovi';
+import { trakaIz } from './tipovi';
+import type { IspravkaPredavanja, JavnoPitanje, KarticaIzBaze, StranicaTekst, TerminRasporeda, Traka, TranskriptIspravke, ZaKoga } from './tipovi';
+import { PROGRAMI_SELECT, programIzReda, type Program } from '../obrasci/programi';
 
 export interface SadrzajIzBaze {
   obavjestenja: Obavjestenje[]; // samo objavljena, najnovija prva
@@ -32,9 +34,30 @@ export interface SadrzajIzBaze {
   dzamija: Partial<Dzamija> | null; // red 'dzamija' iz tabele postavke
   ispravke: Record<string, IspravkaPredavanja>;
   pitanja: JavnoPitanje[]; // objavljena pitanja sa odgovorom
+  traka: Traka | null; // red 'traka' iz tabele postavke
+  // ---- migracija 0005: null = tabela ne postoji / nije dostupna → ugrađeni sadržaj ----
+  programi: (Program & { aktivno: boolean })[] | null; // svi redovi (i neaktivni), po redoslijedu
+  kartice: KarticaIzBaze[] | null; // samo aktivne, po stranici i redoslijedu
+  transkriptIspravke: TranskriptIspravke | null;
+  predavanjaRucna: PredavanjeRucno[] | null;
+}
+
+/** Red tabele predavanja_rucna (ručno dodan YouTube video). */
+export interface PredavanjeRucno {
+  id: string;
+  naslov: string;
+  naslovCist: string | null;
+  datum: string;
+  trajanje: number;
+  imam: string | null;
+  kategorija: string;
+  serija: string | null;
+  serijaDio: number | null;
+  opis: string | null;
 }
 
 const TIMEOUT_MS = 8000;
+const STRANA = 1000; // PostgREST max-rows (podrazumijevano 1000)
 
 async function dohvati<T>(putanja: string): Promise<T[]> {
   const res = await fetch(restUrl(putanja), {
@@ -48,6 +71,26 @@ async function dohvati<T>(putanja: string): Promise<T[]> {
   const data = (await res.json()) as unknown;
   if (!Array.isArray(data)) throw new Error(`Neočekivan odgovor za ${putanja.split('?')[0]}`);
   return data as T[];
+}
+
+/** Svi redovi u stranama od STRANA (za tabele koje mogu biti veće od 1000 redova). */
+async function dohvatiSve<T>(putanja: string): Promise<T[]> {
+  const rez: T[] = [];
+  for (let od = 0; ; od += STRANA) {
+    const dio = await dohvati<T>(`${putanja}&limit=${STRANA}&offset=${od}`);
+    rez.push(...dio);
+    if (dio.length < STRANA) return rez;
+  }
+}
+
+/** Tabela iz kasnije migracije: greška (npr. tabela još ne postoji) → null, bez obaranja ostatka. */
+async function opciono<T>(naziv: string, p: Promise<T>): Promise<T | null> {
+  try {
+    return await p;
+  } catch (e) {
+    console.warn(`[supabase] ${naziv} nisu učitani (koristi se ugrađeni sadržaj): ${(e as Error).message}`);
+    return null;
+  }
 }
 
 type Red = Record<string, unknown>;
@@ -81,6 +124,40 @@ const mapObavjestenje = (r: Red): Obavjestenje => ({
 
 const ZA_KOGA: ZaKoga[] = ['muškarci', 'žene', 'djeca', 'svi'];
 
+function mapIspravkeTranskripata(redovi: Red[]): TranskriptIspravke {
+  const rez: TranskriptIspravke = {};
+  for (const r of redovi) {
+    const id = strObavezno(r.video_id);
+    const jezik = r.jezik === 'en' ? 'en' : r.jezik === 'bs' ? 'bs' : null;
+    const seg = Number(r.segment);
+    const tekst = str(r.tekst);
+    if (!id || !jezik || !Number.isInteger(seg) || seg < 0 || !tekst) continue;
+    ((rez[id] ??= {})[jezik] ??= {})[seg] = tekst.trim();
+  }
+  return rez;
+}
+
+const YT_ID = /^[A-Za-z0-9_-]{11}$/;
+function mapRucno(r: Red): PredavanjeRucno | null {
+  const id = strObavezno(r.id);
+  const naslov = str(r.naslov);
+  const datum = strObavezno(r.datum).slice(0, 10);
+  if (!YT_ID.test(id) || !naslov || !/^\d{4}-\d{2}-\d{2}$/.test(datum)) return null;
+  const dio = Number(r.serija_dio);
+  return {
+    id,
+    naslov: naslov.trim(),
+    naslovCist: str(r.naslov_cist)?.trim() ?? null,
+    datum,
+    trajanje: Math.max(0, Math.floor(Number(r.trajanje) || 0)),
+    imam: str(r.imam),
+    kategorija: str(r.kategorija) ?? 'predavanje',
+    serija: str(r.serija),
+    serijaDio: Number.isInteger(dio) && dio > 0 ? dio : null,
+    opis: str(r.opis),
+  };
+}
+
 /** Učitava sav javni sadržaj iz baze. null = koristiti JSON rezervu. */
 export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
   if (!supabaseUkljucen) return null;
@@ -96,7 +173,7 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
       dohvati<Red>(`${TABELE.ajetiHadisi}?select=tip,arapski,tekst,izvor&order=redoslijed.asc,created_at.asc`),
       dohvati<Red>(`${TABELE.raspored}?select=id,dan,vrijeme,naziv,opis,za_koga,aktivno,redoslijed&aktivno=eq.true&order=dan.asc,redoslijed.asc`),
       dohvati<Red>(`${TABELE.stranice}?select=kljuc,naslov,sadrzaj`),
-      dohvati<Red>(`${TABELE.postavke}?select=kljuc,vrijednost&kljuc=eq.dzamija`),
+      dohvati<Red>(`${TABELE.postavke}?select=kljuc,vrijednost&kljuc=in.(dzamija,traka)`),
       dohvati<Red>(`${TABELE.ispravke}?select=video_id,podaci`),
     ]);
     // pitanja su iz kasnije migracije (0004) — njihov izostanak ne obara ostatak sadržaja
@@ -106,6 +183,15 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
         return [] as Red[];
       },
     );
+    // migracija 0005 — svaka tabela posebno; bez nje (ili kad ne odgovori) ugrađeni sadržaj
+    const [progRed, kartRed, trIspRed, rucRed] = await Promise.all([
+      opciono('programi', dohvati<Red>(`${TABELE.programi}?select=${PROGRAMI_SELECT}&order=redoslijed.asc,slug.asc`)),
+      opciono('kartice stranica', dohvati<Red>(`${TABELE.kartice}?select=stranica,naslov,tekst,ikona,link&aktivno=eq.true&order=stranica.asc,redoslijed.asc,created_at.asc`)),
+      opciono('ispravke transkripata', dohvatiSve<Red>(`${TABELE.transkriptIspravke}?select=video_id,jezik,segment,tekst&order=video_id.asc,jezik.asc,segment.asc`)),
+      opciono('ručno dodana predavanja', dohvati<Red>(`${TABELE.predavanjaRucna}?select=id,naslov,naslov_cist,datum,trajanje,imam,kategorija,serija,serija_dio,opis&order=datum.desc`)),
+    ]);
+    const postavka = (kljuc: string) => postRed.find((r) => r.kljuc === kljuc)?.vrijednost;
+    const dzamijaRed = postavka('dzamija');
 
     const rez: SadrzajIzBaze = {
       obavjestenja: obav.map(mapObavjestenje).filter((o) => o.slug && o.naslov && o.datum),
@@ -155,7 +241,8 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
       stranice: Object.fromEntries(
         strRed.map((r) => [strObavezno(r.kljuc), { kljuc: strObavezno(r.kljuc), naslov: str(r.naslov), paragrafi: uParagrafe(str(r.sadrzaj)) }]),
       ),
-      dzamija: postRed[0]?.vrijednost && typeof postRed[0].vrijednost === 'object' ? (postRed[0].vrijednost as Partial<Dzamija>) : null,
+      dzamija: dzamijaRed && typeof dzamijaRed === 'object' ? (dzamijaRed as Partial<Dzamija>) : null,
+      traka: trakaIz(postavka('traka')),
       ispravke: Object.fromEntries(
         ispRed
           .filter((r) => r.podaci && typeof r.podaci === 'object')
@@ -169,10 +256,22 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
         odgovorenoAt: str(r.odgovoreno_at),
         createdAt: strObavezno(r.created_at),
       })),
+      programi: progRed ? progRed.map(programIzReda).filter((p): p is Program & { aktivno: boolean } => p !== null) : null,
+      kartice: kartRed
+        ? kartRed
+            .map((r) => ({ stranica: strObavezno(r.stranica), naslov: strObavezno(r.naslov), tekst: strObavezno(r.tekst), ikona: str(r.ikona), link: str(r.link) }))
+            .filter((k) => k.stranica && k.naslov)
+        : null,
+      transkriptIspravke: trIspRed ? mapIspravkeTranskripata(trIspRed) : null,
+      predavanjaRucna: rucRed ? rucRed.map(mapRucno).filter((p): p is PredavanjeRucno => p !== null) : null,
     };
     console.info(
       `[supabase] sadržaj iz baze: ${rez.obavjestenja.length} obavještenja, ${rez.galerija.length} slika, ${rez.dove.length} dova, ` +
-        `${rez.ajetiHadisi.length} ajeta/hadisa, ${rez.raspored.length} termina, ${Object.keys(rez.ispravke).length} ispravki`,
+        `${rez.ajetiHadisi.length} ajeta/hadisa, ${rez.raspored.length} termina, ${Object.keys(rez.ispravke).length} ispravki` +
+        (rez.programi ? `, ${rez.programi.length} programa` : '') +
+        (rez.kartice ? `, ${rez.kartice.length} kartica` : '') +
+        (rez.transkriptIspravke ? `, ${Object.keys(rez.transkriptIspravke).length} transkripata sa ispravkama` : '') +
+        (rez.predavanjaRucna ? `, ${rez.predavanjaRucna.length} ručno dodanih predavanja` : ''),
     );
     return rez;
   } catch (e) {
@@ -209,6 +308,46 @@ export function spojiPoSlugu<T extends { slug: string }>(json: T[], baza: T[]): 
   const postojeci = new Set(json.map((x) => x.slug));
   for (const x of baza) if (!postojeci.has(x.slug)) rez.push(x);
   return rez;
+}
+
+/**
+ * Dodaje ručno unesena predavanja (predavanja_rucna) na listu sa YouTube kanala. Video koji već postoji
+ * u JSON-u se preskače (verzija sa kanala ima prednost). Nepoznat imam/serija → bez, nepoznata
+ * kategorija → "predavanje" (uz upozorenje), da greška ne obori build.
+ */
+export function dodajRucnaPredavanja(
+  predavanja: Predavanje[],
+  rucna: PredavanjeRucno[],
+  poznato: { imami: Set<string>; kategorije: Set<string>; serije: Set<string> },
+): Predavanje[] {
+  if (!rucna.length) return predavanja;
+  const postojeci = new Set(predavanja.map((p) => p.id));
+  const nova: Predavanje[] = [];
+  for (const r of rucna) {
+    if (postojeci.has(r.id)) continue;
+    postojeci.add(r.id);
+    const imam = r.imam && poznato.imami.has(r.imam) ? r.imam : null;
+    if (r.imam && !imam) console.warn(`[supabase] ručno predavanje ${r.id}: nepoznat imam "${r.imam}"`);
+    const kategorija = poznato.kategorije.has(r.kategorija) ? r.kategorija : 'predavanje';
+    if (kategorija !== r.kategorija) console.warn(`[supabase] ručno predavanje ${r.id}: nepoznata kategorija "${r.kategorija}"`);
+    const serija = r.serija && poznato.serije.has(r.serija) ? r.serija : null;
+    nova.push({
+      id: r.id,
+      naslov: r.naslov,
+      naslovCist: r.naslovCist || r.naslov,
+      datum: r.datum,
+      trajanje: r.trajanje,
+      thumbnail: `https://i.ytimg.com/vi/${r.id}/hqdefault.jpg`,
+      imam,
+      imamPotvrdjen: imam !== null,
+      kategorija,
+      serija,
+      serijaDio: serija ? r.serijaDio : null,
+      opis: r.opis,
+      pregledi: null,
+    });
+  }
+  return predavanja.concat(nova);
 }
 
 /**

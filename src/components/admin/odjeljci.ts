@@ -15,10 +15,9 @@ export const ODJELJCI: GrupaOdjeljaka[] = [
     naziv: 'Sadržaj',
     stavke: [
       { id: 'obavjestenja', naziv: 'Obavještenja i objave' },
-      { id: 'raspored', naziv: 'Sedmični raspored' },
-      { id: 'galerija', naziv: 'Galerija' },
-      { id: 'dzamija', naziv: 'Podaci o džamiji' },
       { id: 'stranice', naziv: 'Tekstovi stranica' },
+      { id: 'kartice', naziv: 'Kartice na stranicama' },
+      { id: 'galerija', naziv: 'Galerija' },
       { id: 'dove', naziv: 'Dove' },
       { id: 'ajeti-hadisi', naziv: 'Ajeti i hadisi' },
     ],
@@ -26,14 +25,31 @@ export const ODJELJCI: GrupaOdjeljaka[] = [
   {
     naziv: 'Predavanja',
     stavke: [
+      { id: 'predavanja', naziv: 'Predavanja (sakrij / uredi)' },
+      { id: 'predavanja-rucna', naziv: 'Dodani videi' },
+      { id: 'ispravke', naziv: 'Ispravke predavanja' },
+      { id: 'transkripti', naziv: 'Transkripti' },
       { id: 'imami', naziv: 'Imami i predavači' },
       { id: 'kategorije', naziv: 'Kategorije' },
       { id: 'serije', naziv: 'Serije' },
-      { id: 'ispravke', naziv: 'Ispravke predavanja' },
     ],
   },
   {
-    naziv: 'Pristiglo sa sajta',
+    naziv: 'Džamija',
+    stavke: [
+      { id: 'dzamija', naziv: 'Podaci o džamiji' },
+      { id: 'traka', naziv: 'Traka na vrhu sajta' },
+    ],
+  },
+  {
+    naziv: 'Mekteb',
+    stavke: [
+      { id: 'raspored', naziv: 'Sedmični raspored' },
+      { id: 'programi', naziv: 'Programi za upis' },
+    ],
+  },
+  {
+    naziv: 'Inbox',
     stavke: [
       { id: 'poruke', naziv: 'Poruke', brojac: 'poruke' },
       { id: 'prijave', naziv: 'Prijave', brojac: 'prijave' },
@@ -41,7 +57,7 @@ export const ODJELJCI: GrupaOdjeljaka[] = [
     ],
   },
   {
-    naziv: 'Administracija',
+    naziv: 'Podešavanja',
     samoAdmin: true,
     stavke: [{ id: 'urednici', naziv: 'Urednici' }],
   },

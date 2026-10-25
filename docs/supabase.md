@@ -90,9 +90,12 @@ anti-spam radi, storage upload samo za urednike u bucket `slike`, migracije i se
 ## Postavljanje (redom)
 
 1. **Migracije** (SQL editor ili Supabase MCP `apply_migration`), tačno ovim redom:
-   `0001_sadrzaj` → `0002_rls` → `0003_storage` → `0004_javni_unosi`. Sve su idempotentne.
+   `0001_sadrzaj` → `0002_rls` → `0003_storage` → `0004_javni_unosi` → `0005_programi_kartice_transkripti`.
+   Sve su idempotentne.
 2. **Seed**: `supabase/seed.sql` (početni sadržaj; `ON CONFLICT DO NOTHING`, ne prepisuje izmjene).
    Ponovno generisanje poslije izmjena u `data/*.json`: `node scripts/supabase-seed.mjs`.
+   Poslije 0005: `supabase/seed-0005.sql` (programi, kartice, novi tekstovi stranica, isključena traka —
+   iz ugrađenih lista u kodu; generiše `node scripts/supabase-seed-0005.mjs`).
 3. **Prvi administrator** (SQL editor, radi kao `postgres`, pa RLS ne smeta):
    ```sql
    insert into public.urednici (email, uloga) values ('ime@primjer.com', 'admin');
@@ -327,6 +330,18 @@ Kur'ana); isto u podnožju; početna ima blok Online upis / Pitaj imama / Sedmi�
 izuzima `/admin/` i `/obavjestenja/prikaz/`, `robots.txt` ih zabranjuje. Admin poruke „Sačuvano“
 kažu ~15–20 minuta.
 
-Nije u bazi (mijenja se u kodu): lista programa za upis (`src/lib/obrasci/programi.ts`), ugrađeni
-tekstovi kartica (npr. „Šta djeca uče u mektebu“, pravila ponašanja, koraci učenja Kur'ana).
+### Migracija 0005 (programi, kartice, transkripti, dodani videi, traka)
+
+| Admin odjeljak (tabela) | Gdje se vidi |
+|---|---|
+| Mekteb → Programi za upis (`programi`) | `/upis` (lista + obrazac `PrijavaForma`); pri buildu i **odmah** u pregledaču (`programi-klijent.ts`). Baza se koristi kad tabela ima bar jedan red (samo aktivni), inače `PROGRAMI` iz `src/lib/obrasci/programi.ts`. `za_koga = 'djeca'` ⇒ obrazac traži godine/roditelja |
+| Sadržaj → Kartice na stranicama (`kartice_stranica`) | `/pravila-ponasanja`, `/mekteb` („Šta djeca uče“), `/ucenje-kurana` (koraci; `ucenje-kurana-izvori` = izvori sa linkom). Stranica bez aktivnih kartica u bazi = ugrađena lista (`src/lib/kartice.ts`). Nova stranica: proširiti `kartice_stranica_stranica_check` + `karticeStranica('<kljuc>')` |
+| Sadržaj → Tekstovi stranica (`stranice_tekstovi`, novi ključevi) | spisak i ugrađeni tekstovi: `src/lib/tekstovi-stranica.ts`; `zaglavljeStranice()` (naslov + podnaslov PageHero) na `/kontakt`, `/galerija`, `/mediji`, `/dove`, `/kuran-hadisi`, `/alati/*` (`{azimut}` na kibli); `pocetna-uvod`, `footer-o-nama` (prazno = kratak opis džamije) |
+| Predavanja → Predavanja | sakrij/prikaži = `"skriveno": true` u `predavanja_ispravke.podaci`; skriveno predavanje nema stranicu i nema ga u listama, pretrazi, RSS-u, sitemap-u, brojevima imama (`predavanja` u `data.ts`; admin koristi `svaPredavanja`) |
+| Predavanja → Dodani videi (`predavanja_rucna`) | spaja se sa `data/predavanja.json` pri buildu (`dodajRucnaPredavanja`), stranica `/predavanja/<id>` se generiše; ako video kasnije stigne sa kanala, ima prednost verzija sa kanala |
+| Predavanja → Transkripti (`transkript_ispravke`) | `src/lib/transkripti.ts` zamjenjuje tekst segmenta (bs = prikazana lektorisana/automatska verzija, en = `data/transkripti-en`). Admin učitava originale sa `/transkripti/<id>.json` |
+| Džamija → Traka na vrhu sajta (`postavke`, red `traka`) | vrh svake stranice (`Traka.astro`): iz builda + osvježavanje u pregledaču (keš 3 min) — vidi se bez builda |
+
+Nove tabele su **opcione pri buildu**: dok 0005 nije primijenjena (ili tabela ne odgovori), sajt koristi
+ugrađeni sadržaj, a ostatak se i dalje čita iz baze.
 

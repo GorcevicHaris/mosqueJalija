@@ -3,6 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import AlatKartica from '../../components/alati/AlatKartica.astro';
 import { ALATI, POVEZANO } from '../../lib/alati/alati';
+import { zaglavljeStranice } from '../../lib/data';
+// Naslov i podnaslov zaglavlja: admin → Tekstovi stranica (prazno = ugrađeno, src/lib/tekstovi-stranica.ts).
+const zaglavlje = zaglavljeStranice('alati');
 ---
 <BaseLayout
   title="Islamski alati"
@@ -10,8 +13,8 @@ import { ALATI, POVEZANO } from '../../lib/alati/alati';
 >
   <PageHero
     eyebrow="Alati"
-    title="Islamski alati"
-    subtitle="Kibla, tesbih, zekat, imsakija i podsjetnik za namaz — sve radi u vašem pregledaču, bez prijave i bez slanja podataka."
+    title={zaglavlje.naslov}
+    subtitle={zaglavlje.podnaslov}
   />
   <section class="section section--tight">
     <div class="container">
