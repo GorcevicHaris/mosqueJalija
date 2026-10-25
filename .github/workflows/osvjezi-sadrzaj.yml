@@ -1,7 +1,7 @@
 name: Osvježavanje sadržaja iz baze
 
 # Sajt je statički: sadržaj iz Supabase baze (obavještenja, raspored, dove, podaci o džamiji…)
-# ulazi u stranice pri buildu. Ovaj workflow svakih 15 minuta pokreće deploy, pa se izmjene iz admina
+# ulazi u stranice pri buildu. Ovaj workflow svakih 15 minuta pokreće Vercel deploy (Deploy Hook), pa se izmjene iz admina
 # pojave na sajtu za ~15–20 minuta (build + objava traju 1–3 min). Nova obavještenja, raspored na
 # /raspored i odgovori na /pitaj-imama vide se i odmah — čita ih pregledač.
 # Javni repo → GitHub Actions minute su besplatne.
@@ -13,7 +13,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  actions: write # pokretanje deploy workflowa
   contents: read
 
 concurrency:
@@ -25,13 +24,6 @@ jobs:
     if: ${{ vars.PUBLIC_SUPABASE_URL != '' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Pokreni deploy.yml
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        # zakazana pokretanja uvijek rade na podrazumijevanoj grani (main)
-        run: gh workflow run deploy.yml --ref "${{ github.ref_name }}"
-
       # Vercel: novi build preko Deploy Hook-a (Vercel → Settings → Git → Deploy Hooks).
       # Link se čuva kao GitHub secret VERCEL_DEPLOY_HOOK; bez njega se ovaj korak preskače.
       - name: Pokreni Vercel deploy

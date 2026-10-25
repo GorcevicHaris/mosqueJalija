@@ -8,7 +8,7 @@ pristupa kodu.
 
 - **Javni sajt (Vercel):** https://dzamija-na-jaliji.vercel.app/
 - **Admin panel:** https://dzamija-na-jaliji.vercel.app/admin/
-- **Rezervna adresa (GitHub Pages):** https://gorcevicharis.github.io/mosqueJalija/
+- **Stara adresa (GitHub Pages):** https://gorcevicharis.github.io/mosqueJalija/ automatski preusmjerava na istu stranicu na Vercel-u, pa svi stari i podijeljeni linkovi vode na Vercel.
 - **Repozitorij:** https://github.com/GorcevicHaris/mosqueJalija (javan)
 - **Baza:** Supabase projekat `dzamija-na-jaliji` (Frankfurt, besplatni plan)
 

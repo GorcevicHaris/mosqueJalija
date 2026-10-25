@@ -95,14 +95,14 @@ Sajt se objavljuje na dva mjesta, oba automatski pri svakom pushu na `main`:
 | Hosting | Adresa | Kako |
 |---|---|---|
 | **Vercel (glavni)** | https://dzamija-na-jaliji.vercel.app/ | Vercel projekat `dzamija-na-jaliji` povezan sa repoom; podešavanja u `vercel.json` |
-| GitHub Pages (rezerva) | https://gorcevicharis.github.io/mosqueJalija/ | `.github/workflows/deploy.yml` |
+| GitHub Pages (samo preusmjeravanje) | https://gorcevicharis.github.io/mosqueJalija/ | `.github/workflows/deploy.yml` + `scripts/gh-preusmjeravanje.mjs`: svaka stara adresa vodi na istu stranicu na Vercel-u |
 
 Isti kod radi na oba mjesta. Na Vercel-u (env `VERCEL=1`) sajt je na korijenu domena (`BASE=/`), a na
 GitHub Pages u podfolderu `/mosqueJalija/`. Manifest i `robots.txt` se generišu prema adresi.
 
 Sadržaj iz admina ulazi u stranice pri buildu. `.github/workflows/osvjezi-sadrzaj.yml` zato svakih
-15 minuta pokreće novi build: na GitHub Pages i na Vercel-u, preko Deploy Hook-a sačuvanog kao GitHub
-secret `VERCEL_DEPLOY_HOOK`.
+15 minuta pokreće novi build na Vercel-u, preko Deploy Hook-a sačuvanog kao GitHub secret
+`VERCEL_DEPLOY_HOOK`.
 
 ### Vlastiti domen (Vercel)
 

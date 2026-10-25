@@ -29,6 +29,8 @@ jobs:
           # Supabase (admin panel) — javne vrijednosti iz repo Variables; bez njih build koristi data/*.json
           PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
           PUBLIC_SUPABASE_ANON_KEY: ${{ vars.PUBLIC_SUPABASE_ANON_KEY }}
+      # Glavni sajt je na Vercel-u: stare GitHub Pages adrese preusmjeravaju na istu stranicu tamo.
+      - run: node scripts/gh-preusmjeravanje.mjs
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
