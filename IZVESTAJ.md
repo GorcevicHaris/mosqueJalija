@@ -125,19 +125,23 @@ Već podešeno:
 - **Ulaz u admin:** diskretan link „Prijava za urednike“ dolje u podnožju svake stranice (nije u
   glavnom meniju; Google ga ne indeksira).
 
+**Provjereno:** nalog harisgorcevic1000@gmail.com se uspješno prijavio linkom iz e-maila. U bazi je
+potvrđeno da ima prava urednika i admina: vidi listu urednika i može da mijenja obavještenja, podatke o
+džamiji, raspored i imame (testirano u transakciji koja je poništena). Javnost ne može ni čitati
+poruke ni mijenjati sadržaj.
+
 Kako se prijaviti: „Prijava za urednike“ → upiši e-mail → „Pošalji link za prijavu“ → otvori link iz
 e-maila na istom uređaju.
 
 Šta još treba uraditi ti:
-1. **Probaj prijavu** na gore opisani način.
-2. **Ostali urednici (imam, sekretar).** Supabase-ov ugrađeni e-mail servis šalje samo članovima tvog
+1. **Ostali urednici (imam, sekretar).** Supabase-ov ugrađeni e-mail servis šalje samo članovima tvog
    Supabase tima (najviše ~2 e-maila na sat). Imaš dvije opcije:
    - **(a)** Supabase → Authentication → Users → **Add user** → e-mail + lozinka + „Auto confirm“, pa
      u adminu, u sekciji „Urednici“, dodaj tu adresu. Urednik se prijavljuje preko „Imam lozinku“.
    - **(b)** Podesi besplatni SMTP (npr. Resend ili Brevo) u Authentication → Emails → SMTP Settings.
      Tada prijava linkom radi za sve, a u e-mail šablon se može dodati i šestocifreni kod
      (`{{ .Token }}`). Bez SMTP-a Supabase ne dozvoljava izmjenu šablona.
-3. **Vlastiti domen (preporuka):** kupi npr. `dzamijanajaliji.rs`, a ja podesim sajt na njega.
+2. **Vlastiti domen (preporuka):** kupi npr. `dzamijanajaliji.rs`, a ja podesim sajt na njega.
 
 ## Šta treba da mi dostavite (džemat)
 
