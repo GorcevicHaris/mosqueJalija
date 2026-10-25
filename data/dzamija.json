@@ -31,7 +31,7 @@
     }
   ],
   "cinjenice": [
-    { "oznaka": "Adresa", "vrijednost": "Jalija 69, Novi Pazar", "izvor": "https://www.openstreetmap.org/way/1443189625" },
+    { "oznaka": "Adresa", "vrijednost": "Jalija 69, Novi Pazar", "izvor": "https://www.google.com/maps/search/?api=1&query=43.148048,20.524462" },
     { "oznaka": "Svečano otvorena", "vrijednost": "8. mart 2024. (uoči ramazana 1445. h. g.)", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
     { "oznaka": "Početak gradnje", "vrijednost": "2022. godine", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
     { "oznaka": "Objekat", "vrijednost": "četiri etaže", "izvor": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
@@ -66,7 +66,7 @@
   "izvori": [
     { "naziv": "Mešihat IZ u Srbiji — Svečano otvorena džamija na Jaliji (8. 3. 2024.)", "url": "https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/" },
     { "naziv": "Sandžak TV / SANA — Svečano otvorena džamija na Jaliji (8. 3. 2024.)", "url": "https://sandzak.tv/svecano-otvorena-dzamija-na-jaliji/" },
-    { "naziv": "OpenStreetMap — objekat džamije, Jalija 69 (way 1443189625)", "url": "https://www.openstreetmap.org/way/1443189625" },
+    { "naziv": "Google Maps — Džamija na Jaliji, Jalija 69", "url": "https://www.google.com/maps/search/?api=1&query=43.148048,20.524462" },
     { "naziv": "Wikipedia (sr) — Spisak džamija u Srbiji (Džamija na Jaliji, Jalija 69)", "url": "https://sr.wikipedia.org/sr-el/Списак_џамија_у_Србији" },
     { "naziv": "YouTube kanal „Džamija na Jaliji”", "url": "https://www.youtube.com/@D%C5%BEamijanaJaliji" },
     { "naziv": "Instagram @dzamija_na_jaliji", "url": "https://www.instagram.com/dzamija_na_jaliji/" },

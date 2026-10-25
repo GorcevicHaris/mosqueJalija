@@ -7,13 +7,10 @@ import { url } from '../lib/url';
 import { dzamija } from '../lib/data';
 
 const { lat, lng, potvrdjeno } = dzamija.koordinate;
-const d = 0.0035;
-const bbox = [lng - d * 1.6, lat - d, lng + d * 1.6, lat + d].map((x) => x.toFixed(5)).join(',');
-const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${lat}%2C${lng}`;
-const osmLink = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=18/${lat}/${lng}`;
+// Sve mape vode na Google Maps (ugrađena mapa, "Otvori" i navigacija).
+const gEmbed = `https://maps.google.com/maps?q=${lat},${lng}&z=17&hl=sr&output=embed`;
 const gmaps = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 const gnav = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-const apple = `https://maps.apple.com/?daddr=${lat},${lng}&q=${encodeURIComponent(dzamija.naziv)}`;
 const adresa = [dzamija.adresa, dzamija.drzava].filter(Boolean).join(', ');
 const k = dzamija.kontakt;
 const m = dzamija.drustveneMreze;
@@ -36,7 +33,6 @@ const mreze = [
           <div class="kt__btns">
             <a class="btn btn--primary btn--sm" href={gnav} target="_blank" rel="noopener">Navigacija do džamije</a>
             <a class="btn btn--ghost btn--sm" href={gmaps} target="_blank" rel="noopener">Otvori u Google Maps</a>
-            <a class="btn btn--ghost btn--sm" href={apple} target="_blank" rel="noopener">Apple Maps</a>
           </div>
         </div>
 
@@ -81,15 +77,15 @@ const mreze = [
       <div class="kt__map">
         <div class="kt__frame">
           <iframe
-            src={osmEmbed}
+            src={gEmbed}
             title={`Mapa: lokacija — ${dzamija.naziv}`}
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
           ></iframe>
         </div>
         <p class="kt__small muted">
-          Mapa: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> saradnici ·
-          <a href={osmLink} target="_blank" rel="noopener">Veća mapa</a>
+          <a href={gmaps} target="_blank" rel="noopener">Veća mapa (Google Maps)</a>
         </p>
       </div>
     </div>
