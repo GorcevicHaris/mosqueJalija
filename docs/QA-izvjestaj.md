@@ -216,3 +216,30 @@ Sve na javnoj adresi https://gorcevicharis.github.io/mosqueJalija/, poslije poje
 | Mape | sve vode na Google Maps; u buildu nema OpenStreetMap ni Apple Maps linkova |
 | Admin | javni /admin povezan sa bazom; nalog admina se prijavio linkom iz e-maila; u bazi potvrđena prava urednika i admina (pisanje testirano u poništenoj transakciji) |
 | Build / `astro check` | 124 stranice, 0 grešaka; 0 grešaka, 0 upozorenja, 0 napomena |
+
+### Poređenje sa uzorom (arapdzamija.rs) — automatska provjera objavljenog sajta
+
+Za svaku funkciju iz `docs/analiza-uzora.md` („Funkcije koje Jalija sajt mora imati“) provjereno je da
+postoji na objavljenom sajtu: **44/44**.
+
+- **Isto kao uzor:**
+  - početna sa kaligrafijom, fotografijom, vaktijom, predavanjima, obavještenjima i mrežama;
+  - header sa padajućim menijem i dugmetom „Doniraj“; top bar sa hidžretskim datumom; footer;
+  - vaktija sa mjesečnom tabelom, zvaničnim izvorom i napomenama;
+  - hutbe i predavanja sa filterima; detalj sa plejerom, punim tekstom (transkript), srodnim
+    predavanjima i YouTube linkom;
+  - mediji; kontakt sa Google mapom i formom; obavještenja sa kategorijama; objave;
+  - donacije bez izmišljenog računa; historijat sa izvorima;
+  - pravila ponašanja (14 kartica, uzor ima 13); Kur'an i hadisi (ajet i hadis dana);
+  - dove sa kopiranjem; mekteb sa rasporedom i prijavom; učenje Kur'ana; galerija sa lightboxom.
+- **Više od uzora:**
+  - imami sa fotografijama i profilima; pretraga cijelog sajta, uključujući transkripte;
+  - islamski kalendar; islamski alati; online upis; sedmični raspored; Pitaj imama;
+  - RSS; instalacija na telefon (PWA); admin panel.
+- **Svjesno izostavljeno:** stranica „Obnova“ uzora, jer je Džamija na Jaliji nova (otvorena 2024.),
+  pa obnove nije bilo.
+
+Nepoznati podaci su na sajtu vidljivo označeni („Podatak nedostaje“): kontakt (5 oznaka), donacije (8),
+mekteb (2), vaktija (3, sabah i džuma u džamiji), profili Metjahića i Salihovića (2).
+Mobilni prikaz je provjeren u emulaciji telefona (375 px, Android Chrome user-agent, touch), ne na
+fizičkom uređaju.
