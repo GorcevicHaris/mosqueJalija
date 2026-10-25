@@ -87,7 +87,7 @@ Samo dvije stvari se ne mijenjaju kroz admin, i to namjerno:
 Kad se nešto sačuva u adminu, nova obavještenja se na sajtu vide odmah. Ostale izmjene se pojavljuju
 za ~15–20 minuta, jer se sajt automatski obnavlja iz baze svakih 15 minuta.
 
-Prijava ide preko linka na e-mail ili lozinkom. Ulaz je link „Prijava za urednike“ u podnožju sajta.
+Prijava ide samo preko linka na e-mail, bez lozinke. Ulaz je dugme „Admin prijava“ u podnožju sajta, „Admin“ u gornjoj traci i „Admin prijava“ u meniju na telefonu.
 
 **Sigurnost:**
 - svaka tabela ima RLS pravila, a Supabase sigurnosna provjera ne prijavljuje upozorenja;
@@ -143,27 +143,29 @@ Već podešeno:
 - **Supabase prijava:** Site URL i redirect adrese za `/mosqueJalija/admin/` (javni sajt) i
   `localhost:4330` (razvoj).
 - **Prvi administrator:** harisgorcevic1000@gmail.com.
-- **Lozinke urednika:** najmanje 12 znakova, obavezna mala i velika slova, brojevi i simboli.
-  Zaštita od procurjelih lozinki (HaveIBeenPwned) postoji samo na Supabase Pro planu, pa nije uključena.
-- **Ulaz u admin:** diskretan link „Prijava za urednike“ dolje u podnožju svake stranice (nije u
-  glavnom meniju; Google ga ne indeksira).
+- **Prijava bez lozinke:** samo link na e-mail (opcija sa lozinkom je uklonjena). U Supabase-u su
+  ipak postavljena stroga pravila za lozinke (12+ znakova, slova, brojevi, simboli), za slučaj da se
+  lozinke ikad uključe.
+- **Ulaz u admin:** dugme „Admin prijava“ u podnožju, „Admin“ u gornjoj traci (desktop) i „Admin
+  prijava“ na dnu menija na telefonu. Nije u glavnom meniju, a Google ga ne indeksira.
 
 **Provjereno:** nalog harisgorcevic1000@gmail.com se uspješno prijavio linkom iz e-maila. U bazi je
 potvrđeno da ima prava urednika i admina: vidi listu urednika i može da mijenja obavještenja, podatke o
 džamiji, raspored i imame (testirano u transakciji koja je poništena). Javnost ne može ni čitati
 poruke ni mijenjati sadržaj.
 
-Kako se prijaviti: „Prijava za urednike“ → upiši e-mail → „Pošalji link za prijavu“ → otvori link iz
+Kako se prijaviti: „Admin prijava“ → upiši e-mail → „Pošalji link za prijavu“ → otvori link iz
 e-maila na istom uređaju.
 
 Šta još treba uraditi ti:
 1. **Ostali urednici (imam, sekretar).** Supabase-ov ugrađeni e-mail servis šalje samo članovima tvog
-   Supabase tima (najviše ~2 e-maila na sat). Imaš dvije opcije:
-   - **(a)** Supabase → Authentication → Users → **Add user** → e-mail + lozinka + „Auto confirm“, pa
-     u adminu, u sekciji „Urednici“, dodaj tu adresu. Urednik se prijavljuje preko „Imam lozinku“.
+   Supabase tima (najviše ~2 e-maila na sat). Da bi im link za prijavu stizao, imaš dvije opcije:
+   - **(a)** Dodaj ih kao članove svog Supabase tima (Organization → Team → Invite).
    - **(b)** Podesi besplatni SMTP (npr. Resend ili Brevo) u Authentication → Emails → SMTP Settings.
      Tada prijava linkom radi za sve, a u e-mail šablon se može dodati i šestocifreni kod
      (`{{ .Token }}`). Bez SMTP-a Supabase ne dozvoljava izmjenu šablona.
+
+   U oba slučaja tu adresu dodaj i u adminu, u sekciji „Urednici“.
 2. **Vlastiti domen:** kupi domen, pa ga dodaj u Vercel → Settings → Domains (uputstvo u `README.md`).
    Javi mi domen, da ga dodam i u Supabase prijavu.
 3. **Deploy Hook:** link je bio vidljiv u razgovoru. Preporuka je da u Vercel → Settings → Git → Deploy
