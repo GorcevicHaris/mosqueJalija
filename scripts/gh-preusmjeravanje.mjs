@@ -25,7 +25,10 @@ function stranica(cilj) {
 <script>
   (function () {
     var cilj = ${JSON.stringify(CILJ)};
-    var put = location.pathname.replace(${JSON.stringify(new RegExp('^' + BASE).source)}, '') || '/';
+    var base = ${JSON.stringify(BASE)};
+    var put = location.pathname;
+    if (put.indexOf(base) === 0) put = put.slice(base.length);
+    if (!put) put = '/';
     location.replace(cilj + put + location.search + location.hash);
   })();
 </script>
