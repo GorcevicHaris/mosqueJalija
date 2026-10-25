@@ -30,6 +30,9 @@ export interface Dzamija {
     swift: string | null;
     svrha: string | null;
     napomena: string | null;
+    /** Kontakt za donacije (stranica /donacije); prazno = opšti kontakt džamije. */
+    email?: string | null;
+    telefon?: string | null;
   };
   dzuma: { vrijeme: string | null; napomena: string | null };
   izvori: Izvor[];

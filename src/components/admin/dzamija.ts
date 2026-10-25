@@ -49,15 +49,11 @@ const GRUPE: { naslov: string; opis?: string; polja: Polje[] }[] = [
   },
   {
     naslov: 'Donacije',
-    opis: 'Unosite samo zvanične, provjerene podatke za uplatu. Prazno polje se na sajtu prikazuje kao "nije objavljeno".',
+    opis: 'Stranica Donacije prikazuje samo kontakt: Instagram i Facebook (iz društvenih mreža), telefon i e-mail. Prazno polje = koristi se opšti kontakt džamije.',
     polja: [
-      { k: 'donacije.primalac', l: 'Primalac', t: 'text', max: 200 },
-      { k: 'donacije.banka', l: 'Banka', t: 'text', max: 200, pola: true },
-      { k: 'donacije.racun', l: 'Broj računa', t: 'text', max: 60, pola: true },
-      { k: 'donacije.iban', l: 'IBAN', t: 'text', max: 60, pola: true },
-      { k: 'donacije.swift', l: 'SWIFT/BIC', t: 'text', max: 20, pola: true },
-      { k: 'donacije.svrha', l: 'Svrha uplate', t: 'text', max: 200 },
-      { k: 'donacije.napomena', l: 'Napomena', t: 'textarea', redovi: 3, max: 1000 },
+      { k: 'donacije.email', l: 'E-mail za donacije', t: 'email', max: 254, pola: true },
+      { k: 'donacije.telefon', l: 'Telefon za donacije', t: 'tel', max: 40, pola: true },
+      { k: 'donacije.napomena', l: 'Napomena (prikazuje se ispod kontakta)', t: 'textarea', redovi: 3, max: 1000 },
     ],
   },
   {

@@ -105,8 +105,8 @@ const kolone = [
     <p class="site-footer__copy">
       <span>© {godina} Džamija na Jaliji</span>
       <a class="site-footer__admin" href={url('/admin')} rel="nofollow">
-        <Icon name="lock" size={13} />
-        <span>Prijava za urednike</span>
+        <Icon name="lock" size={15} />
+        <span>Admin prijava</span>
       </a>
     </p>
     <p class="site-footer__note">
@@ -176,18 +176,22 @@ const kolone = [
   }
   .site-footer__bottom p { margin: 0; }
   .site-footer__copy { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-4); }
-  /* diskretan ulaz za urednike: sitno i prigušeno, ali čitljivo (AA) i ≥ 40 px za dodir */
+  /* ulaz za urednike: malo dugme sa okvirom u podnožju (nije u glavnom meniju) */
   .site-footer__admin {
     display: inline-flex;
     align-items: center;
-    gap: 0.35em;
+    gap: 0.45em;
     min-height: 40px;
-    color: var(--inverse-muted);
-    font-size: 0.8rem;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--inverse-accent);
+    border-radius: var(--radius-full);
+    color: var(--inverse-accent);
+    font-size: 0.85rem;
+    font-weight: 600;
     text-decoration: none;
-    opacity: 0.9;
+    transition: background var(--transition), color var(--transition);
   }
-  .site-footer__admin :global(svg) { flex: none; opacity: 0.8; }
-  .site-footer__admin:hover { color: var(--inverse-accent); opacity: 1; text-decoration: underline; }
+  .site-footer__admin :global(svg) { flex: none; }
+  .site-footer__admin:hover { background: var(--inverse-accent); color: var(--inverse-bg); }
   .site-footer__note .badge { font-size: 0.72rem; }
 </style>
