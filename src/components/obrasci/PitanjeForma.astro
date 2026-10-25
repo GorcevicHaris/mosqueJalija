@@ -1,0 +1,85 @@
+---
+// "Pitaj imama" — slanje pitanja u public.pitanja (ime, email, pitanje). Anonimno je dozvoljeno.
+// Odgovor i objava su samo za urednike (admin panel).
+import './obrasci.css';
+import ObrazacPodnozje from './ObrazacPodnozje.astro';
+import ObrazacUspjeh from './ObrazacUspjeh.astro';
+import { imaSupabase } from '../../lib/obrasci/supabase-rest';
+import { url } from '../../lib/url';
+
+interface Props { id?: string }
+const { id = 'pitanje' } = Astro.props;
+---
+{imaSupabase ? (
+  <div class="ob-okvir">
+    <form class="ob" id={id} novalidate data-ob-pitanje>
+      <div class="ob-summary" role="alert" tabindex="-1" data-ob-summary hidden></div>
+
+      <div class="field ob-polje">
+        <label for={`${id}-pitanje`}>Vaše pitanje <span class="ob-req" aria-hidden="true">*</span></label>
+        <textarea class="textarea" id={`${id}-pitanje`} name="pitanje" rows="6" required maxlength="3000" aria-describedby={`${id}-pitanje-hint ${id}-pitanje-err`}></textarea>
+        <p class="ob-hint" id={`${id}-pitanje-hint`}>Ne upisujte lične podatke u pitanje — ono može biti objavljeno. <span data-ob-brojac="pitanje">0</span>/3000</p>
+        <p class="ob-err" id={`${id}-pitanje-err`} data-ob-err="pitanje"></p>
+      </div>
+
+      <fieldset class="pq-anon">
+        <legend class="ob-legend">Podaci o vama <span class="ob-opt">(neobavezno — možete pitati anonimno)</span></legend>
+        <div class="ob-red">
+          <div class="field ob-polje">
+            <label for={`${id}-ime`}>Ime</label>
+            <input class="input" id={`${id}-ime`} name="ime" type="text" autocomplete="given-name" maxlength="100" aria-describedby={`${id}-ime-err`} />
+            <p class="ob-err" id={`${id}-ime-err`} data-ob-err="ime"></p>
+          </div>
+          <div class="field ob-polje">
+            <label for={`${id}-email`}>E-mail</label>
+            <input class="input" id={`${id}-email`} name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" aria-describedby={`${id}-email-err ${id}-email-hint`} />
+            <p class="ob-hint" id={`${id}-email-hint`}>Samo ako želite da vam imam odgovori i privatno.</p>
+            <p class="ob-err" id={`${id}-email-err`} data-ob-err="email"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <p class="ob-note">
+        Ime i e-mail se nikada ne objavljuju — vidi ih samo imam/urednik. Za brisanje podataka pišite nam preko
+        <a href={url('/kontakt')}>kontakt stranice</a>.
+      </p>
+
+      <ObrazacPodnozje id={id} oznaka="Pošalji pitanje" />
+    </form>
+    <ObrazacUspjeh forId={id} naslov="Hvala, pitanje je primljeno" ponovo="Postavi novo pitanje" />
+  </div>
+) : (
+  <p class="muted">Slanje pitanja preko sajta trenutno nije dostupno. Pitanje možete poslati preko <a href={url('/kontakt')}>kontakt stranice</a>.</p>
+)}
+
+<style>
+  .pq-anon { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-3); min-width: 0; }
+  .pq-anon legend { padding: 0; margin-bottom: var(--space-3); }
+</style>
+
+<script>
+  import { obrazac, EMAIL_RE, iliNull } from '../../lib/obrasci/forma-ui';
+
+  document.querySelectorAll<HTMLFormElement>('form[data-ob-pitanje]').forEach((form) => {
+    const { el } = obrazac({
+      form,
+      tabela: 'pitanja',
+      uspjeh: 'Imam će ga pregledati. Odgovori se objavljuju na ovoj stranici (bez vašeg imena); ako ste ostavili e-mail, odgovor može stići i privatno.',
+      pravila: [
+        {
+          ime: 'pitanje',
+          naziv: 'Pitanje',
+          provjera: (v) =>
+            !v ? 'Upišite pitanje.' : v.length < 10 ? `Pitanje je prekratko (još ${10 - v.length} znakova).` : v.length > 3000 ? 'Pitanje je predugo (najviše 3000 znakova).' : '',
+        },
+        { ime: 'ime', naziv: 'Ime', provjera: (v) => (v.length > 100 ? 'Ime je predugo (najviše 100 znakova).' : '') },
+        { ime: 'email', naziv: 'E-mail', provjera: (v) => (v && (!EMAIL_RE.test(v) || v.length > 254) ? 'E-mail adresa nije ispravna (npr. ime@primjer.com).' : '') },
+      ],
+      red: () => ({
+        pitanje: el('pitanje').value.trim(),
+        ime: iliNull(el('ime').value),
+        email: iliNull(el('email').value),
+      }),
+    });
+  });
+</script>

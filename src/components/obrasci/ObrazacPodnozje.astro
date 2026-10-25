@@ -1,0 +1,32 @@
+---
+// Donji dio svakog javnog obrasca: zamka za botove, dugme sa stanjem učitavanja, status (aria-live)
+// i rezervni kanal (Instagram poruka) koji se prikaže kada slanje ne uspije.
+import Icon from '../ui/Icon.astro';
+import { kanaliPoruka } from '../../lib/data';
+
+interface Props { id: string; oznaka: string }
+const { id, oznaka } = Astro.props;
+const k = kanaliPoruka();
+const dm = k.instagramDm ?? 'https://ig.me/m/dzamija_na_jaliji';
+---
+<!-- zamka za botove: ljudi ovo polje ne vide -->
+<div class="ob-hp" aria-hidden="true" data-ob-hp>
+  <label for={`${id}-web`}>Ne popunjavajte ovo polje</label>
+  <input id={`${id}-web`} name="web_adresa" type="text" tabindex="-1" autocomplete="off" />
+</div>
+
+<div class="ob-actions">
+  <button class="btn btn--primary" type="submit" data-ob-submit>
+    <span class="ob-spinner" aria-hidden="true"></span>
+    <span data-ob-submit-tekst>{oznaka}</span>
+  </button>
+</div>
+
+<p class="ob-status" id={`${id}-status`} role="status" aria-live="polite" tabindex="-1" data-ob-status></p>
+
+<div class="ob-fallback" data-ob-fallback hidden>
+  <p>Ako slanje i dalje ne uspijeva, pošaljite nam privatnu poruku na Instagramu — odgovaramo i tamo.</p>
+  <a class="btn btn--ghost btn--sm" href={dm} target="_blank" rel="noopener">
+    <Icon name="instagram" size={18} /> Poruka na Instagramu<span class="visually-hidden"> (otvara se u novoj kartici)</span>
+  </a>
+</div>

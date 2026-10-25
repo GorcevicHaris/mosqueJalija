@@ -54,6 +54,22 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
         <button type="button" class="btn btn--ghost btn--sm" data-promijeni-adresu>Druga adresa</button>
       </div>
     </form>
+
+    <details class="adm-lozinka">
+      <summary>Imam lozinku</summary>
+      <form class="adm-prijava" data-prijava-lozinka novalidate>
+        <p class="muted">Za naloge koje je administrator napravio sa lozinkom (Supabase → Authentication → Add user).</p>
+        <div class="field">
+          <label for="adm-email-l">E-mail adresa</label>
+          <input class="input" id="adm-email-l" name="email" type="email" autocomplete="username" inputmode="email" required spellcheck="false" />
+        </div>
+        <div class="field">
+          <label for="adm-lozinka">Lozinka</label>
+          <input class="input" id="adm-lozinka" name="lozinka" type="password" autocomplete="current-password" required />
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">Prijavi se lozinkom</button>
+      </form>
+    </details>
   </section>
 
   <!-- Prijavljen, ali nije urednik -->
@@ -155,6 +171,9 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
   .adm-prijava { display: grid; gap: var(--space-4); }
   .adm-prijava p { margin: 0; }
   .adm-prijava__dodatno { justify-content: center; }
+  .adm-lozinka { margin-top: var(--space-5); border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+  .adm-lozinka summary { cursor: pointer; color: var(--color-text-muted); font-weight: 600; min-height: 40px; display: flex; align-items: center; }
+  .adm-lozinka[open] summary { margin-bottom: var(--space-3); }
   .adm-kod { font-size: 1.5rem; letter-spacing: 0.3em; text-align: center; font-variant-numeric: tabular-nums; }
   .adm-ucitavanje { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--color-text-muted); }
   .adm-spiner { width: 1.2em; height: 1.2em; border-radius: 50%; border: 2.5px solid var(--color-border-strong); border-top-color: var(--color-primary); animation: adm-vrti 0.8s linear infinite; }

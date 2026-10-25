@@ -1,0 +1,92 @@
+/* Zajednički stilovi javnih obrazaca (kontakt, upis, pitaj imama). Prefiks: .ob- */
+.ob { display: grid; gap: var(--space-4); }
+.ob[hidden], .ob [hidden], .ob-uspjeh[hidden] { display: none !important; }
+.ob-red { display: grid; gap: var(--space-4); align-items: start; }
+/* dvije kolone samo kad je OBRAZAC dovoljno širok (radi i u uskoj bočnoj kartici na /mekteb) */
+.ob-okvir { container-type: inline-size; }
+@container (min-width: 520px) { .ob-red { grid-template-columns: 1fr 1fr; } }
+.ob-polje { gap: var(--space-1); align-content: start; }
+.ob-polje > label, .ob-legend { font-weight: 700; font-size: 0.92rem; }
+.ob-req { color: var(--color-danger); }
+.ob-opt { font-weight: 500; color: var(--color-text-muted); font-size: 0.85em; }
+.ob-hint { margin: 0; font-size: 0.82rem; color: var(--color-text-muted); }
+.ob-err { margin: 0; color: var(--color-danger); font-size: 0.88rem; font-weight: 600; }
+.ob-err:empty { display: none; }
+.ob [aria-invalid='true'] { border-color: var(--color-danger); box-shadow: 0 0 0 1px var(--color-danger); }
+.ob-hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.ob-note { margin: 0; font-size: 0.85rem; color: var(--color-text-muted); }
+
+.ob-summary {
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface));
+  font-weight: 600;
+}
+.ob-summary p { margin: 0; }
+.ob-summary ul { margin: var(--space-2) 0 0; padding-left: 1.2em; font-weight: 500; }
+.ob-summary a { color: inherit; }
+
+.ob-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.ob-actions .btn { min-width: 12rem; }
+@container (max-width: 479px) { .ob-actions .btn { width: 100%; } }
+.ob-spinner {
+  width: 1.05em; height: 1.05em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  display: none;
+}
+.btn[aria-busy='true'] .ob-spinner { display: inline-block; animation: ob-vrti 0.8s linear infinite; }
+@keyframes ob-vrti { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .btn[aria-busy='true'] .ob-spinner { animation-duration: 2.4s; } }
+
+.ob-status:empty { display: none; }
+.ob-status {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+.ob-status:focus { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.ob-status[data-tip='ok'] { background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface)); color: var(--color-success); border: 1.5px solid var(--color-success); }
+.ob-status[data-tip='greska'] { background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface)); color: var(--color-danger); border: 1.5px solid var(--color-danger); }
+.ob-status[data-tip='info'] { background: var(--color-surface-2); color: var(--color-text); border: 1.5px solid var(--color-border-strong); }
+
+.ob-fallback { display: grid; gap: var(--space-2); padding: var(--space-3) var(--space-4); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); }
+.ob-fallback p { margin: 0; font-size: 0.92rem; }
+.ob-fallback .btn { justify-self: start; white-space: normal; }
+
+.ob-uspjeh {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  padding: var(--space-5);
+  border: 1.5px solid var(--color-success);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-success) 8%, var(--color-surface));
+}
+.ob-uspjeh:focus { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.ob-uspjeh__ikona {
+  display: inline-grid; place-items: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--color-success); color: var(--color-surface);
+}
+.ob-uspjeh__naslov { margin: 0; font-size: 1.3rem; }
+.ob-uspjeh p { margin: 0; }
+
+.ob-check { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; }
+.ob-check input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--color-primary); }
+.ob-check label { font-weight: 500; font-size: 0.95rem; }
+
+.ob-privatnost {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.9rem;
+}
+.ob-privatnost summary { cursor: pointer; font-weight: 700; min-height: 40px; display: flex; align-items: center; color: var(--color-primary); }
+.ob-privatnost ul { margin: var(--space-2) 0 0; padding-left: 1.2em; display: grid; gap: var(--space-1); }
+.ob-privatnost p { margin: var(--space-2) 0 0; }

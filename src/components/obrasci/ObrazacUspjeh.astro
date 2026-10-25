@@ -1,0 +1,14 @@
+---
+// Kartica koja zamijeni obrazac nakon uspješnog slanja (fokus se prebacuje na nju).
+import Icon from '../ui/Icon.astro';
+
+interface Props { forId: string; naslov: string; ponovo?: string }
+const { forId, naslov, ponovo = 'Pošalji još jednu' } = Astro.props;
+---
+<div class="ob-uspjeh" data-ob-uspjeh={forId} tabindex="-1" role="status" aria-live="polite" hidden>
+  <span class="ob-uspjeh__ikona" aria-hidden="true"><Icon name="check" size={24} /></span>
+  <h3 class="ob-uspjeh__naslov">{naslov}</h3>
+  <p data-ob-uspjeh-tekst></p>
+  <slot />
+  <button type="button" class="btn btn--ghost btn--sm" data-ob-ponovo>{ponovo}</button>
+</div>

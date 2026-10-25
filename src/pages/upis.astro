@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Icon from '../components/ui/Icon.astro';
+import PrijavaForma from '../components/obrasci/PrijavaForma.astro';
+import { GRUPE, PROGRAMI } from '../lib/obrasci/programi';
+import { url } from '../lib/url';
+
+const grupe = GRUPE.filter((g) => g !== 'Ostalo')
+  .map((g) => ({ g, lista: PROGRAMI.filter((p) => p.grupa === g) }))
+  .filter((x) => x.lista.length);
+---
+<BaseLayout
+  title="Online upis"
+  description="Online prijava za mekteb, Školu Kur'ana, halke hifza i kurseve sufare u Džamiji na Jaliji (Novi Pazar)."
+>
+  <PageHero eyebrow="Mekteb · Škola Kur'ana · Halke" title="Online upis" subtitle="Prijavite sebe ili dijete na nastavu u džamiji — javićemo vam se radi potvrde.">
+    <a class="btn btn--gold up__skok" href="#prijava-naslov">Na obrazac za prijavu</a>
+    <a class="btn btn--ghost up__skok-raspored" href={url('/raspored')}>Sedmični raspored</a>
+  </PageHero>
+
+  <section class="section section--tight">
+    <div class="container up">
+      <div class="up__programi">
+        <h2 class="up__h">Programi</h2>
+        <p class="muted up__lead">
+          Termini su preuzeti iz <a href={url('/obavjestenja')}>obavještenja</a> džamije. Nastava je besplatna, osim ako
+          u obavještenju nije drugačije navedeno.
+        </p>
+        {grupe.map(({ g, lista }) => (
+          <section class="up__grupa" aria-labelledby={`grupa-${g.replace(/[^a-z]/gi, '')}`}>
+            <h3 class="up__gh" id={`grupa-${g.replace(/[^a-z]/gi, '')}`}>{g}</h3>
+            <ul class="up__lista" role="list">
+              {lista.map((p) => (
+                <li class="card up__kartica">
+                  <h4 class="up__naziv">{p.naziv}</h4>
+                  <p class="up__meta"><Icon name="users" size={16} /> {p.zaKoga}</p>
+                  <p class="up__meta"><Icon name="clock" size={16} /> {p.termin ?? 'Termin još nije objavljen'}</p>
+                  {p.predavac && <p class="up__meta"><Icon name="graduation" size={16} /> {p.predavac}</p>}
+                  {p.napomena && <p class="up__napomena">{p.napomena}</p>}
+                  <a class="link-arrow up__link" href={`?program=${p.id}#prijava`} data-up-program={p.id}>
+                    Prijavi se<span class="visually-hidden">: {p.naziv}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+        <p class="muted up__small">Sedmični raspored svih termina: <a href={url('/raspored')}>raspored halki i mekteba</a>.</p>
+      </div>
+
+      <div class="up__forma">
+        <div class="card up__card">
+          <h2 class="up__h" id="prijava-naslov">Prijava</h2>
+          <PrijavaForma id="prijava" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .up { display: grid; gap: var(--space-6); }
+  @media (min-width: 1000px) { .up { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; } .up__forma { position: sticky; top: calc(var(--header-h) + var(--space-4)); } }
+  .up__h { margin: 0 0 var(--space-3); font-size: clamp(1.4rem, 1.5vw + 1rem, 1.8rem); }
+  .up__lead { margin: 0 0 var(--space-4); }
+  .up__grupa + .up__grupa { margin-top: var(--space-5); }
+  .up__gh { font-size: 1.05rem; margin: 0 0 var(--space-3); color: var(--color-accent); font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.06em; }
+  .up__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+  .up__kartica { padding: var(--space-4); gap: var(--space-1); }
+  .up__naziv { margin: 0 0 var(--space-1); font-size: 1.05rem; font-family: var(--font-sans); font-weight: 700; }
+  .up__meta { margin: 0; display: flex; gap: var(--space-2); align-items: center; font-size: 0.9rem; color: var(--color-text-muted); }
+  .up__meta :global(svg) { flex: none; color: var(--color-accent); }
+  .up__napomena { margin: var(--space-1) 0 0; font-size: 0.85rem; color: var(--color-missing-text); }
+  .up__link { align-self: flex-start; margin-top: var(--space-1); font-weight: 700; }
+  .up__small { margin: var(--space-5) 0 0; font-size: 0.9rem; }
+  .up__card { padding: clamp(var(--space-4), 3vw, var(--space-6)); }
+</style>
+
+<script>
+  // "Prijavi se" bez ponovnog učitavanja: odabere program u obrascu i prebaci fokus.
+  document.querySelectorAll<HTMLAnchorElement>('[data-up-program]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const sel = document.querySelector<HTMLSelectElement>('#prijava-program');
+      if (!sel) return; // bez Supabase-a — običan link
+      e.preventDefault();
+      sel.value = a.dataset.upProgram!;
+      sel.dispatchEvent(new Event('change'));
+      try {
+        history.replaceState(null, '', `?program=${a.dataset.upProgram}#prijava`);
+      } catch {
+        /* ništa */
+      }
+      document.getElementById('prijava-naslov')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      sel.focus({ preventScroll: true });
+    });
+  });
+</script>

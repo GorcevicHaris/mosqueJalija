@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import { imaSupabase, procitajZaBuild } from '../lib/obrasci/supabase-rest';
+import { UPIT_RASPORED, ZA_KOGA, renderRaspored, type Termin, type ZaKoga } from '../lib/obrasci/raspored';
+import { obavjestenja, formatDatum } from '../lib/data';
+import { url } from '../lib/url';
+
+// Build: raspored ulazi u HTML (SEO, radi i bez JS-a). Preglednik ga osvježi i označi današnji dan.
+const { redovi } = imaSupabase ? await procitajZaBuild<Termin>('raspored', UPIT_RASPORED) : { redovi: [] as Termin[] };
+const prisutni = new Set(redovi.map((t) => t.za_koga));
+const filteri = (Object.keys(ZA_KOGA) as ZaKoga[]).filter((k) => k !== 'svi' && prisutni.has(k));
+const najnovija = obavjestenja.filter((o) => !o.placeholder).slice(0, 3);
+---
+<BaseLayout
+  title="Raspored halki i mekteba"
+  description="Sedmični raspored halki, mekteba i kurseva u Džamiji na Jaliji (Novi Pazar) — po danima, za muškarce, žene i djecu."
+>
+  <PageHero eyebrow="Sedmični raspored" title="Raspored halki i mekteba" subtitle="Termini nastave u džamiji po danima u sedmici." />
+
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      <div class="rs-alati" data-rs-alati hidden={redovi.length === 0}>
+        <ul class="chips" role="list" aria-label="Za koga" data-rs-filteri>
+          <li><button type="button" class="chip" aria-pressed="true" data-value="">Svi termini</button></li>
+          {filteri.map((k) => <li><button type="button" class="chip" aria-pressed="false" data-value={k}>{ZA_KOGA[k]}</button></li>)}
+        </ul>
+        <p class="visually-hidden" aria-live="polite" data-rs-status></p>
+      </div>
+
+      <div class="rs" data-rs-lista><Fragment set:html={renderRaspored(redovi, null)} /></div>
+
+      <p class="muted rs-nema" data-rs-nema-filter hidden>Nema termina za odabranu grupu.</p>
+
+      <div class="rs-prazno" data-rs-prazno hidden={redovi.length > 0}>
+        <Placeholder label="Raspored još nije unesen" hint="termini se objavljuju u obavještenjima džamije" />
+        {najnovija.length > 0 && (
+          <div class="rs-obav">
+            <h2 class="rs-obav__h">Najnovija obavještenja</h2>
+            <ul class="rs-obav__lista" role="list">
+              {najnovija.map((o) => (
+                <li>
+                  <a href={url(`/obavjestenja/${o.slug}`)}>{o.naslov}</a>
+                  <span class="muted"> · <time datetime={o.datum}>{formatDatum(o.datum)}</time></span>
+                </li>
+              ))}
+            </ul>
+            <a class="link-arrow" href={url('/obavjestenja')}>Sva obavještenja</a>
+          </div>
+        )}
+      </div>
+
+      <div class="rs-cta card">
+        <p><strong>Želite se uključiti?</strong> Prijavite sebe ili dijete online.</p>
+        <a class="btn btn--primary btn--sm" href={url('/upis')}>Online upis</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .rs-alati { margin-bottom: var(--space-5); }
+  .rs-alati[hidden], .rs-prazno[hidden], .rs-nema[hidden] { display: none; }
+  .rs { display: grid; gap: var(--space-5); }
+  .rs:empty { display: none; }
+  .rs :global(.rs-dan[hidden]) { display: none; }
+  .rs :global(.rs-dan__naslov) { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); font-size: 1.3rem; }
+  .rs :global(.rs-dan--danas .rs-dan__naslov) { color: var(--color-primary); }
+  .rs :global(.rs-dan--danas .rs-stavka) { border-color: var(--color-primary); border-left-width: 4px; }
+  .rs :global(.rs-lista) { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+  .rs :global(.rs-stavka) { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--space-3); padding: var(--space-4); }
+  .rs :global(.rs-stavka[hidden]) { display: none; }
+  @media (max-width: 420px) { .rs :global(.rs-stavka) { grid-template-columns: 1fr; gap: var(--space-1); } }
+  .rs :global(.rs-stavka__vrijeme) { margin: 0; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--color-accent); line-height: 1.35; }
+  .rs :global(.rs-stavka__tijelo) { display: grid; gap: var(--space-1); min-width: 0; }
+  .rs :global(.rs-stavka__naziv) { margin: 0; font-size: 1.05rem; font-family: var(--font-sans); font-weight: 700; }
+  .rs :global(.rs-stavka__opis) { margin: 0; font-size: 0.92rem; color: var(--color-text-muted); }
+  .rs :global(.rs-stavka__za) { justify-self: start; }
+  .rs-nema { margin: 0; }
+  .rs-prazno { display: grid; gap: var(--space-4); }
+  .rs-obav { display: grid; gap: var(--space-2); }
+  .rs-obav__h { font-size: 1.15rem; margin: 0; }
+  .rs-obav__lista { margin: 0; padding-left: 1.2em; display: grid; gap: var(--space-2); }
+  .rs-cta { margin-top: var(--space-6); flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) var(--space-5); }
+  .rs-cta p { margin: 0; }
+</style>
+
+<script>
+  import { procitaj } from '../lib/obrasci/supabase-rest';
+  import { UPIT_RASPORED, ZA_KOGA, danasDan, renderRaspored, type Termin, type ZaKoga } from '../lib/obrasci/raspored';
+
+  const lista = document.querySelector<HTMLElement>('[data-rs-lista]')!;
+  const alati = document.querySelector<HTMLElement>('[data-rs-alati]')!;
+  const filteri = document.querySelector<HTMLElement>('[data-rs-filteri]')!;
+  const status = document.querySelector<HTMLElement>('[data-rs-status]')!;
+  const prazno = document.querySelector<HTMLElement>('[data-rs-prazno]')!;
+  const nemaFilter = document.querySelector<HTMLElement>('[data-rs-nema-filter]')!;
+  let filter = '';
+  try {
+    filter = new URLSearchParams(location.search).get('za') ?? '';
+  } catch {
+    /* ništa */
+  }
+
+  function primijeni() {
+    let ukupno = 0;
+    lista.querySelectorAll<HTMLElement>('.rs-dan').forEach((dan) => {
+      let n = 0;
+      dan.querySelectorAll<HTMLElement>('.rs-stavka').forEach((s) => {
+        // "svi" termini su vidljivi u svakom filteru
+        const ok = !filter || s.dataset.zaKoga === filter || s.dataset.zaKoga === 'svi';
+        s.hidden = !ok;
+        if (ok) n++;
+      });
+      dan.hidden = n === 0;
+      ukupno += n;
+    });
+    filteri.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.value ?? '') === filter)));
+    nemaFilter.hidden = !(filter && ukupno === 0 && lista.children.length);
+    status.textContent = `Prikazano termina: ${ukupno}`;
+  }
+
+  function postaviFiltere(termini: Termin[]) {
+    const prisutni = new Set(termini.map((t) => t.za_koga));
+    const kljucevi = (Object.keys(ZA_KOGA) as ZaKoga[]).filter((k) => k !== 'svi' && prisutni.has(k));
+    if (filter && !kljucevi.includes(filter as ZaKoga)) filter = '';
+    filteri.innerHTML = '';
+    for (const k of ['', ...kljucevi]) {
+      const li = document.createElement('li');
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.dataset.value = k;
+      b.textContent = k ? ZA_KOGA[k as ZaKoga] : 'Svi termini';
+      li.append(b);
+      filteri.append(li);
+    }
+    filteri.closest<HTMLElement>('[data-rs-alati]')!.hidden = termini.length === 0;
+  }
+
+  filteri.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-value]');
+    if (!b) return;
+    filter = b.dataset.value ?? '';
+    primijeni();
+  });
+
+  function iscrtaj(termini: Termin[]) {
+    lista.innerHTML = renderRaspored(termini, danasDan());
+    prazno.hidden = termini.length > 0;
+    alati.hidden = termini.length === 0;
+    postaviFiltere(termini);
+    primijeni();
+  }
+
+  // Označi "Danas" i u verziji iz builda (bez čekanja mreže)
+  const danas = danasDan();
+  const danSekcija = lista.querySelector<HTMLElement>(`.rs-dan[data-dan="${danas}"]`);
+  if (danSekcija) {
+    danSekcija.classList.add('rs-dan--danas');
+    const h = danSekcija.querySelector('.rs-dan__naslov');
+    if (h && !h.querySelector('.rs-danas')) h.insertAdjacentHTML('beforeend', ' <span class="badge badge--primary rs-danas">Danas</span>');
+  }
+  primijeni();
+
+  void procitaj<Termin>('raspored', UPIT_RASPORED).then((r) => {
+    if (r.ok) iscrtaj(r.podaci);
+    // pri grešci ostaje verzija iz builda (ili Placeholder ako je prazna)
+  });
+</script>

@@ -1,0 +1,95 @@
+---
+// Kontakt forma koja poruku upisuje u Supabase (tabela public.poruke: ime, email, tema, poruka).
+// Ako PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY nisu postavljeni u vrijeme builda,
+// prikazuje se postojeća forma (components/forms/ContactForm.astro) — ponašanje kao do sada.
+import './obrasci.css';
+import ContactForm from '../forms/ContactForm.astro';
+import ObrazacPodnozje from './ObrazacPodnozje.astro';
+import ObrazacUspjeh from './ObrazacUspjeh.astro';
+import { imaSupabase } from '../../lib/obrasci/supabase-rest';
+
+interface Props { id?: string; tema?: string }
+const { id = 'kontakt-supabase', tema: pocetnaTema } = Astro.props;
+const TEME =['Opšte', 'Mekteb', 'Halke', 'Donacije', 'Pitanje za imama', 'Ostalo'];
+---
+{imaSupabase ? (
+  <div class="ob-okvir">
+    <form class="ob" id={id} novalidate data-ob-kontakt aria-describedby={`${id}-napomena`}>
+      <div class="ob-summary" role="alert" tabindex="-1" data-ob-summary hidden></div>
+
+      <div class="ob-red">
+        <div class="field ob-polje">
+          <label for={`${id}-ime`}>Ime i prezime <span class="ob-req" aria-hidden="true">*</span></label>
+          <input class="input" id={`${id}-ime`} name="ime" type="text" autocomplete="name" required maxlength="100" aria-describedby={`${id}-ime-err`} />
+          <p class="ob-err" id={`${id}-ime-err`} data-ob-err="ime"></p>
+        </div>
+        <div class="field ob-polje">
+          <label for={`${id}-email`}>E-mail <span class="ob-req" aria-hidden="true">*</span></label>
+          <input class="input" id={`${id}-email`} name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby={`${id}-email-err ${id}-email-hint`} />
+          <p class="ob-hint" id={`${id}-email-hint`}>Na ovu adresu šaljemo odgovor.</p>
+          <p class="ob-err" id={`${id}-email-err`} data-ob-err="email"></p>
+        </div>
+      </div>
+
+      <div class="field ob-polje">
+        <label for={`${id}-tema`}>Tema</label>
+        <select class="select" id={`${id}-tema`} name="tema">
+          {TEME.map((t) => <option value={t} selected={t === pocetnaTema}>{t}</option>)}
+        </select>
+      </div>
+
+      <div class="field ob-polje">
+        <label for={`${id}-poruka`}>Poruka <span class="ob-req" aria-hidden="true">*</span></label>
+        <textarea class="textarea" id={`${id}-poruka`} name="poruka" rows="6" required maxlength="5000" aria-describedby={`${id}-poruka-err ${id}-poruka-hint`}></textarea>
+        <p class="ob-hint" id={`${id}-poruka-hint`}>Najmanje 10 znakova. <span data-ob-brojac="poruka">0</span>/5000</p>
+        <p class="ob-err" id={`${id}-poruka-err`} data-ob-err="poruka"></p>
+      </div>
+
+      <p class="ob-note" id={`${id}-napomena`}>
+        Polja označena zvjezdicom (*) su obavezna. Poruku čitaju samo urednici sajta džamije; ime i e-mail koristimo
+        isključivo za odgovor. Za brisanje vaših podataka pišite nam istim putem.
+      </p>
+
+      <ObrazacPodnozje id={id} oznaka="Pošalji poruku" />
+    </form>
+    <ObrazacUspjeh forId={id} naslov="Hvala, poruka je primljena" ponovo="Pošalji novu poruku" />
+  </div>
+) : (
+  <ContactForm id={id} />
+)}
+
+<script>
+  import { obrazac, EMAIL_RE } from '../../lib/obrasci/forma-ui';
+
+  document.querySelectorAll<HTMLFormElement>('form[data-ob-kontakt]').forEach((form) => {
+    const { el } = obrazac({
+      form,
+      tabela: 'poruke',
+      uspjeh: 'Odgovorićemo vam na navedeni e-mail u najkraćem roku, in šā Allāh.',
+      pravila: [
+        {
+          ime: 'ime',
+          naziv: 'Ime i prezime',
+          provjera: (v) => (!v ? 'Upišite ime i prezime.' : v.length < 2 ? 'Ime je prekratko.' : v.length > 100 ? 'Ime je predugo (najviše 100 znakova).' : ''),
+        },
+        {
+          ime: 'email',
+          naziv: 'E-mail',
+          provjera: (v) => (!v ? 'Upišite e-mail adresu.' : !EMAIL_RE.test(v) || v.length > 254 ? 'E-mail adresa nije ispravna (npr. ime@primjer.com).' : ''),
+        },
+        {
+          ime: 'poruka',
+          naziv: 'Poruka',
+          provjera: (v) =>
+            !v ? 'Upišite poruku.' : v.length < 10 ? `Poruka je prekratka (još ${10 - v.length} znakova).` : v.length > 5000 ? 'Poruka je preduga (najviše 5000 znakova).' : '',
+        },
+      ],
+      red: () => ({
+        ime: el('ime').value.trim(),
+        email: el('email').value.trim(),
+        tema: el('tema').value,
+        poruka: el('poruka').value.trim(),
+      }),
+    });
+  });
+</script>

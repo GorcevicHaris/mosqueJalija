@@ -1,0 +1,266 @@
+---
+// Online prijava (upis) za mekteb, halke, Školu Kur'ana i sufaru → tabela public.prijave
+// (ime_prezime, roditelj, telefon, email, program, uzrast, napomena).
+// Upotreba: <PrijavaForma /> na /upis, ili <PrijavaForma program="mekteb" /> na /mekteb (preselect).
+// Na /upis se program može preselektovati i adresom: /upis/?program=sufara-muskarci
+// Bez Supabase env varijabli: prikazuje se postojeće dugme za prijavu porukom (PrijavaDugme).
+import './obrasci.css';
+import ObrazacPodnozje from './ObrazacPodnozje.astro';
+import ObrazacUspjeh from './ObrazacUspjeh.astro';
+import PrijavaDugme from '../forms/PrijavaDugme.astro';
+import { imaSupabase } from '../../lib/obrasci/supabase-rest';
+import { GRUPE, PROGRAMI, UZRAST_DIJETE, getProgram } from '../../lib/obrasci/programi';
+import { url } from '../../lib/url';
+
+interface Props { id?: string; program?: string }
+const { id = 'prijava', program } = Astro.props;
+const odabran = getProgram(program);
+const podaci = Object.fromEntries(
+  PROGRAMI.map((p) => [p.id, { naziv: p.naziv, termin: p.termin, predavac: p.predavac, zaKoga: p.zaKoga, napomena: p.napomena ?? null, zaDjecu: Boolean(p.zaDjecu), izvor: p.izvor ? url(`/obavjestenja/${p.izvor}`) : null }]),
+);
+const tekstPoruke =
+  'Selam alejkum,\n\nželim se prijaviti (ili prijaviti dijete).\n\nProgram:\nIme i prezime polaznika:\nGodine:\nIme roditelja (za djecu):\nKontakt telefon:\nNapomena:\n';
+---
+{imaSupabase ? (
+  <div class="ob-okvir">
+    <form class="ob" id={id} novalidate data-ob-prijava data-programi={JSON.stringify(podaci)} data-uzrast-dijete={UZRAST_DIJETE}>
+      <div class="ob-summary" role="alert" tabindex="-1" data-ob-summary hidden></div>
+
+      <div class="field ob-polje">
+        <label for={`${id}-program`}>Program <span class="ob-req" aria-hidden="true">*</span></label>
+        <select class="select" id={`${id}-program`} name="program" required aria-describedby={`${id}-program-err ${id}-program-info`}>
+          <option value="" selected={!odabran}>— Odaberite program —</option>
+          {GRUPE.map((g) => (
+            <optgroup label={g}>
+              {PROGRAMI.filter((p) => p.grupa === g).map((p) => (
+                <option value={p.id} selected={odabran?.id === p.id}>{p.naziv}</option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+        <p class="ob-err" id={`${id}-program-err`} data-ob-err="program"></p>
+        <div class="pf-info" id={`${id}-program-info`} aria-live="polite" data-pf-info></div>
+      </div>
+
+      <div class="ob-red">
+        <div class="field ob-polje">
+          <label for={`${id}-ime`}>Ime i prezime polaznika <span class="ob-req" aria-hidden="true">*</span></label>
+          <input class="input" id={`${id}-ime`} name="ime_prezime" type="text" autocomplete="name" required maxlength="120" aria-describedby={`${id}-ime-err`} />
+          <p class="ob-err" id={`${id}-ime-err`} data-ob-err="ime_prezime"></p>
+        </div>
+        <div class="field ob-polje">
+          <label for={`${id}-uzrast`}>Godine polaznika <span class="ob-opt" data-pf-uzrast-opt>(neobavezno)</span><span class="ob-req" aria-hidden="true" data-pf-uzrast-req hidden>*</span></label>
+          <input class="input" id={`${id}-uzrast`} name="uzrast" type="number" inputmode="numeric" min="3" max="99" step="1" aria-describedby={`${id}-uzrast-err ${id}-uzrast-hint`} />
+          <p class="ob-hint" id={`${id}-uzrast-hint`}>Obavezno za djecu; za mlađe od {UZRAST_DIJETE} godina tražimo i ime roditelja.</p>
+          <p class="ob-err" id={`${id}-uzrast-err`} data-ob-err="uzrast"></p>
+        </div>
+      </div>
+
+      <div class="field ob-polje" data-pf-roditelj hidden>
+        <label for={`${id}-roditelj`}>Ime i prezime roditelja / staratelja <span class="ob-req" aria-hidden="true">*</span></label>
+        <input class="input" id={`${id}-roditelj`} name="roditelj" type="text" autocomplete="off" maxlength="120" aria-describedby={`${id}-roditelj-err`} />
+        <p class="ob-err" id={`${id}-roditelj-err`} data-ob-err="roditelj"></p>
+      </div>
+
+      <div class="ob-red">
+        <div class="field ob-polje">
+          <label for={`${id}-telefon`}>Kontakt telefon <span class="ob-req" aria-hidden="true">*</span></label>
+          <input class="input" id={`${id}-telefon`} name="telefon" type="tel" autocomplete="tel" inputmode="tel" required maxlength="40" aria-describedby={`${id}-telefon-err ${id}-telefon-hint`} />
+          <p class="ob-hint" id={`${id}-telefon-hint`}>Npr. 064 123 4567 — javljamo se radi potvrde upisa.</p>
+          <p class="ob-err" id={`${id}-telefon-err`} data-ob-err="telefon"></p>
+        </div>
+        <div class="field ob-polje">
+          <label for={`${id}-email`}>E-mail <span class="ob-opt">(neobavezno)</span></label>
+          <input class="input" id={`${id}-email`} name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" aria-describedby={`${id}-email-err`} />
+          <p class="ob-err" id={`${id}-email-err`} data-ob-err="email"></p>
+        </div>
+      </div>
+
+      <div class="field ob-polje">
+        <label for={`${id}-napomena`}>Napomena <span class="ob-opt">(neobavezno)</span></label>
+        <textarea class="textarea pf-napomena" id={`${id}-napomena`} name="napomena" rows="3" maxlength="2000" aria-describedby={`${id}-napomena-hint ${id}-napomena-err`}></textarea>
+        <p class="ob-hint" id={`${id}-napomena-hint`}>Npr. predznanje, termin koji vam odgovara. <span data-ob-brojac="napomena">0</span>/2000</p>
+        <p class="ob-err" id={`${id}-napomena-err`} data-ob-err="napomena"></p>
+      </div>
+
+      <details class="ob-privatnost">
+        <summary>Kako čuvamo vaše podatke</summary>
+        <ul>
+          <li><strong>Šta se čuva:</strong> program, ime i prezime polaznika, godine, ime roditelja (za djecu), telefon, e-mail (ako ga upišete) i napomena.</li>
+          <li><strong>Ko vidi:</strong> samo ovlašteni urednici sajta džamije (imam i osobe zadužene za upis). Podaci se ne objavljuju i ne dijele trećim licima.</li>
+          <li><strong>Zašto:</strong> isključivo radi organizacije nastave i kontakta u vezi sa upisom.</li>
+          <li><strong>Brisanje:</strong> zatražite brisanje porukom preko <a href={url('/kontakt')}>kontakt stranice</a> ili privatnom porukom na Instagramu — podatke brišemo bez odlaganja.</li>
+        </ul>
+        <p>Podaci se čuvaju u zaštićenoj bazi podataka (Supabase) — posjetioci sajta ih ne mogu pročitati, a prijava se može samo poslati.</p>
+      </details>
+
+      <div class="field ob-polje">
+        <div class="ob-check">
+          <input id={`${id}-saglasnost`} name="saglasnost" type="checkbox" required aria-describedby={`${id}-saglasnost-err`} />
+          <label for={`${id}-saglasnost`}>
+            Saglasan/saglasna sam da džemat čuva navedene podatke radi upisa. Za dijete prijavu šalje roditelj ili staratelj. <span class="ob-req" aria-hidden="true">*</span>
+          </label>
+        </div>
+        <p class="ob-err" id={`${id}-saglasnost-err`} data-ob-err="saglasnost"></p>
+      </div>
+
+      <ObrazacPodnozje id={id} oznaka="Pošalji prijavu" />
+    </form>
+    <ObrazacUspjeh forId={id} naslov="Hvala, prijava je primljena" ponovo="Prijavi još nekoga">
+      <p class="muted">Pratite i <a href={url('/obavjestenja')}>obavještenja</a> — tamo objavljujemo termine i promjene.</p>
+    </ObrazacUspjeh>
+  </div>
+) : (
+  <div class="pf-bez">
+    <p class="muted">Online prijava trenutno nije dostupna. Prijavu možete poslati porukom — tekst je pripremljen:</p>
+    <PrijavaDugme tema="Prijava za upis" tekst={tekstPoruke} oznaka="Pošalji prijavu" />
+    <a class="btn btn--ghost" href={url('/obavjestenja')}>Obavještenja o upisu</a>
+  </div>
+)}
+
+<style>
+  .pf-info:empty { display: none; }
+  .pf-info {
+    margin-top: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border-left: 4px solid var(--color-accent-bright);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-2);
+    font-size: 0.9rem;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .pf-info :global(p) { margin: 0; }
+  .pf-napomena { min-height: 96px; }
+  .pf-bez { display: grid; gap: var(--space-3); justify-items: start; }
+</style>
+
+<script>
+  import { obrazac, EMAIL_RE, iliNull } from '../../lib/obrasci/forma-ui';
+
+  interface P { naziv: string; termin: string | null; predavac: string | null; zaKoga: string; napomena: string | null; zaDjecu: boolean; izvor: string | null }
+
+  document.querySelectorAll<HTMLFormElement>('form[data-ob-prijava]').forEach((form) => {
+    const programi = JSON.parse(form.dataset.programi ?? '{}') as Record<string, P>;
+    const granica = Number(form.dataset.uzrastDijete ?? 15);
+    const sel = form.elements.namedItem('program') as HTMLSelectElement;
+    const uzrast = form.elements.namedItem('uzrast') as HTMLInputElement;
+    const roditeljBlok = form.querySelector<HTMLElement>('[data-pf-roditelj]')!;
+    const roditelj = form.elements.namedItem('roditelj') as HTMLInputElement;
+    const info = form.querySelector<HTMLElement>('[data-pf-info]')!;
+    const uzrastOpt = form.querySelector<HTMLElement>('[data-pf-uzrast-opt]')!;
+    const uzrastReq = form.querySelector<HTMLElement>('[data-pf-uzrast-req]')!;
+
+    // ?program=<id> u adresi (samo ako komponenta nema već preselektovan program)
+    try {
+      const q = new URLSearchParams(location.search).get('program');
+      if (q && programi[q] && !sel.value) sel.value = q;
+    } catch {
+      /* ništa */
+    }
+
+    const program = () => programi[sel.value] ?? null;
+
+    function osvjeziInfo() {
+      const p = program();
+      info.innerHTML = '';
+      const dijete = Boolean(p?.zaDjecu);
+      uzrast.required = dijete;
+      uzrastOpt.hidden = dijete;
+      uzrastReq.hidden = !dijete;
+      if (!p) return;
+      const red = (oznaka: string, tekst: string) => {
+        const el = document.createElement('p');
+        const b = document.createElement('strong');
+        b.textContent = `${oznaka}: `;
+        el.append(b, tekst);
+        info.append(el);
+      };
+      red('Za koga', p.zaKoga);
+      red('Termin', p.termin ?? 'termin još nije objavljen — javićemo vam se');
+      if (p.predavac) red('Predaje', p.predavac);
+      if (p.napomena) red('Napomena', p.napomena);
+      if (p.izvor) {
+        const el = document.createElement('p');
+        const a = document.createElement('a');
+        a.href = p.izvor;
+        a.textContent = 'Pročitajte obavještenje';
+        el.append(a);
+        info.append(el);
+      }
+    }
+
+    function osvjeziRoditelja() {
+      const n = Number(uzrast.value);
+      const dijete = uzrast.value.trim() !== '' && Number.isFinite(n) && n < granica;
+      roditeljBlok.hidden = !dijete;
+      roditelj.required = dijete;
+    }
+
+    sel.addEventListener('change', osvjeziInfo);
+    uzrast.addEventListener('input', osvjeziRoditelja);
+    osvjeziInfo();
+    osvjeziRoditelja();
+
+    const { el } = obrazac({
+      form,
+      tabela: 'prijave',
+      uspjeh: 'Javićemo vam se na navedeni telefon radi potvrde upisa, in šā Allāh.',
+      pravila: [
+        { ime: 'program', naziv: 'Program', provjera: (v) => (!v ? 'Odaberite program.' : '') },
+        {
+          ime: 'ime_prezime',
+          naziv: 'Ime i prezime',
+          provjera: (v) => (!v ? 'Upišite ime i prezime polaznika.' : v.length < 2 ? 'Ime je prekratko.' : v.length > 120 ? 'Ime je predugo (najviše 120 znakova).' : ''),
+        },
+        {
+          ime: 'uzrast',
+          naziv: 'Godine',
+          provjera: (v) => {
+            if (!v) return program()?.zaDjecu ? 'Upišite godine djeteta.' : '';
+            const n = Number(v);
+            if (!Number.isInteger(n)) return 'Upišite cijeli broj godina.';
+            if (n < 3 || n > 99) return 'Godine moraju biti između 3 i 99.';
+            return '';
+          },
+        },
+        {
+          ime: 'roditelj',
+          naziv: 'Roditelj / staratelj',
+          provjera: (v) => (!v ? 'Za dijete upišite ime i prezime roditelja ili staratelja.' : v.length < 2 ? 'Ime je prekratko.' : ''),
+        },
+        {
+          ime: 'telefon',
+          naziv: 'Telefon',
+          provjera: (v) => {
+            if (!v) return 'Upišite kontakt telefon.';
+            if (!/^[+()\d\s/.-]+$/.test(v)) return 'Telefon smije sadržati samo cifre, razmake i znakove + - / ( ).';
+            const cifre = v.replace(/\D/g, '').length;
+            if (cifre < 6 || v.length > 40) return 'Broj telefona nije potpun (npr. 064 123 4567).';
+            return '';
+          },
+        },
+        { ime: 'email', naziv: 'E-mail', provjera: (v) => (v && (!EMAIL_RE.test(v) || v.length > 254) ? 'E-mail adresa nije ispravna (npr. ime@primjer.com).' : '') },
+        { ime: 'napomena', naziv: 'Napomena', provjera: (v) => (v.length > 2000 ? 'Napomena je preduga (najviše 2000 znakova).' : '') },
+        { ime: 'saglasnost', naziv: 'Saglasnost', provjera: (v) => (!v ? 'Potrebna je saglasnost za čuvanje podataka.' : '') },
+      ],
+      red: () => {
+        const p = program();
+        const god = uzrast.value.trim() ? Number(uzrast.value) : null;
+        return {
+          program: (p?.naziv ?? sel.value).slice(0, 120),
+          ime_prezime: el('ime_prezime').value.trim(),
+          uzrast: god,
+          roditelj: roditeljBlok.hidden ? null : iliNull(roditelj.value),
+          telefon: el('telefon').value.trim(),
+          email: iliNull(el('email').value),
+          napomena: iliNull(el('napomena').value),
+        };
+      },
+      poslije: () => {
+        osvjeziInfo();
+        osvjeziRoditelja();
+      },
+    });
+  });
+</script>
