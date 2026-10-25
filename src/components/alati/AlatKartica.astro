@@ -1,0 +1,26 @@
+---
+// Kartica jednog alata (stranica /alati i blok "Ostali alati").
+import { url } from '../../lib/url';
+import type { Alat } from '../../lib/alati/alati';
+
+interface Props { alat: Alat; kompaktno?: boolean; headingLevel?: 'h2' | 'h3' }
+const { alat, kompaktno = false, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+---
+<article class:list={['card card--link alat', { 'alat--kompaktno': kompaktno }]}>
+  <span class="card__icon alat__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={alat.ikona} />
+  </span>
+  <H class="card__title alat__title"><a href={url(alat.href)}>{alat.naziv}</a></H>
+  <p class="alat__opis">{alat.opis}</p>
+  {!kompaktno && <span class="alat__more" aria-hidden="true">Otvori →</span>}
+</article>
+<style>
+  .alat { height: 100%; }
+  .alat__opis { color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: var(--space-3); }
+  .alat__more { margin-top: auto; font-weight: 700; font-size: 0.9rem; color: var(--color-primary); }
+  .alat--kompaktno { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: var(--space-3); padding: var(--space-4); }
+  .alat--kompaktno .alat__icon { margin: 0; width: 40px; height: 40px; border-radius: 12px; }
+  .alat--kompaktno .alat__title { margin: 0; font-size: 1.05rem; flex: 1; min-width: 0; }
+  .alat--kompaktno .alat__opis { flex-basis: 100%; margin: var(--space-2) 0 0; font-size: 0.88rem; }
+</style>

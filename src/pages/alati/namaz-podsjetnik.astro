@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import NamazPodsjetnik from '../../components/alati/NamazPodsjetnik.astro';
+import OstaliAlati from '../../components/alati/OstaliAlati.astro';
+import { url } from '../../lib/url';
+---
+<BaseLayout
+  title="Podsjetnik za namaz"
+  description="Podsjetnik za namaz: obavještenja pred svaki vakat dok je sajt otvoren i vaktija za cijeli mjesec u kalendaru telefona (.ics) — za Novi Pazar."
+>
+  <PageHero
+    eyebrow="Alati"
+    title="Podsjetnik za namaz"
+    subtitle="Obavještenje pred namaz dok je sajt otvoren, ili vaktija za cijeli mjesec u kalendaru telefona — tada vas podsjeća i kad je sajt zatvoren."
+  >
+    <a class="btn btn--gold btn--sm" href={url('/vaktija')}>Današnja vaktija</a>
+  </PageHero>
+  <section class="section section--tight">
+    <div class="container">
+      <NamazPodsjetnik />
+    </div>
+  </section>
+  <OstaliAlati trenutni="podsjetnik" />
+</BaseLayout>

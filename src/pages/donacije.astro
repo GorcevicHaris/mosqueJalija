@@ -5,6 +5,7 @@ import Placeholder from '../components/ui/Placeholder.astro';
 import CopyButton from '../components/ui/CopyButton.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import Icon from '../components/ui/Icon.astro';
+import IpsQr from '../components/alati/IpsQr.astro';
 import { url } from '../lib/url';
 import { dzamija, kanaliPoruka } from '../lib/data';
 const igDm = kanaliPoruka().instagramDm;
@@ -77,6 +78,7 @@ const namjene = [
           ))}
         </dl>
         {don.napomena && <p class="bank__note"><Icon name="info" size={18} /> {don.napomena}</p>}
+        {imaRacun && <IpsQr racun={don.racun} primalac={don.primalac} svrha={don.svrha} />}
         {!imaRacun && (
           <div class="bank__missing">
             <p><strong>Broj računa još nije objavljen.</strong> Ne objavljujemo nepotvrđene podatke za uplatu — zatražite ih direktno od džemata.</p>

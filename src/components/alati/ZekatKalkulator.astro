@@ -1,0 +1,308 @@
+---
+// Kalkulator zekata: imovina − kratkoročni dugovi, nisab po 85 g zlata ili 595 g srebra (cijenu unosi korisnik),
+// zekat = 2,5 %. Ništa se ne šalje; pamte se samo unesene cijene metala (localStorage).
+import { NISAB_SREBRO_G, NISAB_ZLATO_G } from '../../lib/alati/zekat';
+
+const imovina = [
+  { id: 'gotovina', label: 'Gotovina', hint: 'Novac kod kuće, u novčaniku, u sefu' },
+  { id: 'banka', label: 'Novac na računima', hint: 'Tekući, štedni i devizni računi (preračunati u odabranu valutu)' },
+  { id: 'roba', label: 'Roba namijenjena prodaji', hint: 'Po trenutnoj tržišnoj (prodajnoj) vrijednosti' },
+  { id: 'potrazivanja', label: 'Potraživanja', hint: 'Dugovi drugih prema vama za koje očekujete da će biti vraćeni' },
+  { id: 'ostalo', label: 'Ostala imovina koja podliježe zekatu', hint: 'Npr. dionice i udjeli kupljeni radi preprodaje' },
+];
+---
+<form class="zk" data-zekat novalidate>
+  <div class="zk__grid">
+    <div class="zk__inputs">
+      <fieldset class="card zk__set">
+        <legend class="zk__legend">1. Valuta i nisab</legend>
+        <div class="zk__radios" role="radiogroup" aria-label="Valuta">
+          <label class="chip"><input type="radio" name="valuta" value="RSD" checked /> RSD (dinar)</label>
+          <label class="chip"><input type="radio" name="valuta" value="EUR" /> EUR (euro)</label>
+        </div>
+        <p class="zk__small muted">Sve iznose unesite u istoj valuti.</p>
+        <div class="zk__radios" role="radiogroup" aria-label="Nisab se računa po">
+          <label class="chip"><input type="radio" name="nisab" value="zlato" checked /> Nisab po zlatu ({NISAB_ZLATO_G} g)</label>
+          <label class="chip"><input type="radio" name="nisab" value="srebro" /> Nisab po srebru ({NISAB_SREBRO_G} g)</label>
+        </div>
+        <div class="zk__two">
+          <div class="field">
+            <label for="zk-cz">Cijena zlata po gramu (<span data-zk-val>RSD</span>)</label>
+            <input id="zk-cz" name="cijenaZlata" class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="npr. 11.500" />
+          </div>
+          <div class="field">
+            <label for="zk-cs">Cijena srebra po gramu (<span data-zk-val>RSD</span>)</label>
+            <input id="zk-cs" name="cijenaSrebra" class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="npr. 130" />
+          </div>
+        </div>
+        <p class="zk__small">
+          Cijene se ne preuzimaju automatski — unesite aktuelnu cijenu čistog (24 k) zlata i srebra. Zvanična
+          međunarodna referentna cijena objavljuje se na
+          <a href="https://www.lbma.org.uk/prices-and-data/lbma-precious-metal-prices" target="_blank" rel="noopener">LBMA</a>
+          (u USD po unci), a kurs dinara na
+          <a href="https://www.nbs.rs/sr_RS/finansijsko_trziste/informacije-za-javnost/kursna-lista/" target="_blank" rel="noopener">kursnoj listi NBS</a>.
+          Možete koristiti i otkupnu cijenu kod banke ili zlatare.
+        </p>
+        <details class="zk__conv">
+          <summary>Preračunaj cijenu iz USD po unci</summary>
+          <div class="zk__two">
+            <div class="field">
+              <label for="zk-oz">Cijena u USD po unci (troy oz)</label>
+              <input id="zk-oz" class="input" type="text" inputmode="decimal" autocomplete="off" data-zk-oz />
+            </div>
+            <div class="field">
+              <label for="zk-kurs">Kurs: 1 USD = ? <span data-zk-val>RSD</span></label>
+              <input id="zk-kurs" class="input" type="text" inputmode="decimal" autocomplete="off" data-zk-kurs />
+            </div>
+          </div>
+          <p class="zk__small" data-zk-conv-out aria-live="polite">1 unca = 31,1035 g.</p>
+          <div class="zk__conv-btns">
+            <button type="button" class="btn btn--sm btn--ghost" data-zk-conv="cijenaZlata">Upiši kao cijenu zlata</button>
+            <button type="button" class="btn btn--sm btn--ghost" data-zk-conv="cijenaSrebra">Upiši kao cijenu srebra</button>
+          </div>
+        </details>
+      </fieldset>
+
+      <fieldset class="card zk__set">
+        <legend class="zk__legend">2. Imovina</legend>
+        {imovina.map((f) => (
+          <div class="field">
+            <label for={`zk-${f.id}`}>{f.label}</label>
+            <input id={`zk-${f.id}`} name={f.id} class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="0" aria-describedby={`zk-${f.id}-h`} />
+            <span id={`zk-${f.id}-h`} class="zk__small muted">{f.hint}</span>
+          </div>
+        ))}
+        <div class="zk__two">
+          <div class="field">
+            <label for="zk-zg">Zlato (grama)</label>
+            <input id="zk-zg" name="zlatoGrama" class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="0" />
+          </div>
+          <div class="field">
+            <label for="zk-zc">Čistoća zlata</label>
+            <select id="zk-zc" name="zlatoCistoca" class="select">
+              <option value="0.999">24 karata (999)</option>
+              <option value="0.916">22 karata (916)</option>
+              <option value="0.75" selected>18 karata (750)</option>
+              <option value="0.585">14 karata (585)</option>
+              <option value="0.375">9 karata (375)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="zk-sg">Srebro (grama)</label>
+          <input id="zk-sg" name="srebroGrama" class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="0" />
+        </div>
+        <p class="zk__small muted">
+          Po mnogim učenjacima zekat se daje i na nakit; o pitanju nakita koji se redovno nosi postoje različita
+          mišljenja — pitajte imama.
+        </p>
+      </fieldset>
+
+      <fieldset class="card zk__set">
+        <legend class="zk__legend">3. Odbici</legend>
+        <div class="field">
+          <label for="zk-dugovi">Kratkoročni dugovi koji dospijevaju</label>
+          <input id="zk-dugovi" name="dugovi" class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="0" aria-describedby="zk-dugovi-h" />
+          <span id="zk-dugovi-h" class="zk__small muted">Dugovi i računi koje morate platiti uskoro (npr. rate koje dospijevaju u narednom periodu), ne cijeli dugoročni kredit.</span>
+        </div>
+      </fieldset>
+    </div>
+
+    <aside class="zk__result card" aria-labelledby="zk-res-title">
+      <h2 id="zk-res-title" class="zk__h">Rezultat</h2>
+      <div class="zk__out" role="status" aria-live="polite" data-zk-out>
+        <p class="zk__big"><span data-zk-zekat>0,00</span> <span data-zk-val>RSD</span></p>
+        <p class="zk__verdict" data-zk-verdict>Unesite cijenu zlata i imovinu.</p>
+      </div>
+      <dl class="zk__dl">
+        <div><dt>Ukupna imovina</dt><dd data-zk-bruto>0,00</dd></div>
+        <div><dt>− Dugovi</dt><dd data-zk-dug>0,00</dd></div>
+        <div class="zk__dl-strong"><dt>Neto imovina</dt><dd data-zk-neto>0,00</dd></div>
+        <div><dt>Nisab (<span data-zk-nisab-lbl>85 g zlata</span>)</dt><dd data-zk-nisab>—</dd></div>
+        <div><dt>Vrijednost zlata</dt><dd data-zk-vz>0,00</dd></div>
+        <div><dt>Vrijednost srebra</dt><dd data-zk-vs>0,00</dd></div>
+      </dl>
+      <ul class="zk__warn" data-zk-warn></ul>
+      <div class="zk__actions no-print">
+        <button type="button" class="btn btn--primary" data-zk-print>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Štampaj
+        </button>
+        <button type="reset" class="btn btn--ghost" data-zk-reset>Očisti</button>
+      </div>
+      <p class="zk__disclaimer">
+        Kalkulator je orijentacioni. Zekat je obavezan kada neto imovina dostigne nisab i kada protekne jedna
+        hidžretska (lunarna) godina od dostizanja nisaba. <strong>Za konkretna pitanja obratite se imamu.</strong>
+      </p>
+    </aside>
+  </div>
+</form>
+
+<style>
+  .zk__grid { display: grid; gap: var(--space-5); }
+  @media (min-width: 960px) {
+    .zk__grid { grid-template-columns: 1.4fr 1fr; align-items: start; }
+    .zk__result { position: sticky; top: calc(var(--header-h) + var(--space-4)); }
+  }
+  .zk__inputs { display: grid; gap: var(--space-5); }
+  .zk__set { display: grid; gap: var(--space-4); margin: 0; min-width: 0; }
+  .zk__legend { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; padding: 0 var(--space-2); }
+  .zk__radios { display: flex; flex-wrap: wrap; gap: var(--space-2); border: 0; padding: 0; margin: 0; }
+  .zk__radios .chip { cursor: pointer; }
+  .zk__radios .chip:has(input:checked) { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary); }
+  .zk__radios .chip:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .zk__radios input { accent-color: var(--color-primary); margin: 0; }
+  .zk__two { display: grid; gap: var(--space-4); }
+  @media (min-width: 560px) { .zk__two { grid-template-columns: 1fr 1fr; } }
+  .zk__small { font-size: 0.86rem; margin: 0; }
+  .zk__conv summary { cursor: pointer; font-weight: 700; min-height: 40px; display: flex; align-items: center; }
+  .zk__conv[open] { display: grid; gap: var(--space-3); }
+  .zk__conv-btns { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .zk__h { font-size: 1.3rem; }
+  .zk__big { font-family: var(--font-serif); font-size: clamp(2.2rem, 5vw + 1rem, 3rem); font-weight: 600; line-height: 1.1; margin: 0 0 var(--space-2); color: var(--color-primary); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .zk__verdict { font-weight: 600; min-height: 3.2em; }
+  .zk__dl { display: grid; gap: 0; margin: 0 0 var(--space-4); font-variant-numeric: tabular-nums; }
+  .zk__dl div { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); font-size: 0.94rem; }
+  .zk__dl dt { color: var(--color-text-muted); }
+  .zk__dl dd { margin: 0; font-weight: 600; text-align: right; }
+  .zk__dl-strong dt, .zk__dl-strong dd { color: var(--color-text); font-weight: 800; }
+  .zk__warn { margin: 0 0 var(--space-4); padding-left: 1.2em; color: var(--color-missing-text); font-size: 0.9rem; }
+  .zk__warn:empty { display: none; }
+  .zk__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .zk__disclaimer { font-size: 0.88rem; color: var(--color-text-muted); margin: 0; }
+  @media print {
+    .zk__grid { grid-template-columns: 1fr; }
+    .zk__result { position: static; }
+    .zk__conv { display: none; }
+    .card { break-inside: avoid; }
+  }
+</style>
+
+<script>
+  import { izracunajZekat, GRAMA_U_UNCI, NISAB_SREBRO_G, NISAB_ZLATO_G } from '../../lib/alati/zekat.ts';
+
+  const KLJUC = 'dzj-zekat-cijene-v1';
+  const form = document.querySelector<HTMLFormElement>('[data-zekat]');
+  if (form) init(form);
+
+  /** "1.500,50" / "1 500,5" / "1500.5" → 1500.5 */
+  function broj(s: string): number {
+    let t = s.replace(/[\s ']/g, '');
+    if (!t) return 0;
+    if (t.includes(',')) t = t.replace(/\./g, '').replace(',', '.');
+    else if ((t.match(/\./g) ?? []).length > 1) t = t.replace(/\./g, '');
+    else if (/^\d{1,3}\.\d{3}$/.test(t)) t = t.replace('.', ''); // "11.500" = jedanaest hiljada petsto
+    const x = Number(t);
+    return Number.isFinite(x) ? x : NaN;
+  }
+
+  function init(form: HTMLFormElement) {
+    const $ = <T extends Element = HTMLElement>(s: string) => form.querySelector<T>(s)!;
+    const polje = (name: string) => form.elements.namedItem(name) as HTMLInputElement;
+    const fmt = (x: number) => x.toLocaleString('sr-Latn-RS', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    try {
+      const c = JSON.parse(localStorage.getItem(KLJUC) ?? 'null');
+      if (c && typeof c === 'object') {
+        if (c.valuta === 'EUR') (form.querySelector('input[name="valuta"][value="EUR"]') as HTMLInputElement).checked = true;
+        if (c.cijenaZlata) polje('cijenaZlata').value = c.cijenaZlata;
+        if (c.cijenaSrebra) polje('cijenaSrebra').value = c.cijenaSrebra;
+      }
+    } catch {
+      /* bez pamćenja */
+    }
+
+    function racunaj() {
+      const valuta = (form.querySelector('input[name="valuta"]:checked') as HTMLInputElement).value;
+      const nisabPo = (form.querySelector('input[name="nisab"]:checked') as HTMLInputElement).value as 'zlato' | 'srebro';
+      form.querySelectorAll('[data-zk-val]').forEach((e) => (e.textContent = valuta));
+      const v = (name: string) => broj(polje(name).value);
+      const neispravna: string[] = [];
+      form.querySelectorAll<HTMLInputElement>('input[inputmode="decimal"]').forEach((i) => {
+        const bad = Number.isNaN(broj(i.value)) || broj(i.value) < 0;
+        i.setAttribute('aria-invalid', String(bad));
+        if (bad && i.labels?.[0]) neispravna.push(i.labels[0].textContent?.trim() ?? '');
+      });
+      const cz = v('cijenaZlata');
+      const cs = v('cijenaSrebra');
+      const r = izracunajZekat({
+        gotovina: v('gotovina'),
+        banka: v('banka'),
+        zlatoGrama: v('zlatoGrama'),
+        zlatoCistoca: Number((form.elements.namedItem('zlatoCistoca') as HTMLSelectElement).value),
+        srebroGrama: v('srebroGrama'),
+        roba: v('roba'),
+        potrazivanja: v('potrazivanja'),
+        ostalo: v('ostalo'),
+        dugovi: v('dugovi'),
+        cijenaZlata: cz > 0 ? cz : null,
+        cijenaSrebra: cs > 0 ? cs : null,
+        nisabPo,
+      });
+      $('[data-zk-zekat]').textContent = fmt(r.zekat);
+      $('[data-zk-bruto]').textContent = fmt(r.bruto);
+      $('[data-zk-dug]').textContent = fmt(Math.max(0, v('dugovi') || 0));
+      $('[data-zk-neto]').textContent = fmt(r.neto);
+      $('[data-zk-nisab]').textContent = r.nisab === null ? '—' : fmt(r.nisab);
+      $('[data-zk-nisab-lbl]').textContent = nisabPo === 'zlato' ? `${NISAB_ZLATO_G} g zlata` : `${NISAB_SREBRO_G} g srebra`;
+      $('[data-zk-vz]').textContent = r.vrijednostZlata === null ? '—' : fmt(r.vrijednostZlata);
+      $('[data-zk-vs]').textContent = r.vrijednostSrebra === null ? '—' : fmt(r.vrijednostSrebra);
+      $('[data-zk-verdict]').textContent =
+        r.obaveza === null
+          ? 'Za izračun nisaba potrebna je cijena metala.'
+          : r.obaveza
+            ? `Neto imovina dostiže nisab — zekat iznosi 2,5 % (${fmt(r.zekat)} ${valuta}).`
+            : r.neto > 0
+              ? `Neto imovina je ispod nisaba (nedostaje ${fmt((r.nisab ?? 0) - r.neto)} ${valuta}) — zekat nije obavezan.`
+              : 'Unesite imovinu.';
+      const warn = $('[data-zk-warn]');
+      warn.replaceChildren(
+        ...[...r.upozorenja, ...neispravna.map((l) => `Neispravan broj u polju „${l}”.`)].map((t) => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          return li;
+        }),
+      );
+      try {
+        localStorage.setItem(KLJUC, JSON.stringify({ valuta, cijenaZlata: polje('cijenaZlata').value, cijenaSrebra: polje('cijenaSrebra').value }));
+      } catch {
+        /* ignoriši */
+      }
+    }
+
+    // pretvaranje USD/oz → cijena po gramu
+    const oz = $<HTMLInputElement>('[data-zk-oz]');
+    const kurs = $<HTMLInputElement>('[data-zk-kurs]');
+    const convOut = $('[data-zk-conv-out]');
+    const poGramu = () => {
+      const a = broj(oz.value);
+      const k = broj(kurs.value);
+      return a > 0 && k > 0 ? (a / GRAMA_U_UNCI) * k : null;
+    };
+    const osvjeziConv = () => {
+      const g = poGramu();
+      const valuta = (form.querySelector('input[name="valuta"]:checked') as HTMLInputElement).value;
+      convOut.textContent = g === null ? '1 unca = 31,1035 g.' : `= ${fmt(g)} ${valuta} po gramu (1 unca = 31,1035 g).`;
+    };
+    oz.addEventListener('input', osvjeziConv);
+    kurs.addEventListener('input', osvjeziConv);
+    form.querySelectorAll<HTMLButtonElement>('[data-zk-conv]').forEach((b) =>
+      b.addEventListener('click', () => {
+        const g = poGramu();
+        if (g === null) {
+          convOut.textContent = 'Unesite cijenu po unci i kurs.';
+          return;
+        }
+        polje(b.dataset.zkConv!).value = g.toFixed(2).replace('.', ',');
+        racunaj();
+      }),
+    );
+
+    form.addEventListener('submit', (e) => e.preventDefault());
+    form.addEventListener('input', racunaj);
+    form.addEventListener('change', racunaj);
+    form.addEventListener('reset', () => setTimeout(racunaj, 0));
+    $('[data-zk-print]').addEventListener('click', () => window.print());
+    racunaj();
+  }
+</script>

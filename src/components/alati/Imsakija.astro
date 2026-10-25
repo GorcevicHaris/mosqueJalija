@@ -1,0 +1,266 @@
+---
+// Ramazan: datum iz hidžretskog kalendara (±1 dan), imsakija iz kalibrisane vaktije (imsak = zora, iftar = akšam),
+// odbrojavanje do iftara/imsaka (ili do početka Ramazana), štampa, CSV i .ics.
+// Pri buildu se iscrtava stanje za dan builda; skripta ga osvježava za stvarni današnji dan (isti HTML → bez pomjeranja).
+import { dzamija } from '../../lib/data';
+import { VAKTIJA_CONFIG } from '../../lib/vaktija-config';
+import { formatGreg } from '../../lib/extras/hidzra';
+import { danasUZoni, imsakija, ramazanZa, renderImsakijaRedovi } from '../../lib/alati/ramazan';
+
+const { lat, lng } = dzamija.koordinate;
+const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
+const danas = danasUZoni();
+const info = ramazanZa(danas);
+const dani = imsakija(info, { lat, lng });
+const redovi = renderImsakijaRedovi(dani, danas);
+---
+<div class="im" data-imsakija data-lat={lat} data-lng={lng} data-grad={grad} data-hy={info.hy}>
+  <div class="im__top">
+    <section class="card im__dates" aria-labelledby="im-dates-title">
+      <p class="eyebrow" id="im-dates-title">Ramazan <span data-im-hy>{info.hy}</span>. h. g.</p>
+      <dl class="im__dl">
+        <div><dt>Prvi dan posta</dt><dd data-im-start>{formatGreg(info.pocetak)}</dd></div>
+        <div><dt>Prva teravija</dt><dd data-im-terav>noć uoči, {formatGreg(info.pocetak - 1)}</dd></div>
+        <div><dt>Lejletul-kadr</dt><dd data-im-kadr>noć uoči 27. ramazana, {formatGreg(info.pocetak + 25)}</dd></div>
+        <div><dt>Ramazanski bajram</dt><dd data-im-bajram>{formatGreg(info.bajram)}</dd></div>
+      </dl>
+      <p class="im__note">
+        Datumi su izračunati (kalendar Umm al-Qura) i mogu se razlikovati <strong>±1 dan</strong>. Zvanični početak
+        Ramazana i datum bajrama objavljuje Rijaset, odnosno Mešihat Islamske zajednice.
+      </p>
+    </section>
+
+    <section class="card im__cd theme-inverse" aria-labelledby="im-cd-label">
+      <p class="im__cd-label" id="im-cd-label" data-im-cd-label>Do početka Ramazana</p>
+      <p class="im__cd-time" role="timer" aria-live="off" data-im-cd-time>— dana —:—:—</p>
+      <p class="im__cd-sub" data-im-cd-sub>&nbsp;</p>
+    </section>
+  </div>
+
+  <div class="im__toolbar no-print">
+    <button type="button" class="btn btn--primary btn--sm" data-im-print>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Štampaj
+    </button>
+    <button type="button" class="btn btn--ghost btn--sm" data-im-csv>Preuzmi CSV</button>
+    <button type="button" class="btn btn--ghost btn--sm" data-im-ics>Dodaj u kalendar (.ics)</button>
+    <label class="im__alarm">
+      <span>Podsjetnik u kalendaru</span>
+      <select class="select" data-im-alarm>
+        <option value="">bez podsjetnika</option>
+        <option value="0">u trenutku</option>
+        <option value="10">10 min prije</option>
+        <option value="15" selected>15 min prije</option>
+        <option value="30">30 min prije</option>
+        <option value="45">45 min prije</option>
+      </select>
+    </label>
+  </div>
+
+  <h2 class="im__h" id="im-tab-title">Imsakija — {grad}</h2>
+  <p class="im__legend muted">
+    <strong>Imsak</strong> = početak zore (kraj sehura, prestanak jela i pića). <strong>Iftar</strong> = akšam (zalazak sunca).
+    Vremena su izračunata za {grad} prema kalibrisanoj vaktiji (odstupanje od zvanične do ±1–2 min); preporučuje se
+    sehur završiti nekoliko minuta ranije.<span class="im-mob"> Na užem ekranu prikazani su imsak i iftar — okrenite telefon za sve vakte.</span>
+  </p>
+  <div class="table-wrap im__wrap">
+    <table class="table im__table" aria-labelledby="im-tab-title">
+      <thead>
+        <tr>
+          <th scope="col">Dan</th>
+          <th scope="col">Datum</th>
+          <th scope="col">Imsak</th>
+          <th scope="col" class="im-x">Izlazak</th>
+          <th scope="col" class="im-x">Podne</th>
+          <th scope="col" class="im-x">Ikindija</th>
+          <th scope="col">Iftar</th>
+          <th scope="col" class="im-x">Jacija</th>
+        </tr>
+      </thead>
+      <tbody data-im-body set:html={redovi} />
+    </table>
+  </div>
+  <p class="im__status muted" role="status" data-im-status></p>
+</div>
+
+<style>
+  .im__top { display: grid; gap: var(--space-5); margin-bottom: var(--space-5); }
+  @media (min-width: 900px) { .im__top { grid-template-columns: 1.3fr 1fr; } }
+  .im__dl { display: grid; gap: 0; margin: var(--space-3) 0; }
+  .im__dl div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-1) var(--space-3); padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); }
+  .im__dl dt { color: var(--color-text-muted); font-size: 0.92rem; }
+  .im__dl dd { margin: 0; font-weight: 700; }
+  .im__note { font-size: 0.88rem; color: var(--color-text-muted); margin: 0; }
+  .im__cd { text-align: center; display: grid; align-content: center; gap: var(--space-2); background: var(--color-bg); border-color: transparent; }
+  .im__cd p { margin: 0; }
+  .im__cd-label { font-weight: 700; color: var(--color-accent); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
+  .im__cd-time { font-family: var(--font-serif); font-size: clamp(2rem, 6vw + 0.5rem, 3rem); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--color-text); line-height: 1.15; }
+  .im__cd-sub { color: var(--color-text-muted); font-size: 0.95rem; min-height: 1.5em; }
+  .im__toolbar { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: end; margin-bottom: var(--space-5); }
+  .im__alarm { display: grid; gap: var(--space-1); font-size: 0.85rem; font-weight: 700; }
+  .im__alarm .select { min-height: 40px; padding-block: 0.3rem; width: auto; }
+  .im__h { font-size: clamp(1.4rem, 1.5vw + 1rem, 1.9rem); }
+  .im__legend { font-size: 0.9rem; max-width: 75ch; }
+  .im__table :global(th), .im__table :global(td) { padding: 0.5rem 0.6rem; white-space: nowrap; }
+  .im__table :global(.im-rb) { font-weight: 700; color: var(--color-text-muted); }
+  .im__table :global(.im-dow) { display: inline-block; min-width: 2.2em; color: var(--color-text-muted); font-size: 0.85em; text-transform: capitalize; }
+  .im__table :global(.im-t--imsak), .im__table :global(.im-t--iftar) { font-weight: 800; }
+  .im__table :global(.im-t--iftar) { color: var(--color-primary); }
+  .im__table :global(tr.is-petak) { background: color-mix(in srgb, var(--color-accent-soft) 45%, transparent); }
+  .im__table :global(tr.is-danas) { background: var(--color-accent-soft); box-shadow: inset 4px 0 0 var(--color-accent-bright); }
+  .im__table :global(.im-tag) { display: inline-block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.05rem 0.4rem; border-radius: var(--radius-full); background: var(--color-surface-2); color: var(--color-accent); vertical-align: middle; }
+  .im__table :global(.im-tag--danas) { background: var(--color-primary); color: var(--color-on-primary); }
+  .im__table :global(.im-x) { display: none; }
+  @media (min-width: 640px), (orientation: landscape) and (min-width: 560px) {
+    .im__table :global(.im-x) { display: table-cell; }
+  }
+  @media (min-width: 640px), (orientation: landscape) and (min-width: 560px) { .im-mob { display: none; } }
+  @media print { .im-mob { display: none; } }
+  .im__status { font-size: 0.88rem; min-height: 1.4em; margin-top: var(--space-3); }
+  @media print {
+    .im__cd { display: none; }
+    .im__top { grid-template-columns: 1fr; }
+    .im__table :global(.im-x) { display: table-cell; }
+    .im__table :global(th), .im__table :global(td) { padding: 0.25rem 0.5rem; font-size: 10.5pt; }
+    .im__wrap { overflow: visible; }
+    .im__legend { font-size: 9pt; }
+  }
+</style>
+
+<script>
+  import { formatGreg } from '../../lib/extras/hidzra.ts';
+  import { danasUZoni, imsakija, ramazanZa, renderImsakijaRedovi, type DanImsakije, type RamazanInfo } from '../../lib/alati/ramazan.ts';
+  import { napraviCsv, napraviIcs, preuzmi, type IcsDogadjaj } from '../../lib/alati/ics.ts';
+  import { formatOdbrojavanje } from '../../lib/vaktija.ts';
+
+  const root = document.querySelector<HTMLElement>('[data-imsakija]');
+  if (root) init(root);
+
+  function init(root: HTMLElement) {
+    const $ = <T extends Element = HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const k = { lat: Number(root.dataset.lat), lng: Number(root.dataset.lng) };
+    const grad = root.dataset.grad ?? '';
+    let danas = -1;
+    let info: RamazanInfo;
+    let dani: DanImsakije[] = [];
+
+    function osvjeziPodatke() {
+      const d = danasUZoni();
+      if (d === danas) return;
+      danas = d;
+      info = ramazanZa(danas);
+      dani = imsakija(info, k);
+      $('[data-im-hy]').textContent = String(info.hy);
+      $('[data-im-start]').textContent = formatGreg(info.pocetak);
+      $('[data-im-terav]').textContent = `noć uoči, ${formatGreg(info.pocetak - 1)}`;
+      $('[data-im-kadr]').textContent = `noć uoči 27. ramazana, ${formatGreg(info.pocetak + 25)}`;
+      $('[data-im-bajram]').textContent = formatGreg(info.bajram);
+      $('[data-im-body]').innerHTML = renderImsakijaRedovi(dani, danas);
+    }
+
+    const elLabel = $('[data-im-cd-label]');
+    const elTime = $('[data-im-cd-time]');
+    const elSub = $('[data-im-cd-sub]');
+
+    function odbrojavanje(ms: number): string {
+      const sek = Math.max(0, Math.floor(ms / 1000));
+      const dana = Math.floor(sek / 86_400);
+      if (!dana) return formatOdbrojavanje(ms);
+      const h = Math.floor((sek % 86_400) / 3600);
+      const m = Math.floor((sek % 3600) / 60);
+      const p2 = (x: number) => String(x).padStart(2, '0');
+      return `${dana} ${dana % 10 === 1 && dana % 100 !== 11 ? 'dan' : 'dana'} ${h}:${p2(m)}:${p2(sek % 60)}`;
+    }
+
+    function tik() {
+      osvjeziPodatke();
+      const now = Date.now();
+      let label: string;
+      let cilj: Date | null;
+      let sub: string;
+      if (!info.uToku) {
+        cilj = dani[0].vakti[0].vrijeme;
+        label = 'Do početka Ramazana';
+        sub = `Prvi imsak: ${formatGreg(info.pocetak)} u ${dani[0].vakti[0].hhmm}`;
+      } else {
+        const i = danas - info.pocetak;
+        const r = dani[i];
+        if (now < r.vakti[0].vrijeme.getTime()) {
+          cilj = r.vakti[0].vrijeme;
+          label = 'Do imsaka (kraj sehura)';
+          sub = `${i + 1}. dan Ramazana · imsak u ${r.vakti[0].hhmm}`;
+        } else if (now < r.vakti[4].vrijeme.getTime()) {
+          cilj = r.vakti[4].vrijeme;
+          label = 'Do iftara';
+          sub = `${i + 1}. dan Ramazana · iftar u ${r.vakti[4].hhmm}`;
+        } else if (dani[i + 1]) {
+          cilj = dani[i + 1].vakti[0].vrijeme;
+          label = 'Do imsaka (kraj sehura)';
+          sub = `Sutra ${i + 2}. dan Ramazana · imsak u ${dani[i + 1].vakti[0].hhmm}`;
+        } else {
+          cilj = null;
+          label = 'Ramazan je završen';
+          sub = 'Bajram šerif mubarek olsun! (Datum bajrama potvrdite u zvaničnom saopštenju.)';
+        }
+      }
+      elLabel.textContent = label;
+      elTime.textContent = cilj ? odbrojavanje(cilj.getTime() - now) : '—';
+      elSub.textContent = sub;
+    }
+    tik();
+    let timer = window.setInterval(tik, 1000);
+    document.addEventListener('visibilitychange', () => {
+      clearInterval(timer);
+      if (!document.hidden) {
+        tik();
+        timer = window.setInterval(tik, 1000);
+      }
+    });
+
+    // ---- izvoz ----
+    const status = $('[data-im-status]');
+    const ime = () => `imsakija-ramazan-${info.hy}-${grad.toLowerCase().replace(/\s+/g, '-').normalize('NFD').replace(/[^\w-]/g, '')}`;
+    $('[data-im-print]').addEventListener('click', () => window.print());
+    $('[data-im-csv]').addEventListener('click', () => {
+      const red = (r: DanImsakije) => [
+        r.rb,
+        `${r.god}-${String(r.mj).padStart(2, '0')}-${String(r.d).padStart(2, '0')}`,
+        ...r.vakti.map((v) => v.hhmm),
+      ];
+      const csv = napraviCsv([
+        ['Dan Ramazana', 'Datum', 'Imsak (zora)', 'Izlazak sunca', 'Podne', 'Ikindija', 'Iftar (akšam)', 'Jacija'],
+        ...dani.map(red),
+      ]);
+      preuzmi(csv, `${ime()}.csv`, 'text/csv;charset=utf-8');
+      status.textContent = 'CSV fajl je preuzet.';
+    });
+    $('[data-im-ics]').addEventListener('click', () => {
+      const a = $<HTMLSelectElement>('[data-im-alarm]').value;
+      const alarm = a === '' ? null : Number(a);
+      const ev: IcsDogadjaj[] = [];
+      for (const r of dani) {
+        const datum = `${r.god}${String(r.mj).padStart(2, '0')}${String(r.d).padStart(2, '0')}`;
+        ev.push({
+          uid: `imsak-${datum}@dzamija-na-jaliji`,
+          pocetak: r.vakti[0].vrijeme,
+          trajanjeMin: 10,
+          naslov: `Imsak — ${r.rb}. dan Ramazana (${r.vakti[0].hhmm})`,
+          opis: `Kraj sehura (početak zore) za ${grad}. Izračunato; zvanična vaktija: vaktija.ba.`,
+          mjesto: grad,
+          podsjetnikMin: alarm,
+        });
+        ev.push({
+          uid: `iftar-${datum}@dzamija-na-jaliji`,
+          pocetak: r.vakti[4].vrijeme,
+          trajanjeMin: 20,
+          naslov: `Iftar — ${r.rb}. dan Ramazana (${r.vakti[4].hhmm})`,
+          opis: `Akšam (zalazak sunca) za ${grad}. Izračunato; zvanična vaktija: vaktija.ba.`,
+          mjesto: grad,
+          podsjetnikMin: alarm,
+        });
+      }
+      preuzmi(napraviIcs(ev, `Imsakija ${info.hy} — ${grad}`), `${ime()}.ics`, 'text/calendar;charset=utf-8');
+      status.textContent = 'Kalendarski fajl (.ics) je preuzet — otvorite ga da biste dodali imsak i iftar u kalendar.';
+    });
+  }
+</script>

@@ -1,0 +1,25 @@
+---
+// Blok "Ostali alati" na dnu svake stranice alata.
+import AlatKartica from './AlatKartica.astro';
+import { ALATI } from '../../lib/alati/alati';
+import { url } from '../../lib/url';
+
+interface Props { trenutni: string }
+const { trenutni } = Astro.props;
+const ostali = ALATI.filter((a) => a.kljuc !== trenutni);
+---
+<section class="section section--tight section--tint ostali no-print" aria-labelledby="ostali-alati-naslov">
+  <div class="container">
+    <div class="ostali__head">
+      <h2 id="ostali-alati-naslov" class="ostali__title">Ostali alati</h2>
+      <a class="link-arrow" href={url('/alati')}>Svi alati</a>
+    </div>
+    <div class="grid-cards grid-cards--sm">
+      {ostali.map((a) => <AlatKartica alat={a} kompaktno />)}
+    </div>
+  </div>
+</section>
+<style>
+  .ostali__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-5); }
+  .ostali__title { margin: 0; font-size: clamp(1.35rem, 1.5vw + 1rem, 1.8rem); }
+</style>

@@ -1,0 +1,324 @@
+---
+// Pravac kible: azimut za lokaciju korisnika (Geolocation API, uz pristanak) ili za džamiju (podrazumijevano),
+// SVG kompas koji se na telefonu okreće uživo (DeviceOrientation; iOS traži dozvolu na dodir dugmeta).
+import { dzamija } from '../../lib/data';
+import { azimutKible, formatStepeni, stranaSvijeta, stranaSvijetaPuno, udaljenostDoKabe } from '../../lib/alati/kibla';
+
+const { lat, lng } = dzamija.koordinate;
+const az = azimutKible({ lat, lng });
+const km = udaljenostDoKabe({ lat, lng });
+const fmtKm = (x: number) => Math.round(x).toLocaleString('sr-Latn-RS');
+const nazivMjesta = `${dzamija.naziv} (${dzamija.grad ?? 'Novi Pazar'})`;
+
+const C = 120;
+const ticks = Array.from({ length: 72 }, (_, i) => i * 5);
+const pol = (deg: number, r: number) => {
+  const a = ((deg - 90) * Math.PI) / 180;
+  return { x: +(C + r * Math.cos(a)).toFixed(2), y: +(C + r * Math.sin(a)).toFixed(2) };
+};
+const strane = [
+  { t: 'S', d: 0, cls: 'kk-n' },
+  { t: 'I', d: 90 },
+  { t: 'J', d: 180 },
+  { t: 'Z', d: 270 },
+];
+---
+<div class="kk" data-kibla data-lat={lat} data-lng={lng} data-naziv={nazivMjesta}>
+  <div class="kk__grid">
+    <section class="card kk__result" aria-labelledby="kk-res-title">
+      <p class="eyebrow" id="kk-res-title">Pravac kible</p>
+      <p class="kk__deg"><span data-kk-deg>{formatStepeni(az)}</span></p>
+      <p class="kk__dir"><span data-kk-dir>{stranaSvijetaPuno(az)} ({stranaSvijeta(az)})</span> · od geografskog sjevera, u smjeru kazaljke na satu</p>
+      <dl class="kk__meta">
+        <div><dt>Lokacija</dt><dd data-kk-mjesto>{nazivMjesta}</dd></div>
+        <div><dt>Udaljenost do Kabe</dt><dd><span data-kk-km>{fmtKm(km)}</span> km (po velikom krugu)</dd></div>
+      </dl>
+      <div class="kk__actions">
+        <button type="button" class="btn btn--primary" data-kk-geo>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Koristi moju lokaciju
+        </button>
+        <button type="button" class="btn btn--ghost" data-kk-reset hidden>Vrati na džamiju</button>
+      </div>
+      <p class="kk__note">
+        Pregledač će tražiti dozvolu za lokaciju. Koordinate se koriste <strong>samo na vašem uređaju</strong> za
+        izračun pravca i nigdje se ne šalju niti čuvaju. Bez dozvole prikazuje se pravac za džamiju — za cijeli
+        Novi Pazar razlika je zanemarljiva.
+      </p>
+      <p class="kk__status" role="status" aria-live="polite" data-kk-geo-status></p>
+    </section>
+
+    <section class="card kk__compass-card" aria-labelledby="kk-comp-title">
+      <h2 class="kk__h" id="kk-comp-title">Kompas</h2>
+      <div class="kk__compass" data-kk-wrap>
+        <svg viewBox="0 0 240 240" class="kk__svg" role="img" data-kk-svg aria-label={`Kompas: kibla je na ${formatStepeni(az)} od sjevera`}>
+          <polygon class="kk-pointer" points="120,2 112,16 128,16" />
+          <g data-kk-dial transform="rotate(0 120 120)">
+            <circle cx={C} cy={C} r="104" class="kk-face" />
+            {ticks.map((d) => {
+              const major = d % 30 === 0;
+              const a = pol(d, 104);
+              const b = pol(d, major ? 92 : 98);
+              return <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} class:list={['kk-tick', { 'kk-tick--major': major }]} />;
+            })}
+            {strane.map((s) => {
+              const p = pol(s.d, 80);
+              return <text x={p.x} y={p.y} class:list={['kk-letter', s.cls]} text-anchor="middle" dominant-baseline="central">{s.t}</text>;
+            })}
+            <g data-kk-needle transform={`rotate(${az.toFixed(2)} 120 120)`}>
+              <line x1="120" y1="120" x2="120" y2="44" class="kk-needle" />
+              <polygon points="120,30 111,47 129,47" class="kk-needle-head" />
+              <g transform="translate(108 6)" class="kk-kaaba">
+                <rect width="24" height="22" rx="2" />
+                <rect y="5" width="24" height="4" class="kk-kaaba-band" />
+              </g>
+            </g>
+            <circle cx={C} cy={C} r="6" class="kk-center" />
+          </g>
+        </svg>
+      </div>
+      <p class="kk__live" role="status" aria-live="polite" data-kk-live>
+        Postavite uređaj vodoravno i okrenite ga tako da slovo <strong>S</strong> pokazuje na sjever — strelica sa
+        Kabom tada pokazuje kiblu.
+      </p>
+      <div class="kk__actions">
+        <button type="button" class="btn btn--primary" data-kk-sensor hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.1 6.3-6.3 2.1 2.1-6.3z"/></svg>
+          Uključi živi kompas
+        </button>
+        <button type="button" class="btn btn--ghost" data-kk-sensor-off hidden>Isključi kompas</button>
+      </div>
+      <p class="kk__fallback" data-kk-fallback hidden></p>
+      <details class="kk__details">
+        <summary>Savjeti za tačan kompas</summary>
+        <ul>
+          <li>Držite telefon vodoravno (ekranom prema gore), daleko od metala, magneta, zvučnika i drugih uređaja.</li>
+          <li>Ako strelica skače ili kasni, kalibrišite senzor: nekoliko puta pomjerite telefon u obliku osmice (∞).</li>
+          <li>Telefonski kompas pokazuje magnetni sjever; u Novom Pazaru magnetna deklinacija je oko 5° istočno, pa je moguće malo odstupanje.</li>
+          <li>Na računaru nema senzora — koristite ispisani ugao i pravi kompas ili mapu.</li>
+        </ul>
+      </details>
+    </section>
+  </div>
+</div>
+
+<style>
+  .kk [hidden] { display: none !important; }
+  .kk__grid { display: grid; gap: var(--space-5); }
+  @media (min-width: 900px) { .kk__grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+  .kk__deg {
+    font-family: var(--font-serif);
+    font-size: clamp(3rem, 8vw + 1rem, 4.5rem);
+    font-weight: 600;
+    line-height: 1;
+    margin: var(--space-2) 0 var(--space-2);
+    color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+  }
+  .kk__dir { color: var(--color-text-muted); margin-bottom: var(--space-4); }
+  .kk__dir span { color: var(--color-text); font-weight: 700; }
+  .kk__meta { display: grid; gap: var(--space-2); margin: 0 0 var(--space-4); }
+  .kk__meta div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); border-top: 1px solid var(--color-border); padding-top: var(--space-2); }
+  .kk__meta dt { color: var(--color-text-muted); font-size: 0.9rem; }
+  .kk__meta dd { margin: 0; font-weight: 700; text-align: right; }
+  .kk__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .kk__note, .kk__live, .kk__fallback { font-size: 0.92rem; color: var(--color-text-muted); }
+  .kk__status { min-height: 1.5em; margin: 0; font-size: 0.92rem; font-weight: 600; }
+  .kk__h { font-size: 1.25rem; }
+  .kk__compass { width: min(100%, 340px); margin: 0 auto var(--space-4); aspect-ratio: 1; }
+  .kk__svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .kk-face { fill: var(--color-surface-2); stroke: var(--color-border-strong); stroke-width: 2; }
+  .kk-tick { stroke: var(--color-text-muted); stroke-width: 1; }
+  .kk-tick--major { stroke: var(--color-text); stroke-width: 2; }
+  .kk-letter { font: 700 20px var(--font-sans); fill: var(--color-text); }
+  .kk-n { fill: var(--color-danger); }
+  .kk-needle { stroke: var(--color-primary); stroke-width: 5; stroke-linecap: round; }
+  .kk-needle-head { fill: var(--color-primary); }
+  .kk-kaaba rect { fill: #1a1a1a; stroke: var(--color-accent-bright); stroke-width: 1; }
+  .kk-kaaba .kk-kaaba-band { fill: var(--color-accent-bright); stroke: none; }
+  .kk-center { fill: var(--color-accent-bright); stroke: var(--color-surface); stroke-width: 2; }
+  .kk-pointer { fill: var(--color-text-muted); }
+  .kk.is-live .kk-pointer { fill: var(--color-accent-bright); }
+  .kk.is-aligned .kk-pointer { fill: var(--color-success); }
+  .kk.is-aligned .kk-face { stroke: var(--color-success); stroke-width: 4; }
+  .kk.is-aligned .kk__live { color: var(--color-success); font-weight: 700; }
+  .kk__details { margin-top: var(--space-2); font-size: 0.92rem; }
+  .kk__details summary { cursor: pointer; font-weight: 700; min-height: 40px; display: flex; align-items: center; }
+  .kk__details ul { margin: var(--space-2) 0 0; padding-left: 1.2em; color: var(--color-text-muted); }
+  .kk__details li + li { margin-top: var(--space-1); }
+</style>
+
+<script>
+  import { azimutKible, formatStepeni, razlikaUgla, stranaSvijeta, stranaSvijetaPuno, udaljenostDoKabe } from '../../lib/alati/kibla.ts';
+
+  type DOE = typeof DeviceOrientationEvent & { requestPermission?: () => Promise<'granted' | 'denied'> };
+  type OrEvent = DeviceOrientationEvent & { webkitCompassHeading?: number };
+
+  const root = document.querySelector<HTMLElement>('[data-kibla]');
+  if (root) init(root);
+
+  function init(root: HTMLElement) {
+    const $ = <T extends Element = HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const dzamija = { lat: Number(root.dataset.lat), lng: Number(root.dataset.lng) };
+    const nazivDz = root.dataset.naziv ?? '';
+    let az = azimutKible(dzamija);
+
+    const elDeg = $('[data-kk-deg]');
+    const elDir = $('[data-kk-dir]');
+    const elKm = $('[data-kk-km]');
+    const elMjesto = $('[data-kk-mjesto]');
+    const elGeoStatus = $('[data-kk-geo-status]');
+    const btnGeo = $<HTMLButtonElement>('[data-kk-geo]');
+    const btnReset = $<HTMLButtonElement>('[data-kk-reset]');
+    const svg = $<SVGSVGElement>('[data-kk-svg]');
+    const dial = $<SVGGElement>('[data-kk-dial]');
+    const needle = $<SVGGElement>('[data-kk-needle]');
+    const live = $('[data-kk-live]');
+    const btnSensor = $<HTMLButtonElement>('[data-kk-sensor]');
+    const btnSensorOff = $<HTMLButtonElement>('[data-kk-sensor-off]');
+    const fallback = $('[data-kk-fallback]');
+    const liveDefault = live.innerHTML;
+
+    function prikazi(t: { lat: number; lng: number }, mjesto: string) {
+      az = azimutKible(t);
+      elDeg.textContent = formatStepeni(az);
+      elDir.textContent = `${stranaSvijetaPuno(az)} (${stranaSvijeta(az)})`;
+      elKm.textContent = Math.round(udaljenostDoKabe(t)).toLocaleString('sr-Latn-RS');
+      elMjesto.textContent = mjesto;
+      needle.setAttribute('transform', `rotate(${az.toFixed(2)} 120 120)`);
+      svg.setAttribute('aria-label', `Kompas: kibla je na ${formatStepeni(az)} od sjevera`);
+    }
+
+    // ---- Lokacija ----
+    if (!('geolocation' in navigator)) {
+      btnGeo.hidden = true;
+      elGeoStatus.textContent = 'Ovaj pregledač ne podržava određivanje lokacije — prikazan je pravac za džamiju.';
+    }
+    btnGeo.addEventListener('click', () => {
+      elGeoStatus.textContent = 'Određujem lokaciju…';
+      btnGeo.disabled = true;
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          btnGeo.disabled = false;
+          const t = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          const f = (x: number) => x.toFixed(3).replace('.', ',');
+          prikazi(t, `Vaša lokacija (${f(t.lat)}°, ${f(t.lng)}°)`);
+          elGeoStatus.textContent = `Pravac je izračunat za vašu lokaciju (tačnost oko ${Math.round(pos.coords.accuracy)} m).`;
+          btnReset.hidden = false;
+        },
+        (err) => {
+          btnGeo.disabled = false;
+          elGeoStatus.textContent =
+            err.code === err.PERMISSION_DENIED
+              ? 'Dozvola za lokaciju nije data — prikazan je pravac za džamiju. Dozvolu možete promijeniti u postavkama pregledača.'
+              : 'Lokaciju nije bilo moguće odrediti — prikazan je pravac za džamiju.';
+        },
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 10 * 60 * 1000 },
+      );
+    });
+    btnReset.addEventListener('click', () => {
+      prikazi(dzamija, nazivDz);
+      btnReset.hidden = true;
+      elGeoStatus.textContent = 'Prikazan je pravac za džamiju.';
+    });
+
+    // ---- Kompas (senzori) ----
+    const D = (window as unknown as { DeviceOrientationEvent?: DOE }).DeviceOrientationEvent;
+    const imaSenzor = !!D && (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+    if (imaSenzor) btnSensor.hidden = false;
+    else {
+      fallback.hidden = false;
+      fallback.textContent =
+        'Živi kompas radi na telefonima i tabletima sa senzorom orijentacije. Na ovom uređaju koristite ispisani ugao: ' +
+        'okrenite se prema jugoistoku, za navedeni broj stepeni od sjevera.';
+    }
+
+    let heading: number | null = null;
+    let prikazano: number | null = null;
+    let raf = 0;
+    let poravnato = false;
+    let aktivno = false;
+    let timer = 0;
+    const tip = 'ondeviceorientationabsolute' in window ? 'deviceorientationabsolute' : 'deviceorientation';
+
+    function ugaoEkrana(): number {
+      const so = screen.orientation;
+      if (so && typeof so.angle === 'number') return so.angle;
+      const wo = (window as unknown as { orientation?: number }).orientation;
+      return typeof wo === 'number' ? wo : 0;
+    }
+
+    function onOrient(e: Event) {
+      const ev = e as OrEvent;
+      let h: number | null = null;
+      if (typeof ev.webkitCompassHeading === 'number' && !Number.isNaN(ev.webkitCompassHeading)) h = ev.webkitCompassHeading;
+      else if ((ev.absolute || e.type === 'deviceorientationabsolute') && ev.alpha !== null) h = 360 - ev.alpha;
+      if (h === null) return;
+      heading = (h + ugaoEkrana() + 360) % 360;
+      if (!raf) raf = requestAnimationFrame(crtaj);
+    }
+
+    function crtaj() {
+      raf = 0;
+      if (heading === null) return;
+      prikazano = prikazano === null ? heading : (prikazano + razlikaUgla(heading, prikazano) * 0.3 + 360) % 360;
+      dial.setAttribute('transform', `rotate(${(-prikazano).toFixed(1)} 120 120)`);
+      const diff = razlikaUgla(az, prikazano);
+      const sad = Math.abs(diff) < 4;
+      if (sad !== poravnato) {
+        poravnato = sad;
+        root.classList.toggle('is-aligned', sad);
+        if (sad && 'vibrate' in navigator) navigator.vibrate(60);
+      }
+      live.textContent = sad
+        ? 'Okrenuti ste prema kibli.'
+        : `Okrenite se ${Math.round(Math.abs(diff))}° ${diff > 0 ? 'udesno' : 'ulijevo'} (vrh telefona prema strelici sa Kabom).`;
+      if (Math.abs(razlikaUgla(heading, prikazano)) > 0.5) raf = requestAnimationFrame(crtaj);
+    }
+
+    function zaustavi(poruka?: string) {
+      window.removeEventListener(tip, onOrient);
+      window.removeEventListener('deviceorientation', onOrient);
+      clearTimeout(timer);
+      aktivno = false;
+      heading = prikazano = null;
+      root.classList.remove('is-live', 'is-aligned');
+      dial.setAttribute('transform', 'rotate(0 120 120)');
+      btnSensor.hidden = false;
+      btnSensorOff.hidden = true;
+      live.innerHTML = liveDefault;
+      if (poruka) {
+        fallback.hidden = false;
+        fallback.textContent = poruka;
+      }
+    }
+
+    btnSensor.addEventListener('click', async () => {
+      fallback.hidden = true;
+      if (D && typeof D.requestPermission === 'function') {
+        try {
+          const r = await D.requestPermission();
+          if (r !== 'granted') {
+            zaustavi('Pristup senzoru orijentacije nije dozvoljen. Koristite ispisani ugao ili dozvolite pristup u postavkama Safarija.');
+            return;
+          }
+        } catch {
+          zaustavi('Pristup senzoru nije moguć u ovom pregledaču. Koristite ispisani ugao.');
+          return;
+        }
+      }
+      aktivno = true;
+      window.addEventListener(tip, onOrient);
+      if (tip !== 'deviceorientation') window.addEventListener('deviceorientation', onOrient);
+      root.classList.add('is-live');
+      btnSensor.hidden = true;
+      btnSensorOff.hidden = false;
+      live.textContent = 'Čekam podatke kompasa… držite telefon vodoravno.';
+      timer = window.setTimeout(() => {
+        if (aktivno && heading === null)
+          zaustavi('Uređaj ne daje podatke kompasa (senzor nije dostupan ili pregledač to ne podržava). Koristite ispisani ugao i pravi kompas.');
+      }, 3500);
+    });
+    btnSensorOff.addEventListener('click', () => zaustavi());
+  }
+</script>

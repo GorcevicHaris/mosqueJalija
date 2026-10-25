@@ -38,6 +38,7 @@ export const glavniMeni: NavItem[] = [
       { label: 'Mekteb i halke', href: '/mekteb', opis: 'Vjerska pouka za djecu i odrasle' },
       { label: 'Mediji', href: '/mediji', opis: 'YouTube kanal i društvene mreže' },
       { label: 'Islamski kalendar', href: '/kalendar', opis: 'Hidžretski datumi i važni dani' },
+      { label: 'Islamski alati', href: '/alati', opis: 'Kibla, tesbih, zekat, imsakija, podsjetnik' },
     ],
   },
   { label: 'Kontakt', href: '/kontakt' },

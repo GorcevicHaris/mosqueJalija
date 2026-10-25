@@ -1,0 +1,405 @@
+---
+// Podsjetnik za namaz: (1) obavještenja pregledača dok je sajt/PWA otvoren (Notification API),
+// (2) .ics fajl sa vaktijom za mjesec (VEVENT + VALARM, TZID=Europe/Belgrade) — radi i kad je sajt zatvoren.
+import { dzamija } from '../../lib/data';
+import { VAKTI, VAKTIJA_CONFIG } from '../../lib/vaktija-config';
+import { danUZoni, MJESECI } from '../../lib/vaktija';
+
+const { lat, lng } = dzamija.koordinate;
+const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
+const d = danUZoni();
+const mjeseci = [0, 1, 2].map((i) => {
+  const m0 = d.mj - 1 + i;
+  const god = d.god + Math.floor(m0 / 12);
+  const mj = (m0 % 12) + 1;
+  return { value: `${god}-${mj}`, label: `${MJESECI[mj - 1]} ${god}.` };
+});
+const minuta = [0, 5, 10, 15, 20, 30, 45];
+---
+<div class="np" data-podsjetnik data-lat={lat} data-lng={lng} data-grad={grad} data-adresa={dzamija.adresa ?? grad}>
+  <fieldset class="card np__vakti">
+    <legend class="np__legend">Za koje vakte?</legend>
+    <div class="np__checks">
+      {VAKTI.map((v) => (
+        <label class="chip np__chip">
+          <input type="checkbox" value={v.kljuc} checked={v.namaz} data-np-vakat />
+          {v.naziv}
+        </label>
+      ))}
+    </div>
+    <p class="np__small muted">Odabir važi i za obavještenja i za kalendar. Vremena su za {grad} (kalibrisana vaktija).</p>
+  </fieldset>
+
+  <div class="np__grid">
+    <section class="card np__card" aria-labelledby="np-notif-title">
+      <h2 class="np__h" id="np-notif-title">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Obavještenja na ovom uređaju
+      </h2>
+      <div class="field">
+        <label for="np-min">Koliko ranije?</label>
+        <select id="np-min" class="select" data-np-min>
+          {minuta.map((m) => <option value={m} selected={m === 10}>{m === 0 ? 'u trenutku nastupanja vakta' : `${m} minuta prije`}</option>)}
+        </select>
+      </div>
+      <div class="np__actions">
+        <button type="button" class="btn btn--primary" data-np-on>Uključi podsjetnik</button>
+        <button type="button" class="btn btn--ghost" data-np-off hidden>Isključi</button>
+        <button type="button" class="btn btn--ghost btn--sm" data-np-test hidden>Probno obavještenje</button>
+      </div>
+      <p class="np__state" role="status" aria-live="polite" data-np-state>Podsjetnik je isključen.</p>
+      <div class="np__next">
+        <h3 class="np__h3">Sljedeći podsjetnici</h3>
+        <ol class="np__list" data-np-list><li class="muted">—</li></ol>
+      </div>
+      <div class="np__alert" role="alert" data-np-alert hidden></div>
+      <div class="np__limits">
+        <h3 class="np__h3">Ograničenja pregledača</h3>
+        <ul>
+          <li>Obavještenja stižu <strong>samo dok je sajt otvoren</strong> (kartica ili instalirana aplikacija). Kad zatvorite pregledač, podsjetnik ne radi.</li>
+          <li>Pregledači usporavaju skripte u pozadinskim karticama, pa obavještenje može kasniti do minut.</li>
+          <li>Na iPhoneu obavještenja rade samo ako je sajt dodat na početni ekran (iOS 16.4+); na nekim Android pregledačima potrebna je instalirana aplikacija.</li>
+          <li>Za pouzdane podsjetnike i kad je sajt zatvoren koristite <a href="#np-cal-title">vaktiju u kalendaru</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card np__card" aria-labelledby="np-cal-title">
+      <h2 class="np__h" id="np-cal-title">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Dodaj vaktiju u kalendar
+      </h2>
+      <p>Preuzmite fajl sa svim vaktima za mjesec. Kalendar na telefonu će vas podsjetiti i kada sajt nije otvoren.</p>
+      <div class="np__two">
+        <div class="field">
+          <label for="np-mj">Mjesec</label>
+          <select id="np-mj" class="select" data-np-mj>
+            {mjeseci.map((m, i) => <option value={m.value} selected={i === 0}>{m.label}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="np-alarm">Podsjetnik u kalendaru</label>
+          <select id="np-alarm" class="select" data-np-alarm>
+            <option value="">bez podsjetnika</option>
+            {minuta.map((m) => <option value={m} selected={m === 10}>{m === 0 ? 'u trenutku vakta' : `${m} min prije`}</option>)}
+          </select>
+        </div>
+      </div>
+      <button type="button" class="btn btn--primary btn--block" data-np-ics>Preuzmi vaktiju (.ics)</button>
+      <p class="np__state" role="status" aria-live="polite" data-np-ics-state></p>
+      <details class="np__how">
+        <summary>Kako dodati u kalendar?</summary>
+        <ul>
+          <li><strong>iPhone / iPad:</strong> otvorite preuzeti fajl (u Safariju ili aplikaciji Fajlovi) i dodirnite „Dodaj sve”. Savjet: napravite poseban kalendar „Vaktija” da ga kasnije lako obrišete.</li>
+          <li><strong>Android:</strong> otvorite fajl aplikacijom kalendara (npr. Samsung Kalendar). Za Google Kalendar fajl uvezite na računaru: calendar.google.com → Postavke → Uvoz i izvoz.</li>
+          <li>Neki kalendari (npr. Google Kalendar pri uvozu) ne preuzimaju podsjetnike iz fajla — tada uključite podrazumijevana obavještenja za taj kalendar u njegovim postavkama.</li>
+          <li>Na kraju mjeseca preuzmite fajl za sljedeći mjesec. Vremena su izračunata (odstupanje od zvanične vaktije do ±1–2 min).</li>
+        </ul>
+      </details>
+    </section>
+  </div>
+</div>
+
+<style>
+  .np [hidden] { display: none !important; }
+  .np { display: grid; gap: var(--space-5); }
+  .np__vakti { margin: 0; min-width: 0; }
+  .np__legend { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; padding: 0 var(--space-2); }
+  .np__checks { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .np__chip { cursor: pointer; }
+  .np__chip input { accent-color: var(--color-primary); width: 1.05rem; height: 1.05rem; margin: 0; }
+  .np__chip:has(input:checked) { border-color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface)); }
+  .np__chip:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .np__small { font-size: 0.86rem; margin: var(--space-3) 0 0; }
+  .np__grid { display: grid; gap: var(--space-5); }
+  @media (min-width: 960px) { .np__grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+  .np__card { display: grid; gap: var(--space-4); }
+  .np__card > * { margin: 0; }
+  .np__h { display: flex; align-items: center; gap: var(--space-2); font-size: 1.25rem; }
+  .np__h svg { color: var(--color-accent); flex: none; }
+  .np__h3 { font-family: var(--font-sans); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: var(--space-2); }
+  .np__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .np__state { font-size: 0.92rem; font-weight: 600; min-height: 1.5em; }
+  .np__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-1); min-height: 4.5em; font-variant-numeric: tabular-nums; }
+  .np__list :global(li) { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-1) 0; border-bottom: 1px dashed var(--color-border); font-size: 0.94rem; }
+  .np__alert { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-accent-soft); border: 1px solid var(--color-accent-bright); font-weight: 700; }
+  .np__limits ul, .np__how ul { margin: 0; padding-left: 1.2em; font-size: 0.9rem; color: var(--color-text-muted); }
+  .np__limits li + li, .np__how li + li { margin-top: var(--space-2); }
+  .np__two { display: grid; gap: var(--space-4); }
+  @media (min-width: 520px) { .np__two { grid-template-columns: 1fr 1fr; } }
+  .np__how summary { cursor: pointer; font-weight: 700; min-height: 40px; display: flex; align-items: center; }
+</style>
+
+<script>
+  import { izracunajDan, izracunajMjesec, danUZoni, pomjeriDan, MJESECI, type Vakat } from '../../lib/vaktija.ts';
+  import { napraviIcs, preuzmi, type IcsDogadjaj } from '../../lib/alati/ics.ts';
+
+  const KLJUC = 'dzj-podsjetnik-v1';
+  interface Postavke {
+    ukljuceno: boolean;
+    vakti: string[];
+    minuta: number;
+    poslano: Record<string, number>;
+  }
+  const NAZIV_DO: Record<string, string> = {
+    zora: 'zore (sabah)',
+    izlazak: 'izlaska sunca',
+    podne: 'podne-namaza',
+    ikindija: 'ikindije',
+    aksam: 'akšama',
+    jacija: 'jacije',
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-podsjetnik]');
+  if (root) init(root);
+
+  function init(root: HTMLElement) {
+    const $ = <T extends Element = HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const k = { lat: Number(root.dataset.lat), lng: Number(root.dataset.lng) };
+    const grad = root.dataset.grad ?? '';
+    const adresa = root.dataset.adresa ?? grad;
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+    const ikona = `${base}/icon-192.png`;
+
+    const checks = [...root.querySelectorAll<HTMLInputElement>('[data-np-vakat]')];
+    const selMin = $<HTMLSelectElement>('[data-np-min]');
+    const btnOn = $<HTMLButtonElement>('[data-np-on]');
+    const btnOff = $<HTMLButtonElement>('[data-np-off]');
+    const btnTest = $<HTMLButtonElement>('[data-np-test]');
+    const elState = $('[data-np-state]');
+    const elList = $('[data-np-list]');
+    const elAlert = $('[data-np-alert]');
+
+    const podrzano = 'Notification' in window;
+    let p: Postavke = { ukljuceno: false, vakti: checks.filter((c) => c.checked).map((c) => c.value), minuta: 10, poslano: {} };
+    try {
+      const raw = localStorage.getItem(KLJUC);
+      if (raw) p = { ...p, ...JSON.parse(raw) };
+    } catch {
+      /* bez pamćenja */
+    }
+    const sacuvaj = () => {
+      try {
+        localStorage.setItem(KLJUC, JSON.stringify(p));
+      } catch {
+        /* ignoriši */
+      }
+    };
+    checks.forEach((c) => (c.checked = p.vakti.includes(c.value)));
+    selMin.value = String(p.minuta);
+    if (!selMin.value) selMin.value = '10';
+
+    interface Podsjetnik {
+      kljuc: string;
+      vakat: Vakat;
+      kada: number;
+      sutra: boolean;
+    }
+
+    function predstojeci(now = Date.now()): Podsjetnik[] {
+      const d = danUZoni(new Date(now));
+      const s = pomjeriDan(d.god, d.mj, d.dan, 1);
+      const out: Podsjetnik[] = [];
+      for (const [dan, sutra] of [
+        [izracunajDan(d.god, d.mj, d.dan, k), false],
+        [izracunajDan(s.god, s.mj, s.dan, k), true],
+      ] as const) {
+        for (const v of dan.vakti) {
+          if (!p.vakti.includes(v.kljuc)) continue;
+          const kada = v.vrijeme.getTime() - p.minuta * 60_000;
+          if (v.vrijeme.getTime() + 60_000 < now) continue;
+          out.push({ kljuc: `${dan.datum}-${v.kljuc}-${p.minuta}`, vakat: v, kada, sutra });
+        }
+      }
+      return out;
+    }
+
+    const hhmm = (t: number) =>
+      new Intl.DateTimeFormat('sr-Latn', { timeZone: 'Europe/Belgrade', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(t);
+
+    function renderList() {
+      const lista = predstojeci().slice(0, 4);
+      elList.replaceChildren(
+        ...(lista.length
+          ? lista.map((x) => {
+              const li = document.createElement('li');
+              const a = document.createElement('span');
+              a.textContent = `${x.vakat.naziv}${x.sutra ? ' (sutra)' : ''} — ${x.vakat.hhmm}`;
+              const b = document.createElement('span');
+              b.className = 'muted';
+              b.textContent = p.minuta ? `podsjetnik u ${hhmm(x.kada)}` : 'u trenutku vakta';
+              li.append(a, b);
+              return li;
+            })
+          : [Object.assign(document.createElement('li'), { className: 'muted', textContent: 'Odaberite bar jedan vakat.' })]),
+      );
+    }
+
+    async function prikaziObavjestenje(naslov: string, tekst: string, tag: string): Promise<boolean> {
+      if (podrzano && Notification.permission === 'granted') {
+        const opts: NotificationOptions = { body: tekst, icon: ikona, badge: ikona, tag, lang: 'sr-Latn' };
+        try {
+          const n = new Notification(naslov, opts);
+          n.onclick = () => {
+            window.focus();
+            n.close();
+          };
+          return true;
+        } catch {
+          // Android Chrome: konstruktor nije dozvoljen — pokušaj preko service workera ako postoji
+          try {
+            const reg = await navigator.serviceWorker?.getRegistration();
+            if (reg) {
+              await reg.showNotification(naslov, opts);
+              return true;
+            }
+          } catch {
+            /* nastavi na prikaz na stranici */
+          }
+        }
+      }
+      return false;
+    }
+
+    function upozorenjeNaStranici(tekst: string) {
+      elAlert.hidden = false;
+      elAlert.textContent = tekst;
+      const ua = (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation;
+      if ('vibrate' in navigator && (!ua || ua.hasBeenActive)) navigator.vibrate([200, 100, 200]);
+    }
+
+    async function provjeri() {
+      if (!p.ukljuceno) return;
+      const now = Date.now();
+      for (const x of predstojeci(now)) {
+        if (now >= x.kada && !p.poslano[x.kljuc]) {
+          p.poslano[x.kljuc] = now;
+          const naslov = p.minuta ? `Za ${p.minuta} min: ${x.vakat.naziv}` : `Nastupio je vakat: ${x.vakat.naziv}`;
+          const tekst = `${x.vakat.naziv} u ${x.vakat.hhmm} (${grad}). Podsjetnik do ${NAZIV_DO[x.vakat.kljuc]}.`;
+          const ok = await prikaziObavjestenje(naslov, tekst, x.kljuc);
+          if (!ok || document.visibilityState === 'visible') upozorenjeNaStranici(`${naslov} — ${x.vakat.hhmm}`);
+        }
+      }
+      // očisti stare oznake (starije od 2 dana)
+      for (const [kk, t] of Object.entries(p.poslano)) if (now - t > 2 * 86_400_000) delete p.poslano[kk];
+      sacuvaj();
+    }
+
+    function renderStanje() {
+      const dozvola = podrzano ? Notification.permission : 'nepodrzano';
+      btnOn.hidden = p.ukljuceno;
+      btnOff.hidden = !p.ukljuceno;
+      btnTest.hidden = !p.ukljuceno;
+      if (!podrzano) {
+        elState.textContent = p.ukljuceno
+          ? 'Ovaj pregledač ne podržava obavještenja — podsjetnik će se prikazati na stranici dok je otvorena.'
+          : 'Ovaj pregledač ne podržava obavještenja. Koristite vaktiju u kalendaru.';
+      } else if (dozvola === 'denied') {
+        elState.textContent = 'Obavještenja su blokirana u postavkama pregledača. Dozvolite ih za ovaj sajt ili koristite kalendar.';
+      } else if (p.ukljuceno) {
+        elState.textContent =
+          dozvola === 'granted'
+            ? `Podsjetnik je uključen (${p.minuta ? `${p.minuta} min prije` : 'u trenutku vakta'}). Ostavite sajt otvoren.`
+            : 'Podsjetnik je uključen, ali obavještenja nisu dozvoljena — prikazaće se na stranici.';
+      } else {
+        elState.textContent = 'Podsjetnik je isključen.';
+      }
+    }
+
+    btnOn.addEventListener('click', async () => {
+      if (podrzano && Notification.permission === 'default') {
+        try {
+          await Notification.requestPermission();
+        } catch {
+          /* stari Safari: callback API */
+        }
+      }
+      p.ukljuceno = true;
+      // ne šalji odmah podsjetnike čije je vrijeme već prošlo
+      const now = Date.now();
+      predstojeci(now).forEach((x) => {
+        if (x.kada <= now) p.poslano[x.kljuc] = now;
+      });
+      sacuvaj();
+      renderStanje();
+    });
+    btnOff.addEventListener('click', () => {
+      p.ukljuceno = false;
+      sacuvaj();
+      renderStanje();
+      elAlert.hidden = true;
+    });
+    btnTest.addEventListener('click', async () => {
+      const ok = await prikaziObavjestenje('Probno obavještenje', `Ovako će izgledati podsjetnik za namaz (${grad}).`, 'proba');
+      if (!ok)
+        upozorenjeNaStranici(
+          'Sistemsko obavještenje nije moguće prikazati u ovom pregledaču — podsjetnik će se prikazivati ovdje, na stranici. Za pouzdane podsjetnike koristite kalendar.',
+        );
+      else elState.textContent = 'Probno obavještenje je poslano.';
+    });
+    elAlert.addEventListener('click', () => (elAlert.hidden = true));
+
+    checks.forEach((c) =>
+      c.addEventListener('change', () => {
+        p.vakti = checks.filter((x) => x.checked).map((x) => x.value);
+        sacuvaj();
+        renderList();
+      }),
+    );
+    selMin.addEventListener('change', () => {
+      p.minuta = Number(selMin.value);
+      const now = Date.now();
+      predstojeci(now).forEach((x) => {
+        if (x.kada <= now) p.poslano[x.kljuc] = now;
+      });
+      sacuvaj();
+      renderList();
+      renderStanje();
+    });
+
+    renderStanje();
+    renderList();
+    provjeri();
+    setInterval(() => {
+      provjeri();
+      renderList();
+    }, 15_000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        provjeri();
+        renderList();
+      }
+    });
+
+    // ---- .ics za mjesec ----
+    const selMj = $<HTMLSelectElement>('[data-np-mj]');
+    const selAlarm = $<HTMLSelectElement>('[data-np-alarm]');
+    const icsState = $('[data-np-ics-state]');
+    $('[data-np-ics]').addEventListener('click', () => {
+      const [god, mj] = selMj.value.split('-').map(Number);
+      const izabrani = checks.filter((c) => c.checked).map((c) => c.value);
+      if (!izabrani.length) {
+        icsState.textContent = 'Odaberite bar jedan vakat.';
+        return;
+      }
+      const alarm = selAlarm.value === '' ? null : Number(selAlarm.value);
+      const ev: IcsDogadjaj[] = [];
+      for (const dan of izracunajMjesec(god, mj, k)) {
+        for (const v of dan.vakti) {
+          if (!izabrani.includes(v.kljuc)) continue;
+          ev.push({
+            uid: `${dan.datum.replace(/-/g, '')}-${v.kljuc}@dzamija-na-jaliji`,
+            pocetak: v.vrijeme,
+            trajanjeMin: v.kljuc === 'izlazak' ? 5 : 15,
+            naslov: `${v.naziv} — ${v.hhmm}`,
+            opis: `Vaktija za ${grad} (Džamija na Jaliji). Izračunato prema kalibrisanoj vaktiji; zvanična vaktija: vaktija.ba.`,
+            mjesto: adresa,
+            podsjetnikMin: alarm,
+          });
+        }
+      }
+      preuzmi(napraviIcs(ev, `Vaktija — ${grad}`), `vaktija-${grad.toLowerCase().replace(/\s+/g, '-')}-${god}-${String(mj).padStart(2, '0')}.ics`, 'text/calendar;charset=utf-8');
+      icsState.textContent = `Preuzet je fajl sa ${ev.length} termina za ${MJESECI[mj - 1]} ${god}. Otvorite ga da ih dodate u kalendar.`;
+    });
+  }
+</script>

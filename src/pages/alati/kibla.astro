@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import KiblaKompas from '../../components/alati/KiblaKompas.astro';
+import OstaliAlati from '../../components/alati/OstaliAlati.astro';
+import { dzamija } from '../../lib/data';
+import { azimutKible, formatStepeni } from '../../lib/alati/kibla';
+
+const az = formatStepeni(azimutKible(dzamija.koordinate));
+---
+<BaseLayout
+  title="Kibla — pravac Kabe"
+  description={`Pravac kible za Novi Pazar je ${az} od sjevera (jugoistok). Izračunajte kiblu za svoju lokaciju i koristite kompas na telefonu.`}
+>
+  <PageHero
+    eyebrow="Alati"
+    title="Kibla — pravac Kabe"
+    subtitle={`Iz Novog Pazara kibla je na ${az} od sjevera, prema jugoistoku. Na telefonu možete uključiti živi kompas.`}
+    arabic="القبلة"
+  />
+  <section class="section section--tight">
+    <div class="container">
+      <KiblaKompas />
+      <div class="prose kibla-info">
+        <h2>Kako je izračunato</h2>
+        <p>
+          Kibla je smjer najkraćeg puta po površini Zemlje (velikog kruga) od vaše lokacije do Kabe u Mekki
+          (21,4225° N, 39,8262° E). Ugao se mjeri od geografskog sjevera u smjeru kazaljke na satu. Isti
+          postupak koriste i drugi kalkulatori kible, pa se rezultati poklapaju na desetinku stepena.
+        </p>
+        <p>
+          Kada klanjate u džamiji, saff je već usmjeren prema kibli. Ovaj alat je koristan kod kuće, na poslu ili
+          na putovanju. Ako kiblu nije moguće tačno utvrditi, prema učenjacima je dovoljan iskren trud da se ona odredi (idžtihad); za konkretna pitanja obratite se imamu.
+        </p>
+      </div>
+    </div>
+  </section>
+  <OstaliAlati trenutni="kibla" />
+</BaseLayout>
+<style>
+  .kibla-info { margin-top: var(--space-7); }
+  .kibla-info h2 { margin-top: 0; }
+</style>

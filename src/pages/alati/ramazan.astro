@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import Placeholder from '../../components/ui/Placeholder.astro';
+import Imsakija from '../../components/alati/Imsakija.astro';
+import OstaliAlati from '../../components/alati/OstaliAlati.astro';
+import { url } from '../../lib/url';
+---
+<BaseLayout
+  title="Ramazan i imsakija"
+  description="Ramazanska imsakija za Novi Pazar: imsak (kraj sehura) i iftar za svaki dan, odbrojavanje do iftara, datum početka Ramazana i preuzimanje u kalendar telefona."
+>
+  <PageHero
+    eyebrow="Alati"
+    title="Ramazan i imsakija"
+    subtitle="Vrijeme imsaka i iftara za svaki dan Ramazana, odbrojavanje i imsakija za štampu ili kalendar telefona."
+    arabic="رَمَضَان"
+  />
+  <section class="section section--tight">
+    <div class="container">
+      <Imsakija />
+    </div>
+  </section>
+
+  <section class="section section--tight section--tint no-print" aria-labelledby="teravih-naslov">
+    <div class="container grid-2">
+      <div class="prose">
+        <h2 id="teravih-naslov">Teravih-namaz u džamiji</h2>
+        <p>
+          Teravih se klanja svake ramazanske noći nakon jacije, a prva teravija noć uoči prvog dana posta.
+          Tačno vrijeme klanjanja u Džamiji na Jaliji objavljuje džemat pred Ramazan.
+        </p>
+        <Placeholder label="vrijeme teravih-namaza u Džamiji na Jaliji" hint="objavljuje se pred Ramazan u obavještenjima džemata" />
+        <p><a class="link-arrow" href={url('/obavjestenja')}>Obavještenja džemata</a></p>
+      </div>
+      <div class="prose">
+        <h2>Dova pri iftaru</h2>
+        <p class="arabic-block" lang="ar" dir="rtl">ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ</p>
+        <p><em>Zehebez-zameu vebtelletil-'uruku ve sebetel-edžru inšallah.</em></p>
+        <p>„Otišla je žeđ, ovlažile su se žile i nagrada je potvrđena, ako Allah da.” (Ebu Davud)</p>
+        <p class="muted">Postač koji ima opravdan razlog da ne posti (bolest, putovanje) naknađuje propuštene dane; o fidji i drugim pitanjima posta pitajte imama.</p>
+      </div>
+    </div>
+  </section>
+  <OstaliAlati trenutni="ramazan" />
+</BaseLayout>

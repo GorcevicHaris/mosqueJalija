@@ -1,0 +1,62 @@
+---
+// Sadekatul-fitr: iznos NE izmišljamo — zvanično ga svake godine objavljuje Mešihat / Rijaset IZ.
+// Kada bude objavljen, upisati ga u `IZNOS_PO_OSOBI` (broj u RSD) ili ostaviti null (placeholder).
+import Placeholder from '../ui/Placeholder.astro';
+
+const IZNOS_PO_OSOBI = null as number | null;
+const GODINA = null as string | null; // npr. '1448. h. g. (2027.)'
+---
+<section class="card sf" aria-labelledby="sf-title" data-sf data-iznos={IZNOS_PO_OSOBI ?? ''}>
+  <h2 id="sf-title" class="sf__h">Sadekatul-fitr</h2>
+  <p>
+    Sadekatul-fitr (zekatul-fitr) je obaveza svakog muslimana koji ima imovinu preko osnovnih potreba, za sebe i
+    za članove porodice koje izdržava. Daje se tokom Ramazana, a najkasnije prije bajram-namaza, kako bi i siromašni
+    dočekali bajram radosni.
+  </p>
+  <p class="sf__label">Zvanični iznos po osobi{GODINA ? ` za ${GODINA}` : ''}:</p>
+  {IZNOS_PO_OSOBI === null ? (
+    <Placeholder label="iznos sadekatul-fitra za ovu godinu" hint="zvanično ga pred Ramazan objavljuje Mešihat Islamske zajednice u Srbiji / Rijaset — upišite objavljeni iznos u polje ispod" />
+  ) : (
+    <p class="sf__amount">{IZNOS_PO_OSOBI.toLocaleString('sr-Latn-RS')} RSD</p>
+  )}
+  <div class="sf__calc">
+    <div class="field">
+      <label for="sf-iznos">Iznos po osobi (RSD)</label>
+      <input id="sf-iznos" class="input" type="text" inputmode="decimal" autocomplete="off" value={IZNOS_PO_OSOBI ?? ''} placeholder="zvanično objavljen iznos" data-sf-iznos />
+    </div>
+    <div class="field">
+      <label for="sf-osobe">Broj članova domaćinstva</label>
+      <input id="sf-osobe" class="input" type="number" inputmode="numeric" min="1" max="99" step="1" value="1" data-sf-osobe />
+    </div>
+  </div>
+  <p class="sf__total" role="status" aria-live="polite">Ukupno: <strong data-sf-total>—</strong></p>
+  <p class="sf__src muted">
+    Pratite zvanična saopštenja na <a href="https://mesihat.org" target="_blank" rel="noopener">mesihat.org</a> i
+    objave džemata. Iznos fidje (za one koji iz opravdanog razloga ne mogu postiti) objavljuje se na isti način.
+  </p>
+</section>
+<style>
+  .sf__h { font-size: 1.4rem; }
+  .sf__label { font-weight: 700; margin-bottom: var(--space-2); }
+  .sf__amount { font-family: var(--font-serif); font-size: 2rem; font-weight: 600; color: var(--color-primary); }
+  .sf__calc { display: grid; gap: var(--space-4); margin-top: var(--space-4); }
+  @media (min-width: 560px) { .sf__calc { grid-template-columns: 1fr 1fr; } }
+  .sf__total { margin: var(--space-4) 0 var(--space-2); font-size: 1.1rem; }
+  .sf__src { font-size: 0.88rem; margin: 0; }
+</style>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-sf]');
+  if (root) {
+    const iznos = root.querySelector<HTMLInputElement>('[data-sf-iznos]')!;
+    const osobe = root.querySelector<HTMLInputElement>('[data-sf-osobe]')!;
+    const out = root.querySelector<HTMLElement>('[data-sf-total]')!;
+    const calc = () => {
+      const a = Number(iznos.value.replace(/[\s.]/g, '').replace(',', '.'));
+      const n = Math.max(1, Math.round(Number(osobe.value) || 1));
+      out.textContent = a > 0 ? `${(a * n).toLocaleString('sr-Latn-RS', { maximumFractionDigits: 2 })} RSD (${n} × ${a.toLocaleString('sr-Latn-RS')})` : '—';
+    };
+    iznos.addEventListener('input', calc);
+    osobe.addEventListener('input', calc);
+    calc();
+  }
+</script>

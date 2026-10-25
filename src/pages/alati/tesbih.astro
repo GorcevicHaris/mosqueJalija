@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import Tesbih from '../../components/alati/Tesbih.astro';
+import OstaliAlati from '../../components/alati/OstaliAlati.astro';
+---
+<BaseLayout
+  title="Digitalni tesbih"
+  description="Digitalni tesbih (brojač zikra): tesbihat poslije namaza 33-33-34, Subhanallah, Elhamdulillah, Allahu ekber, istigfar i salavat, uz vibraciju i pamćenje stanja."
+>
+  <PageHero
+    eyebrow="Alati"
+    title="Digitalni tesbih"
+    subtitle="Brojač zikra sa tesbihatom poslije namaza, vlastitim ciljem i vibracijom. Radi i bez interneta kada je stranica učitana."
+    arabic="سُبْحَانَ ٱللَّٰهِ"
+  />
+  <section class="section section--tight">
+    <div class="container">
+      <Tesbih />
+      <div class="prose tesbih-info">
+        <h2>O tesbihatu poslije namaza</h2>
+        <p>
+          Poslije farz-namaza uobičajeno je izgovoriti 33 puta <em>Subhanallah</em>, 33 puta <em>Elhamdulillah</em> i
+          34 puta <em>Allahu ekber</em> (ukupno 100). Prema drugoj predaji, <em>Allahu ekber</em> se izgovori 33 puta, a
+          stotka se upotpuni riječima tevhida (<em>La ilahe illallahu vahdehu la šerike leh…</em>). Za cilj od 33 odaberite
+          zikr <strong>Allahu ekber</strong> i dugme „33”.
+        </p>
+        <p>
+          Tesbih je pomoćno sredstvo — važnije je prisustvo srca i razumijevanje onoga što se izgovara. Za pitanja o
+          zikru i virdovima obratite se imamu džemata.
+        </p>
+      </div>
+    </div>
+  </section>
+  <OstaliAlati trenutni="tesbih" />
+</BaseLayout>
+<style>
+  .tesbih-info { margin: var(--space-7) auto 0; }
+  .tesbih-info h2 { margin-top: 0; }
+</style>

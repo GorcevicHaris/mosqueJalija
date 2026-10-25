@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import AlatKartica from '../../components/alati/AlatKartica.astro';
+import { ALATI, POVEZANO } from '../../lib/alati/alati';
+---
+<BaseLayout
+  title="Islamski alati"
+  description="Korisni alati za džematlije: pravac kible, digitalni tesbih, kalkulator zekata, ramazanska imsakija i podsjetnik za namaz — besplatno, u pregledaču, bez prijave."
+>
+  <PageHero
+    eyebrow="Alati"
+    title="Islamski alati"
+    subtitle="Kibla, tesbih, zekat, imsakija i podsjetnik za namaz — sve radi u vašem pregledaču, bez prijave i bez slanja podataka."
+  />
+  <section class="section section--tight">
+    <div class="container">
+      <h2 class="visually-hidden">Alati</h2>
+      <ul class="grid-cards alati-lista" role="list">
+        {ALATI.map((a) => <li><AlatKartica alat={a} /></li>)}
+      </ul>
+    </div>
+  </section>
+  <section class="section section--tight section--tint" aria-labelledby="povezano-naslov">
+    <div class="container">
+      <h2 id="povezano-naslov" class="povezano__title">Povezano na sajtu</h2>
+      <ul class="grid-cards grid-cards--sm alati-lista" role="list">
+        {POVEZANO.map((a) => <li><AlatKartica alat={a} kompaktno /></li>)}
+      </ul>
+      <p class="muted alati-napomena">
+        Proračuni (vaktija, kibla, datumi) su orijentacioni i rade se lokalno na vašem uređaju. Za vjerska pitanja
+        i zvanične datume obratite se imamu džemata ili pratite objave Islamske zajednice.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .alati-lista { list-style: none; padding: 0; margin: 0; }
+  .alati-lista > li { display: flex; flex-direction: column; }
+  .alati-lista > li > :global(.card) { flex: 1; }
+  .povezano__title { font-size: clamp(1.35rem, 1.5vw + 1rem, 1.8rem); margin-bottom: var(--space-5); }
+  .alati-napomena { margin: var(--space-6) 0 0; font-size: 0.92rem; max-width: 70ch; }
+</style>

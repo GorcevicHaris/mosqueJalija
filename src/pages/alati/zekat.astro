@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import ZekatKalkulator from '../../components/alati/ZekatKalkulator.astro';
+import SadekatulFitr from '../../components/alati/SadekatulFitr.astro';
+import OstaliAlati from '../../components/alati/OstaliAlati.astro';
+---
+<BaseLayout
+  title="Kalkulator zekata"
+  description="Izračunajte zekat (2,5 %) na gotovinu, štednju, zlato, srebro, robu i potraživanja, uz nisab po 85 g zlata ili 595 g srebra. Informacije o sadekatul-fitru."
+>
+  <PageHero
+    eyebrow="Alati"
+    title="Kalkulator zekata"
+    subtitle="Unesite imovinu i aktuelnu cijenu zlata ili srebra — kalkulator računa nisab i zekat od 2,5 %. Podaci ostaju samo u vašem pregledaču."
+    arabic="الزكاة"
+  />
+  <section class="section section--tight">
+    <div class="container">
+      <ZekatKalkulator />
+    </div>
+  </section>
+
+  <section class="section section--tight section--tint zekat-info">
+    <div class="container grid-2">
+      <div class="prose">
+        <h2>Ukratko o zekatu</h2>
+        <ul>
+          <li><strong>Ko daje zekat:</strong> punoljetan musliman čija neto imovina (nakon odbitka dugova koji dospijevaju) dostigne nisab.</li>
+          <li><strong>Nisab</strong> je vrijednost 85 grama čistog zlata ili 595 grama srebra. Nisab po srebru je niži, pa ga neki učenjaci preporučuju kao povoljniji za siromašne.</li>
+          <li><strong>Godina (havl):</strong> zekat se daje kada protekne jedna hidžretska godina otkako je imovina dostigla nisab.</li>
+          <li><strong>Iznos:</strong> 2,5 % (jedna četrdesetina) neto imovine na dan obračuna.</li>
+          <li><strong>Ne računa se:</strong> stan u kojem živite, lično vozilo, namještaj, alat i oprema za rad.</li>
+          <li><strong>Kome se daje:</strong> osam kategorija navedenih u Kur'anu (sura Et-Tevba, 60), među kojima su siromasi i potrebni. Zekat se može uplatiti i preko Islamske zajednice.</li>
+        </ul>
+        <p class="muted">Ovo je pojednostavljen pregled. Za konkretna pitanja (nakit, dionice, poljoprivreda, firma) obratite se imamu.</p>
+      </div>
+      <SadekatulFitr />
+    </div>
+  </section>
+  <OstaliAlati trenutni="zekat" />
+</BaseLayout>
+<style>
+  .zekat-info .prose h2 { margin-top: 0; }
+</style>
