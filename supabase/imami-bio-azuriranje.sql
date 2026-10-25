@@ -1,0 +1,130 @@
+-- Ažuriranje biografija predavača (generisano iz data/imami-bio.json, 2026-10-25; nakon provjere činjenica, vidi docs/provjera-imama.md).
+-- Idempotentno: insert ... on conflict (slug) do update; update imami po slugu.
+begin;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$admir-jasarevic$s$,
+  $s$Hatib i predavač u Džamiji na Jaliji$s$,
+  $s$Hafiz Kur'ana. Prema opisu njegovog javnog Instagram profila, diplomirao je na Odsjeku za kur'anske studije Univerziteta kralja Sauda (King Saud University) u Rijadu.
+
+Prema plakatu Džamije na Jaliji (11. 10. 2026.), od 20. 10. 2026. kao profesor vodi halku hifza Amme džuza za muškarce metodom telkina, uz tefsir. Kao „hfz. Admir ef. Jašarević” proučio je ašere na manifestaciji povodom 12. rebiul-evvela održanoj na Fakultetu za islamske studije u Novom Pazaru 15. 9. 2024.
+
+Na kanalu Džamije na Jaliji (stanje 25. 10. 2026.) objavljena su 62 njegova snimka: 27 džumanskih hutbi (od 35 hutbi objavljenih na kanalu), 25 dijelova ramazanskog tefsira sure Jusuf (februar–mart 2026.), sedam predavanja — među njima serijal „Duhovna opskrba vjernika” u pet dijelova — i tri snimka učenja Kur'ana (sure En-Nahl i El-Kijame). Hutbe su posvećene stanju srca i posljedicama grijeha, djelima koja uvode u Džennet, emanetu, bratstvu i pomaganju među muslimanima, odgoju djece i poukama iz sire (Bedr, hidžra); u hutbi „Šutnja nije opravdanje – sačuvajmo Rogoznu” (24. 4. 2026.) govorio je o očuvanju planine Rogozne.$s$,
+  $s$/images/imami/admir-jasarevic.webp$s$,
+  true,
+  $s$[{"naziv":"YouTube kanal „Džamija na Jaliji” (pregledano 25. 10. 2026.)","url":"https://www.youtube.com/@D%C5%BEamijanaJaliji/videos"},{"naziv":"Instagram @admir__j — opis profila, vlastiti navod (pregledano 25. 10. 2026.)","url":"https://www.instagram.com/admir__j/"},{"naziv":"Instagram @dzamija_na_jaliji — plakat „Hifz Amme džuza”, profesor hafiz Admir Jašarević (11. 10. 2026.)","url":"https://www.instagram.com/dzamija_na_jaliji/p/DeWbvqEqdf2/"},{"naziv":"mesihat.org — Održana manifestacija povodom 12. rebiul-evvela (16. 9. 2024.)","url":"https://mesihat.org/2024/09/16/odrzana-manifestacija-povodom-12-rebiul-evvela/"},{"naziv":"YouTube — hutba „Šutnja nije opravdanje – sačuvajmo Rogoznu” (24. 4. 2026.)","url":"https://www.youtube.com/watch?v=YFpo1trv5JM"},{"naziv":"Fotografija: kadar iz videa „Istinsko popravljanje stanja” (10. 10. 2026.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=zViIQjXeAd8&t=200s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$abdurahman-kujevic$s$,
+  $s$Direktor Vakufske direkcije IZ u Srbiji; gost hatib i predavač (halka hadisa)$s$,
+  $s$Hafiz, rodom iz sela Balotiće kod Rožaja, rođen 21. 6. 1982. Medresu „Gazi Isa-beg” u Novom Pazaru završio je 2001. kao učenik generacije, a zatim je na Islamskom univerzitetu u Medini, nakon kursa arapskog jezika, završio Fakultet hadisa i islamskih nauka (2006.). U Medini je Kur'an proučio pred karijom Poslanikove džamije šejhom Jusufom ibn Dževdom ed-Davudijem i stekao idžazetnamu za učenje i podučavanje Kur'ana.
+
+Prema biografiji arhiviranoj 2012. predavao je na Islamskom fakultetu u Novom Pazaru i u ženskoj medresi u Rožajama, te držao hutbe i predavanja u rožajskim džamijama. Mešihat Islamske zajednice u Srbiji imenovao ga je 7. 3. 2016., kao dotadašnjeg pomoćnika muftije sandžačkog, za vršioca dužnosti muftije sandžačkog. Kao muftija sandžački navodi se u izvorima do početka 2025., pa se tako obratio i na otvaranju Džamije na Jaliji 8. 3. 2024.
+
+Na proširenoj sjednici Mešihata 19. 2. 2025. odlučeno je da se ingerencije oblasnih muftija prenesu na glavnog muftiju, a Kujević je imenovan za savjetnika predsjednika Mešihata za sandžačku dijasporu. Nekoliko dana kasnije (26. 2. 2025.) izjavio je da, prema Ustavu Islamske zajednice, o razrješenju i imenovanju muftija odlučuje Sabor, te da će poštovati odluke Islamske zajednice. U izvorima Mešihata iz 2026. navodi se kao „hfz. Abdurrahman ef. Kujević”, bez muftijske titule, a kao muftija sandžački navodi se predsjednik Mešihata dr. Mevlud ef. Dudić. Titula „muftija” i dalje se uz njegovo ime koristi u naslovima pojedinih snimaka na kanalu Džamije na Jaliji (npr. avgust 2026.) i na stranici Hasan Čelebi (Arap) džamije, kao oznaka dužnosti koju je obavljao.
+
+Vakufsku direkciju Islamske zajednice u Srbiji vodi najkasnije od 2022.; kao njen direktor navodi se i u izvorima iz 2025. i 2026. (posljednji iz juna 2026.), kada je javno govorio o obnovi Isa-begovog hamama i Kolo džamije u Novom Pazaru.
+
+Na kanalu Džamije na Jaliji objavljeno je pet njegovih snimaka: tri džumanske hutbe („Poruke i pouke iz sure El-Beled”, „Najvažniji ibadet – namaz”, „Trebamo kvalitetne ljude”) i dva predavanja iz halke hadisa („Putovanje radi znanja”, „Allahov Poslanik ﷺ žuri da uvede ljude u Džennet”). Predavanja drži i u Hasan Čelebi (Arap) džamiji u Novom Pazaru (2025–2026), a u februaru 2026. održao je hutbu u Altun-alem džamiji i gostovao u ramazanskom programu Mešihata.$s$,
+  $s$/images/imami/abdurahman-kujevic.webp$s$,
+  true,
+  $s$[{"naziv":"dersovi.net — Hfz. Abdurahman Kujević, biografija (arhivirano 6. 3. 2012.)","url":"https://web.archive.org/web/20120306170959/http://www.dersovi.net/predavaci/hfz-abdurahman-kujevic/"},{"naziv":"mesihat.org — Vršilac dužnosti muftija sandžački je hfz. Abdurahman ef. Kujević (7. 3. 2016.)","url":"https://mesihat.org/2016/03/07/vrsilac-duznosti-muftija-sandzacki-je-hfz-abdurahman-ef-kujevic/"},{"naziv":"Sandžak Press — Zukorlić u posjeti Vakufskoj direkciji Islamske zajednice u Srbiji (16. 12. 2022.)","url":"https://www.sandzakpress.net/zukorlic-u-posjeti-vakufskoj-direkciji-islamske-zajednice-u-srbiji/"},{"naziv":"mesihat.org — Svečano otvorena džamija na Jaliji (8. 3. 2024.)","url":"https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/"},{"naziv":"mesihat.org — Održana proširena sjednica Mešihata (19. 2. 2025.)","url":"https://mesihat.org/2025/02/19/odrzana-prosirena-sjednica-mesihata-8/"},{"naziv":"SANA — Hfz. Kujević: Različita mišljenja su snaga Islamske zajednice (26. 2. 2025.)","url":"https://sanapress.info/hfz-kujevic-razlicita-misljenja-su-snaga-islamske-zajednice/"},{"naziv":"Glas Sandžaka — Oglasio se i hfz Kujević: „Muftija Dudić je moj poglavar” (26. 2. 2025.)","url":"https://glassandzaka.online/2025/02/26/oglasio-se-i-hfz-kujevic-muftija-dudic-je-moj-poglavar/"},{"naziv":"mesihat.org — Muftija sandžački dr. Mevlud ef. Dudić (pregledano 25. 10. 2026.)","url":"https://mesihat.org/muftija-sandzacki-mevlud-dudic/"},{"naziv":"SANA — Hfz. Kujević: Vizija muftije Zukorlića sačuvala Hamam (13. 6. 2025.)","url":"https://sanapress.info/hfz-kujevic-vizija-muftije-zukorlica-sacuvala-hamam-zavrsena-arheoloska-istrazivanja-slijedi-izrada-projekta/"},{"naziv":"SANA — Hfz. Kujević: Obnova Kolo džamije biće autentična i u izvornom obliku (23. 12. 2025.)","url":"https://sanapress.info/hfz-kujevic-obnova-kolo-dzamije-bice-autenticna-i-u-izvornom-obliku/"},{"naziv":"SANA — Hfz. Abdurahman ef. Kujević: Vakufi su temelj razvoja i društvene odgovornosti (21. 5. 2026.)","url":"https://sanapress.info/hfz-abdurahman-ef-kujevic-vakufi-su-temelj-razvoja-i-drustvene-odgovornosti/"},{"naziv":"Medžlis IZ Tuzla — Posjeta delegacije Vakufske direkcije Mešihata IZ u Srbiji (18. 6. 2026.)","url":"https://medzlistuzla.ba/posjeta-delegacije-vakufske-direkcije-mesihata-islamske-zajednice-u-srbiji/"},{"naziv":"mesihat.org — Hutba, hfz. Abdurrahman ef. Kujević, Altun Alem džamija (23. 2. 2026.)","url":"https://mesihat.org/2026/02/23/hutba-hfz-abdurrahman-ef-kujevic-altun-alem-dzamija-20-2-2026/"},{"naziv":"mesihat.org — Ramazanski program 2026., gost: hfz. Abdurrahman ef. Kujević (23. 2. 2026.)","url":"https://mesihat.org/2026/02/23/ramazanski-program-2026-gost-hfz-abdurrahman-ef-kujevic/"},{"naziv":"YouTube kanal „Džamija na Jaliji” — „Trebamo kvalitetne ljude – muftija hfz. Abdurahman ef. Kujević” (22. 8. 2026.)","url":"https://www.youtube.com/watch?v=URC-DOi3T-c"},{"naziv":"Hasan Čelebi (Arap) džamija — Predavanja (pregledano 25. 10. 2026.)","url":"https://www.arapdzamija.rs/predavanja"},{"naziv":"Fotografija: kadar iz videa „Trebamo kvalitetne ljude” (22. 8. 2026.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=URC-DOi3T-c&t=102s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$edin-redzepovic$s$,
+  $s$Gost hatib; asistent na Fakultetu za islamske studije, glavni i odgovorni urednik Glasa islama$s$,
+  $s$Hafiz Kur'ana i magistar (mr.). Prema izvoru iz januara 2026. radi kao asistent za hadis na Fakultetu za islamske studije u Novom Pazaru, gdje je i doktorand na Odsjeku za hadis, a u Medresi „Gazi Isa-beg” predaje ahlak. U maju 2026. primljen je u članstvo Svjetske unije islamskih učenjaka (IUMS) sa sjedištem u Dohi.
+
+Mešihat Islamske zajednice u Srbiji imenovao ga je u februaru 2024. za v.d. glavnog urednika Glasa islama, a kao glavni i odgovorni urednik naveden je i u impresumu brojeva 369 (jul 2026.) i 370 (avgust 2026.). U listu objavljuje analize, npr. „Najljepši uzor ljudskog karaktera” (br. 370).
+
+Autor je knjiga „Osnove islamskog karaktera” (2023.) i „Sunnetom do savršene ličnosti” (2024.), obje u izdanju El-Kelimeha, te „Vrijednost i značaj salavata”, predstavljene u januaru 2026. kao njegova peta autorska knjiga. Prema istom izvoru preveo je petnaest knjiga, radio na komentaru i recenziji Buharijevog Sahiha i Nesaijevog Sunena i šerijatski je recenzent više od 50 naslova. U časopisu „Islamska misao” (br. 16, 2025.) objavio je rad o razvoju metodologije zapisivanja, pisanja i klasifikacije hadisa u prva dva hidžretska stoljeća.
+
+Na kanalu Džamije na Jaliji objavljene su dvije njegove džumanske hutbe: „Zar ste mislili da smo vas uzalud stvorili i da Nam se nećete vratiti?” (26. 12. 2025.) i „Razumijevanje ibadeta u islamu” (25. 9. 2026.). Predavanja drži i u Hasan Čelebi (Arap) džamiji u Novom Pazaru (2025–2026), o temama imana, dobročinstva, pokajanja i kur'anskih kazivanja.$s$,
+  $s$/images/imami/edin-redzepovic.webp$s$,
+  true,
+  $s$[{"naziv":"FIS — Dr. Enver Omerović čestitao hfz. Edinu Redžepoviću na novoj knjizi (5. 1. 2026.)","url":"https://fis.edu.rs/dr-enver-omerovic-cestitao-hfz-edinu-redzepovicu-na-novoj-knjizi-i-podrzao-njegov-naucni-rad/"},{"naziv":"FIS — Hafiz mr. Edin Redžepović primljen u članstvo Svjetske unije islamskih učenjaka (16. 5. 2026.)","url":"https://fis.edu.rs/hafiz-mr-edin-redzepovic-primljen-u-clanstvo-svjetske-unije-islamskih-ucenjaka/"},{"naziv":"mesihat.org — Novi urednik Glasa islama stupio na dužnost (16. 2. 2024.)","url":"https://mesihat.org/2024/02/16/novi-urednik-glas-islama-stupio-na-duznost/"},{"naziv":"Glas islama br. 369 (jul 2026.), impresum (PDF)","url":"http://www.glas-islama.com/pdf/2026/369.pdf"},{"naziv":"Glas islama br. 370 (avgust 2026.), impresum (PDF)","url":"http://www.glas-islama.com/pdf/2026/370.pdf"},{"naziv":"mesihat.org — „Najljepši uzor ljudskog karaktera”, Glas islama 370, autor Edin Redžepović (25. 9. 2026.)","url":"https://mesihat.org/2026/09/25/najljepsi-uzor-ljudskog-karaktera/"},{"naziv":"El-Kelimeh — „Sunnetom do savršene ličnosti” (2024.)","url":"https://www.kelimeh.org/product/sunnetom-do-savrsene-licnosti/"},{"naziv":"Islamska misao br. 15 (FIS, 2024.), PDF — bibliografska referenca: „Osnove islamskog karaktera”, El-Kelimeh, 2023.","url":"https://fis.edu.rs/wp-content/uploads/2024/06/01-MISAO-15.pdf"},{"naziv":"Islamska misao br. 16 (FIS, 2025.), PDF","url":"https://fis.edu.rs/wp-content/uploads/2025/11/MISAO-16-www.pdf"},{"naziv":"YouTube — hutba „Zar ste mislili da smo vas uzalud stvorili…” (26. 12. 2025., objavljeno 1. 1. 2026.)","url":"https://www.youtube.com/watch?v=rCzQq8ZhLTc"},{"naziv":"YouTube — hutba „Razumijevanje ibadeta u islamu” (25. 9. 2026.)","url":"https://www.youtube.com/watch?v=uOrHIm0Tmc0"},{"naziv":"Hasan Čelebi (Arap) džamija — Predavanja (pregledano 25. 10. 2026.)","url":"https://www.arapdzamija.rs/predavanja"},{"naziv":"Fotografija: kadar iz videa „Razumijevanje ibadeta u islamu” (26. 9. 2026.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=uOrHIm0Tmc0&t=360s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$dzenan-kamesnicanin$s$,
+  $s$Gost hatib i predavač; profesor u Medresi „Gazi Isa-beg”$s$,
+  $s$Školovao se u Medresi „Gazi Isa-beg” u Novom Pazaru, koju je kao učenik četvrtog razreda 2012. predstavljao u disciplini pjesništva na međunarodnom takmičenju iz arapskog jezika u Turskoj. Bio je student Islamskog univerziteta u Medini, gdje se 2017. kao predsjednik Udruženja studenata obratio na tradicionalnom susretu sandžačkih studenata s hadžijama. U izvoru iz 2023. naveden je kao profesor arapskog jezika i književnosti.
+
+U aprilu 2023. imenovan je za v.d. glavnog i odgovornog urednika Glasa islama, a 5. 10. 2023. preuzeo je dužnost v.d. glavnog imama Medžlisa Islamske zajednice Novi Pazar, zbog čega je u februaru 2024. predao uredništvo lista. Kao glavni imam vodio je program svečanog otvaranja Džamije na Jaliji 8. 3. 2024. Dužnost glavnog imama predao je 8. 4. 2025. dr. Enveru ef. Giciću, a 21. 4. 2025. preuzeo je dužnost šefa Ureda za mekteb (tako se navodi i u decembru 2025.); u aprilu 2026. dužnost šefa tog ureda preuzeo je dr. Semir ef. Čupović.
+
+Prema izvještaju Medrese „Gazi Isa-beg” od 5. 10. 2026., kao profesor je bio u pratnji učenica trećih razreda Ženske medrese na ekskurziji. Predavanja drži i u Hasan Čelebi (Arap) džamiji u Novom Pazaru, među kojima „Mekteb – lađa spasa” (septembar 2025.) i tefsir sure El-Bekare o pogubnosti sihra (novembar 2025.). Autor je tekstova u Glasu islama, npr. „Arapski jezik i Bošnjaci” (br. 318, 2022.), a u impresumu lista iz 2026. naveden je među saradnicima.
+
+Na kanalu Džamije na Jaliji objavljena je njegova džumanska hutba „Kulturološka pripadnost islamu” (29. 8. 2025.).$s$,
+  $s$/images/imami/dzenan-kamesnicanin.webp$s$,
+  true,
+  $s$[{"naziv":"mesihat.org — Medresa Gazi Isa-beg 3. mjesto na internacionalnom takmičenju iz arapskog (20. 5. 2012.)","url":"https://mesihat.org/2012/05/20/medresa-gazi-isa-beg-3-mjesto-na-internacionalnom-takmienju-iz-arapskog/"},{"naziv":"mesihat.org — Upriličen sastanak studenata Islamskog univerziteta u Medini sa hadžijama (12. 9. 2017.)","url":"https://mesihat.org/2017/09/12/uprilicen-sastanak-studenata-islamskog-univerziteta-u-medini-sa-hadzijama/"},{"naziv":"mesihat.org — Imenovan novi glavni urednik Glasa islama (24. 4. 2023.)","url":"https://mesihat.org/2023/04/24/imenovan-novi-glavni-urednik-glasa-islama/"},{"naziv":"mesihat.org — Izvršena primopredaja dužnosti glavnog imama u Novom Pazaru (5. 10. 2023.)","url":"https://mesihat.org/2023/10/05/izvrsena-primopredaja-duznosti-glavnog-imama-u-novom-pazaru/"},{"naziv":"mesihat.org — Novi urednik Glasa islama stupio na dužnost (16. 2. 2024.)","url":"https://mesihat.org/2024/02/16/novi-urednik-glas-islama-stupio-na-duznost/"},{"naziv":"mesihat.org — Svečano otvorena džamija na Jaliji (8. 3. 2024.)","url":"https://mesihat.org/2024/03/08/svecano-otvorena-dzamija-na-jaliji/"},{"naziv":"mesihat.org — Izvršena primopredaja dužnosti novopazarskog glavnog imama (8. 4. 2025.)","url":"https://mesihat.org/2025/04/08/izvrsena-primopredaja-duznosti-novopazarskog-glavnog-imama-2/"},{"naziv":"mesihat.org — Izvršena primopredaja dužnosti šefa Ureda za mekteb (21. 4. 2025.)","url":"https://mesihat.org/2025/04/21/izvrsena-primopredaja-duznosti-sefa-ureda-za-mekteb/"},{"naziv":"mesihat.org — Muftija Dudić posjetio novopazarske mektebe u Svojboru i Lugu (6. 12. 2025.)","url":"https://mesihat.org/2025/12/06/muftija-dudic-posjetio-novopazarske-mektebe-u-svojboru-i-lugu/"},{"naziv":"mesihat.org — Imenovan šef Ureda za mekteb (2. 4. 2026.)","url":"https://mesihat.org/2026/04/02/imenovan-sef-ureda-za-mekteb/"},{"naziv":"Medresa „Gazi Isa-beg” — Vikend u znaku putovanja (5. 10. 2026.)","url":"https://www.medresa.edu.rs/vikend-u-znaku-putovanja/"},{"naziv":"mesihat.org — „Arapski jezik i Bošnjaci”, Glas islama 318 (17. 4. 2022.)","url":"https://mesihat.org/2022/04/17/arapski-jezik-i-bosnjaci/"},{"naziv":"Glas islama br. 370 (avgust 2026.), impresum (PDF)","url":"http://www.glas-islama.com/pdf/2026/370.pdf"},{"naziv":"Hasan Čelebi (Arap) džamija — Predavanja (pregledano 25. 10. 2026.)","url":"https://www.arapdzamija.rs/predavanja"},{"naziv":"YouTube — Hutba 29. 8. 2025.","url":"https://www.youtube.com/watch?v=_9qWe3pe_k8"},{"naziv":"Fotografija: kadar iz videa „Kulturološka pripadnost islamu” (30. 8. 2025.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=_9qWe3pe_k8&t=150s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$ferid-fijuljanin$s$,
+  $s$Gost hatib i predavač$s$,
+  $s$Hafiz Kur'ana. Kao predstavnik Škole Kur'ana Časnog plasirao se 2016. u finalni krug 20. međunarodnog takmičenja u učenju Kur'ana u Dubaiju (kategorija takmičara do 25 godina). Na IV međunarodnom takmičenju u hifzu Kur'ana u Sarajevu (Kulturni centar Kralj Fahd, oktobar 2019.) osvojio je, nastupajući za Mešihat Islamske zajednice u Srbiji, drugo mjesto u kategoriji 20 džuzeva.
+
+Izvor iz juna 2026. (Shoura, Luksemburg) navodi hafiza Ferida Fijuljanina kao imama džamije Sabur u Berlinu, koji je s petnaestak članova svoje zajednice posjetio sjedište te islamske organizacije u Luksemburgu. Snimci njegovih predavanja objavljivani su i na kanalu Hadži-Mehove džamije (2016., 2022.).
+
+Hutbe i predavanja drži i u Hasan Čelebi (Arap) džamiji u Novom Pazaru, npr. predavanje „Ustraj ponosno, pobjeda je blizu” (10. 11. 2023.) i hutbu „Ne smije nam biti svejedno” (avgust 2026.). Na kanalu Džamije na Jaliji objavljena je njegova džumanska hutba od 25. 7. 2025.$s$,
+  $s$/images/imami/ferid-fijuljanin.webp$s$,
+  true,
+  $s$[{"naziv":"mesihat.org — Hafiz Ferid Fijuljanin se plasirao u finalni krug takmičenja u učenju Kur'ana (19. 6. 2016.)","url":"https://mesihat.org/2016/06/19/hafiz-ferid-fijuljanin-se-plasirao-u-finalni-krug-takmicenja-u-ucenju-kurana/"},{"naziv":"mesihat.org — Hfz. Fijuljanin osvojio drugo mjesto na takmičenju u Sarajevu (21. 10. 2019.)","url":"https://mesihat.org/2019/10/21/hfz-fijuljanin-osvojio-drugo-mjesto-na-takmicenju-u-sarajevu/"},{"naziv":"Shoura (Luksemburg) — Reception of a Delegation from Berlin at the Shoura Headquarters (17. 6. 2026.)","url":"https://shoura.lu/en/reception-of-a-delegation-from-berlin-at-the-shoura-headquarters/"},{"naziv":"YouTube, Hadži Mehova Džamija — Hfz. Ferid Fijuljanin: Vrijednost dove (2016.)","url":"https://www.youtube.com/watch?v=pBMlVMexxBY"},{"naziv":"YouTube, Hadži Mehova Džamija — Hfz. Ferid Fijuljanin: Vjernička kuća (2022.)","url":"https://www.youtube.com/watch?v=dOnHtIXET5k"},{"naziv":"Hasan Čelebi (Arap) džamija — Hutbe (pregledano 25. 10. 2026.)","url":"https://www.arapdzamija.rs/hutbe"},{"naziv":"Hasan Čelebi (Arap) džamija — Predavanja (pregledano 25. 10. 2026.)","url":"https://www.arapdzamija.rs/predavanja"},{"naziv":"YouTube — Hutba 25. 7. 2025.","url":"https://www.youtube.com/watch?v=XyZ9pCBpPB0"},{"naziv":"Fotografija: kadar iz videa „Hutba 25.07.2025.” (27. 7. 2025.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=XyZ9pCBpPB0&t=150s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$zikret-mustafic$s$,
+  $s$Gost predavač; imam Islamskog centra Gazi Isa-beg u Luksemburgu$s$,
+  $s$Hafiz Kur'ana, rođen 1981. u Novom Pazaru. U Luksemburg je došao 1999. Studirao je u Damasku, gdje je završio Šerijatski fakultet i hifz Kur'ana, a diplomu iz šerijata i arapskog jezika stekao je u Kairu. Nakon studija djelovao je kao imam u Novom Pazaru i Berlinu.
+
+Imam je, hatib i muallim Islamskog centra Gazi Isa-beg u Esch-sur-Alzetteu (Luksemburg): izvor iz januara 2024. navodi da tu dužnost obavlja dugi niz godina, a tako ga predstavljaju i izvori iz 2026. Od 2023. je i predsjednik Bošnjačke nacionalne fondacije (BNF) Luksemburg. U aprilu 2026. posjetio je Medresu „Gazi Isa-beg” u Novom Pazaru, čija ga uprava naziva dugogodišnjim prijateljem ustanove.
+
+U Hasan Čelebi (Arap) džamiji u Novom Pazaru drži hutbe i predavanja (2023–2026), među kojima „Senzibilitet – osjećaj prema drugima”, „Primjer postojanosti na istini” i „Vrijednost ustrajnosti”. Na kanalu Džamije na Jaliji objavljeno je njegovo predavanje „Opasnost javnog razvrata” (jul 2025.).$s$,
+  $s$/images/imami/zikret-mustafic.webp$s$,
+  true,
+  $s$[{"naziv":"Islamski centar Gazi Isa-beg (Luksemburg) — O nama (stranica datirana 1. 10. 2026.)","url":"https://gazi-isa-beg.lu/o-nama"},{"naziv":"Shoura (Luksemburg) — Visit to the Gazi Isa-beg Islamic Center in Esch-sur-Alzette (17. 1. 2024.)","url":"https://shoura.lu/en/visit-to-the-gazi-isa-beg-islamic-center-in-esch-sur-alzette/"},{"naziv":"Medresa „Gazi Isa-beg” — Hfz. Zikret ef. Mustafić posjetio Medresu (8. 4. 2026.)","url":"https://www.medresa.edu.rs/hfz-zikret-ef-mustafic-posjetio-medresu/"},{"naziv":"Hasan Čelebi (Arap) džamija — Hutbe (pregledano 25. 10. 2026.)","url":"https://www.arapdzamija.rs/hutbe"},{"naziv":"Hasan Čelebi (Arap) džamija — Predavanja (pregledano 25. 10. 2026.)","url":"https://www.arapdzamija.rs/predavanja"},{"naziv":"YouTube — Opasnost javnog razvrata (jul 2025.)","url":"https://www.youtube.com/watch?v=43grkcWOjiQ"},{"naziv":"Fotografija: kadar iz videa „Opasnost javnog razvrata” (23. 7. 2025.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=43grkcWOjiQ&t=302s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$muhamed-metjahic$s$,
+  $s$Gost hatib$s$,
+  $s$Na kanalu Džamije na Jaliji objavljena je njegova džumanska hutba „Osnovni emanet” (18. 9. 2026.).$s$,
+  $s$/images/imami/muhamed-metjahic.webp$s$,
+  false,
+  $s$[{"naziv":"YouTube — hutba „Osnovni emanet” (18. 9. 2026.)","url":"https://www.youtube.com/watch?v=Sqw2IPRsP24"},{"naziv":"Fotografija: kadar iz videa „Osnovni emanet” (19. 9. 2026.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=Sqw2IPRsP24&t=92s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+insert into public.imami_bio (slug, uloga, bio, slika, potvrdjeno, izvori)
+values (
+  $s$edin-salihovic$s$,
+  $s$Gost hatib$s$,
+  $s$Na kanalu Džamije na Jaliji objavljena je njegova džumanska hutba „Vjernik je ogledalo vjerniku” (31. 7. 2026.).
+
+Snimci Edina ef. Salihovića objavljivani su i na kanalima drugih novopazarskih džemata — džemata Altun-alem (hutba „Allah je izvor svjetlosti nebesa i zemlje”, 24. 7. 2026.) i Islamskog centra Gazilar („Istinsko slijeđenje sunneta”, avgust 2026.).$s$,
+  $s$/images/imami/edin-salihovic.webp$s$,
+  false,
+  $s$[{"naziv":"YouTube — hutba „Vjernik je ogledalo vjerniku” (31. 7. 2026.)","url":"https://www.youtube.com/watch?v=aFCBrBJYZik"},{"naziv":"YouTube, Dzemat Altun Alem — Hutba, Edin ef. Salihović (24. 7. 2026.)","url":"https://www.youtube.com/watch?v=D7d1jYS2CQc"},{"naziv":"YouTube, IC Gazilar — Edin ef. Salihović: Istinsko slijeđenje sunneta (objavljeno 15. 8. 2026.)","url":"https://www.youtube.com/watch?v=a-YUy_EVQBM"},{"naziv":"Fotografija: kadar iz videa „Vjernik je ogledalo vjerniku” (1. 8. 2026.), YouTube kanal „Džamija na Jaliji”","url":"https://www.youtube.com/watch?v=aFCBrBJYZik&t=88s"}]$s$::jsonb
+)
+on conflict (slug) do update set uloga = excluded.uloga, bio = excluded.bio, slika = excluded.slika, potvrdjeno = excluded.potvrdjeno, izvori = excluded.izvori;
+
+-- Prikazno ime za 2026. (bez titule „muftija”; stari oblik zadržan u aliasima radi prepoznavanja naslova videa).
+update public.imami set puno_ime = $s$Hfz. Abdurahman ef. Kujević$s$, aliasi = array[$s$Abdurahman ef. Kujević$s$, $s$Abdurrahman Kujević$s$, $s$muftija hfz.Abdurahman ef. Kujević$s$, $s$Muftija hfz.Abdurrahman Kujević$s$, $s$M.hfz.Abdurahman Kujević$s$, $s$Muftija hfz. Abdurrahman Kujević$s$, $s$Muftija hfz. Abdurahman ef. Kujević$s$, $s$Hfz. Abdurrahman ef. Kujević$s$]::text[] where slug = $s$abdurahman-kujevic$s$;
+
+commit;
