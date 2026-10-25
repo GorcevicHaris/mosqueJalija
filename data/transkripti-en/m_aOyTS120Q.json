@@ -1,0 +1,19 @@
+{
+ "id": "m_aOyTS120Q",
+ "naslov": "Short clip from a lecture (3/6) — 12 December 2025",
+ "jezik": "en",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T03:22:59.572Z",
+ "automatski": true,
+ "lektorisano": true,
+ "lektura": "2026-10-25",
+ "prevod": "2026-10-25",
+ "izvorniJezik": "bs",
+ "segmenti": [
+  {
+   "od": 0,
+   "do": 17.1,
+   "tekst": "[Arabic recitation]"
+  }
+ ]
+}

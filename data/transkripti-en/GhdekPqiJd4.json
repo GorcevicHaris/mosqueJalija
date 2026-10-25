@@ -1,0 +1,19 @@
+{
+ "id": "GhdekPqiJd4",
+ "naslov": "Short Clip from the Lecture (2/6) — 12 December 2025",
+ "jezik": "en",
+ "model": "large-v3-turbo",
+ "generisano": "2026-10-25T03:22:55.795Z",
+ "automatski": true,
+ "lektorisano": true,
+ "lektura": "2026-10-25",
+ "prevod": "2026-10-25",
+ "izvorniJezik": "bs",
+ "segmenti": [
+  {
+   "od": 0.3,
+   "do": 7.6,
+   "tekst": "وَتَوَكَّلْ عَلَى اللَّهِ وَكَفَىٰ بِاللَّهِ وَكِيلًا"
+  }
+ ]
+}
