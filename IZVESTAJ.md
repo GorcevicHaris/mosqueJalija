@@ -6,8 +6,9 @@ Za **Džamiju na Jaliji (Jalija 69, Novi Pazar)** napravljen je kompletan sajt p
 Ima sve sekcije uzora i niz dodataka. Postoji admin panel iz kojeg urednici mijenjaju sadržaj bez
 pristupa kodu.
 
-- **Javni sajt:** https://gorcevicharis.github.io/mosqueJalija/
-- **Admin panel:** https://gorcevicharis.github.io/mosqueJalija/admin/
+- **Javni sajt (Vercel):** https://dzamija-na-jaliji.vercel.app/
+- **Admin panel:** https://dzamija-na-jaliji.vercel.app/admin/
+- **Rezervna adresa (GitHub Pages):** https://gorcevicharis.github.io/mosqueJalija/
 - **Repozitorij:** https://github.com/GorcevicHaris/mosqueJalija (javan)
 - **Baza:** Supabase projekat `dzamija-na-jaliji` (Frankfurt, besplatni plan)
 
@@ -46,7 +47,7 @@ razgovoru: https://www.youtube.com/@D%C5%BEamijanaJaliji (ID kanala `UCyw1ppQVij
 | **Početna** | Kaligrafija Bismille, naslovna fotografija, današnja vaktija sa odbrojavanjem, „Danas u džamiji“, najnovija predavanja i obavještenja, ajet/hadis dana, upis i Pitaj imama, donacije |
 | **O džamiji, Galerija** | Historija sa izvorima (vakuf, gradnja, otvaranje 8. 3. 2024.), činjenice i 16 fotografija sa zaslugama |
 | **Predavanja (81)** | Filteri po imamu, kategoriji, seriji i godini; pretraga bez dijakritika; sortiranje; „Učitaj još“. Svi filteri su u URL-u, pa se link može podijeliti |
-| **Stranica predavanja** | Plejer, **cijeli transkript** sa vremenskim oznakama (klik premota video), serija, srodna predavanja, dijeljenje |
+| **Stranica predavanja** | Jednostavna: naslov, video i ispod njega **cijeli transkript** sa vremenskim oznakama (klik premota video), dugme **Bosanski / English** (prevod transkripta), prethodni/sljedeći dio serije |
 | **Hutbe** | 36 džumanskih hutbi |
 | **Imami (8)** | Profil sa fotografijom, biografijom (sa izvorima) i svim predavanjima |
 | **Vaktija** | Računa se lokalno i kalibrisana je prema vaktija.ba (Novi Pazar); mjesečna tabela, štampa, CSV |
@@ -150,7 +151,10 @@ e-maila na istom uređaju.
    - **(b)** Podesi besplatni SMTP (npr. Resend ili Brevo) u Authentication → Emails → SMTP Settings.
      Tada prijava linkom radi za sve, a u e-mail šablon se može dodati i šestocifreni kod
      (`{{ .Token }}`). Bez SMTP-a Supabase ne dozvoljava izmjenu šablona.
-2. **Vlastiti domen (preporuka):** kupi npr. `dzamijanajaliji.rs`, a ja podesim sajt na njega.
+2. **Vlastiti domen:** kupi domen, pa ga dodaj u Vercel → Settings → Domains (uputstvo u `README.md`).
+   Javi mi domen, da ga dodam i u Supabase prijavu.
+3. **Deploy Hook:** link je bio vidljiv u razgovoru. Preporuka je da u Vercel → Settings → Git → Deploy
+   Hooks napraviš novi i staviš ga u GitHub secret `VERCEL_DEPLOY_HOOK`.
 
 ## Šta treba da mi dostavite (džemat)
 

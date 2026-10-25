@@ -33,7 +33,7 @@ npm run preview    # pregled build-a
 
 ## Admin panel i baza (Supabase)
 
-Urednici mijenjaju sadržaj na **https://gorcevicharis.github.io/mosqueJalija/admin/**, bez pristupa
+Urednici mijenjaju sadržaj na **https://dzamija-na-jaliji.vercel.app/admin/**, bez pristupa
 kodu. Ulaz je link „Prijava za urednike“ u podnožju sajta. Prijava ide preko linka na e-mail ili
 lozinkom (nalog sa lozinkom pravi administrator u Supabase → Authentication → Users → Add user).
 Prvi administrator je upisan u tabelu `urednici`. Ostale urednike admin dodaje u sekciji „Urednici“. U adminu se uređuju obavještenja, objave, podaci o džamiji, imami, galerija, dove, raspored,
@@ -50,7 +50,9 @@ obnavlja sajt svakih 15 minuta.
 ## Transkripti predavanja
 
 Svako predavanje ima automatski transkript (`data/transkripti/`), uz lektorisanu verziju u
-`data/transkripti-lektura/`. Lektorisana verzija ima prednost. Za nove videe, na Mac-u sa Homebrew-om:
+`data/transkripti-lektura/`. Lektorisana verzija ima prednost. Engleski prevod je u
+`data/transkripti-en/` (isti odlomci i vremena). Stranica predavanja ima dugme „Bosanski | English“,
+koje se prikazuje kad prevod postoji. Za nove videe, na Mac-u sa Homebrew-om:
 
 ```bash
 brew install ffmpeg whisper-cpp
@@ -86,20 +88,30 @@ npm run update-videos
 
 Detalji (kako se određuju imam, kategorija i serija): `docs/predavanja-podaci.md`.
 
-## Deploy (GitHub Pages)
+## Deploy
 
-Svaki push na `main` pokreće `.github/workflows/deploy.yml`, koji gradi sajt i objavljuje ga na
-GitHub Pages: https://gorcevicharis.github.io/mosqueJalija/
+Sajt se objavljuje na dva mjesta, oba automatski pri svakom pushu na `main`:
 
-GitHub Pages je uključen (Settings → Pages → Source: **GitHub Actions**). Repozitorij je javan, jer
-GitHub Pages na besplatnom planu ne radi sa privatnim repozitorijem.
+| Hosting | Adresa | Kako |
+|---|---|---|
+| **Vercel (glavni)** | https://dzamija-na-jaliji.vercel.app/ | Vercel projekat `dzamija-na-jaliji` povezan sa repoom; podešavanja u `vercel.json` |
+| GitHub Pages (rezerva) | https://gorcevicharis.github.io/mosqueJalija/ | `.github/workflows/deploy.yml` |
 
-### Vlastiti domen
+Isti kod radi na oba mjesta. Na Vercel-u (env `VERCEL=1`) sajt je na korijenu domena (`BASE=/`), a na
+GitHub Pages u podfolderu `/mosqueJalija/`. Manifest i `robots.txt` se generišu prema adresi.
 
-1. U `astro.config.mjs` (ili kao varijable okruženja u workflow-u) postavite `SITE=https://vas-domen.rs`
-   i `BASE=/`.
-2. Dodajte `public/CNAME` sa nazivom domena i podesite DNS po uputstvu GitHub Pages.
-3. Ažurirajte `Sitemap:` u `public/robots.txt`.
+Sadržaj iz admina ulazi u stranice pri buildu. `.github/workflows/osvjezi-sadrzaj.yml` zato svakih
+15 minuta pokreće novi build: na GitHub Pages i na Vercel-u, preko Deploy Hook-a sačuvanog kao GitHub
+secret `VERCEL_DEPLOY_HOOK`.
+
+### Vlastiti domen (Vercel)
+
+1. Vercel → projekat **dzamija-na-jaliji** → **Settings → Domains → Add** → upišite domen (npr.
+   `dzamijanajaliji.rs`) i kod registra domena podesite DNS zapise koje Vercel pokaže.
+2. Vercel sam postavlja HTTPS. Kanonski URL-ovi, sitemap i `robots.txt` automatski koriste domen, jer
+   ga Vercel daje kroz `VERCEL_PROJECT_PRODUCTION_URL`.
+3. U Supabase → Authentication → URL Configuration dodajte `https://vas-domen/admin/**` u Redirect
+   URLs i postavite Site URL na `https://vas-domen/admin/`, da prijava u admin radi na domenu.
 
 ## Kontakt forma
 
