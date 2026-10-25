@@ -144,8 +144,9 @@ const uid = zakljucanaKategorija ? `lb-${zakljucanaKategorija}` : 'lb';
     <button type="button" class="btn btn--sm btn--ghost lb__reset" data-lb-reset hidden>Poništi filtere</button>
   </div>
 
+  <h2 class="visually-hidden">Rezultati</h2>
   <div class="grid-cards lb__grid" data-lb-grid>
-    {prva.map((p) => <LectureCard predavanje={p} />)}
+    {prva.map((p, i) => <LectureCard predavanje={p} eager={i === 0} />)}
   </div>
 
   <div class="lb__empty card" data-lb-empty hidden={lista.length > 0}>
@@ -373,7 +374,7 @@ const uid = zakljucanaKategorija ? `lb-${zakljucanaKategorija}` : 'lb';
           kategorijaNaziv: data.kategorije[it.k] ?? null,
           dio: it.s ? it.sd : null,
         },
-        `${BASE}/predavanja/${encodeURIComponent(it.id)}`,
+        `${BASE}/predavanja/${encodeURIComponent(it.id)}/`,
       );
     }
 

@@ -14,6 +14,12 @@ const imamiPrijedlozi = ix.m
   .map((m) => m[1].trim().split(/\s+/).pop() ?? '') // prezime
   .filter(Boolean);
 const ukupno = ix.p.length + ix.o.length + ix.d.length + ix.m.length + ix.s.length;
+const stavkiRijec = (n: number) => {
+  const d = n % 10, s = n % 100;
+  if (d === 1 && s !== 11) return 'stavka';
+  if (d >= 2 && d <= 4 && (s < 12 || s > 14)) return 'stavke';
+  return 'stavki';
+};
 ---
 <div class="sr" data-sr>
   <form class="sr-form" role="search" action={url('/pretraga')} method="get" data-sr-form>
@@ -51,7 +57,7 @@ const ukupno = ix.p.length + ix.o.length + ix.d.length + ix.m.length + ix.s.leng
 
   <div class="sr-empty card" data-sr-intro>
     <h2 class="sr-empty__title">Šta tražite?</h2>
-    <p class="muted">Pretražuje se {ukupno} stavki: predavanja i hutbe, obavještenja, dove, imami i stranice sajta.</p>
+    <p class="muted">Pretražuje se {ukupno} {stavkiRijec(ukupno)}: predavanja i hutbe, obavještenja, dove, imami i stranice sajta.</p>
     <p class="sr-empty__label">Česte pretrage:</p>
     <ul class="chips" role="list">
       {[...prijedlozi, ...imamiPrijedlozi].map((p) => (
@@ -80,6 +86,7 @@ const ukupno = ix.p.length + ix.o.length + ix.d.length + ix.m.length + ix.s.leng
 <script>
   import { GRUPE, fmtDatum, oznaci, pretrazi, raspakuj, type Grupa, type Rezultat, type Stavka } from '../../lib/extras/pretraga-pretrazi';
   import type { PretragaIndeks } from '../../lib/extras/pretraga-indeks';
+  import { saKosomCrtom } from '../../lib/url';
 
   const root = document.querySelector<HTMLElement>('[data-sr]');
   if (root) {
@@ -117,7 +124,7 @@ const ukupno = ix.p.length + ix.o.length + ix.d.length + ix.m.length + ix.s.leng
       const s = r.s;
       const meta = [s.meta, s.datum ? fmtDatum(s.datum) : ''].filter(Boolean);
       return (
-        `<li class="sr-item"><a class="sr-link" href="${esc(BASE + s.url)}">` +
+        `<li class="sr-item"><a class="sr-link" href="${esc(saKosomCrtom(BASE + s.url))}">` +
         `<span class="sr-item__title">${oznaci(s.naslov, q)}</span>` +
         (meta.length ? `<span class="sr-item__meta">${meta.map((m) => oznaci(m, q)).join(' · ')}</span>` : '') +
         (s.opis ? `<span class="sr-item__desc">${oznaci(s.opis, q)}</span>` : '') +

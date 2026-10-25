@@ -1,0 +1,102 @@
+---
+// Dugme za prijavu / upit (mekteb, halke…).
+// - Ako je poznat e-mail džamije: mailto sa pripremljenom temom i tekstom.
+// - Inače, ako postoji Instagram/Facebook: link na Instagram poruku (ig.me) ili Facebook stranicu;
+//   klik ujedno kopira pripremljeni tekst prijave da se zalijepi u poruku (radi i bez JS-a kao običan link).
+// - Inače: link na /kontakt.
+import Icon from '../ui/Icon.astro';
+import { dzamija, kanaliPoruka } from '../../lib/data';
+import { url } from '../../lib/url';
+
+interface Props {
+  /** tema e-maila */
+  tema: string;
+  /** pripremljeni tekst prijave */
+  tekst: string;
+  /** natpis dugmeta kada se šalje e-mailom */
+  oznaka: string;
+  varijanta?: 'primary' | 'ghost';
+  block?: boolean;
+}
+const { tema, tekst, oznaka, varijanta = 'primary', block = false } = Astro.props;
+const email = dzamija.kontakt.email;
+const k = kanaliPoruka();
+const uid = `prijava-${tema.normalize('NFD').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+const cls = ['btn', varijanta === 'primary' ? 'btn--primary' : 'btn--ghost', block && 'btn--block', 'pd-btn'];
+const dm = k.instagramDm
+  ? { href: k.instagramDm, oznaka: `${oznaka} na Instagramu`, mreza: 'Instagramu', ikona: 'instagram' as const }
+  : k.facebook
+    ? { href: k.facebook, oznaka: `${oznaka} na Facebooku`, mreza: 'Facebooku', ikona: 'facebook' as const }
+    : null;
+const fbDrugi = k.instagramDm && k.facebook ? k.facebook : null;
+---
+{email ? (
+  <a class:list={cls} href={`mailto:${email}?subject=${encodeURIComponent(tema)}&body=${encodeURIComponent(tekst)}`}>
+    <Icon name="mail" size={18} /> {oznaka}
+  </a>
+) : dm ? (
+  <div class:list={['pd', { 'pd--block': block }]} data-prijava>
+    <a
+      class:list={cls}
+      href={dm.href}
+      target="_blank"
+      rel="noopener"
+      data-prijava-link
+      data-tekst={tekst}
+      data-mreza={dm.mreza}
+      aria-describedby={`${uid}-opis`}
+    >
+      <Icon name={dm.ikona} size={18} /> {dm.oznaka}<span class="visually-hidden"> (otvara se u novoj kartici)</span>
+    </a>
+    <p class="pd__opis" id={`${uid}-opis`}>
+      Klikom se kopira pripremljen tekst prijave — zalijepite ga u poruku džematu{fbDrugi && <> (ili na <a href={fbDrugi} target="_blank" rel="noopener">Facebooku</a>)</>}.
+    </p>
+    <p class="pd__status" role="status" aria-live="polite" data-prijava-status></p>
+    <details class="pd__tekst">
+      <summary>Prikaži tekst prijave</summary>
+      <pre>{tekst}</pre>
+    </details>
+  </div>
+) : (
+  <a class:list={cls} href={url('/kontakt')}><Icon name="mail" size={18} /> {oznaka}</a>
+)}
+
+<style>
+  .pd { display: grid; gap: var(--space-2); justify-items: start; }
+  .pd--block { justify-items: stretch; }
+  .pd .btn { white-space: normal; text-align: center; }
+  .pd__opis { margin: 0; font-size: 0.85rem; color: var(--color-text-muted); }
+  .pd__status { margin: 0; font-size: 0.88rem; font-weight: 600; color: var(--color-success); }
+  .pd__status:empty { display: none; }
+  .pd__tekst summary { cursor: pointer; font-size: 0.88rem; font-weight: 600; color: var(--color-primary); min-height: 40px; display: flex; align-items: center; }
+  .pd__tekst pre {
+    margin: var(--space-2) 0 0;
+    padding: var(--space-3);
+    white-space: pre-wrap;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+</style>
+
+<script>
+  import { kopirajSinhrono, kopirajTekst } from '../../lib/kopiraj';
+  document.querySelectorAll<HTMLAnchorElement>('[data-prijava-link]').forEach((a) => {
+    a.addEventListener('click', () => {
+      // Link se otvara normalno (nova kartica / Instagram aplikacija). Kopira se sinhrono, u istom
+      // kliku, prije nego što stranica izgubi fokus; Clipboard API je samo rezerva.
+      const tekst = a.dataset.tekst ?? '';
+      const status = a.closest('[data-prijava]')?.querySelector<HTMLElement>('[data-prijava-status]');
+      const javi = (ok: boolean) => {
+        if (!status) return;
+        status.textContent = ok
+          ? `Tekst prijave je kopiran — zalijepite ga u poruku na ${a.dataset.mreza ?? 'Instagramu'}.`
+          : 'Kopiranje nije uspjelo — otvorite „Prikaži tekst prijave“ i kopirajte tekst ručno.';
+      };
+      if (kopirajSinhrono(tekst)) javi(true);
+      else void kopirajTekst(tekst).then(javi);
+    });
+  });
+</script>

@@ -1,8 +1,10 @@
 ---
 // UGOVOR (ne mijenjati props bez dogovora): title, description?, image?, noindex?
 // Vlasnik: dizajner. Sadrži <head> (SEO, OG/Twitter, JSON-LD, tema bez bljeska), header, footer.
-import '@fontsource-variable/fraunces/index.css';
-import '@fontsource-variable/manrope/index.css';
+import '../styles/fonts.css';
+// Osnovni tekstualni font se predučitava (manje pomjeranja teksta pri zamjeni fonta — CLS).
+import manropeLatin from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+import manropeLatinExt from '@fontsource-variable/manrope/files/manrope-latin-ext-wght-normal.woff2?url';
 import '@fontsource/amiri/arabic-400.css';
 import '@fontsource/amiri/arabic-700.css';
 import '@fontsource/amiri/latin-400.css';
@@ -13,7 +15,8 @@ import '../styles/global.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { url } from '../lib/url';
-import { dzamija } from '../lib/data';
+import { dzamija, adresaDijelovi } from '../lib/data';
+const adr = adresaDijelovi();
 
 interface Props {
   title: string;
@@ -43,9 +46,10 @@ const homeUrl = new URL(url('/'), site).href;
 const adresa = [dzamija.adresa, dzamija.grad, dzamija.drzava].some(Boolean)
   ? {
       '@type': 'PostalAddress',
-      ...(dzamija.adresa && { streetAddress: dzamija.adresa }),
+      ...(adr.ulica && { streetAddress: adr.ulica }),
+      ...(adr.postanskiBroj && { postalCode: adr.postanskiBroj }),
       ...(dzamija.grad && { addressLocality: dzamija.grad }),
-      ...(dzamija.drzava && { addressCountry: dzamija.drzava }),
+      ...(dzamija.drzava && { addressCountry: dzamija.drzava === 'Srbija' ? 'RS' : dzamija.drzava }),
     }
   : undefined;
 const sameAs = Object.values(dzamija.drustveneMreze).filter((v): v is string => Boolean(v));
@@ -83,9 +87,11 @@ const jsonLd = {
         document.documentElement.setAttribute('data-theme', t);
       })();
     </script>
+    <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={manropeLatinExt} as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#0c3b2e" />
@@ -104,7 +110,7 @@ const jsonLd = {
     <meta property="og:locale" content="sr_RS" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {!noindex && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImage} />
     {!image && <meta property="og:image:width" content="1200" />}
     {!image && <meta property="og:image:height" content="630" />}

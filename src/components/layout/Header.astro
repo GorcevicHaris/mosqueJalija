@@ -10,7 +10,7 @@ const mjesto = [dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
 const yt = dzamija.drustveneMreze.youtube;
 const email = dzamija.kontakt.email;
 ---
-<div class="topbar theme-inverse">
+<aside class="topbar theme-inverse" aria-label="Datum i brzi linkovi">
   <div class="container topbar__inner">
     <a class="topbar__date" href={url('/kalendar')} data-today>
       <Icon name="calendar" size={15} />
@@ -31,16 +31,17 @@ const email = dzamija.kontakt.email;
       )}
     </ul>
   </div>
-</div>
+</aside>
 
 <header class="site-header" data-site-header>
   <div class="container site-header__inner">
-    <a class="brand" href={url('/')} aria-label="Džamija na Jaliji — početna">
+    <a class="brand" href={url('/')}>
       <StarEmblem size={42} class="brand__emblem" />
       <span class="brand__text">
         <span class="brand__name">Džamija na Jaliji</span>
         <span class="brand__sub">{dzamija.grad ?? 'Džemat · Predavanja · Vaktija'}</span>
       </span>
+      <span class="visually-hidden"> — početna stranica</span>
     </a>
 
     <div class="nav-backdrop" data-nav-backdrop hidden></div>
@@ -118,7 +119,7 @@ const email = dzamija.kontakt.email;
         <Icon name="sun" size={20} class="theme-toggle__sun" />
       </button>
       <a class="btn btn--gold btn--sm donate-btn" href={url('/donacije')}>
-        <Icon name="heart" size={16} /> <span>Doniraj</span>
+        <Icon name="heart" size={16} /> <span class="donate-btn__label">Doniraj</span>
       </a>
       <button
         type="button"
@@ -158,7 +159,9 @@ const email = dzamija.kontakt.email;
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
+    min-height: 38px;
   }
+  .topbar__date [data-today-text] { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .topbar__date:hover { color: var(--inverse-text); }
   .topbar__date :global(svg) { color: var(--inverse-accent); flex: none; }
   .topbar__bismillah {
@@ -226,6 +229,7 @@ const email = dzamija.kontakt.email;
     color: var(--color-text);
     margin-right: auto;
     min-width: 0;
+    min-height: 44px;
   }
   .brand:hover { color: var(--color-text); }
   .brand :global(.brand__emblem) { flex: none; transition: transform 600ms ease; }
@@ -420,8 +424,12 @@ const email = dzamija.kontakt.email;
     .nav-backdrop[hidden] { display: none; }
   }
   @media (max-width: 520px) {
-    .donate-btn span { display: none; }
-    .donate-btn { padding-inline: 0.7rem; }
+    /* tekst ostaje dostupan čitačima ekrana (ime linka), samo se vizuelno sakriva */
+    .donate-btn__label {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .donate-btn { padding-inline: 0.7rem; min-width: 44px; min-height: 44px; }
     .brand__name { font-size: 1.12rem; }
     .brand :global(.brand__emblem) { width: 36px; height: 36px; }
     .site-header__inner { gap: var(--space-2); }
@@ -439,7 +447,7 @@ const email = dzamija.kontakt.email;
   // ---------- Datum (gregorijanski + hidžretski) u gornjoj traci ----------
   const DANI = ['nedjelja', 'ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota'];
   const MJ = ['januar', 'februar', 'mart', 'april', 'maj', 'jun', 'jul', 'avgust', 'septembar', 'oktobar', 'novembar', 'decembar'];
-  const HMJ = ['muharrem', 'safer', 'rebiu-l-evvel', 'rebiu-l-ahir', 'džumade-l-ula', 'džumade-l-uhra', 'redžeb', "ša'ban", 'ramazan', 'ševval', "zu-l-ka'de", 'zu-l-hidždže'];
+  const HMJ = ['muharrem', 'safer', 'rebiul-evvel', 'rebiul-ahir', 'džumadel-ula', 'džumadel-uhra', 'redžeb', "ša'ban", 'ramazan', 'ševval', "zul-ka'de", 'zul-hidždže'];
   function renderDate() {
     const el = document.querySelector('[data-today-text]');
     if (!el) return;
@@ -467,7 +475,6 @@ const email = dzamija.kontakt.email;
     if (!themeBtn) return;
     const dark = root.dataset.theme === 'dark';
     themeBtn.setAttribute('aria-label', dark ? 'Uključi svijetlu temu' : 'Uključi tamnu temu');
-    themeBtn.setAttribute('aria-pressed', String(dark));
   }
   syncThemeButton();
   themeBtn?.addEventListener('click', () => {

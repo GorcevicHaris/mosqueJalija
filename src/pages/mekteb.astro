@@ -4,22 +4,19 @@ import PageHero from '../components/ui/PageHero.astro';
 import Placeholder from '../components/ui/Placeholder.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import Icon from '../components/ui/Icon.astro';
+import PrijavaDugme from '../components/forms/PrijavaDugme.astro';
 import { url } from '../lib/url';
 import { dzamija, obavjestenja, imami, predavanja, formatDatum } from '../lib/data';
 
 const email = dzamija.kontakt.email;
-const mailto = (subject: string, body: string) =>
-  email ? `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}` : null;
-const prijavaMekteb = mailto(
-  'Prijava za mekteb',
-  'Selam alejkum,\n\nželim prijaviti dijete u mekteb.\n\nIme i prezime djeteta:\nGodine / razred:\nIme roditelja:\nKontakt telefon:\nNapomena:\n',
-);
-const prijavaHalka = mailto(
-  'Prijava / upit za halku',
-  'Selam alejkum,\n\nzanima me halka (kružok) u džamiji.\n\nIme i prezime:\nKontakt telefon:\nTema / halka koja me zanima:\n',
-);
+const imaDm = Boolean(dzamija.drustveneMreze.instagram || dzamija.drustveneMreze.facebook);
+const tekstMekteb =
+  'Selam alejkum,\n\nželim prijaviti dijete u mekteb.\n\nIme i prezime djeteta:\nGodine / razred:\nIme roditelja:\nKontakt telefon:\nNapomena:\n';
+const tekstHalka =
+  'Selam alejkum,\n\nzanima me halka (kružok) u džamiji.\n\nIme i prezime:\nKontakt telefon:\nTema / halka koja me zanima:\n';
 const vezana = obavjestenja.filter((o) => /mekteb|halk/i.test(o.kategorija)).slice(0, 4);
-const imamDzamije = imami.filter((i) => i.potvrdjeno && i.uloga && /imam/i.test(i.uloga));
+// samo ako podaci izričito kažu "imam džamije" (npr. "Glavni imam Medžlisa" se ne računa)
+const imamDzamije = imami.filter((i) => i.potvrdjeno && i.uloga && /imam (ove )?džamije|imam džamije na jaliji/i.test(i.uloga));
 const halkeSnimci = predavanja.filter((p) => p.kategorija === 'halka-hadisa').length;
 
 const uci = [
@@ -53,19 +50,16 @@ const uci = [
       <aside class="enroll card" aria-labelledby="prijava-naslov">
         <span class="card__icon"><Icon name="graduation" size={24} /></span>
         <h2 id="prijava-naslov" class="enroll__title">Prijava za mekteb</h2>
-        <p class="muted">{email ? 'Prijava se šalje e-mailom džematu. Poruka je već pripremljena — samo dopunite podatke.' : 'Upis se najavljuje u obavještenjima i objavama džemata.'}</p>
-        {prijavaMekteb ? (
-          <a class="btn btn--primary btn--block" href={prijavaMekteb}><Icon name="mail" size={18} /> Pošalji prijavu</a>
-        ) : (
-          <>
-            <Placeholder label="e-mail za prijave" />
-            {dzamija.kontakt.napomena && <p class="muted small">{dzamija.kontakt.napomena}</p>}
-            {dzamija.drustveneMreze.instagram && (
-              <a class="btn btn--primary btn--block" href={dzamija.drustveneMreze.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> Pišite nam na Instagramu</a>
-            )}
-            <a class="btn btn--ghost btn--block" href={url('/obavjestenja')}>Obavještenja o upisu</a>
-          </>
-        )}
+        <p class="muted">
+          {email
+            ? 'Prijava se šalje e-mailom džematu. Poruka je već pripremljena — samo dopunite podatke.'
+            : imaDm
+              ? 'Prijava se šalje privatnom porukom džematu. Tekst prijave je pripremljen — samo dopunite podatke.'
+              : 'Upis se najavljuje u obavještenjima i objavama džemata.'}
+        </p>
+        {!email && <Placeholder label="e-mail za prijave" hint="do tada prijava ide porukom na društvenim mrežama" />}
+        <PrijavaDugme tema="Prijava za mekteb" tekst={tekstMekteb} oznaka="Pošalji prijavu" block />
+        {!email && <a class="btn btn--ghost btn--block" href={url('/obavjestenja')}>Obavještenja o upisu</a>}
         {imamDzamije.length > 0 && (
           <p class="enroll__imam">
             <Icon name="users" size={18} />
@@ -105,13 +99,7 @@ const uci = [
         )}
         <h3>Raspored halki</h3>
         <Placeholder label="raspored halki" hint="dan, vrijeme (npr. poslije jacije), tema i predavač" />
-        <p>
-          {prijavaHalka ? (
-            <a class="btn btn--ghost" href={prijavaHalka}><Icon name="mail" size={18} /> Upit za halku</a>
-          ) : (
-            <a class="btn btn--ghost" href={dzamija.drustveneMreze.instagram ?? url('/kontakt')}>Upit za halku</a>
-          )}
-        </p>
+        <PrijavaDugme tema="Prijava / upit za halku" tekst={tekstHalka} oznaka="Upit za halku" varijanta="ghost" />
       </div>
       <div>
         <h3>Najave mekteba i halki</h3>

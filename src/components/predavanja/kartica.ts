@@ -24,7 +24,7 @@ export function sliciceKartice(id: string, thumbnail: string): { src: string; sr
   return { src: thumbnail, srcset: '' };
 }
 
-export function karticaHTML(p: KarticaPodaci, href: string, naslovTag: 'h2' | 'h3' = 'h3'): string {
+export function karticaHTML(p: KarticaPodaci, href: string, naslovTag: 'h2' | 'h3' = 'h3', eager = false): string {
   const e = escapeHtml;
   const { src, srcset } = sliciceKartice(p.id, p.thumbnail);
   const traj = trajanjeTekst(p.trajanje);
@@ -39,7 +39,7 @@ export function karticaHTML(p: KarticaPodaci, href: string, naslovTag: 'h2' | 'h
     `<article class="lcard">` +
     `<a class="lcard__link" href="${e(href)}">` +
     `<span class="lcard__thumb">` +
-    `<img src="${e(src)}"${srcset ? ` srcset="${e(srcset)}" sizes="(min-width: 700px) 320px, 100vw"` : ''} alt="" width="320" height="180" loading="lazy" decoding="async" />` +
+    `<img src="${e(src)}"${srcset ? ` srcset="${e(srcset)}" sizes="(min-width: 700px) 320px, 100vw"` : ''} alt="" width="320" height="180" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" />` +
     `<span class="lcard__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></span>` +
     dur +
     `</span>` +

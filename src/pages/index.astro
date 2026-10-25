@@ -10,13 +10,17 @@ import StarEmblem from '../components/ui/StarEmblem.astro';
 import AjetHadisDana from '../components/ui/AjetHadisDana.astro';
 import SocialLinks from '../components/ui/SocialLinks.astro';
 import { url } from '../lib/url';
-import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum } from '../lib/data';
+import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum, punaAdresa } from '../lib/data';
 
 const najnovija = predavanja.slice(0, 6);
 const brojHutbi = predavanja.filter((p) => p.kategorija === 'hutba').length;
 const aktuelno = obavjestenja.slice(0, 3);
 const istaknutiImami = imami.slice(0, 4);
-const cinjenice = dzamija.cinjenice.filter((c) => c.oznaka !== 'Adresa' && c.vrijednost.length <= 40).slice(0, 3);
+// na početnoj kratko: bez pojašnjenja u zagradi ("8. mart 2024." umjesto "8. mart 2024. (uoči ramazana …)")
+const cinjenice = dzamija.cinjenice
+  .map((c) => ({ ...c, vrijednost: c.vrijednost.replace(/\s*\([^)]*\)\s*$/, '') }))
+  .filter((c) => c.oznaka !== 'Adresa' && c.vrijednost.length <= 40)
+  .slice(0, 3);
 const prvaHistorija = dzamija.historija[0] ?? null;
 const naslovnaSlika = galerija[0] ?? null;
 const imgSrc = (src: string) => (/^https?:/.test(src) ? src : url(src));
@@ -264,7 +268,7 @@ const korisno = [
         <div class="visit__body">
           <h3>Posjetite nas</h3>
           {[dzamija.adresa, dzamija.grad].some(Boolean) ? (
-            <p>{[dzamija.adresa, dzamija.grad, dzamija.drzava].filter(Boolean).join(', ')}</p>
+            <p>{punaAdresa()}</p>
           ) : (
             <Placeholder label="tačna adresa džamije" />
           )}

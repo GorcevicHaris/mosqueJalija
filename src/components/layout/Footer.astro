@@ -1,6 +1,6 @@
 ---
 import { url } from '../../lib/url';
-import { dzamija } from '../../lib/data';
+import { dzamija, punaAdresa } from '../../lib/data';
 import Icon from '../ui/Icon.astro';
 import StarEmblem from '../ui/StarEmblem.astro';
 import SocialLinks from '../ui/SocialLinks.astro';
@@ -8,7 +8,7 @@ import Placeholder from '../ui/Placeholder.astro';
 
 const godina = new Date().getFullYear();
 const k = dzamija.kontakt;
-const adresa = [dzamija.adresa, dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
+const adresa = punaAdresa();
 
 const kolone = [
   {

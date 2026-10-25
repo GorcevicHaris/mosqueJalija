@@ -210,7 +210,7 @@ const naslov = naslovMjeseca(g.y, g.m);
   .hk-nav { flex: none; }
   @media (max-width: 559px) {
     .hk-nav__txt { display: none; }
-    .hk-nav { padding-inline: 0.6rem; }
+    .hk-nav { padding-inline: 0.6rem; min-width: 44px; }
   }
   .hk-month__tools {
     display: flex;
@@ -327,7 +327,8 @@ const naslov = naslovMjeseca(g.y, g.m);
   }
   @media (min-width: 640px) { .hk-legend li { grid-template-columns: 16rem 1fr; } }
   .hk-legend time { font-weight: 600; color: var(--color-text-muted); font-size: 0.92rem; }
-  .hk-legend li.is-past { opacity: 0.65; }
+  /* prošlo: prigušeno pozadinom (ne providnošću — tekst mora ostati čitljiv, kontrast AA) */
+  .hk-legend li.is-past { background: var(--color-surface-2); border-left-color: var(--color-border-strong); }
 
   /* Važni datumi */
   .hk-important > h2 { margin-bottom: var(--space-4); }
@@ -363,6 +364,7 @@ const naslov = naslovMjeseca(g.y, g.m);
   .hk-date__what strong { font-size: 1.02rem; }
   .hk-date__note { display: block; font-size: 0.85rem; color: var(--color-text-muted); margin-top: 0.15rem; }
   .hk-date__status { align-self: center; white-space: nowrap; }
-  .hk-date.is-past { opacity: 0.6; }
+  .hk-date.is-past { background: var(--color-surface-2); border-style: dashed; }
+  .hk-date.is-past .hk-date__what strong { font-weight: 600; }
   .hk-date.is-next { border-color: var(--color-primary); box-shadow: 0 0 0 1px var(--color-primary), var(--shadow-sm); }
 </style>

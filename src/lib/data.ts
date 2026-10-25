@@ -78,3 +78,30 @@ export function formatTrajanje(sekunde: number): string {
   const pad = (n: number) => String(n).padStart(2, '0');
   return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
 }
+
+/**
+ * Kanali za privatne poruke džematu kada e-mail nije objavljen.
+ * Instagram DM link (ig.me/m/<profil>) se izvodi iz adrese Instagram profila.
+ */
+export function kanaliPoruka(): { instagramDm: string | null; instagram: string | null; facebook: string | null } {
+  const ig = dzamija.drustveneMreze.instagram ?? null;
+  const fb = dzamija.drustveneMreze.facebook ?? null;
+  const profil = ig?.match(/instagram\.com\/([A-Za-z0-9._]+)/)?.[1] ?? null;
+  return { instagramDm: profil ? `https://ig.me/m/${profil}` : null, instagram: ig, facebook: fb };
+}
+
+/** Puna adresa za prikaz, bez ponavljanja grada ("Jalija 69, 36300 Novi Pazar, Srbija"). */
+export function punaAdresa(): string {
+  const { adresa, grad, drzava } = dzamija;
+  const dijelovi = [adresa];
+  if (grad && !(adresa ?? '').includes(grad)) dijelovi.push(grad);
+  dijelovi.push(drzava);
+  return dijelovi.filter(Boolean).join(', ');
+}
+
+/** Adresa rastavljena za schema.org PostalAddress. */
+export function adresaDijelovi(): { ulica: string | null; postanskiBroj: string | null } {
+  const a = dzamija.adresa ?? '';
+  const m = a.match(/^(.*?),\s*(\d{5})\s+.+$/);
+  return m ? { ulica: m[1], postanskiBroj: m[2] } : { ulica: a || null, postanskiBroj: null };
+}

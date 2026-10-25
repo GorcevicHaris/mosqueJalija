@@ -62,8 +62,8 @@ export function renderMjesec(y: number, m: number, danas: number): string {
       if (ev.length) cls.push('hk-cell--event');
       const label =
         `${formatGreg(n)} — ${formatHijri(h)}` +
-        (ev.length ? `. ${ev.map((e) => (e.noc ? `${e.naziv} (noć)` : e.naziv)).join(', ')}` : '') +
-        (n === danas ? '. Danas' : '');
+        (ev.length ? `; ${ev.map((e) => (e.noc ? `${e.naziv} (noć)` : e.naziv)).join(', ')}` : '') +
+        (n === danas ? ' (danas)' : '');
       cells +=
         `<td class="${cls.join(' ')}"${n === danas ? ' aria-current="date"' : ''}>` +
         `<span class="visually-hidden">${label}</span>` +

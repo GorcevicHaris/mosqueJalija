@@ -30,10 +30,13 @@ const dioTekst = serija && p.serijaDio ? `${serija.naziv}, dio ${p.serijaDio}` :
 const punNaslov = dioTekst && !naslov.includes(String(p.serijaDio)) ? `${naslov} (dio ${p.serijaDio})` : naslov;
 const traj = trajanjeTekst(p.trajanje);
 const ytUrl = `https://www.youtube.com/watch?v=${encodeURIComponent(p.id)}`;
-const opisMeta = (
-  p.opis?.replace(/\s+/g, ' ').trim().slice(0, 155) ||
-  `${kategorija?.naziv ?? 'Predavanje'}${imam ? ` — ${imam.punoIme}` : ''}, ${formatDatum(p.datum)}. Snimak sa YouTube kanala Džamije na Jaliji.`
-);
+// jedinstven opis za svaku stranicu: naslov + kategorija/predavač/datum + početak opisa sa YouTube-a
+const opisMetaPun = [
+  `${punNaslov} — ${kategorija?.naziv ?? 'Predavanje'}${imam ? `, ${imam.punoIme}` : ''}, ${formatDatum(p.datum)}`,
+  p.opis?.replace(/\s+/g, ' ').trim() || 'Snimak sa YouTube kanala Džamije na Jaliji.',
+].join(' ');
+const opisMeta =
+  opisMetaPun.length <= 160 ? opisMetaPun : `${opisMetaPun.slice(0, 157).replace(/\s+\S*$/, '')}…`;
 const site = Astro.site ?? new URL('https://gorcevicharis.github.io');
 const pageUrl = new URL(url(`/predavanja/${p.id}`), site).href;
 
@@ -212,8 +215,10 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     color: var(--color-text-muted);
   }
   .pd__crumbs li + li::before { content: '/'; margin-right: var(--space-2); opacity: 0.6; }
+  .pd__crumbs li[aria-current] { display: flex; min-width: 0; max-width: 100%; }
   .pd__crumbs li[aria-current] span {
     display: inline-block;
+    min-width: 0;
     max-width: 40ch;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -251,6 +256,7 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     font-weight: 700;
   }
   .pd__meta dd { margin: 0.15rem 0 0; font-weight: 600; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+  .pd__meta dd a { display: inline-flex; align-items: center; min-height: 40px; }
   .pd__nepotvrdjeno { cursor: help; }
   .pd__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .pd__h2 { font-size: 1.3rem; margin: var(--space-7) 0 var(--space-3); }

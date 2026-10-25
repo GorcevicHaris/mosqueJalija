@@ -6,7 +6,8 @@ import CopyButton from '../components/ui/CopyButton.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
-import { dzamija } from '../lib/data';
+import { dzamija, kanaliPoruka } from '../lib/data';
+const igDm = kanaliPoruka().instagramDm;
 
 const don = dzamija.donacije;
 const email = dzamija.kontakt.email;
@@ -83,7 +84,7 @@ const namjene = [
               <a class="btn btn--primary" href={upit}><Icon name="mail" size={18} /> Zatražite podatke e-mailom</a>
             ) : (
               <div class="bank__ask">
-                {dzamija.drustveneMreze.instagram && <a class="btn btn--primary" href={dzamija.drustveneMreze.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> Pitajte na Instagramu</a>}
+                {igDm && <a class="btn btn--primary" href={igDm} target="_blank" rel="noopener"><Icon name="instagram" size={18} /> Pitajte porukom na Instagramu</a>}
                 {dzamija.drustveneMreze.facebook && <a class="btn btn--ghost" href={dzamija.drustveneMreze.facebook} target="_blank" rel="noopener"><Icon name="facebook" size={18} /> Facebook</a>}
                 <a class="btn btn--ghost" href={url('/kontakt')}>Kontakt</a>
               </div>

@@ -21,6 +21,7 @@ const { naslov, tekst, link } = Astro.props;
 </button>
 
 <script>
+  import { kopirajTekst as kopiraj } from '../../lib/kopiraj';
   function toast(poruka: string) {
     let el = document.querySelector<HTMLElement>('.share-toast');
     if (!el) {
@@ -34,24 +35,6 @@ const { naslov, tekst, link } = Astro.props;
     el.dataset.show = '';
     clearTimeout(Number(el.dataset.t));
     el.dataset.t = String(window.setTimeout(() => el && delete el.dataset.show, 2600));
-  }
-  async function kopiraj(text: string) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.append(ta);
-      ta.select();
-      let ok = false;
-      try { ok = document.execCommand('copy'); } catch { ok = false; }
-      ta.remove();
-      return ok;
-    }
   }
   document.querySelectorAll<HTMLButtonElement>('[data-share]').forEach((btn) => {
     btn.addEventListener('click', async () => {

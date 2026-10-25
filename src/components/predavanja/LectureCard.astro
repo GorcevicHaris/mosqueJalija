@@ -10,12 +10,15 @@ import { karticaPodaci } from '../../lib/predavanja';
 interface Props {
   predavanje: Predavanje;
   headingLevel?: 2 | 3;
+  /** Prva kartica iznad pregiba: učitaj sličicu odmah (LCP). */
+  eager?: boolean;
 }
-const { predavanje, headingLevel = 3 } = Astro.props;
+const { predavanje, headingLevel = 3, eager = false } = Astro.props;
 const html = karticaHTML(
   karticaPodaci(predavanje),
   url(`/predavanja/${predavanje.id}`),
   headingLevel === 2 ? 'h2' : 'h3',
+  eager,
 );
 ---
 <Fragment set:html={html} />

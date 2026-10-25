@@ -85,5 +85,9 @@ Vidi `docs/vaktija.md`. Danas + odbrojavanje, mjesečna tabela (`?mjesec=GGGG-MM
      Actions deploy workflowu) → `fetch` POST (`FormData`, `Accept: application/json`), poruke o
      uspjehu/grešci.
   2. inače, ako postoji `dzamija.kontakt.email` → otvara se `mailto:` sa popunjenom temom i porukom.
-  3. inače (trenutno stanje — e-mail nije javno objavljen) → placeholder, dugme za slanje je
-     onemogućeno uz objašnjenje i linkove na Instagram/Facebook.
+  3. inače, ako postoji Instagram/Facebook (trenutno stanje — e-mail nije javno objavljen) → „Pripremi
+     poruku“: provjera polja, sastavljena poruka se kopira u međuspremnik i nude se dugmad „Otvori poruku na
+     Instagramu“ (`https://ig.me/m/<profil>`) i Facebook stranica; e-mail korisnika je tada neobavezan.
+  4. inače → placeholder, dugme za slanje je onemogućeno uz objašnjenje.
+- Prijave za mekteb/halke: `src/components/forms/PrijavaDugme.astro` (mailto, a bez e-maila Instagram poruka
+  uz automatsko kopiranje pripremljenog teksta prijave).

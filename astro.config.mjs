@@ -12,5 +12,7 @@ export default defineConfig({
   base: BASE,
   trailingSlash: 'ignore',
   output: 'static',
+  // CSS je mali (~15 KB) — ugrađuje se u stranicu da ne blokira prvo iscrtavanje.
+  build: { inlineStylesheets: 'always' },
   integrations: [sitemap()],
 });

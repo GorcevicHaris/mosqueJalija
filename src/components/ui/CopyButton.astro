@@ -6,32 +6,18 @@ const { text, label = 'Kopiraj', small = true, class: cls } = Astro.props;
 ---
 <button type="button" class:list={['btn btn--ghost copy-btn', { 'btn--sm': small }, cls]} data-copy={text} data-label={label}>
   <Icon name="copy" size={16} />
-  <span class="copy-btn__label">{label}</span>
+  <span class="copy-btn__label" aria-live="polite">{label}</span>
 </button>
 <script>
-  function fallbackCopy(text: string) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    let ok = false;
-    try { ok = document.execCommand('copy'); } catch { ok = false; }
-    ta.remove();
-    return ok;
-  }
+  import { kopirajTekst } from '../../lib/kopiraj';
   document.addEventListener('click', async (e) => {
     const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-copy]');
     if (!btn) return;
     const text = btn.dataset.copy ?? '';
-    let ok = false;
-    try { await navigator.clipboard.writeText(text); ok = true; } catch { ok = fallbackCopy(text); }
+    const ok = await kopirajTekst(text);
     const lbl = btn.querySelector('.copy-btn__label');
     if (!lbl) return;
     lbl.textContent = ok ? 'Kopirano ✓' : 'Kopiranje nije uspjelo';
-    btn.setAttribute('aria-live', 'polite');
     window.setTimeout(() => { lbl.textContent = btn.dataset.label ?? 'Kopiraj'; }, 2200);
   });
 </script>

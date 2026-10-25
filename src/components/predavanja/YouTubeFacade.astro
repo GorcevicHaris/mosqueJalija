@@ -11,7 +11,7 @@ const yt = `https://i.ytimg.com/vi/${encodeURIComponent(id)}`;
 const jeYt = /ytimg\.com/.test(thumbnail);
 const src = jeYt ? `${yt}/hqdefault.jpg` : thumbnail;
 const srcset = jeYt
-  ? `${yt}/hqdefault.jpg 480w${/maxresdefault/.test(thumbnail) ? `, ${yt}/maxresdefault.jpg 1280w` : ''}`
+  ? `${yt}/hqdefault.jpg 480w${/maxresdefault/.test(thumbnail) ? `, ${yt}/sddefault.jpg 640w, ${yt}/maxresdefault.jpg 1280w` : ''}`
   : undefined;
 const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}${start ? `&t=${start}s` : ''}`;
 ---
@@ -21,7 +21,7 @@ const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}${start 
       class="ytf__img"
       src={src}
       srcset={srcset}
-      sizes="(min-width: 1100px) 760px, 100vw"
+      sizes="(min-width: 1100px) 760px, calc(100vw - 32px)"
       alt=""
       width="1280"
       height="720"

@@ -80,6 +80,8 @@ const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
     align-items: flex-end;
     gap: var(--space-3) var(--space-5);
   }
+  /* širina datuma je rezervisana unaprijed, pa se red ne prelama tek kad skripta upiše datum (CLS) */
+  .vt__dates { flex: 1 0 17rem; min-width: 0; }
   .vt__dates p { margin: 0; }
   .vt__greg {
     font-family: var(--font-serif);
@@ -88,7 +90,7 @@ const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
     min-height: 1.5em;
   }
   .vt__hijri { color: var(--color-text-muted); font-size: 0.92rem; min-height: 1.45em; display: flex; flex-wrap: wrap; gap: 0 var(--space-2); align-items: baseline; }
-  .vt__hijri-note { font-size: 0.75rem; opacity: 0.8; cursor: help; border-bottom: 1px dotted currentColor; }
+  .vt__hijri-note { font-size: 0.75rem; cursor: help; border-bottom: 1px dotted currentColor; }
   .vt__next { display: grid; justify-items: end; text-align: right; }
   .vt__next-lbl { font-size: 0.85rem; color: var(--color-text-muted); font-weight: 600; min-height: 1.3em; }
   .vt__countdown {
