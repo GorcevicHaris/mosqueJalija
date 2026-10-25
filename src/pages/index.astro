@@ -17,7 +17,6 @@ import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum, punaAd
 const najnovija = predavanja.slice(0, 6);
 const brojHutbi = predavanja.filter((p) => p.kategorija === 'hutba').length;
 const aktuelno = obavjestenja.slice(0, 3);
-const istaknutiImami = imami.slice(0, 4);
 // na početnoj kratko: bez pojašnjenja u zagradi ("8. mart 2024." umjesto "8. mart 2024. (uoči ramazana …)")
 const cinjenice = dzamija.cinjenice
   .map((c) => ({ ...c, vrijednost: c.vrijednost.replace(/\s*\([^)]*\)\s*$/, '') }))
@@ -28,18 +27,8 @@ const hero = dajNaslovnu();
 // Fotografija u okviru "O džamiji": prva iz galerije koja nije ista kao naslovna (dron-fotografija s otvaranja).
 const naslovnaSlika = galerija.find((g) => !/dzamija-iz-drona|dzamija-hero/.test(g.src) && g.src !== dzamija.naslovnaSlika) ?? galerija[0] ?? null;
 const imgSrc = (src: string) => (/^https?:/.test(src) ? src : url(src));
-/** Mala varijanta (<ime>-200.webp) za avatare, ako postoji. */
-const avatarSrc = (src: string) => imgSrc(varijanta(src, '200') ?? src);
 /** Sličica galerije (<ime>-600.webp), ako postoji. */
 const galSrc = (src: string) => imgSrc(varijanta(src, '600') ?? src);
-const inicijali = (ime: string) =>
-  ime
-    .replace(/\b(hfz|ef|mr|dr|prof|muftija|kurra)\.?\b/gi, '')
-    .split(/\s+/)
-    .filter((w) => /^[A-ZČĆĐŠŽ]/.test(w))
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('');
 const mjesto = [dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
 
 const korisno = [
@@ -202,34 +191,6 @@ const korisno = [
       </div>
     </div>
   </section>
-
-  <!-- ================= IMAMI ================= -->
-  {istaknutiImami.length > 0 && (
-    <section class="section" aria-labelledby="imami-naslov">
-      <div class="container">
-        <SectionHeading id="imami-naslov" eyebrow="Imami i predavači" title="Ko drži predavanja">
-          <a slot="action" class="link-arrow" href={url('/imami')}>Svi imami i predavači</a>
-        </SectionHeading>
-        <ul class="imami grid-cards grid-cards--sm" role="list">
-          {istaknutiImami.map((i) => (
-            <li class="card card--link imam">
-              {i.slika ? (
-                <img class="imam__avatar" src={avatarSrc(i.slika)} alt="" width="76" height="76" loading="lazy" decoding="async" />
-              ) : (
-                <span class="imam__avatar imam__avatar--initials" aria-hidden="true">{inicijali(i.punoIme) || '•'}</span>
-              )}
-              <h3 class="card__title imam__name"><a href={url(`/imami/${i.slug}`)}>{i.punoIme}</a></h3>
-              <p class="imam__role">
-                {i.uloga ?? <span class="muted">Predavač</span>}
-                {!i.potvrdjeno && <span class="badge badge--muted">nepotvrđeno</span>}
-              </p>
-              <p class="card__meta">{i.brojPredavanja} {i.brojPredavanja === 1 ? 'snimak' : 'snimaka'}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )}
 
   <!-- ================= KORISNO ================= -->
   <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="korisno-naslov">
@@ -487,31 +448,6 @@ const korisno = [
     background: var(--color-surface-2);
   }
   .about__links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
-
-  /* ---------- Imami ---------- */
-  .imami { list-style: none; margin: 0; padding: 0; }
-  .imam { align-items: center; text-align: center; }
-  .imam__avatar {
-    width: 76px;
-    height: 76px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: var(--space-3);
-  }
-  .imam__avatar--initials {
-    display: grid;
-    place-items: center;
-    background: var(--color-primary);
-    color: var(--color-on-primary);
-    font-family: var(--font-serif);
-    font-size: 1.6rem;
-    font-weight: 600;
-    border-radius: 0;
-    -webkit-mask: var(--ornament-star) center / contain no-repeat;
-    mask: var(--ornament-star) center / contain no-repeat;
-  }
-  .imam__role { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-1); font-size: 0.92rem; }
-  .imam .card__meta { margin: 0; }
 
   /* ---------- Korisno ---------- */
   .korisno { list-style: none; margin: 0; padding: 0; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: var(--space-4); }
