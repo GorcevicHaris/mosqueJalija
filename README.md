@@ -31,7 +31,35 @@ npm run preview    # pregled build-a
 | `scripts/update-videos.mjs` | Osvježavanje predavanja sa YouTube kanala |
 | `docs/` | Arhitektura, analiza uzora, istraživanje, napomene o vaktiji i podacima |
 
-## Izmjena sadržaja
+## Admin panel i baza (Supabase)
+
+Urednici mijenjaju sadržaj na **https://gorcevicharis.github.io/mosqueJalija/admin/**, bez pristupa
+kodu. U adminu se uređuju obavještenja, objave, podaci o džamiji, imami, galerija, dove, raspored,
+ispravke predavanja, inbox poruka, prijave i pitanja. Sadržaj je u Supabase bazi; sajt ga čita pri
+buildu, a nova obavještenja i direktno u pregledaču. Workflow `.github/workflows/osvjezi-sadrzaj.yml`
+obnavlja sajt svakih 15 minuta.
+
+- Lokalno: napravite `.env` sa `PUBLIC_SUPABASE_URL` i `PUBLIC_SUPABASE_ANON_KEY` (javni ključ). Bez
+  njih sajt koristi `data/*.json`.
+- Na GitHub-u su iste vrijednosti u Settings → Secrets and variables → Actions → **Variables**.
+- Šema baze: `supabase/migrations/`. Početni podaci: `node scripts/supabase-seed.mjs` → `supabase/seed.sql`.
+- Dodavanje urednika, podešavanje prijave i sigurnost: `docs/supabase.md`.
+
+## Transkripti predavanja
+
+Svako predavanje ima automatski transkript (`data/transkripti/`), uz lektorisanu verziju u
+`data/transkripti-lektura/`. Lektorisana verzija ima prednost. Za nove videe, na Mac-u sa Homebrew-om:
+
+```bash
+brew install ffmpeg whisper-cpp
+node scripts/transkripcija/transkribuj.mjs
+```
+
+Skripta preskače već obrađene videe. Detalji: `docs/transkripcija.md`.
+
+## Izmjena sadržaja (bez admina, direktno u fajlovima)
+
+Ako Supabase nije podešen, sadržaj se mijenja u fajlovima:
 
 - **Podaci o džamiji** (adresa, kontakt, historija, račun za donacije, vrijeme džume): `data/dzamija.json`.
   Polje sa vrijednošću `null` se na sajtu prikazuje kao vidljiva oznaka "Podatak nedostaje".
@@ -61,9 +89,8 @@ Detalji (kako se određuju imam, kategorija i serija): `docs/predavanja-podaci.m
 Svaki push na `main` pokreće `.github/workflows/deploy.yml`, koji gradi sajt i objavljuje ga na
 GitHub Pages: https://gorcevicharis.github.io/mosqueJalija/
 
-Jednokratno podešavanje: GitHub → Settings → Pages → Source: **GitHub Actions**.
-Napomena: GitHub Pages za **privatni** repozitorij radi samo uz plaćeni plan (Pro/Team). Na besplatnom
-planu repozitorij mora biti javan.
+GitHub Pages je uključen (Settings → Pages → Source: **GitHub Actions**). Repozitorij je javan, jer
+GitHub Pages na besplatnom planu ne radi sa privatnim repozitorijem.
 
 ### Vlastiti domen
 
@@ -74,6 +101,7 @@ planu repozitorij mora biti javan.
 
 ## Kontakt forma
 
-Bez backend-a forma otvara e-mail klijent (mailto) sa popunjenom porukom. Za slanje direktno sa sajta
-napravite besplatan formular na npr. [Formspree](https://formspree.io) i postavite varijablu
-`PUBLIC_FORM_ENDPOINT` (lokalno u `.env`, na GitHub-u u workflow-u). Detalji: `docs/funkcionalnosti.md`.
+Kontakt forma, online upis i „Pitaj imama“ spremaju poruke u Supabase (tabele `poruke`, `prijave`,
+`pitanja`), a urednici ih čitaju u inboxu admin panela. Bez Supabase-a kontakt forma koristi rezervu:
+kopira poruku i otvara Instagram poruku, mailto, ili `PUBLIC_FORM_ENDPOINT` (npr. Formspree) ako je
+podešen. Detalji: `docs/obrasci.md`, `docs/funkcionalnosti.md`.
