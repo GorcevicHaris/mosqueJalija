@@ -5,6 +5,10 @@ import { sb, type SB } from './sb';
 import { ukloniSliku } from './slike';
 import { el, esc, norm, odgovara, porukaGreske, potvrdi, poruka, SACUVANO, toast, uToku } from './util';
 
+/** Lokalna putanja ('/images/…') → sa base-om sajta (GitHub Pages podfolder); URL ostaje. */
+const srcSlike = (v: string): string =>
+  /^https?:\/\//.test(v) ? v : `${import.meta.env.BASE_URL.replace(/\/$/, '')}${v.startsWith('/') ? v : `/${v}`}`;
+
 export type Red = Record<string, unknown>;
 export interface Znacka {
   t: string;
@@ -154,7 +158,7 @@ export class SekcijaCrud {
         const pkv = String(r[this.def.pk] ?? '');
         const li = el('li', { class: 'adm-stavka', 'data-pk': pkv });
         if (p.slika !== undefined) {
-          li.append(p.slika ? el('img', { class: 'adm-stavka__slika', src: p.slika, alt: '', loading: 'lazy' }) : el('span', { class: 'adm-stavka__slika adm-stavka__slika--prazno', 'aria-hidden': 'true' }));
+          li.append(p.slika ? el('img', { class: 'adm-stavka__slika', src: srcSlike(p.slika), alt: '', loading: 'lazy' }) : el('span', { class: 'adm-stavka__slika adm-stavka__slika--prazno', 'aria-hidden': 'true' }));
         }
         const tijelo = el('div', { class: 'adm-stavka__tijelo' }, el('p', { class: 'adm-stavka__naslov', text: p.naslov || '(bez naslova)' }));
         const meta = el('p', { class: 'adm-stavka__meta' });
@@ -202,7 +206,7 @@ export class SekcijaCrud {
       const pkv = String(r[this.def.pk]);
       this.lista.querySelector<HTMLButtonElement>(`[data-pk="${CSS.escape(pkv)}"] [aria-label^="Pomjeri ${smjer < 0 ? 'gore' : 'dolje'}"]:not([disabled])`)?.focus() ??
         this.lista.querySelector<HTMLButtonElement>(`[data-pk="${CSS.escape(pkv)}"] [data-uredi]`)?.focus();
-      toast('Redoslijed je sačuvan. Na sajtu se vidi nakon sljedećeg osvježavanja (do 1 sat).', 'uspjeh', 4000);
+      toast('Redoslijed je sačuvan. Na sajtu se vidi za otprilike 15–20 minuta.', 'uspjeh', 4000);
       await this.def.nakonIzmjene?.();
     } catch (e) {
       toast(porukaGreske(e), 'greska');

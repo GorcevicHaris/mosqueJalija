@@ -1,0 +1,86 @@
+---
+// Sažet sedmični raspored (tabela `raspored` iz admina, preko data.ts) — npr. na /mekteb.
+// Puna stranica sa filterom je /raspored. Pregledač označi današnji dan (Europe/Belgrade).
+import { raspored, type TerminRasporeda } from '../../lib/data';
+import { DANI, ZA_KOGA, formatVrijeme } from '../../lib/obrasci/raspored';
+import { url } from '../../lib/url';
+
+interface Props {
+  /** samo termini za ove grupe (npr. ['djeca']); prazno = svi */
+  zaKoga?: TerminRasporeda['zaKoga'][];
+  naslovId?: string;
+  naslov?: string;
+}
+const { zaKoga = [], naslovId = 'raspored-sedmica', naslov = 'Sedmični raspored' } = Astro.props;
+const termini = raspored.filter((t) => !zaKoga.length || zaKoga.includes(t.zaKoga) || t.zaKoga === 'svi');
+const poDanu = [1, 2, 3, 4, 5, 6, 7]
+  .map((dan) => ({ dan, lista: termini.filter((t) => t.dan === dan) }))
+  .filter((d) => d.lista.length > 0);
+---
+<section class="rsd" aria-labelledby={naslovId} data-rsd>
+  <div class="rsd__head">
+    <h3 id={naslovId} class="rsd__title">{naslov}</h3>
+    <a class="link-arrow" href={url('/raspored')}>Cijeli raspored</a>
+  </div>
+  {poDanu.length ? (
+    <ul class="rsd__dani" role="list">
+      {poDanu.map(({ dan, lista }) => (
+        <li class="rsd__dan" data-dan={dan}>
+          <p class="rsd__ime">{DANI[dan]}<span class="badge badge--primary rsd__danas" hidden>Danas</span></p>
+          <ul class="rsd__lista" role="list">
+            {lista.map((t) => (
+              <li class="rsd__stavka">
+                <span class="rsd__vrijeme">{formatVrijeme(t.vrijeme)}</span>
+                <span class="rsd__naziv">
+                  {t.naziv}
+                  {t.zaKoga !== 'svi' && <span class="rsd__za"> · {ZA_KOGA[t.zaKoga]}</span>}
+                </span>
+                {t.opis && <span class="rsd__opis">{t.opis}</span>}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="muted rsd__prazno">
+      Termini se objavljuju u <a href={url('/obavjestenja')}>obavještenjima</a> i na stranici <a href={url('/raspored')}>Raspored</a>.
+    </p>
+  )}
+</section>
+
+<style>
+  .rsd { display: grid; gap: var(--space-3); }
+  .rsd__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+  .rsd__title { margin: 0; }
+  .rsd__dani { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+  .rsd__dan {
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+  .rsd__dan.is-danas { border-color: var(--color-primary); border-left-width: 4px; }
+  .rsd__ime { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2); font-weight: 800; font-size: 0.95rem; }
+  .rsd__danas[hidden] { display: none; }
+  .rsd__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  .rsd__stavka { display: grid; grid-template-columns: minmax(5.5rem, max-content) 1fr; gap: 0 var(--space-3); font-size: 0.95rem; }
+  .rsd__vrijeme { font-weight: 700; color: var(--color-accent); font-variant-numeric: tabular-nums; }
+  .rsd__naziv { min-width: 0; }
+  .rsd__za { color: var(--color-text-muted); }
+  .rsd__opis { grid-column: 2; font-size: 0.86rem; color: var(--color-text-muted); }
+  @media (max-width: 420px) {
+    .rsd__stavka { grid-template-columns: 1fr; }
+    .rsd__opis { grid-column: 1; }
+  }
+  .rsd__prazno { margin: 0; }
+</style>
+
+<script>
+  import { danasDan } from '../../lib/obrasci/raspored';
+  const d = danasDan();
+  document.querySelectorAll<HTMLElement>(`[data-rsd] .rsd__dan[data-dan="${d}"]`).forEach((li) => {
+    li.classList.add('is-danas');
+    li.querySelector<HTMLElement>('.rsd__danas')?.removeAttribute('hidden');
+  });
+</script>

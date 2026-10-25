@@ -1,16 +1,38 @@
 ---
 // Fotografija imama ili ornamentalni monogram (osmokraka zvijezda) kada slike nema.
+// Lokalne fotografije (/images/imami/<slug>.webp, 600×600) imaju i malu varijantu <slug>-200.webp —
+// srcset pušta pregledač da izabere manju za male avatare. Slike iz admina (Supabase URL) idu kako jesu.
 import { url } from '../../lib/url';
 import { monogram } from '../../lib/predavanja';
-interface Props { punoIme: string; slika: string | null; size?: number }
-const { punoIme, slika, size = 96 } = Astro.props;
-const src = slika ? (/^https?:\/\//.test(slika) ? slika : url(slika)) : null;
+interface Props {
+  punoIme: string;
+  slika: string | null;
+  size?: number;
+  /** true = slika je odmah vidljiva (npr. zaglavlje profila) — bez lazy učitavanja */
+  eager?: boolean;
+  /** true = ime je već napisano pored (prazan alt, da čitač ne ponavlja) */
+  dekorativno?: boolean;
+}
+const { punoIme, slika, size = 96, eager = false, dekorativno = false } = Astro.props;
+const vanjska = !!slika && /^https?:\/\//.test(slika);
+const src = slika ? (vanjska ? slika : url(slika)) : null;
+const mala = src && !vanjska && /\.webp$/i.test(src) && !/-200\.webp$/i.test(src) ? src.replace(/\.webp$/i, '-200.webp') : null;
+const srcset = mala ? `${mala} 200w, ${src} 600w` : undefined;
 ---
 <span class="avatar" style={`--avatar-size:${size}px`}>
   {src ? (
-    <img src={src} alt={`Fotografija: ${punoIme}`} width={size} height={size} loading="lazy" decoding="async" />
+    <img
+      src={mala && size <= 100 ? mala : src}
+      srcset={srcset}
+      sizes={srcset ? `${size}px` : undefined}
+      alt={dekorativno ? '' : `Fotografija: ${punoIme}`}
+      width={size}
+      height={size}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+    />
   ) : (
-    <span class="avatar__mono" role="img" aria-label={`Monogram: ${punoIme} (fotografija nije dostupna)`}>
+    <span class="avatar__mono" role={dekorativno ? undefined : 'img'} aria-label={dekorativno ? undefined : `Monogram: ${punoIme} (fotografija nije dostupna)`} aria-hidden={dekorativno ? 'true' : undefined}>
       <svg viewBox="0 0 100 100" aria-hidden="true" class="avatar__star">
         <g fill="none" stroke="currentColor" stroke-width="2.2">
           <rect x="21" y="21" width="58" height="58" rx="3" />

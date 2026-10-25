@@ -88,7 +88,7 @@ const email = dzamija.kontakt.email;
             );
           }
           return (
-            <li class="nav__item">
+            <li class:list={['nav__item', { 'nav__item--home': item.href === '/' }]}>
               <a
                 class:list={['nav__link', { 'is-active': isActive(item.href, current) }]}
                 href={url(item.href)}
@@ -357,6 +357,13 @@ const email = dzamija.kontakt.email;
       transform: translate(-50%, 0);
       transition: opacity var(--transition), transform var(--transition), visibility 0s;
     }
+  }
+
+  /* Uži desktop: "Početna" se skriva (logo vodi na početnu), da 8 stavki stane u jedan red bez preklapanja. */
+  @media (min-width: 1140px) and (max-width: 1319.98px) {
+    .nav__item--home { display: none; }
+    .nav__link { padding-inline: 0.55rem; }
+    .site-header__inner { gap: var(--space-3); }
   }
 
   /* ---------- Mobilni / tablet: ladica ---------- */

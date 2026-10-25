@@ -14,6 +14,10 @@ export interface Dzamija {
   adresa: string | null;
   koordinate: { lat: number; lng: number; potvrdjeno: boolean };
   kratakOpis: string | null;
+  /** Naslovna fotografija (početna, O džamiji). Lokalna putanja ili URL iz admina; null = bez fotografije. */
+  naslovnaSlika?: string | null;
+  /** Potpis naslovne fotografije, npr. "Foto: Mešihat Islamske zajednice u Srbiji". */
+  naslovnaSlikaIzvor?: string | null;
   historija: { naslov: string; tekst: string; izvor: string | null }[];
   cinjenice: { oznaka: string; vrijednost: string; izvor: string | null }[];
   kontakt: { email: string | null; telefon: string | null; napomena: string | null };

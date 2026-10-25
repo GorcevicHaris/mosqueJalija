@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /mosqueJalija/admin/
+Disallow: /mosqueJalija/obavjestenja/prikaz/
 
 Sitemap: https://gorcevicharis.github.io/mosqueJalija/sitemap-index.xml

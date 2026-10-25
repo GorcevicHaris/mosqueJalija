@@ -89,6 +89,7 @@ const jsonLd = {
     </script>
     <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={manropeLatinExt} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {!noindex && <link rel="canonical" href={canonical} />}

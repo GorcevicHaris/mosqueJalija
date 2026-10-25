@@ -1,0 +1,97 @@
+---
+// "Danas u džamiji" — kratka traka na početnoj sa današnjim terminima iz sedmičnog rasporeda
+// (admin → Sedmični raspored). Build (svakih ~15 min) unaprijed bira današnji dan po vremenu u
+// Novom Pazaru, pa nema pomjeranja sadržaja; pregledač samo provjeri dan (npr. poslije ponoći).
+// Ako za dan nema termina (ni džume petkom), traka se ne prikazuje.
+import Icon from '../ui/Icon.astro';
+import { raspored, dzamija } from '../../lib/data';
+import { DANI, ZA_KOGA, danasDan, formatVrijeme } from '../../lib/obrasci/raspored';
+import { url } from '../../lib/url';
+
+const dzuma = dzamija.dzuma.vrijeme?.trim() || null;
+const dani = [1, 2, 3, 4, 5, 6, 7].map((dan) => ({
+  dan,
+  stavke: [
+    ...(dan === 5 && dzuma ? [{ vrijeme: dzuma, naziv: 'Džuma-namaz', za: null as string | null }] : []),
+    ...raspored
+      .filter((t) => t.dan === dan)
+      .map((t) => ({ vrijeme: formatVrijeme(t.vrijeme), naziv: t.naziv, za: t.zaKoga === 'svi' ? null : ZA_KOGA[t.zaKoga] })),
+  ],
+}));
+const imaIjedan = dani.some((d) => d.stavke.length > 0);
+const danBuild = danasDan();
+const danas = dani.find((d) => d.dan === danBuild)!;
+---
+{imaIjedan && (
+  <section class="dud" aria-labelledby="dud-naslov" data-dud hidden={danas.stavke.length === 0}>
+    <div class="container dud__inner">
+      <h2 id="dud-naslov" class="dud__title">
+        <Icon name="calendar" size={18} />
+        <span>Danas u džamiji</span>
+        <span class="dud__dan" data-dud-dan>{DANI[danBuild].toLowerCase()}</span>
+      </h2>
+      {dani.map((d) => (
+        <ul class="dud__lista" role="list" data-dud-lista={d.dan} hidden={d.dan !== danBuild}>
+          {d.stavke.map((s) => (
+            <li class="dud__stavka">
+              <span class="dud__vrijeme">{s.vrijeme}</span>
+              <span class="dud__naziv">{s.naziv}{s.za && <span class="dud__za"> · {s.za}</span>}</span>
+            </li>
+          ))}
+        </ul>
+      ))}
+      <a class="link-arrow dud__link" href={url('/raspored')}>Sedmični raspored</a>
+    </div>
+  </section>
+)}
+
+<style>
+  .dud {
+    background: var(--page-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .dud[hidden] { display: none; }
+  .dud__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-4);
+  }
+  .dud__title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: var(--color-primary);
+  }
+  .dud__dan { font-weight: 600; color: var(--color-text-muted); }
+  .dud__dan::before { content: '· '; }
+  .dud__lista { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); flex: 1 1 320px; }
+  .dud__lista[hidden] { display: none; }
+  .dud__stavka { font-size: 0.95rem; min-width: 0; max-width: 100%; }
+  .dud__vrijeme { font-weight: 700; color: var(--color-accent); white-space: nowrap; margin-right: var(--space-2); }
+  .dud__za { color: var(--color-text-muted); }
+  .dud__link { font-size: 0.92rem; }
+</style>
+
+<script>
+  import { DANI, danasDan } from '../../lib/obrasci/raspored';
+  const traka = document.querySelector<HTMLElement>('[data-dud]');
+  if (traka) {
+    const d = danasDan();
+    let ima = false;
+    traka.querySelectorAll<HTMLElement>('[data-dud-lista]').forEach((ul) => {
+      const ovaj = ul.dataset.dudLista === String(d);
+      ul.hidden = !ovaj;
+      if (ovaj) ima = ul.children.length > 0;
+    });
+    const dan = traka.querySelector('[data-dud-dan]');
+    if (dan) dan.textContent = (DANI[d] ?? '').toLowerCase();
+    traka.hidden = !ima;
+  }
+</script>

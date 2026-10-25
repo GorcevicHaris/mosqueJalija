@@ -13,7 +13,7 @@ const stavke = [...obavjestenjaTipa('obavjestenje').map(izObavjestenja), ...vije
   <PageHero eyebrow="Aktuelno" title="Obavještenja" subtitle="Najave, programi i vijesti iz naše džamije." />
   <section class="section section--tight">
     <div class="container container--narrow">
-      <Lista stavke={stavke} prazno="Obavještenja džemata biće objavljena ovdje." />
+      <Lista stavke={stavke} tip="obavjestenje" prazno="Obavještenja džemata biće objavljena ovdje." />
       <p class="ob-dalje muted">Pogledajte i <a href={url('/objave')}>objave iz džemata</a> i <a href={url('/predavanja')}>sva predavanja</a>.</p>
     </div>
   </section>

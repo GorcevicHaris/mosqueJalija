@@ -1,0 +1,22 @@
+---
+// Uvodni tekst stranice iz admina (Tekstovi stranica, tabela stranice_tekstovi).
+// Prazan tekst u bazi (ili build bez baze) = prikazuje se sadržaj iz <slot /> (ugrađeni tekst).
+import { tekstStranice } from '../../lib/data';
+import { opisHTML } from '../../lib/predavanja';
+
+interface Props { kljuc: string; class?: string }
+const { kljuc, class: cls } = Astro.props;
+const t = tekstStranice(kljuc);
+---
+{t ? (
+  <div class:list={['prose uvod-stranice', cls]} data-uvod={kljuc}>
+    {t.paragrafi.map((p) => <Fragment set:html={opisHTML(p)} />)}
+  </div>
+) : (
+  <slot />
+)}
+
+<style>
+  .uvod-stranice { margin-bottom: var(--space-6); font-size: 1.06rem; }
+  .uvod-centar { margin-inline: auto; }
+</style>

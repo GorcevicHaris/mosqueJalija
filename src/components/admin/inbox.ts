@@ -298,7 +298,7 @@ export class SekcijaPitanja extends Sanduce {
       void uToku(sacuvaj, 'Čuvam…', async () => {
         try {
           await this.azuriraj(r, { odgovor: tekst || null, odgovorio: odgovorio.value.trim() || null, objavljeno: objavi.checked && !!tekst },
-            objavi.checked ? 'Odgovor je sačuvan i objavljen (na sajtu nakon sljedećeg osvježavanja, do 1 sat).' : 'Odgovor je sačuvan (nije objavljen).');
+            objavi.checked ? 'Odgovor je sačuvan i objavljen — na stranici „Pitaj imama“ vidi se odmah.' : 'Odgovor je sačuvan (nije objavljen).');
           poruka(status, '');
           this.prikazi();
         } catch (e) {

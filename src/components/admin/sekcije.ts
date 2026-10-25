@@ -274,8 +274,8 @@ export const stranice: DefTabele = {
   red: [['kljuc', true]],
   polja: () => [
     { k: 'kljuc', l: 'Stranica (ključ)', t: 'select', obavezno: true, slobodno: true, zakljucanoPriIzmjeni: true, max: 60, opcije: ugradjeno().stranice.map((s) => ({ v: s.kljuc, t: `${s.naziv} (${s.kljuc})` })) },
-    { k: 'naslov', l: 'Naslov', t: 'text', max: 200 },
-    { k: 'sadrzaj', l: 'Tekst', t: 'textarea', redovi: 12, pomoc: 'Paragrafe odvojite praznim redom. Ostavite prazno da stranica koristi svoj ugrađeni tekst.' },
+    { k: 'naslov', l: 'Naslov stranice', t: 'text', max: 200, pomoc: 'Veliki naslov na vrhu stranice. Prazno = ugrađeni naslov.' },
+    { k: 'sadrzaj', l: 'Uvodni tekst', t: 'textarea', redovi: 12, pomoc: 'Prikazuje se na početku stranice (na Mektebu umjesto ugrađenog teksta o mektebu). Paragrafe odvojite praznim redom; linkovi (https://…) postaju klikabilni. Ostavite prazno da stranica koristi svoj ugrađeni tekst.' },
   ],
   prijeSnimanja: (p, stari, svi) => {
     p.kljuc = slugify(String(p.kljuc ?? ''));

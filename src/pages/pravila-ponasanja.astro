@@ -4,6 +4,9 @@ import PageHero from '../components/ui/PageHero.astro';
 import Icon from '../components/ui/Icon.astro';
 import type { IconName } from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
+import UvodStranice from '../components/ui/UvodStranice.astro';
+import { tekstoviStranica } from '../lib/data';
+const naslovStranice = tekstoviStranica['pravila-ponasanja']?.naslov?.trim() || 'Pravila ponašanja u džamiji';
 
 const pravila: { naslov: string; tekst: string; ikona: IconName }[] = [
   { naslov: 'Ulazak sa poštovanjem', tekst: 'U džamiju ulazite smireno, desnom nogom, uz dovu za ulazak u džamiju. Izlazite lijevom nogom, uz dovu za izlazak.', ikona: 'door' },
@@ -22,8 +25,8 @@ const pravila: { naslov: string; tekst: string; ikona: IconName }[] = [
   { naslov: 'Bez rasprava', tekst: 'Izbjegavajte prepirke i rasprave. Savjet dajte lijepom riječju i u pravo vrijeme.', ikona: 'message' },
 ];
 ---
-<BaseLayout title="Pravila ponašanja u džamiji" description="Adab u džamiji: kako se ponašati u kući Allahovoj — ulazak, čistoća, tišina, hutba, džuma, djeca i čuvanje vakufa.">
-  <PageHero eyebrow="Adab" title="Pravila ponašanja u džamiji" subtitle="Džamija je kuća Allahova — mjesto namaza, mira i znanja. Ponašajmo se u njoj dostojanstveno i sa poštovanjem." />
+<BaseLayout title={naslovStranice} description="Adab u džamiji: kako se ponašati u kući Allahovoj — ulazak, čistoća, tišina, hutba, džuma, djeca i čuvanje vakufa.">
+  <PageHero eyebrow="Adab" title={naslovStranice} subtitle="Džamija je kuća Allahova — mjesto namaza, mira i znanja. Ponašajmo se u njoj dostojanstveno i sa poštovanjem." />
 
   <section class="section">
     <div class="container">
@@ -34,6 +37,8 @@ const pravila: { naslov: string; tekst: string; ikona: IconName }[] = [
         </blockquote>
         <figcaption>Kur'an, El-A'raf, 31 — prevod značenja</figcaption>
       </figure>
+
+      <UvodStranice kljuc="pravila-ponasanja" class="uvod-pravila" />
 
       <ol class="rules" role="list">
         {pravila.map((p, i) => (

@@ -6,7 +6,9 @@ import Placeholder from '../components/ui/Placeholder.astro';
 import LectureCard from '../components/predavanja/LectureCard.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
-import { predavanja } from '../lib/data';
+import UvodStranice from '../components/ui/UvodStranice.astro';
+import { predavanja, tekstoviStranica } from '../lib/data';
+const naslovStranice = tekstoviStranica['ucenje-kurana']?.naslov?.trim() || "Učenje Kur'ana";
 
 const snimci = predavanja.filter((p) => p.kategorija === 'ucenje-kurana');
 
@@ -24,11 +26,12 @@ const izvori = [
   { naziv: 'EveryAyah', url: 'https://everyayah.com', opis: 'Učenje ajet po ajet — korisno za ponavljanje i hifz.' },
 ];
 ---
-<BaseLayout title="Učenje Kur'ana" description="Snimci učenja Kur'ana iz Džamije na Jaliji, koraci u učenju i provjereni izvori za čitanje, slušanje i tedžvid.">
-  <PageHero eyebrow="Korisno" title="Učenje Kur'ana" subtitle="Snimci učenja iz naše džamije, koraci za početnike i provjereni izvori za čitanje i slušanje." arabic="وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا" />
+<BaseLayout title={naslovStranice} description="Snimci učenja Kur'ana iz Džamije na Jaliji, koraci u učenju i provjereni izvori za čitanje, slušanje i tedžvid.">
+  <PageHero eyebrow="Korisno" title={naslovStranice} subtitle="Snimci učenja iz naše džamije, koraci za početnike i provjereni izvori za čitanje i slušanje." arabic="وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا" />
 
   <section class="section" aria-labelledby="snimci-naslov">
     <div class="container">
+      <UvodStranice kljuc="ucenje-kurana" />
       <SectionHeading id="snimci-naslov" eyebrow="Iz džamije" title="Snimci učenja Kur'ana" lead="Kiraet imama i hafiza naše džamije.">
         {snimci.length > 0 && <a slot="action" class="link-arrow" href={url('/predavanja')}>Sva predavanja</a>}
       </SectionHeading>

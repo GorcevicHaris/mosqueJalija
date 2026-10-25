@@ -20,6 +20,8 @@ const GRUPE: { naslov: string; opis?: string; polja: Polje[] }[] = [
       { k: 'koordinate.lng', l: 'Geografska dužina (lng)', t: 'broj', korak: 0.000001, min: -180, max: 180, obavezno: true, pola: true },
       { k: 'koordinate.potvrdjeno', l: 'Koordinate su provjerene (koriste se za vaktiju i mapu)', t: 'checkbox' },
       { k: 'kratakOpis', l: 'Kratak opis', t: 'textarea', redovi: 4, max: 1200, pomoc: 'Prikazuje se na početnoj, u opisu za pretraživače i pri dijeljenju linka.' },
+      { k: 'naslovnaSlika', l: 'Naslovna fotografija', t: 'slika', folder: 'dzamija', pomoc: 'Široka fotografija džamije (položena, najbolje bez ljudi u prvom planu) — pozadina na početnoj i fotografija na stranici O džamiji. Smanjuje se na najviše 1600 px.' },
+      { k: 'naslovnaSlikaIzvor', l: 'Potpis naslovne fotografije', t: 'text', max: 200, placeholder: 'npr. Foto: Džamija na Jaliji' },
     ],
   },
   {

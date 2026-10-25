@@ -7,17 +7,34 @@ import OrnamentDivider from '../components/ui/OrnamentDivider.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
 import { dzamija } from '../lib/data';
+import { naslovnaSlika } from '../lib/slike';
 
 const d = dzamija;
+const foto = naslovnaSlika();
 const opis = 'Vakuf, gradnja, otvaranje i džemat danas — činjenice uz navedene izvore.';
 ---
-<BaseLayout title="O džamiji — historija" description={`O Džamiji na Jaliji: historija, činjenice i lokacija. ${d.kratakOpis ?? ''}`.trim()}>
+<BaseLayout title="O džamiji — historija" description={`O Džamiji na Jaliji: historija, činjenice i lokacija. ${d.kratakOpis ?? ''}`.trim()} image={d.naslovnaSlika ?? undefined}>
   <PageHero eyebrow="O džamiji" title="Historija džamije" subtitle={opis} />
 
   <section class="section">
     <div class="container about-grid">
       <div class="about-main">
         <h2 class="visually-hidden">Historija</h2>
+        {foto && (
+          <figure class="photo">
+            <img
+              src={foto.src}
+              srcset={foto.srcset}
+              sizes={foto.srcset ? '(min-width: 1240px) 720px, (min-width: 960px) 60vw, 100vw' : undefined}
+              alt={`${d.naziv} — fotografija džamije sa munarom`}
+              width="2000"
+              height="1100"
+              fetchpriority="high"
+              decoding="async"
+            />
+            {foto.izvor && <figcaption class="photo__credit">{foto.izvor}</figcaption>}
+          </figure>
+        )}
         {d.kratakOpis && <p class="lead">{d.kratakOpis}</p>}
         {d.historija.length ? (
           <ol class="timeline" role="list">
@@ -104,6 +121,19 @@ const opis = 'Vakuf, gradnja, otvaranje i džemat danas — činjenice uz navede
 
 <style>
   .about-grid { display: grid; gap: var(--space-7); }
+  .photo { margin: 0 0 var(--space-6); }
+  .photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 20 / 11;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    background: var(--color-surface-2);
+  }
+  .photo__credit { margin-top: var(--space-2); font-size: 0.8rem; color: var(--color-text-muted); }
   @media (min-width: 960px) {
     .about-grid { grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr); }
     .about-side { position: sticky; top: calc(var(--header-h) + 24px); align-self: start; }

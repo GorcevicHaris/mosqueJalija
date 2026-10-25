@@ -23,18 +23,39 @@ import type {
   Serija,
 } from './types';
 
-export const dzamija = dzamijaJson as Dzamija;
+import { ucitajIzBaze, spojiDzamiju, spojiPoSlugu, primijeniIspravke } from './supabase/sadrzaj';
+import type { TerminRasporeda, StranicaTekst, JavnoPitanje } from './supabase/tipovi';
 
-export const predavanja: Predavanje[] = (predavanjaJson as Predavanje[])
+export type { TerminRasporeda, StranicaTekst, JavnoPitanje } from './supabase/tipovi';
+
+// Sadržaj iz Supabase baze (admin panel). null = nema varijabli ili baza nije dostupna → data/*.json.
+// "Sve ili ništa": nikad mješavina baze i JSON-a (vidi docs/supabase.md).
+const baza = await ucitajIzBaze();
+
+/** true = ovaj build je napravljen iz baze (admin), false = iz data/*.json. */
+export const izBaze = baza !== null;
+
+export const dzamija: Dzamija = spojiDzamiju(dzamijaJson as Dzamija, baza?.dzamija);
+
+export const kategorije: Kategorija[] = spojiPoSlugu(kategorijeJson as Kategorija[], baza?.kategorije ?? []);
+export const serije: Serija[] = spojiPoSlugu(serijeJson as Serija[], baza?.serije ?? []);
+const imamiOsnovno: ImamOsnovno[] = spojiPoSlugu(imamiJson as ImamOsnovno[], baza?.imami ?? []);
+
+// Redoslijed je bitan: kategorije/serije/imami prije predavanja (validacija ispravki iz baze).
+export const predavanja: Predavanje[] = primijeniIspravke(predavanjaJson as Predavanje[], baza?.ispravke ?? {}, {
+  imami: new Set(imamiOsnovno.map((i) => i.slug)),
+  kategorije: new Set(kategorije.map((k) => k.slug)),
+  serije: new Set(serije.map((s) => s.slug)),
+})
   .slice()
   .sort((a, b) => b.datum.localeCompare(a.datum));
 
-export const kategorije = kategorijeJson as Kategorija[];
-export const serije = serijeJson as Serija[];
+const bio: Record<string, Partial<ImamBio>> = {
+  ...(imamiBioJson as Record<string, Partial<ImamBio>>),
+  ...(baza?.imamiBio ?? {}),
+};
 
-const bio = imamiBioJson as Record<string, Partial<ImamBio>>;
-
-export const imami: Imam[] = (imamiJson as ImamOsnovno[])
+export const imami: Imam[] = imamiOsnovno
   .map((i) => ({
     ...i,
     uloga: bio[i.slug]?.uloga ?? null,
@@ -46,13 +67,26 @@ export const imami: Imam[] = (imamiJson as ImamOsnovno[])
   }))
   .sort((a, b) => b.brojPredavanja - a.brojPredavanja);
 
-export const obavjestenja: Obavjestenje[] = (obavjestenjaJson as Obavjestenje[])
+export const obavjestenja: Obavjestenje[] = (baza?.obavjestenja ?? (obavjestenjaJson as Obavjestenje[]))
   .slice()
   .sort((a, b) => b.datum.localeCompare(a.datum));
 
-export const dove = doveJson as Dova[];
-export const ajetiHadisi = ajetiHadisiJson as AjetHadis[];
-export const galerija = galerijaJson as GalerijaSlika[];
+export const dove: Dova[] = baza?.dove ?? (doveJson as Dova[]);
+export const ajetiHadisi: AjetHadis[] = baza?.ajetiHadisi ?? (ajetiHadisiJson as AjetHadis[]);
+export const galerija: GalerijaSlika[] = baza?.galerija ?? (galerijaJson as GalerijaSlika[]);
+
+/** Sedmični raspored (samo aktivni termini, po danu pa redoslijedu). Prazno bez baze. */
+export const raspored: TerminRasporeda[] = baza?.raspored ?? [];
+/** Uvodni tekstovi stranica iz admina (ključ: mekteb, donacije, pravila-ponasanja, ucenje-kurana). */
+export const tekstoviStranica: Record<string, StranicaTekst> = baza?.stranice ?? {};
+/** Objavljena pitanja sa odgovorom ("Pitaj imama"). */
+export const javnaPitanja: JavnoPitanje[] = baza?.pitanja ?? [];
+
+/** Paragrafi teksta stranice iz baze; prazan niz = stranica koristi svoj ugrađeni tekst. */
+export const tekstStranice = (kljuc: string): StranicaTekst | null => {
+  const t = tekstoviStranica[kljuc];
+  return t && t.paragrafi.length ? t : null;
+};
 
 export const getImam = (slug: string | null) => imami.find((i) => i.slug === slug) ?? null;
 export const getKategorija = (slug: string | null) => kategorije.find((k) => k.slug === slug) ?? null;

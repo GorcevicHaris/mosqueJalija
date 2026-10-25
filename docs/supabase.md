@@ -7,7 +7,7 @@ skladište slika.
 ```
  urednik ──(prijava e-mailom, supabase-js sa CDN-a)──► /admin/ ──► Supabase (Postgres + RLS, Storage "slike")
                                                                        │
- GitHub Actions: svaki sat deploy.yml ──► npm run build ──(PostgREST, anon ključ, samo čitanje)──┘
+ GitHub Actions: svakih 15 min deploy.yml ──► npm run build ──(PostgREST, anon ključ, samo čitanje)──┘
                                                 │
                                         statičke stranice ──► GitHub Pages
  posjetilac ──► /obavjestenja/ (+ skripta čita najnovije objave direktno iz baze — vide se odmah)
@@ -35,7 +35,7 @@ skladište slika.
 | `src/lib/supabase/klijent.ts` | pregledač: `dopuniObavjestenja()`, `ucitajPoSlugu()`, `ucitajJavnaPitanja()` |
 | `src/pages/obavjestenja/prikaz.astro` | `/obavjestenja/prikaz/?slug=…` — objava iz baze koja još nema statičnu stranicu |
 | `src/pages/admin/index.astro`, `src/components/admin/**` | admin panel |
-| `.github/workflows/osvjezi-sadrzaj.yml` | svaki sat pokreće `deploy.yml` |
+| `.github/workflows/osvjezi-sadrzaj.yml` | svakih 15 minuta pokreće `deploy.yml` |
 
 ## Tabele
 
@@ -221,9 +221,10 @@ Lokalno ih čita `.env` (u `.gitignore`).
 
 ## Automatsko osvježavanje
 
-`.github/workflows/osvjezi-sadrzaj.yml`: svaki sat (u :17) i ručno pokreće `deploy.yml`
+`.github/workflows/osvjezi-sadrzaj.yml`: svakih 15 minuta (`*/15 * * * *`) i ručno pokreće `deploy.yml`
 (`gh workflow run`, `permissions: actions: write`). Preskače se dok `vars.PUBLIC_SUPABASE_URL` nije
-postavljen. Nova obavještenja se vide odmah (klijentska skripta), ostalo za najviše ~1 sat.
+postavljen. Nova obavještenja, raspored na `/raspored` i odgovori na `/pitaj-imama` se vide odmah
+(klijentska skripta), ostalo za ~15–20 minuta. Javni repo → Actions minute su besplatne.
 Napomene:
 - GitHub **isključuje zakazane workflowe u javnom repou poslije 60 dana bez aktivnosti** (commita).
   Sedmično osvježavanje predavanja commituje samo kad ima novih snimaka; ako workflow bude
@@ -234,7 +235,7 @@ Napomene:
 
 Supabase pauzira besplatni projekat poslije **7 dana slabe aktivnosti**; prema zvaničnoj
 dokumentaciji ([Project pausing](https://supabase.com/docs/guides/platform/free-project-pausing))
-dovoljno je "nekoliko zahtjeva prema bazi dnevno". Build svakog sata pravi 13 REST upita (stvarni
+dovoljno je "nekoliko zahtjeva prema bazi dnevno". Build svakih 15 minuta pravi ~15 REST upita (stvarni
 SELECT-i), pa bi projekat trebalo da ostane aktivan — **ali to nije zvanično garantovano** (tačan
 prag Supabase ne objavljuje i mijenjao se). Ako stigne e-mail upozorenja o pauzi, otvoriti projekat
 u dashboardu ili ručno pokrenuti workflow. Pauziran projekat se može vratiti iz dashboarda; dok je
@@ -300,3 +301,32 @@ Pokrenuti `get_advisors` (security i performance) poslije migracija. Očekivano:
 RLS, `search_path` ni security definer funkcije u izloženoj šemi (zato šema `private`). Mogući
 INFO "unused index" za nove indekse dok nema saobraćaja — ignorisati. Auth upozorenja (npr. OTP
 expiry, leaked password protection) se podešavaju u dashboardu.
+
+## Integracija (šta je na sajtu iz baze)
+
+`src/lib/data.ts` poziva `ucitajIzBaze()` jednom po buildu; bez varijabli ili kad baza ne odgovori,
+sve ide iz `data/*.json` (provjereno buildom sa praznim varijablama). Exporti `raspored`,
+`tekstoviStranica`, `javnaPitanja`, `izBaze` i pomoćna `tekstStranice(kljuc)` su dodati; ostali exporti
+su isti.
+
+| Admin odjeljak (tabela) | Gdje se vidi |
+|---|---|
+| Obavještenja i objave (`obavjestenja`) | `/obavjestenja`, `/objave`, detalji, „Aktuelno“ na početnoj, `/raspored` (prazno stanje), `/mekteb` (najave), RSS, pretraga. Nove objave i odmah: `dopuniObavjestenja` na `/obavjestenja`, `/objave` (filter kategorija se ponovo primijeni poslije `obavjestenja:dopunjeno`) i na početnoj |
+| Sedmični raspored (`raspored`) | `/raspored` (build + osvježavanje u pregledaču), blok „Sedmični raspored“ na `/mekteb` (`RasporedSedmica.astro`), traka „Danas u džamiji“ na početnoj (`DanasUDzamiji.astro`; petkom i džuma ako je vrijeme uneseno; skrivena kad za dan nema termina) |
+| Galerija (`galerija`) | `/galerija` (mreža koristi `-600.webp` sličice ako postoje; potpis `licenca` + link na `izvor` i u lightboxu), fotografija u odjeljku „O džamiji“ na početnoj |
+| Podaci o džamiji (`postavke.dzamija`) | sve: kontakt (`/kontakt`, podnožje, JSON-LD), džuma (početna, `/vaktija`, `/hutbe`, `/kontakt`, „Danas u džamiji“ petkom), donacije (`/donacije` + IPS QR), društvene mreže, historija/činjenice/izvori (`/o-dzamiji`, početna), koordinate (vaktija, mapa), kratak opis. **Novo polje „Naslovna fotografija“** (`naslovnaSlika`, `naslovnaSlikaIzvor`): pozadina hero-a na početnoj i fotografija na `/o-dzamiji` (za ugrađenu `/images/dzamija-hero.webp` postoji i `-1000.webp` za srcset) |
+| Tekstovi stranica (`stranice_tekstovi`) | `naslov` = naslov stranice (H1 + `<title>`), `sadrzaj` = uvodni tekst: `/mekteb` (zamjenjuje ugrađeni tekst o mektebu), `/donacije`, `/pravila-ponasanja`, `/ucenje-kurana` (`UvodStranice.astro`; prazno = ugrađeno) |
+| Dove, Ajeti i hadisi | `/dove`, `/kuran-hadisi`, „Ajet / hadis dana“ |
+| Imami i predavači (`imami`, `imami_bio`) | `/imami` (i imami dodani u adminu bez snimaka, ako imaju ulogu/bio/fotografiju), `/imami/<slug>` se generiše za svakog (bio po paragrafima, potpis fotografije iz izvora koji počinje sa „Fotografija“/„Foto“), avatar na predavanjima (`-200.webp` + srcset), početna |
+| Kategorije, Serije | filteri i bedževi predavanja (spojeno sa JSON listama po slugu) |
+| Ispravke predavanja (`predavanja_ispravke`) | primjenjuju se pri svakom buildu (`primijeniIspravke`) |
+| Poruke / Prijave / Pitanja | forme: `/kontakt` (`KontaktSupabase`), `/upis` i `/mekteb` (`PrijavaForma`), `/pitaj-imama`; objavljeni odgovori odmah na `/pitaj-imama` |
+
+Ostalo: `nav.ts` ima grupu **Mekteb** (Mekteb i halke, Online upis, Raspored, Pitaj imama, Učenje
+Kur'ana); isto u podnožju; početna ima blok Online upis / Pitaj imama / Sedmični raspored. Sitemap
+izuzima `/admin/` i `/obavjestenja/prikaz/`, `robots.txt` ih zabranjuje. Admin poruke „Sačuvano“
+kažu ~15–20 minuta.
+
+Nije u bazi (mijenja se u kodu): lista programa za upis (`src/lib/obrasci/programi.ts`), ugrađeni
+tekstovi kartica (npr. „Šta djeca uče u mektebu“, pravila ponašanja, koraci učenja Kur'ana).
+

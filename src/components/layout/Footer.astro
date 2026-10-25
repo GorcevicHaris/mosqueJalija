@@ -28,9 +28,18 @@ const kolone = [
       ['Historija', '/o-dzamiji'],
       ['Galerija', '/galerija'],
       ['Pravila ponašanja', '/pravila-ponasanja'],
-      ['Mekteb i halke', '/mekteb'],
       ['Donacije', '/donacije'],
       ['Kontakt', '/kontakt'],
+    ],
+  },
+  {
+    naslov: 'Mekteb',
+    linkovi: [
+      ['Mekteb i halke', '/mekteb'],
+      ['Online upis', '/upis'],
+      ['Raspored', '/raspored'],
+      ['Pitaj imama', '/pitaj-imama'],
+      ["Učenje Kur'ana", '/ucenje-kurana'],
     ],
   },
   {
@@ -38,7 +47,6 @@ const kolone = [
     linkovi: [
       ['Dove', '/dove'],
       ["Kur'an i hadisi", '/kuran-hadisi'],
-      ["Učenje Kur'ana", '/ucenje-kurana'],
       ['Mediji', '/mediji'],
       ['Islamski kalendar', '/kalendar'],
       ['Islamski alati', '/alati'],
@@ -116,8 +124,11 @@ const kolone = [
     .site-footer__grid { grid-template-columns: 1fr 1fr; }
     .site-footer__brand { grid-column: 1 / -1; }
   }
-  @media (min-width: 1000px) {
-    .site-footer__grid { grid-template-columns: 1.6fr 1fr 1fr 1fr 1.4fr; gap: var(--space-6); }
+  @media (min-width: 900px) {
+    .site-footer__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-6) var(--space-5); }
+  }
+  @media (min-width: 1240px) {
+    .site-footer__grid { grid-template-columns: 1.5fr repeat(4, minmax(0, 1fr)) 1.3fr; }
     .site-footer__brand { grid-column: auto; }
   }
   .footer-brand {

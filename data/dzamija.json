@@ -6,6 +6,8 @@
   "adresa": "Jalija 69, 36300 Novi Pazar",
   "koordinate": { "lat": 43.148048, "lng": 20.524462, "potvrdjeno": true },
   "kratakOpis": "Džamija na Jaliji nalazi se u istoimenom naselju u Novom Pazaru, u ulici Jalija. Svečano je otvorena 8. marta 2024. godine, uoči ramazana 1445. h. g., a danas je mjesto namaza, džume, halki Kur'ana i predavanja za džematlije svih uzrasta.",
+  "naslovnaSlika": "/images/dzamija-hero.webp",
+  "naslovnaSlikaIzvor": "Foto: Mešihat Islamske zajednice u Srbiji",
   "historija": [
     {
       "naslov": "Vakuf i početak gradnje",

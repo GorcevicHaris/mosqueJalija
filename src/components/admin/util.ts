@@ -4,7 +4,7 @@ import { escapeHtml } from '../../lib/format';
 export const esc = (v: unknown): string => escapeHtml(v === null || v === undefined ? '' : String(v));
 
 export const SACUVANO =
-  'Sačuvano. Nova obavještenja se odmah vide na sajtu; ostale izmjene se pojavljuju nakon sljedećeg automatskog osvježavanja (do 1 sat).';
+  'Sačuvano. Nova obavještenja se odmah vide na sajtu; ostale izmjene se na sajtu pojavljuju za otprilike 15–20 minuta (automatsko osvježavanje).';
 
 /** "Džuma — Hfz. Ćazim" → "dzuma-hfz-cazim" (ascii, mala slova, crtice). */
 export function slugify(s: string, max = 80): string {

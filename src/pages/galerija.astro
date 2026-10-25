@@ -5,8 +5,21 @@ import Placeholder from '../components/ui/Placeholder.astro';
 import Icon from '../components/ui/Icon.astro';
 import { url } from '../lib/url';
 import { dzamija, galerija } from '../lib/data';
+import { varijanta } from '../lib/slike';
+import type { GalerijaSlika } from '../lib/types';
 
 const src = (s: string) => (/^https?:/.test(s) ? s : url(s));
+/** Sličica za mrežu (<ime>-600.webp) ako postoji; slike iz admina se prikazuju kako jesu. */
+const sitna = (s: string) => src(varijanta(s, '600') ?? s);
+const jeUrl = (v: string | null): v is string => !!v && /^https?:\/\//.test(v);
+/** Potpis fotografije: `licenca` = tekst potpisa, `izvor` = URL izvora ili ime autora (admin). */
+function potpis(g: GalerijaSlika): { tekst: string | null; url: string | null } {
+  const izvorUrl = jeUrl(g.izvor) ? g.izvor : null;
+  const autor = g.izvor && !izvorUrl ? g.izvor.trim() : null;
+  const lic = g.licenca?.trim() || null;
+  const tekst = autor ? `Foto: ${autor}${lic ? ` (${lic})` : ''}` : lic ?? (izvorUrl ? 'Izvor fotografije' : null);
+  return { tekst, url: izvorUrl };
+}
 const email = dzamija.kontakt.email;
 const mailto = email
   ? `mailto:${email}?subject=${encodeURIComponent('Fotografije za galeriju sajta')}&body=${encodeURIComponent('Selam alejkum,\n\nšaljem fotografije džamije za galeriju sajta. Autor fotografija: …\nDozvoljavam objavu na sajtu džamije.\n')}`
@@ -22,15 +35,23 @@ const mailto = email
           <ul class="gallery" role="list" data-gallery>
             {galerija.map((g, i) => (
               <li class="gallery__item">
-                <button type="button" class="gallery__btn" data-index={i} aria-label={`Otvori sliku: ${g.alt}`}>
-                  <img src={src(g.src)} alt={g.alt} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="600" height="450" />
+                <button type="button" class="gallery__btn" data-index={i} aria-label={`Otvori sliku: ${g.alt || `fotografija ${i + 1}`}`}>
+                  <img src={sitna(g.src)} alt={g.alt} loading={i < 4 ? 'eager' : 'lazy'} decoding="async" width="600" height="450" />
                 </button>
-                {(g.opis || g.izvor) && (
-                  <p class="gallery__cap">
-                    {g.opis}
-                    {g.izvor && <span class="gallery__credit"> · Foto: {g.izvor}{g.licenca && ` (${g.licenca})`}</span>}
-                  </p>
-                )}
+                {(() => {
+                  const p = potpis(g);
+                  return (g.opis || p.tekst) && (
+                    <p class="gallery__cap">
+                      {g.opis}
+                      {p.tekst && (
+                        <span class="gallery__credit">
+                          {g.opis && ' · '}
+                          {p.url ? <a href={p.url} target="_blank" rel="noopener">{p.tekst}</a> : p.tekst}
+                        </span>
+                      )}
+                    </p>
+                  );
+                })()}
               </li>
             ))}
           </ul>
@@ -47,7 +68,7 @@ const mailto = email
               <p class="lightbox__count" data-lb-count aria-live="polite"></p>
             </div>
           </dialog>
-          <script type="application/json" data-gallery-data set:html={JSON.stringify(galerija.map((g) => ({ src: src(g.src), alt: g.alt, opis: g.opis, izvor: g.izvor })))} />
+          <script type="application/json" data-gallery-data set:html={JSON.stringify(galerija.map((g) => ({ src: src(g.src), alt: g.alt, opis: g.opis, potpis: potpis(g).tekst, potpisUrl: potpis(g).url }))).replace(/</g, '\\u003c')} />
         </>
       ) : (
         <div class="empty-gallery">
@@ -76,7 +97,7 @@ const mailto = email
 </BaseLayout>
 
 <script>
-  type G = { src: string; alt: string; opis: string | null; izvor: string | null };
+  type G = { src: string; alt: string; opis: string | null; potpis: string | null; potpisUrl: string | null };
   const dataEl = document.querySelector('[data-gallery-data]');
   const dlg = document.querySelector<HTMLDialogElement>('[data-lightbox]');
   if (dataEl && dlg) {
@@ -91,7 +112,23 @@ const mailto = email
       const it = items[idx];
       img.src = it.src;
       img.alt = it.alt;
-      cap.textContent = [it.opis ?? it.alt, it.izvor ? `Foto: ${it.izvor}` : ''].filter(Boolean).join(' · ');
+      // opis + potpis (autor / licenca, link na izvor) — gradi se kroz DOM, bez innerHTML
+      cap.replaceChildren();
+      const opis = it.opis ?? it.alt;
+      if (opis) cap.append(document.createTextNode(opis));
+      if (it.potpis) {
+        const credit = document.createElement('span');
+        credit.className = 'lightbox__credit';
+        if (it.potpisUrl) {
+          const a = document.createElement('a');
+          a.href = it.potpisUrl;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.textContent = it.potpis;
+          credit.append(a);
+        } else credit.textContent = it.potpis;
+        cap.append(credit);
+      }
       count.textContent = `${idx + 1} / ${items.length}`;
     };
     document.querySelectorAll<HTMLButtonElement>('.gallery__btn').forEach((b) =>
@@ -141,7 +178,8 @@ const mailto = email
     .gallery__btn:hover img { transform: scale(1.04); }
   }
   .gallery__cap { font-size: 0.88rem; color: var(--color-text-muted); margin: var(--space-2) 0 0; }
-  .gallery__credit { opacity: 0.85; }
+  .gallery__credit { font-size: 0.8rem; }
+  .gallery__credit a { color: inherit; }
 
   .lightbox {
     width: 100vw;
@@ -166,7 +204,9 @@ const mailto = email
   }
   .lightbox__figure { margin: 0; display: grid; justify-items: center; gap: var(--space-3); min-width: 0; max-height: 100%; }
   .lightbox__figure img { max-height: calc(100vh - 170px); width: auto; max-width: 100%; object-fit: contain; border-radius: var(--radius-md); }
-  .lightbox__figure figcaption { text-align: center; color: #c9d6cc; font-size: 0.95rem; }
+  .lightbox__figure figcaption { text-align: center; color: #c9d6cc; font-size: 0.95rem; max-width: 70ch; }
+  .lightbox__figure figcaption :global(.lightbox__credit) { display: block; margin-top: var(--space-1); font-size: 0.8rem; color: #b9c8bd; }
+  .lightbox__figure figcaption :global(a) { color: #e2bf6e; }
   .lightbox button {
     display: grid;
     place-items: center;

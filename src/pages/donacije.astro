@@ -7,7 +7,9 @@ import SectionHeading from '../components/ui/SectionHeading.astro';
 import Icon from '../components/ui/Icon.astro';
 import IpsQr from '../components/alati/IpsQr.astro';
 import { url } from '../lib/url';
-import { dzamija, kanaliPoruka } from '../lib/data';
+import UvodStranice from '../components/ui/UvodStranice.astro';
+import { dzamija, kanaliPoruka, tekstoviStranica } from '../lib/data';
+const naslovStranice = tekstoviStranica['donacije']?.naslov?.trim() || 'Donacije';
 const igDm = kanaliPoruka().instagramDm;
 
 const don = dzamija.donacije;
@@ -31,12 +33,13 @@ const namjene = [
   { naslov: 'Aktivnosti džemata', opis: 'Predavanja, snimanje i objava predavanja te druge zajedničke aktivnosti džemata.', ikona: 'users' as const },
 ];
 ---
-<BaseLayout title="Donacije" description="Podržite rad Džamije na Jaliji — održavanje džamije, mekteb i aktivnosti džemata. Zvanični podaci za uplatu.">
-  <PageHero eyebrow="Sadaka i vakuf" title="Donacije" subtitle="Vaša sadaka pomaže da džamija ostane otvorena, uređena i puna znanja." arabic="مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ" />
+<BaseLayout title={naslovStranice} description="Podržite rad Džamije na Jaliji — održavanje džamije, mekteb i aktivnosti džemata. Zvanični podaci za uplatu.">
+  <PageHero eyebrow="Sadaka i vakuf" title={naslovStranice} subtitle="Vaša sadaka pomaže da džamija ostane otvorena, uređena i puna znanja." arabic="مَا نَقَصَتْ صَدَقَةٌ مِنْ مَالٍ" />
 
   <section class="section">
     <div class="container">
       <p class="hadith-note muted">„Sadaka ne umanjuje imetak.“ — hadis, bilježi Muslim</p>
+      <UvodStranice kljuc="donacije" class="uvod-centar" />
       <SectionHeading eyebrow="Namjena" title="Za šta se koriste donacije" />
       <ul class="grid-cards" role="list">
         {namjene.map((n) => (

@@ -11,7 +11,7 @@ const stavke = obavjestenjaTipa('objava').map(izObavjestenja);
   <PageHero eyebrow="Iz našeg džemata" title="Objave" subtitle="Zapisi i vijesti o aktivnostima džemata." />
   <section class="section section--tight">
     <div class="container container--narrow">
-      <Lista stavke={stavke} prazno="Objave iz džemata biće dodane ovdje." />
+      <Lista stavke={stavke} tip="objava" prazno="Objave iz džemata biće dodane ovdje." />
       <p class="ob-dalje muted">Najave i rasporede pratite na stranici <a href={url('/obavjestenja')}>Obavještenja</a>.</p>
     </div>
   </section>

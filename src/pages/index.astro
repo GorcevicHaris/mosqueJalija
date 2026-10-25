@@ -10,6 +10,8 @@ import StarEmblem from '../components/ui/StarEmblem.astro';
 import Logo from '../components/ui/Logo.astro';
 import AjetHadisDana from '../components/ui/AjetHadisDana.astro';
 import SocialLinks from '../components/ui/SocialLinks.astro';
+import DanasUDzamiji from '../components/obrasci/DanasUDzamiji.astro';
+import { naslovnaSlika as dajNaslovnu, varijanta } from '../lib/slike';
 import { url } from '../lib/url';
 import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum, punaAdresa } from '../lib/data';
 
@@ -23,8 +25,14 @@ const cinjenice = dzamija.cinjenice
   .filter((c) => c.oznaka !== 'Adresa' && c.vrijednost.length <= 40)
   .slice(0, 3);
 const prvaHistorija = dzamija.historija[0] ?? null;
-const naslovnaSlika = galerija[0] ?? null;
+const hero = dajNaslovnu();
+// Fotografija u okviru "O džamiji": prva iz galerije koja nije ista kao naslovna (dron-fotografija s otvaranja).
+const naslovnaSlika = galerija.find((g) => !/dzamija-iz-drona|dzamija-hero/.test(g.src) && g.src !== dzamija.naslovnaSlika) ?? galerija[0] ?? null;
 const imgSrc = (src: string) => (/^https?:/.test(src) ? src : url(src));
+/** Mala varijanta (<ime>-200.webp) za avatare, ako postoji. */
+const avatarSrc = (src: string) => imgSrc(varijanta(src, '200') ?? src);
+/** Sličica galerije (<ime>-600.webp), ako postoji. */
+const galSrc = (src: string) => imgSrc(varijanta(src, '600') ?? src);
 const inicijali = (ime: string) =>
   ime
     .replace(/\b(hfz|ef|mr|dr|prof|muftija|kurra)\.?\b/gi, '')
@@ -44,9 +52,14 @@ const korisno = [
   { naslov: 'Mediji', opis: 'YouTube kanal džamije i ostale zvanične mreže.', href: '/mediji', ikona: 'youtube' as const },
 ];
 ---
-<BaseLayout title="Džamija na Jaliji">
+<BaseLayout title="Džamija na Jaliji" image={dzamija.naslovnaSlika && /^https?:/.test(dzamija.naslovnaSlika) ? dzamija.naslovnaSlika : undefined}>
+  {hero && <link slot="head" rel="preload" as="image" href={hero.src} imagesrcset={hero.srcset} imagesizes={hero.srcset ? '100vw' : undefined} fetchpriority="high" />}
   <!-- ================= HERO ================= -->
-  <section class="hero theme-inverse pattern-bg" aria-labelledby="hero-naslov">
+  <section class:list={['hero theme-inverse pattern-bg', { 'hero--foto': hero }]} aria-labelledby="hero-naslov">
+    {hero && (
+      <img class="hero__photo" src={hero.src} srcset={hero.srcset} sizes={hero.srcset ? '100vw' : undefined} alt="" width="2000" height="1100" fetchpriority="high" decoding="async" />
+    )}
+    {hero && <div class="hero__shade" aria-hidden="true"></div>}
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="container hero__grid">
       <div class="hero__text">
@@ -94,8 +107,11 @@ const korisno = [
         </div>
       </aside>
     </div>
+    {hero?.izvor && <p class="hero__credit">{hero.izvor}</p>}
     <div class="hero__arcade" aria-hidden="true"></div>
   </section>
+
+  <DanasUDzamiji />
 
   <!-- ================= PREDAVANJA ================= -->
   <section class="section" aria-labelledby="predavanja-naslov">
@@ -123,6 +139,7 @@ const korisno = [
         <SectionHeading id="aktuelno-naslov" eyebrow="Aktuelno" title="Obavještenja">
           <a slot="action" class="link-arrow" href={url('/obavjestenja')}>Sva obavještenja</a>
         </SectionHeading>
+        <div data-news>
         {aktuelno.length ? (
           <ul class="news" role="list">
             {aktuelno.map((o) => (
@@ -147,6 +164,7 @@ const korisno = [
             <a class="link-arrow" href={url('/objave')}>Pogledajte objave</a>
           </div>
         )}
+        </div>
       </div>
       <div class="ahd-col">
         <AjetHadisDana naslov="Ajet / hadis dana" />
@@ -179,7 +197,7 @@ const korisno = [
       <div class="about__visual">
         <div class="arch-frame">
           {naslovnaSlika ? (
-            <img src={imgSrc(naslovnaSlika.src)} alt={naslovnaSlika.alt} loading="lazy" decoding="async" width="600" height="760" />
+            <img src={galSrc(naslovnaSlika.src)} alt={naslovnaSlika.alt} loading="lazy" decoding="async" width="600" height="760" />
           ) : (
             <div class="arch-frame__ornament theme-inverse pattern-bg" aria-hidden="true">
               <Logo size={150} inverse decorative />
@@ -202,7 +220,7 @@ const korisno = [
           {istaknutiImami.map((i) => (
             <li class="card card--link imam">
               {i.slika ? (
-                <img class="imam__avatar" src={imgSrc(i.slika)} alt="" width="72" height="72" loading="lazy" />
+                <img class="imam__avatar" src={avatarSrc(i.slika)} alt="" width="76" height="76" loading="lazy" decoding="async" />
               ) : (
                 <span class="imam__avatar imam__avatar--initials" aria-hidden="true">{inicijali(i.punoIme) || '•'}</span>
               )}
@@ -231,6 +249,39 @@ const korisno = [
             <p class="muted">{k.opis}</p>
           </li>
         ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= UPIS + PITAJ IMAMA ================= -->
+  <section class="section section--tint section--tight" aria-labelledby="cta-naslov">
+    <div class="container">
+      <h2 id="cta-naslov" class="visually-hidden">Prijave i pitanja</h2>
+      <ul class="cta-grid" role="list">
+        <li class="card card--link cta">
+          <span class="card__icon"><Icon name="graduation" size={24} /></span>
+          <div class="cta__body">
+            <h3 class="card__title"><a href={url('/upis')}>Online upis</a></h3>
+            <p class="muted">Prijavite sebe ili dijete u mekteb, halke, Školu Kur'ana ili sufaru — za par minuta, bez odlaska u džamiju.</p>
+          </div>
+          <span class="cta__go link-arrow" aria-hidden="true">Prijava</span>
+        </li>
+        <li class="card card--link cta">
+          <span class="card__icon"><Icon name="message" size={24} /></span>
+          <div class="cta__body">
+            <h3 class="card__title"><a href={url('/pitaj-imama')}>Pitaj imama</a></h3>
+            <p class="muted">Postavite pitanje o vjeri — i anonimno. Odgovori koje imam objavi dostupni su svima.</p>
+          </div>
+          <span class="cta__go link-arrow" aria-hidden="true">Postavi pitanje</span>
+        </li>
+        <li class="card card--link cta">
+          <span class="card__icon"><Icon name="calendar" size={24} /></span>
+          <div class="cta__body">
+            <h3 class="card__title"><a href={url('/raspored')}>Sedmični raspored</a></h3>
+            <p class="muted">Kada su halke, mekteb i kursevi — po danima u sedmici, za muškarce, žene i djecu.</p>
+          </div>
+          <span class="cta__go link-arrow" aria-hidden="true">Raspored</span>
+        </li>
       </ul>
     </div>
   </section>
@@ -286,6 +337,48 @@ const korisno = [
     position: relative;
     overflow: hidden;
     padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3.5rem, 8vw, 6rem);
+  }
+  /* naslovna fotografija: ispod smaragdnog sloja i girih uzorka (kontrast teksta ostaje AA) */
+  .hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 32% 45%;
+    filter: saturate(0.8);
+  }
+  @media (max-width: 959.98px) {
+    /* uzak, visok hero: fotografija samo u gornjem dijelu (manje uvećanje), blago se gubi prema dnu */
+    .hero__photo {
+      height: min(620px, 75%);
+      object-position: 30% 40%;
+      -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+      mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    }
+  }
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      linear-gradient(100deg,
+        color-mix(in srgb, var(--inverse-bg) 92%, transparent) 0%,
+        color-mix(in srgb, var(--inverse-bg) 84%, transparent) 55%,
+        color-mix(in srgb, var(--inverse-bg) 80%, transparent) 100%),
+      linear-gradient(to top, var(--inverse-bg) 0%, transparent 35%);
+  }
+  .hero--foto .hero__arch-inner { background: color-mix(in srgb, var(--inverse-bg) 72%, transparent); }
+  .hero__credit {
+    position: absolute;
+    right: var(--space-4);
+    bottom: 26px;
+    margin: 0;
+    font-size: 0.72rem;
+    color: var(--inverse-muted);
+    max-width: calc(100% - 2 * var(--space-4));
+    text-align: right;
   }
   .hero__glow {
     position: absolute;
@@ -477,6 +570,15 @@ const korisno = [
   .korisno { list-style: none; margin: 0; padding: 0; }
   .korisno p { margin: 0; }
 
+  /* ---------- Upis / Pitaj imama ---------- */
+  .cta-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+  @media (min-width: 760px) { .cta-grid { grid-template-columns: repeat(3, 1fr); } }
+  .cta { gap: var(--space-3); }
+  .cta .card__icon { margin-bottom: 0; }
+  .cta__body { flex: 1; }
+  .cta__body p { margin: 0; }
+  .cta__go { font-weight: 700; color: var(--color-primary); }
+
   /* ---------- Donacije ---------- */
   .donate { padding-block: clamp(3rem, 7vw, 4.5rem); }
   .donate__inner { display: grid; gap: var(--space-6); align-items: center; }
@@ -505,3 +607,9 @@ const korisno = [
   .visit__body h3 { margin-bottom: var(--space-2); }
   .visit__body p { margin: 0; }
 </style>
+
+<script>
+  // Nova obavještenja iz admina vide se odmah (bez čekanja na sljedeći build).
+  import { dopuniObavjestenja } from '../lib/supabase/klijent';
+  void dopuniObavjestenja('[data-news]', { oblik: 'pocetna', max: 3 });
+</script>

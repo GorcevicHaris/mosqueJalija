@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
 import Placeholder from '../components/ui/Placeholder.astro';
-import ContactForm from '../components/forms/ContactForm.astro';
+import KontaktSupabase from '../components/obrasci/KontaktSupabase.astro';
+import { url } from '../lib/url';
 import { dzamija } from '../lib/data';
 
 const { lat, lng, potvrdjeno } = dzamija.koordinate;
@@ -55,6 +56,13 @@ const mreze = [
         </div>
 
         <div class="card kt__card">
+          <h2 class="kt__h">Džuma-namaz</h2>
+          {dzamija.dzuma.vrijeme ? <p class="kt__big">{dzamija.dzuma.vrijeme}</p> : <Placeholder label="vrijeme džume" inline />}
+          {dzamija.dzuma.napomena && <p class="muted kt__small">{dzamija.dzuma.napomena}</p>}
+          <a class="link-arrow kt__small" href={url('/vaktija')}>Vaktija</a>
+        </div>
+
+        <div class="card kt__card">
           <h2 class="kt__h">Društvene mreže</h2>
           <ul class="kt__mreze">
             {mreze.map((x) => (
@@ -90,9 +98,13 @@ const mreze = [
   <section class="section section--tint section--tight" aria-labelledby="forma-naslov">
     <div class="container container--narrow">
       <h2 id="forma-naslov">Pošaljite poruku</h2>
-      <p class="muted">Pitanja o mektebu, halkama, donacijama ili bilo čemu drugom — pišite nam.</p>
+      <p class="muted">
+        Pitanja o mektebu, halkama, donacijama ili bilo čemu drugom — pišite nam. Za upis koristite
+        <a href={url('/upis')}>online upis</a>, a vjerska pitanja možete postaviti i na stranici
+        <a href={url('/pitaj-imama')}>Pitaj imama</a>.
+      </p>
       <div class="card kt__form">
-        <ContactForm />
+        <KontaktSupabase />
       </div>
     </div>
   </section>

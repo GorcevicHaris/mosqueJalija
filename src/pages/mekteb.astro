@@ -1,19 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/ui/PageHero.astro';
-import Placeholder from '../components/ui/Placeholder.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import Icon from '../components/ui/Icon.astro';
-import PrijavaDugme from '../components/forms/PrijavaDugme.astro';
+import PrijavaForma from '../components/obrasci/PrijavaForma.astro';
+import RasporedSedmica from '../components/obrasci/RasporedSedmica.astro';
+import { imaSupabase } from '../lib/obrasci/supabase-rest';
 import { url } from '../lib/url';
-import { dzamija, obavjestenja, imami, predavanja, formatDatum } from '../lib/data';
+import { dzamija, obavjestenja, imami, predavanja, formatDatum, tekstStranice, tekstoviStranica } from '../lib/data';
 
 const email = dzamija.kontakt.email;
 const imaDm = Boolean(dzamija.drustveneMreze.instagram || dzamija.drustveneMreze.facebook);
-const tekstMekteb =
-  'Selam alejkum,\n\nželim prijaviti dijete u mekteb.\n\nIme i prezime djeteta:\nGodine / razred:\nIme roditelja:\nKontakt telefon:\nNapomena:\n';
-const tekstHalka =
-  'Selam alejkum,\n\nzanima me halka (kružok) u džamiji.\n\nIme i prezime:\nKontakt telefon:\nTema / halka koja me zanima:\n';
+// Uvodni tekst iz admina (Tekstovi stranica → mekteb); prazno = ugrađeni tekst ispod.
+const tekst = tekstStranice('mekteb');
+const naslovStranice = tekstoviStranica['mekteb']?.naslov?.trim() || 'Mekteb i halke';
 const vezana = obavjestenja.filter((o) => /mekteb|halk/i.test(o.kategorija)).slice(0, 4);
 // samo ako podaci izričito kažu "imam džamije" (npr. "Glavni imam Medžlisa" se ne računa)
 const imamDzamije = imami.filter((i) => i.potvrdjeno && i.uloga && /imam (ove )?džamije|imam džamije na jaliji/i.test(i.uloga));
@@ -28,38 +28,48 @@ const uci = [
   { naslov: 'Siret', opis: 'Život Allahovog Poslanika ﷺ i kazivanja o poslanicima.', ikona: 'book' as const },
 ];
 ---
-<BaseLayout title="Mekteb i halke" description="Mekteb za djecu i halke za odrasle u Džamiji na Jaliji — šta se uči, raspored i prijava.">
-  <PageHero eyebrow="Znanje i odgoj" title="Mekteb i halke" subtitle="Vjerska pouka za najmlađe članove džemata i halke (kružoci) za odrasle." />
+<BaseLayout title={naslovStranice} description="Mekteb za djecu i halke za odrasle u Džamiji na Jaliji — šta se uči, raspored i prijava.">
+  <PageHero eyebrow="Znanje i odgoj" title={naslovStranice} subtitle="Vjerska pouka za najmlađe članove džemata i halke (kružoci) za odrasle." />
 
   <section class="section">
     <div class="container grid-2 grid-2--wide-left">
+      <div>
       <div class="prose">
         <h2>Mekteb</h2>
-        <p>
-          Mekteb je mjesto gdje djeca stiču prva vjerska znanja: uče čitati Kur'an, upoznaju osnove vjerovanja i
-          ibadeta, i kroz druženje u džamiji grade ljubav prema vjeri i džematu.
-        </p>
-        <p>
-          Nastava se prilagođava uzrastu djeteta. Roditelji su dobrodošli da prate napredak i budu dio odgoja — jer
-          mekteb, porodica i džamija zajedno odgajaju generacije.
-        </p>
-        <h3>Raspored mekteba</h3>
-        <Placeholder label="raspored mekteba" hint="dani, termini i uzrasne grupe — potvrditi sa imamom" />
+        {tekst ? (
+          tekst.paragrafi.map((par) => <p>{par}</p>)
+        ) : (
+          <Fragment>
+            <p>
+              Mekteb je mjesto gdje djeca stiču prva vjerska znanja: uče čitati Kur'an, upoznaju osnove vjerovanja i
+              ibadeta, i kroz druženje u džamiji grade ljubav prema vjeri i džematu.
+            </p>
+            <p>
+              Nastava se prilagođava uzrastu djeteta. Roditelji su dobrodošli da prate napredak i budu dio odgoja — jer
+              mekteb, porodica i džamija zajedno odgajaju generacije.
+            </p>
+          </Fragment>
+        )}
+      </div>
+        <div class="not-prose">
+          <RasporedSedmica naslovId="raspored-mekteb" />
+        </div>
       </div>
 
       <aside class="enroll card" aria-labelledby="prijava-naslov">
         <span class="card__icon"><Icon name="graduation" size={24} /></span>
         <h2 id="prijava-naslov" class="enroll__title">Prijava za mekteb</h2>
         <p class="muted">
-          {email
+          {imaSupabase
+            ? 'Popunite obrazac — prijava stiže direktno džematu, a mi vas kontaktiramo. Za druge programe (halke, Škola Kur\'ana, sufara) izaberite program u obrascu.'
+            : email
             ? 'Prijava se šalje e-mailom džematu. Poruka je već pripremljena — samo dopunite podatke.'
             : imaDm
               ? 'Prijava se šalje privatnom porukom džematu. Tekst prijave je pripremljen — samo dopunite podatke.'
               : 'Upis se najavljuje u obavještenjima i objavama džemata.'}
         </p>
-        {!email && <Placeholder label="e-mail za prijave" hint="do tada prijava ide porukom na društvenim mrežama" />}
-        <PrijavaDugme tema="Prijava za mekteb" tekst={tekstMekteb} oznaka="Pošalji prijavu" block />
-        {!email && <a class="btn btn--ghost btn--block" href={url('/obavjestenja')}>Obavještenja o upisu</a>}
+        <PrijavaForma id="prijava-mekteb" program="mekteb" />
+        <a class="btn btn--ghost btn--block" href={url('/upis')}>Svi programi i online upis</a>
         {imamDzamije.length > 0 && (
           <p class="enroll__imam">
             <Icon name="users" size={18} />
@@ -98,8 +108,11 @@ const uci = [
           <p>Snimke halki možete pogledati među <a href={url('/predavanja')}>predavanjima</a> ({halkeSnimci} snimaka u kategoriji „Halka hadisa“).</p>
         )}
         <h3>Raspored halki</h3>
-        <Placeholder label="raspored halki" hint="dan, vrijeme (npr. poslije jacije), tema i predavač" />
-        <PrijavaDugme tema="Prijava / upit za halku" tekst={tekstHalka} oznaka="Upit za halku" varijanta="ghost" />
+        <p>Dani i termini halki su u <a href={url('/raspored')}>sedmičnom rasporedu</a> (filter: muškarci, žene, djeca).</p>
+        <p class="halke-akcije">
+          <a class="btn btn--ghost" href={url('/upis?program=hifz-amme-muskarci')}>Upit za halku</a>
+          <a class="btn btn--ghost" href={url('/raspored')}>Sedmični raspored</a>
+        </p>
       </div>
       <div>
         <h3>Najave mekteba i halki</h3>
@@ -127,6 +140,9 @@ const uci = [
   .enroll__title { font-size: 1.5rem; margin: 0; }
   .enroll p { margin: 0; }
   .enroll__imam { display: flex; gap: var(--space-2); align-items: center; font-size: 0.92rem; margin-top: var(--space-2) !important; }
+  .not-prose { margin-top: var(--space-6); }
+  .not-prose :global(h3) { margin-top: 0; }
+  .halke-akcije { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .grid-cards { list-style: none; margin: 0; padding: 0; }
   .grid-cards p { margin: 0; }
     .small { font-size: 0.88rem; }

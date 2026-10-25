@@ -20,14 +20,28 @@ const PRIKAZ = 12;
 const poKategoriji = Object.entries(
   njegova.reduce<Record<string, number>>((acc, p) => ((acc[p.kategorija] = (acc[p.kategorija] ?? 0) + 1), acc), {}),
 ).sort((a, b) => b[1] - a[1]);
+// Biografija iz admina: paragrafi odvojeni praznim redom.
+const bioParagrafi = (imam.bio ?? '').split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
+// Potpis fotografije: izvor čiji naziv počinje sa "Fotografija" / "Foto" (data/imami-bio.json, admin → Izvori).
+const jeFotoIzvor = (n: string) => /^foto(grafija)?\b/i.test(n.trim());
+const fotoIzvor = imam.slika ? (imam.izvori.find((iz) => jeFotoIzvor(iz.naziv)) ?? null) : null;
+const ostaliIzvori = imam.izvori.filter((iz) => iz !== fotoIzvor);
+const fotoTekst = fotoIzvor ? fotoIzvor.naziv.replace(/^foto(grafija)?\s*:?\s*/i, '') : null;
 const opis =
-  imam.bio?.slice(0, 155) ??
+  (imam.bio ? (imam.bio.length > 155 ? `${imam.bio.slice(0, 154).replace(/\s+\S*$/, '')}…` : imam.bio).replace(/\s+/g, ' ') : null) ??
   `${imam.punoIme} — ${njegova.length} ${oblik(njegova.length, 'snimak', 'snimka', 'snimaka')} (hutbe i predavanja) u Džamiji na Jaliji.`;
 ---
-<BaseLayout title={imam.punoIme} description={opis}>
+<BaseLayout title={imam.punoIme} description={opis} image={imam.slika ?? undefined}>
   <section class="im-hero theme-inverse pattern-bg">
     <div class="container im-hero__inner">
-      <ImamAvatar punoIme={imam.punoIme} slika={imam.slika} size={128} />
+      <figure class="im-hero__foto">
+        <ImamAvatar punoIme={imam.punoIme} slika={imam.slika} size={128} eager />
+        {fotoTekst && (
+          <figcaption class="im-hero__credit">
+            Foto: {fotoIzvor?.url ? <a href={fotoIzvor.url} target="_blank" rel="noopener">{fotoTekst}</a> : fotoTekst}
+          </figcaption>
+        )}
+      </figure>
       <div>
         <p class="eyebrow"><a href={url('/imami')}>Imami i predavači</a></p>
         <h1 class="im-hero__name">{imam.punoIme}</h1>
@@ -42,15 +56,15 @@ const opis =
       <div class="im-bio">
         <h2 class="im-h2">O predavaču</h2>
         {imam.bio ? (
-          <div class="prose"><p>{imam.bio}</p></div>
+          <div class="prose">{bioParagrafi.map((par) => <p>{par}</p>)}</div>
         ) : (
           <Placeholder label={`biografija (${imam.punoIme})`} hint="podaci će biti dodani nakon provjere" />
         )}
-        {imam.izvori.length > 0 && (
+        {ostaliIzvori.length > 0 && (
           <div class="im-izvori">
             <h3>Izvori</h3>
             <ul>
-              {imam.izvori.map((iz) => (
+              {ostaliIzvori.map((iz) => (
                 <li>{iz.url ? <a href={iz.url} target="_blank" rel="noopener">{iz.naziv}</a> : iz.naziv}</li>
               ))}
             </ul>
@@ -96,6 +110,9 @@ const opis =
   .im-hero { padding-block: clamp(2.5rem, 6vw, 4rem); }
   .im-hero__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5) var(--space-6); }
   .im-hero .eyebrow a { color: inherit; }
+  .im-hero__foto { margin: 0; display: grid; justify-items: center; gap: var(--space-3); max-width: 220px; }
+  .im-hero__credit { font-size: 0.75rem; line-height: 1.35; color: var(--inverse-muted); text-align: center; }
+  .im-hero__credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   .im-hero__name { color: var(--inverse-text); margin: var(--space-1) 0; font-size: clamp(1.8rem, 3vw + 1rem, 2.8rem); }
   .im-hero__role { color: var(--inverse-muted); margin: 0; font-size: 1.08rem; }
   .im-hero__count { color: var(--inverse-accent); margin: var(--space-2) 0 0; font-weight: 700; }

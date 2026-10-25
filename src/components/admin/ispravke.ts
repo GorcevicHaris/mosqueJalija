@@ -215,7 +215,7 @@ export class SekcijaIspravke {
       if (error) throw error;
       this.ispravke.delete(id);
       this.prikaziPostojece();
-      toast('Ispravka je uklonjena. Promjena se vidi nakon sljedećeg osvježavanja (do 1 sat).', 'uspjeh');
+      toast('Ispravka je uklonjena. Promjena se na sajtu vidi za otprilike 15–20 minuta.', 'uspjeh');
     } catch (e) {
       toast(porukaGreske(e), 'greska');
     }

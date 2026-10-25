@@ -6,7 +6,8 @@ import { imami } from '../../lib/data';
 import { oblik } from '../../lib/format';
 import { url } from '../../lib/url';
 
-const lista = imami.filter((i) => i.brojPredavanja > 0 || i.bio);
+// Imami dodani u adminu bez snimaka se prikazuju čim imaju ulogu, biografiju ili fotografiju.
+const lista = imami.filter((i) => i.brojPredavanja > 0 || i.bio || i.uloga || i.slika);
 ---
 <BaseLayout
   title="Imami i predavači"
@@ -25,7 +26,7 @@ const lista = imami.filter((i) => i.brojPredavanja > 0 || i.bio);
         <ul class="grid-cards im-grid" role="list">
           {lista.map((i) => (
             <li class="card im-card">
-              <ImamAvatar punoIme={i.punoIme} slika={i.slika} size={88} />
+              <ImamAvatar punoIme={i.punoIme} slika={i.slika} size={88} dekorativno />
               <h2 class="im-card__name card__title">
                 <a href={url(`/imami/${i.slug}`)}>{i.punoIme}</a>
               </h2>

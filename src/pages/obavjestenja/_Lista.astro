@@ -4,15 +4,20 @@ import type { StavkaListe } from '../../lib/obavjestenja';
 import { kategorijaSlug } from '../../lib/obavjestenja';
 import { formatDatum } from '../../lib/data';
 
-interface Props { stavke: StavkaListe[]; prazno: string }
-const { stavke, prazno } = Astro.props;
+interface Props {
+  stavke: StavkaListe[];
+  prazno: string;
+  /** tip za dopunu iz baze u pregledaču (nove objave iz admina vide se odmah); bez = bez dopune */
+  tip?: 'obavjestenje' | 'objava';
+}
+const { stavke, prazno, tip } = Astro.props;
 const kategorije = [...new Set(stavke.map((s) => s.kategorija))].map((k) => ({
   naziv: k,
   slug: kategorijaSlug(k),
   n: stavke.filter((s) => s.kategorija === k).length,
 }));
 ---
-<div class="ol" data-ol>
+<div class="ol" data-ol data-ol-tip={tip}>
   {kategorije.length > 1 && (
     <div class="ol__filter" role="group" aria-label="Filter po kategoriji" data-ol-filter hidden>
       <ul class="chips">
@@ -75,30 +80,52 @@ const kategorije = [...new Set(stavke.map((s) => s.kategorija))].map((k) => ({
 </style>
 
 <script>
+  import { dopuniObavjestenja } from '../../lib/supabase/klijent';
+
   document.querySelectorAll<HTMLElement>('[data-ol]').forEach((root) => {
     const filter = root.querySelector<HTMLElement>('[data-ol-filter]');
-    if (!filter) return;
-    const btns = Array.from(filter.querySelectorAll<HTMLButtonElement>('[data-ol-kat]'));
-    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-ol-item]'));
-    const live = filter.querySelector<HTMLElement>('[data-ol-live]')!;
-    function primijeni(kat: string, najava: boolean) {
-      if (kat && !btns.some((b) => b.dataset.olKat === kat)) kat = '';
-      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.olKat === kat)));
-      let n = 0;
-      items.forEach((it) => {
-        const v = !kat || it.dataset.olItem === kat;
-        it.hidden = !v;
-        if (v) n++;
+    const tip = root.dataset.olTip as 'obavjestenje' | 'objava' | undefined;
+    let primijeni: ((kat: string, najava: boolean) => void) | null = null;
+
+    if (filter) {
+      const btns = Array.from(filter.querySelectorAll<HTMLButtonElement>('[data-ol-kat]'));
+      const live = filter.querySelector<HTMLElement>('[data-ol-live]')!;
+      // stavke se čitaju pri svakom filtriranju — uključuje i one koje je dodala dopuna iz baze
+      const stavke = () => Array.from(root.querySelectorAll<HTMLElement>('[data-ol-item]'));
+      const brojaci = () => {
+        const sve = stavke();
+        btns.forEach((b) => {
+          const n = b.dataset.olKat ? sve.filter((it) => it.dataset.olItem === b.dataset.olKat).length : sve.length;
+          const c = b.querySelector('.chip__count');
+          if (c) c.textContent = String(n);
+        });
+      };
+      primijeni = (kat: string, najava: boolean) => {
+        if (kat && !btns.some((b) => b.dataset.olKat === kat)) kat = '';
+        btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.olKat === kat)));
+        let n = 0;
+        stavke().forEach((it) => {
+          const v = !kat || it.dataset.olItem === kat;
+          it.hidden = !v;
+          if (v) n++;
+        });
+        const u = new URL(location.href);
+        if (kat) u.searchParams.set('kategorija', kat);
+        else u.searchParams.delete('kategorija');
+        if (u.href !== location.href) history.replaceState(history.state, '', u);
+        if (najava) live.textContent = `Prikazano: ${n}`;
+      };
+      const izUrl = () => new URLSearchParams(location.search).get('kategorija') ?? '';
+      btns.forEach((b) => b.addEventListener('click', () => primijeni!(b.dataset.olKat ?? '', true)));
+      filter.hidden = false;
+      primijeni(izUrl(), false);
+      window.addEventListener('popstate', () => primijeni!(izUrl(), false));
+      root.addEventListener('obavjestenja:dopunjeno', () => {
+        brojaci();
+        primijeni!(izUrl(), false);
       });
-      const u = new URL(location.href);
-      if (kat) u.searchParams.set('kategorija', kat);
-      else u.searchParams.delete('kategorija');
-      if (u.href !== location.href) history.replaceState(history.state, '', u);
-      if (najava) live.textContent = `Prikazano: ${n}`;
     }
-    btns.forEach((b) => b.addEventListener('click', () => primijeni(b.dataset.olKat ?? '', true)));
-    filter.hidden = false;
-    primijeni(new URLSearchParams(location.search).get('kategorija') ?? '', false);
-    window.addEventListener('popstate', () => primijeni(new URLSearchParams(location.search).get('kategorija') ?? '', false));
+
+    if (tip) void dopuniObavjestenja(root, { tip, oblik: 'lista' });
   });
 </script>

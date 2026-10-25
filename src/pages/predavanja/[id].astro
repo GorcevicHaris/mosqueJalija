@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import LectureCard from '../../components/predavanja/LectureCard.astro';
 import YouTubeFacade from '../../components/predavanja/YouTubeFacade.astro';
 import ShareButton from '../../components/predavanja/ShareButton.astro';
+import ImamAvatar from '../../components/predavanja/ImamAvatar.astro';
 import { predavanja, getImam, getKategorija, getSerija, formatDatum } from '../../lib/data';
 import { dijeloviSerije, filterQuery, opisHTML, srodnaPredavanja } from '../../lib/predavanja';
 import { brojTekst, oblik, trajanjeISO, trajanjeTekst } from '../../lib/format';
@@ -106,7 +107,10 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
                 <dt>Predavač</dt>
                 <dd>
                   {imam ? (
-                    <a href={url(`/imami/${imam.slug}`)}>{imam.punoIme}</a>
+                    <a class="pd__imam" href={url(`/imami/${imam.slug}`)}>
+                      <ImamAvatar punoIme={imam.punoIme} slika={imam.slika} size={32} dekorativno />
+                      <span>{imam.punoIme}</span>
+                    </a>
                   ) : (
                     <span class="muted">Nije naveden</span>
                   )}
@@ -257,6 +261,8 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
   }
   .pd__meta dd { margin: 0.15rem 0 0; font-weight: 600; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
   .pd__meta dd a { display: inline-flex; align-items: center; min-height: 40px; }
+  .pd__imam { gap: var(--space-2); }
+  .pd__imam :global(.avatar) { box-shadow: 0 0 0 2px var(--color-accent-bright); }
   .pd__nepotvrdjeno { cursor: help; }
   .pd__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .pd__h2 { font-size: 1.3rem; margin: var(--space-7) 0 var(--space-3); }

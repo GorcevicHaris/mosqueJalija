@@ -30,15 +30,23 @@ export const glavniMeni: NavItem[] = [
     ],
   },
   {
+    label: 'Mekteb',
+    children: [
+      { label: 'Mekteb i halke', href: '/mekteb', opis: 'Vjerska pouka za djecu i odrasle' },
+      { label: 'Online upis', href: '/upis', opis: "Prijava za mekteb, halke i Školu Kur'ana" },
+      { label: 'Raspored', href: '/raspored', opis: 'Sedmični raspored halki i mekteba' },
+      { label: 'Pitaj imama', href: '/pitaj-imama', opis: 'Pitanja i odgovori' },
+      { label: "Učenje Kur'ana", href: '/ucenje-kurana', opis: 'Izvori za učenje i tedžvid' },
+    ],
+  },
+  {
     label: 'Korisno',
     children: [
       { label: 'Dove', href: '/dove', opis: 'Dove sa arapskim tekstom i prevodom' },
       { label: "Kur'an i hadisi", href: '/kuran-hadisi', opis: 'Ajet i hadis dana' },
-      { label: "Učenje Kur'ana", href: '/ucenje-kurana', opis: 'Izvori za učenje i tedžvid' },
-      { label: 'Mekteb i halke', href: '/mekteb', opis: 'Vjerska pouka za djecu i odrasle' },
-      { label: 'Mediji', href: '/mediji', opis: 'YouTube kanal i društvene mreže' },
       { label: 'Islamski kalendar', href: '/kalendar', opis: 'Hidžretski datumi i važni dani' },
       { label: 'Islamski alati', href: '/alati', opis: 'Kibla, tesbih, zekat, imsakija, podsjetnik' },
+      { label: 'Mediji', href: '/mediji', opis: 'YouTube kanal i društvene mreže' },
     ],
   },
   { label: 'Kontakt', href: '/kontakt' },
