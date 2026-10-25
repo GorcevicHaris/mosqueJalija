@@ -1,0 +1,31 @@
+name: Osvježavanje sadržaja iz baze
+
+# Sajt je statički: sadržaj iz Supabase baze (obavještenja, raspored, dove, podaci o džamiji…)
+# ulazi u stranice pri buildu. Ovaj workflow svakog sata pokreće deploy, pa se izmjene iz admina
+# pojave na sajtu najkasnije za ~1 sat. (Nova obavještenja se vide i odmah — čita ih pregledač.)
+# Ne radi ništa dok repo varijabla PUBLIC_SUPABASE_URL nije postavljena.
+
+on:
+  schedule:
+    - cron: '17 * * * *' # svaki sat u :17 (ne u :00, kad je GitHub najopterećeniji)
+  workflow_dispatch:
+
+permissions:
+  actions: write # pokretanje deploy workflowa
+  contents: read
+
+concurrency:
+  group: osvjezi-sadrzaj
+  cancel-in-progress: true
+
+jobs:
+  pokreni-deploy:
+    if: ${{ vars.PUBLIC_SUPABASE_URL != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pokreni deploy.yml
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        # zakazana pokretanja uvijek rade na podrazumijevanoj grani (main)
+        run: gh workflow run deploy.yml --ref "${{ github.ref_name }}"

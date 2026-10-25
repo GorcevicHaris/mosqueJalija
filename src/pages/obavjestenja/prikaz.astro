@@ -1,0 +1,143 @@
+---
+// Klijentski prikaz obavještenja iz baze: /obavjestenja/prikaz/?slug=...
+// Koristi se za objave napravljene u adminu poslije zadnjeg builda (statična stranica još ne postoji).
+// Ako statična stranica postoji, preusmjerava na nju. noindex + izuzeto iz sitemap-a.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { url } from '../../lib/url';
+---
+<BaseLayout title="Obavještenje" description="Obavještenje Džamije na Jaliji." noindex>
+  <article class="op" data-op aria-busy="true">
+    <header class="op__hero theme-inverse pattern-bg">
+      <div class="container container--narrow">
+        <p class="op__back"><a href={url('/obavjestenja')} data-op-lista>← Obavještenja</a></p>
+        <p class="op__meta">
+          <time data-op-datum></time>
+          <span class="badge" data-op-kat hidden></span>
+          <span class="badge badge--warn" data-op-primjer hidden>Primjer</span>
+        </p>
+        <h1 class="op__title" data-op-naslov>Učitavanje…</h1>
+        <p class="op__lead" data-op-sazetak></p>
+      </div>
+    </header>
+
+    <div class="section section--tight">
+      <div class="container container--narrow">
+        <p class="op__poruka" role="status" data-op-status>Učitavam obavještenje…</p>
+        <img class="op__img" data-op-slika alt="" hidden decoding="async" />
+        <div class="prose op__body" data-op-tijelo></div>
+        <div class="op__actions" data-op-akcije hidden>
+          <button type="button" class="btn btn--primary" data-op-podijeli>Podijeli</button>
+          <a class="btn btn--ghost" href={url('/obavjestenja')} data-op-sva>Sva obavještenja</a>
+        </div>
+        <noscript>
+          <p>Za prikaz ovog obavještenja potreban je JavaScript. <a href={url('/obavjestenja')}>Sva obavještenja</a></p>
+        </noscript>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .op__hero { padding-block: clamp(2.25rem, 6vw, 4rem); }
+  .op__back { margin: 0 0 var(--space-4); }
+  .op__back a { color: var(--inverse-accent); font-weight: 700; text-decoration: none; }
+  .op__back a:hover { text-decoration: underline; }
+  .op__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); color: var(--inverse-muted); font-size: 0.92rem; min-height: 1.4em; }
+  .op__title { color: var(--inverse-text); margin: 0 0 var(--space-3); font-size: clamp(1.7rem, 2.5vw + 1rem, 2.6rem); overflow-wrap: anywhere; }
+  .op__lead { color: var(--inverse-muted); font-size: 1.1rem; margin: 0; }
+  .op__poruka { color: var(--color-text-muted); }
+  .op__poruka:empty { display: none; }
+  .op__img { width: 100%; height: auto; border-radius: var(--radius-lg); margin-bottom: var(--space-5); }
+  .op__body { max-width: none; overflow-wrap: anywhere; }
+  .op__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+  [hidden] { display: none !important; }
+</style>
+
+<script>
+  import { ucitajPoSlugu, paragrafHTML } from '../../lib/supabase/klijent';
+  import { supabaseUkljucen } from '../../lib/supabase/config';
+  import { datumTekst } from '../../lib/format';
+
+  const BASE = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+  const $ = <T extends HTMLElement>(s: string) => document.querySelector<T>(`[data-op-${s}]`)!;
+  const root = document.querySelector<HTMLElement>('[data-op]')!;
+  const status = $('status');
+
+  function nijePronadjeno(poruka: string) {
+    $('naslov').textContent = 'Obavještenje nije pronađeno';
+    status.innerHTML = '';
+    status.append(poruka + ' ');
+    const a = document.createElement('a');
+    a.href = `${BASE}obavjestenja/`;
+    a.textContent = 'Pogledajte sva obavještenja';
+    status.append(a, '.');
+    root.setAttribute('aria-busy', 'false');
+  }
+
+  async function postojiStaticna(slug: string): Promise<boolean> {
+    try {
+      const r = await fetch(`${BASE}obavjestenja/${slug}/`, { method: 'HEAD', cache: 'no-store' });
+      return r.ok;
+    } catch {
+      return false;
+    }
+  }
+
+  async function init() {
+    const slug = (new URLSearchParams(location.search).get('slug') ?? '').trim().toLowerCase();
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) return nijePronadjeno('Link nije ispravan.');
+    if (!supabaseUkljucen) return nijePronadjeno('Baza sadržaja nije podešena.');
+
+    const [staticna, o] = await Promise.all([postojiStaticna(slug), ucitajPoSlugu(slug)]);
+    if (staticna) {
+      location.replace(`${BASE}obavjestenja/${slug}/`);
+      return;
+    }
+    if (!o) return nijePronadjeno('Možda je uklonjeno ili još nije objavljeno.');
+
+    const jeObjava = o.tip === 'objava';
+    const listaHref = `${BASE}${jeObjava ? 'objave' : 'obavjestenja'}/`;
+    const lista = $<HTMLAnchorElement>('lista');
+    lista.href = listaHref;
+    lista.textContent = `← ${jeObjava ? 'Objave' : 'Obavještenja'}`;
+    const sva = $<HTMLAnchorElement>('sva');
+    sva.href = listaHref;
+    sva.textContent = jeObjava ? 'Sve objave' : 'Sva obavještenja';
+
+    document.title = `${o.naslov} | Džamija na Jaliji`;
+    const datum = $('datum');
+    datum.setAttribute('datetime', o.datum);
+    datum.textContent = datumTekst(o.datum);
+    const kat = $('kat');
+    kat.textContent = o.kategorija;
+    kat.hidden = false;
+    $('primjer').hidden = !o.placeholder;
+    $('naslov').textContent = o.naslov;
+    $('sazetak').textContent = o.sazetak;
+    if (o.slika) {
+      const img = $<HTMLImageElement>('slika');
+      img.src = /^https?:\/\//.test(o.slika) ? o.slika : `${BASE}${o.slika.replace(/^\//, '')}`;
+      img.alt = o.naslov;
+      img.hidden = false;
+    }
+    $('tijelo').innerHTML = o.sadrzaj.map(paragrafHTML).join('');
+    status.textContent = '';
+    $('akcije').hidden = false;
+    root.setAttribute('aria-busy', 'false');
+
+    $('podijeli').addEventListener('click', async () => {
+      const link = location.href;
+      try {
+        if (navigator.share) await navigator.share({ title: o.naslov, url: link });
+        else {
+          await navigator.clipboard.writeText(link);
+          status.textContent = 'Link je kopiran.';
+        }
+      } catch {
+        /* korisnik je otkazao dijeljenje */
+      }
+    });
+  }
+
+  init();
+</script>

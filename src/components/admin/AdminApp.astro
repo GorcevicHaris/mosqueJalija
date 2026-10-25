@@ -1,0 +1,283 @@
+---
+// Admin panel (ljuska): ekrani prijave, navigacija i prazni kontejneri sekcija.
+// Sadržaj sekcija iscrtava skripta (main.ts) poslije prijave. Stilovi su globalni (prefiks .adm-),
+// jer se veći dio markupa pravi u pregledaču.
+import { supabaseUkljucen } from '../../lib/supabase/config';
+import { url } from '../../lib/url';
+import { ODJELJCI } from './odjeljci';
+import type { Ugradjeno } from './stanje';
+
+interface Props {
+  podaci: Ugradjeno;
+}
+const { podaci } = Astro.props;
+const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
+---
+<div class="adm container" data-adm>
+  <!-- Baza nije podešena (build bez PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY) -->
+  <section class="adm-ekran card" data-ekran="nije-podeseno" hidden={supabaseUkljucen} aria-labelledby="adm-np-naslov">
+    <h1 id="adm-np-naslov" tabindex="-1" data-fokus>Supabase nije podešen</h1>
+    <p>Uređivanje sajta još nije uključeno: pri izradi sajta nisu postavljene varijable
+      <code>PUBLIC_SUPABASE_URL</code> i <code>PUBLIC_SUPABASE_ANON_KEY</code>.</p>
+    <p class="muted">Sajt u međuvremenu prikazuje sadržaj iz fajlova u repozitorijumu. Uputstvo: <code>docs/supabase.md</code>.</p>
+    <a class="btn btn--ghost" href={url('/')}>Na početnu stranicu</a>
+  </section>
+
+  <section class="adm-ekran" data-ekran="ucitavanje" hidden={!supabaseUkljucen} aria-live="polite">
+    <p class="adm-ucitavanje" role="status"><span class="adm-spiner" aria-hidden="true"></span> Učitavam…</p>
+    <noscript><p>Za uređivanje sajta potreban je JavaScript.</p></noscript>
+  </section>
+
+  <!-- Prijava -->
+  <section class="adm-ekran card" data-ekran="prijava" hidden aria-labelledby="adm-prijava-naslov">
+    <h1 id="adm-prijava-naslov" tabindex="-1">Prijava za urednike</h1>
+    <p class="muted">Upišite svoju e-mail adresu. Poslaćemo vam link za prijavu i šestocifreni kod — bez lozinke.</p>
+    <p class="adm-poruka" data-prijava-status hidden></p>
+
+    <form class="adm-prijava" data-prijava-korak="1" novalidate>
+      <div class="field">
+        <label for="adm-email">E-mail adresa</label>
+        <input class="input" id="adm-email" name="email" type="email" autocomplete="email" inputmode="email" required spellcheck="false" data-fokus />
+      </div>
+      <button type="submit" class="btn btn--primary btn--block">Pošalji link za prijavu</button>
+    </form>
+
+    <form class="adm-prijava" data-prijava-korak="2" novalidate hidden>
+      <p>Poslali smo e-mail na <strong data-prijava-adresa></strong>. Otvorite link iz poruke{' '}<em>ili</em>{' '}upišite kod ovdje (korisno ako se link otvori u drugom pregledaču ili na drugom uređaju).</p>
+      <div class="field">
+        <label for="adm-kod">Kod iz e-maila</label>
+        <input class="input adm-kod" id="adm-kod" name="kod" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="10" pattern="[0-9]*" required />
+      </div>
+      <button type="submit" class="btn btn--primary btn--block">Prijavi se</button>
+      <div class="adm-red-dugmadi adm-prijava__dodatno">
+        <button type="button" class="btn btn--ghost btn--sm" data-ponovo>Pošalji ponovo</button>
+        <button type="button" class="btn btn--ghost btn--sm" data-promijeni-adresu>Druga adresa</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Prijavljen, ali nije urednik -->
+  <section class="adm-ekran card" data-ekran="bez-prava" hidden aria-labelledby="adm-bp-naslov">
+    <h1 id="adm-bp-naslov" tabindex="-1" data-fokus>Nemate urednička prava</h1>
+    <p>Prijavljeni ste kao <strong data-korisnik></strong>, ali ova adresa nije na listi urednika.</p>
+    <p class="muted">Ako treba da uređujete sajt, zamolite administratora da vas doda (Admin → Urednici), pa se prijavite ponovo.</p>
+    <div class="adm-red-dugmadi">
+      <button type="button" class="btn btn--primary" data-odjava>Odjavi se</button>
+      <a class="btn btn--ghost" href={url('/')}>Na sajt</a>
+    </div>
+  </section>
+
+  <!-- Greška -->
+  <section class="adm-ekran card" data-ekran="greska" hidden aria-labelledby="adm-gr-naslov">
+    <h1 id="adm-gr-naslov" tabindex="-1" data-fokus>Nešto nije u redu</h1>
+    <p data-greska-tekst role="alert"></p>
+    <div class="adm-red-dugmadi">
+      <button type="button" class="btn btn--primary" data-ponovi>Pokušaj ponovo</button>
+      <button type="button" class="btn btn--ghost" data-odjava>Odjavi se</button>
+    </div>
+  </section>
+
+  <!-- Aplikacija -->
+  <div class="adm-app" data-ekran="app" hidden>
+    <header class="adm-app__glava">
+      <div>
+        <h1 class="adm-app__naslov" tabindex="-1" data-app-naslov>Uređivanje sajta</h1>
+        <p class="adm-app__korisnik muted"><span data-korisnik></span> · <span data-uloga></span></p>
+      </div>
+      <div class="adm-red-dugmadi">
+        <a class="btn btn--ghost btn--sm" href={url('/')} target="_blank" rel="noopener">Otvori sajt ↗</a>
+        <button type="button" class="btn btn--ghost btn--sm" data-odjava>Odjavi se</button>
+      </div>
+    </header>
+
+    <div class="adm-app__tijelo">
+      <nav class="adm-nav" aria-label="Odjeljci uređivanja">
+        <div class="field adm-nav__mobilni">
+          <label for="adm-nav-select">Odjeljak</label>
+          <select id="adm-nav-select" class="select">
+            {ODJELJCI.map((g) => (
+              <optgroup label={g.naziv}>
+                {g.stavke.map((s) => <option value={s.id} data-samo-admin={g.samoAdmin ? '' : undefined}>{s.naziv}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+        <div class="adm-nav__lista">
+          {ODJELJCI.map((g) => (
+            <div class="adm-nav__grupa" data-samo-admin={g.samoAdmin ? '' : undefined} hidden={g.samoAdmin}>
+              <p class="adm-nav__naslov">{g.naziv}</p>
+              <ul role="list">
+                {g.stavke.map((s) => (
+                  <li>
+                    <button type="button" class="adm-nav__stavka" data-nav={s.id}>
+                      <span>{s.naziv}</span>
+                      {s.brojac && <span class="adm-brojac" data-brojac={s.brojac} hidden></span>}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </nav>
+
+      <div class="adm-sadrzaj">
+        {ODJELJCI.flatMap((g) => g.stavke).map((s) => (
+          <section class="adm-sekcija" data-sekcija={s.id} hidden aria-label={s.naziv}></section>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <p id="adm-toast" class="adm-toast" hidden></p>
+</div>
+
+<script type="application/json" id="adm-podaci" set:html={json} />
+
+<script>
+  import './main';
+</script>
+
+<style is:global>
+  .adm { padding-block: var(--space-6) var(--space-8); }
+  .adm [hidden] { display: none !important; }
+  .adm h1 { font-size: clamp(1.5rem, 1.5vw + 1rem, 2rem); margin: 0 0 var(--space-3); }
+  .adm h2 { font-size: clamp(1.3rem, 1vw + 1rem, 1.7rem); margin: 0; }
+  .adm h3 { font-size: 1.2rem; margin: 0 0 var(--space-4); }
+  .adm h1:focus, .adm h2:focus, .adm h3:focus { outline: none; }
+  .adm h1:focus-visible, .adm h2:focus-visible, .adm h3:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 4px; border-radius: var(--radius-sm); }
+  .adm code { font-size: 0.9em; background: var(--color-surface-2); padding: 0.1em 0.35em; border-radius: var(--radius-sm); overflow-wrap: anywhere; }
+
+  /* Ekrani prijave */
+  .adm-ekran { max-width: 480px; margin: var(--space-6) auto; gap: var(--space-4); }
+  .adm-ekran > * { margin: 0; }
+  .adm-ekran[data-ekran='ucitavanje'] { text-align: center; }
+  .adm-prijava { display: grid; gap: var(--space-4); }
+  .adm-prijava p { margin: 0; }
+  .adm-prijava__dodatno { justify-content: center; }
+  .adm-kod { font-size: 1.5rem; letter-spacing: 0.3em; text-align: center; font-variant-numeric: tabular-nums; }
+  .adm-ucitavanje { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--color-text-muted); }
+  .adm-spiner { width: 1.2em; height: 1.2em; border-radius: 50%; border: 2.5px solid var(--color-border-strong); border-top-color: var(--color-primary); animation: adm-vrti 0.8s linear infinite; }
+  @keyframes adm-vrti { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .adm-spiner { animation-duration: 2.4s; } }
+
+  /* Poruke */
+  .adm-poruka { margin: 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-2); font-size: 0.95rem; overflow-wrap: anywhere; }
+  .adm-poruka[data-vrsta='greska'] { border-color: var(--color-danger); color: var(--color-danger); background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface)); }
+  .adm-poruka[data-vrsta='uspjeh'] { border-color: var(--color-success); color: var(--color-success); background: color-mix(in srgb, var(--color-success) 8%, var(--color-surface)); }
+  .adm-toast { position: fixed; z-index: 100; left: 50%; bottom: var(--space-4); transform: translateX(-50%); width: min(560px, calc(100% - 2rem)); margin: 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-text); color: var(--color-bg); box-shadow: var(--shadow-lg); font-size: 0.95rem; }
+  .adm-toast[data-vrsta='greska'] { background: var(--color-danger); color: #fff; }
+  :root[data-theme='dark'] .adm-toast[data-vrsta='greska'] { color: #1a0906; }
+
+  /* Ljuska aplikacije */
+  .adm-app__glava { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-3); padding-bottom: var(--space-4); margin-bottom: var(--space-5); border-bottom: 1px solid var(--color-border); }
+  .adm-app__naslov { margin: 0 !important; }
+  .adm-app__korisnik { margin: var(--space-1) 0 0; font-size: 0.9rem; overflow-wrap: anywhere; }
+  .adm-app__tijelo { display: grid; gap: var(--space-5); }
+  .adm-nav__lista { display: none; }
+  @media (min-width: 960px) {
+    .adm-app__tijelo { grid-template-columns: 240px minmax(0, 1fr); align-items: start; gap: var(--space-6); }
+    .adm-nav { position: sticky; top: var(--space-4); }
+    .adm-nav__mobilni { display: none; }
+    .adm-nav__lista { display: grid; gap: var(--space-4); }
+  }
+  .adm-nav__naslov { margin: 0 0 var(--space-1); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); }
+  .adm-nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .adm-nav__stavka { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: 40px; padding: 0.45rem 0.75rem; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-text); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+  .adm-nav__stavka:hover { background: var(--color-surface-2); }
+  .adm-nav__stavka[aria-current='page'] { background: var(--color-primary); color: var(--color-on-primary); }
+  .adm-brojac { min-width: 1.6em; padding: 0 0.45em; border-radius: var(--radius-full); background: var(--color-accent-soft); color: var(--color-accent); font-size: 0.78rem; font-weight: 800; text-align: center; }
+  .adm-nav__stavka[aria-current='page'] .adm-brojac { background: var(--color-on-primary); color: var(--color-primary); }
+
+  /* Sekcija */
+  .adm-sekcija { display: grid; gap: var(--space-4); min-width: 0; }
+  .adm-sekcija__zaglavlje { display: grid; gap: var(--space-2); }
+  .adm-sekcija__opis { margin: 0; max-width: 70ch; }
+  .adm-sekcija__lista, .adm-sekcija__forma { display: grid; gap: var(--space-4); }
+  .adm-red-dugmadi { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+  .adm-red-dugmadi .btn { white-space: normal; }
+  .adm-traka { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .adm-traka > .field { flex: 1 1 160px; }
+  .adm-traka__pretraga { flex: 2 1 220px !important; }
+  .adm-blok { gap: var(--space-3); }
+
+  /* Lista */
+  .adm-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  .adm-stavka { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+  .adm-stavka__slika { width: 64px; height: 48px; flex: none; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-surface-2); }
+  .adm-stavka__slika--prazno { display: block; }
+  .adm-stavka__tijelo { flex: 1; min-width: 0; }
+  .adm-stavka__naslov { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+  .adm-stavka__meta { margin: var(--space-1) 0 0; font-size: 0.85rem; color: var(--color-text-muted); display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); align-items: center; overflow-wrap: anywhere; }
+  .adm-stavka__akcije { display: flex; flex-wrap: wrap; gap: var(--space-1); justify-content: flex-end; }
+  .adm-prazno { padding: var(--space-5); text-align: center; border: 1px dashed var(--color-border-strong); border-radius: var(--radius-md); }
+  @media (max-width: 560px) {
+    .adm-stavka { flex-wrap: wrap; }
+    .adm-stavka__tijelo { flex-basis: calc(100% - 80px); }
+    .adm-stavka__akcije { width: 100%; justify-content: flex-start; }
+  }
+  .adm-ikona { min-width: 40px; min-height: 40px; display: inline-grid; place-items: center; border-radius: var(--radius-md); border: 1.5px solid var(--color-border-strong); background: var(--color-surface); color: var(--color-text); font: inherit; font-weight: 700; cursor: pointer; }
+  .adm-ikona:hover:not([disabled]) { border-color: var(--color-primary); }
+  .adm-ikona[disabled] { opacity: 0.4; cursor: default; }
+  .adm-ikona--opasno, .adm-opasno { color: var(--color-danger) !important; }
+  .adm-ikona--opasno:hover:not([disabled]) { border-color: var(--color-danger); }
+
+  /* Forma */
+  .adm-forma { display: grid; gap: var(--space-4); }
+  .adm-forma > * { margin: 0; }
+  .adm-forma__polja { display: grid; gap: var(--space-4); }
+  @media (min-width: 640px) {
+    .adm-forma__polja { grid-template-columns: 1fr 1fr; }
+    .adm-forma__polja > .adm-polje:not(.adm-polje--pola), .adm-forma__polja > .adm-niz { grid-column: 1 / -1; }
+  }
+  .adm-polje { min-width: 0; }
+  .adm-pomoc { margin: 0; font-size: 0.85rem; color: var(--color-text-muted); }
+  .adm-greska { margin: 0; font-size: 0.88rem; font-weight: 700; color: var(--color-danger); }
+  .adm [aria-invalid='true'] { border-color: var(--color-danger) !important; }
+  .adm-check { display: inline-flex; align-items: flex-start; gap: var(--space-2); font-weight: 600; cursor: pointer; min-height: 32px; }
+  .adm-check input { width: 1.2em; height: 1.2em; margin-top: 0.15em; accent-color: var(--color-primary); flex: none; }
+  .adm-arapski { font-family: var(--font-arabic); font-size: 1.3rem; line-height: 1.9; }
+  .adm-forma__dugmad { padding-top: var(--space-2); }
+  .adm-forma__dugmad--ljepljivo { position: sticky; bottom: 0; z-index: 5; padding: var(--space-3) 0; background: linear-gradient(to top, var(--page-bg) 70%, transparent); }
+  .adm-grupa { border: 1px solid var(--color-border); gap: var(--space-4); }
+  .adm-grupa > legend { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; padding: 0 var(--space-2); }
+  .select--sm, .textarea--sm { min-height: 40px; }
+  .textarea--sm { min-height: 64px; }
+  .adm-trenutno p { margin: 0 0 var(--space-1); overflow-wrap: anywhere; }
+
+  /* Slika */
+  .adm-slika { display: grid; gap: var(--space-2); }
+  .adm-slika__pregled { max-width: min(100%, 320px); max-height: 220px; object-fit: contain; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-2); }
+  .adm-slika__dugmad { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .adm-slika__dugmad label[aria-disabled='true'] { opacity: 0.55; pointer-events: none; }
+  .adm input[type='file'].visually-hidden:focus-visible + label { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .adm-alatka { display: inline-flex; }
+
+  /* Niz (ponavljajuće stavke) */
+  .adm-niz { border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4) var(--space-4); margin: 0; display: grid; gap: var(--space-3); min-width: 0; }
+  .adm-niz > legend { font-weight: 700; font-size: 0.92rem; padding: 0 var(--space-1); }
+  .adm-niz__stavke { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+  .adm-niz__stavka { display: grid; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-surface-2); }
+  .adm-niz__alati { display: flex; align-items: center; gap: var(--space-1); }
+  .adm-niz__broj { font-weight: 800; margin-right: auto; color: var(--color-text-muted); }
+  .adm-niz .adm-forma__polja { grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .adm-niz .adm-forma__polja { grid-template-columns: 1fr 1fr; } }
+
+  /* Pregled obavještenja */
+  .adm-pregled { border: 2px dashed var(--color-border-strong); border-radius: var(--radius-lg); padding: var(--space-5); background: var(--color-bg); }
+  .adm-pregled__oznaka { margin: 0 0 var(--space-3); font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); }
+  .adm-pregled__naslov { font-size: 1.6rem; margin: var(--space-2) 0; }
+  .adm-pregled__slika { width: 100%; height: auto; border-radius: var(--radius-md); margin: var(--space-3) 0; }
+
+  /* Pristiglo */
+  .adm-poruka-stavka { display: grid; gap: var(--space-3); padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+  .adm-poruka-stavka--nova { border-left: 4px solid var(--color-accent-bright); }
+  .adm-poruka-stavka > * { margin: 0; }
+  .adm-poruka-stavka__tekst { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .adm-pitanje { font-weight: 600; font-size: 1.05rem; }
+  .adm-detalji { display: grid; grid-template-columns: max-content 1fr; gap: var(--space-1) var(--space-3); font-size: 0.92rem; }
+  .adm-detalji dt { font-weight: 700; color: var(--color-text-muted); }
+  .adm-detalji dd { margin: 0; overflow-wrap: anywhere; }
+  .adm-inbox-polja { display: grid; gap: var(--space-3); }
+  @media (min-width: 640px) { .adm-inbox-polja { grid-template-columns: 200px 1fr; } }
+</style>
