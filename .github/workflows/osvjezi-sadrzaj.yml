@@ -31,3 +31,12 @@ jobs:
           GH_REPO: ${{ github.repository }}
         # zakazana pokretanja uvijek rade na podrazumijevanoj grani (main)
         run: gh workflow run deploy.yml --ref "${{ github.ref_name }}"
+
+      # Vercel: novi build preko Deploy Hook-a (Vercel → Settings → Git → Deploy Hooks).
+      # Link se čuva kao GitHub secret VERCEL_DEPLOY_HOOK; bez njega se ovaj korak preskače.
+      - name: Pokreni Vercel deploy
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "VERCEL_DEPLOY_HOOK nije postavljen — preskačem."; exit 0; fi
+          curl -fsS -X POST "$HOOK" > /dev/null && echo "Vercel deploy pokrenut."

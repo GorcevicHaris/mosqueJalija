@@ -23,11 +23,25 @@ export interface Transkript {
   ispravio?: string;
   /** true = konzervativno lektorisana verzija iz data/transkripti-lektura/ */
   lektorisano?: boolean;
+  /** samo engleski prevod (data/transkripti-en/): naslov predavanja na engleskom */
+  naslov?: string;
   segmenti: TranskriptSegment[];
 }
 
 const automatski = import.meta.glob<Transkript>('/data/transkripti/*.json', { eager: true, import: 'default' });
 const lektura = import.meta.glob<Transkript>('/data/transkripti-lektura/*.json', { eager: true, import: 'default' });
+// Engleski (mašinski) prevod lektorisanog transkripta — isti segmenti/vremena, + "jezik": "en" i "naslov".
+// Ne postoji za svaki video (ili uopšte) — tada je glob prazan i getTranskriptEn vraća null.
+// Čita se kao tekst i parsira u try/catch: neispravan (npr. napola upisan) fajl se preskače, build ne pada.
+const engleskiRaw = import.meta.glob<string>('/data/transkripti-en/*.json', { eager: true, query: '?raw', import: 'default' });
+const engleski: Record<string, Transkript | undefined> = {};
+for (const [put, raw] of Object.entries(engleskiRaw)) {
+  try {
+    engleski[put] = JSON.parse(raw) as Transkript;
+  } catch {
+    console.warn(`[transkripti] preskačem neispravan engleski transkript: ${put}`);
+  }
+}
 
 const ispravan = (t: Transkript | undefined): t is Transkript => !!t && Array.isArray(t.segmenti) && t.segmenti.length > 0;
 const idIz = (put: string) => put.split('/').pop()!.replace(/\.json$/, '');
@@ -39,6 +53,26 @@ for (const [put, t] of Object.entries(automatski)) {
 // lektorisana verzija ima prednost
 for (const [put, t] of Object.entries(lektura)) {
   if (ispravan(t)) mapa.set(idIz(put), { ...t, id: idIz(put), lektorisano: true });
+}
+
+const mapaEn = new Map<string, Transkript>();
+for (const [put, t] of Object.entries(engleski)) {
+  const id = idIz(put);
+  if (!ispravan(t) || !mapa.has(id)) continue;
+  const segmenti = t.segmenti.filter((s) => s && typeof s.tekst === 'string' && Number.isFinite(Number(s.od)));
+  if (!segmenti.length) continue;
+  mapaEn.set(id, {
+    ...t,
+    id,
+    jezik: 'en',
+    naslov: typeof t.naslov === 'string' && t.naslov.trim() ? t.naslov.trim() : undefined,
+    segmenti,
+  });
+}
+
+/** Engleski prevod transkripta ili null (nema ga za svaki video). */
+export function getTranskriptEn(id: string): Transkript | null {
+  return mapaEn.get(id) ?? null;
 }
 
 /** Transkript za video ili null ako ne postoji. */
