@@ -113,6 +113,11 @@ Prijava ide samo preko linka na e-mail, bez lozinke. Ulaz je dugme „Admin prij
 - **Transkripti:** YouTube nema titlove za ove videe, pa su svi transkribovani lokalno modelom Whisper
   large-v3-turbo (~121.000 riječi), a zatim pažljivo lektorisani: pravopis, ijekavica, imena, islamski
   izrazi. Na sajtu su označeni kao „automatski transkript“.
+- **Arapski dijelovi** (početak i kraj hutbe, ajeti, dove, hadisi) su posebno transkribovani na
+  arapskom (Whisper large-v3, `-l ar`), ručno provjereni i prikazani zdesna nalijevo, sa harekatima i
+  prevodom na bosanski i engleski. Ukupno je 351 arapski segment u 78 videa. Poznate formule i ajeti
+  su provjereni prema originalu (sura:ajet).
+- **Engleski prevod** cijelih transkripata (dugme „Bosanski | English“), za svih 81 videa.
 - **Fotografije:** svih 8 predavača ima portret, izrezan iz kadrova sa YouTube kanala džamije.
   Galerija i naslovna fotografija su iz izvještaja Mešihata sa otvaranja i iz dron-snimaka sa kanala.
 - **Logo:** urađen prema stvarnom izgledu džamije: vitka bijela munara sa drvenim kioskom i kupastim
@@ -208,6 +213,10 @@ Sve od ovoga se može unijeti i **direktno u admin panelu**.
   `zOmGidryvss` i `43grkcWOjiQ` nemaju opis, pa provjerite kategoriju.
 - 6 kratkih videa od 12. 12. 2025. i „Poklon umra“ **nemaju imama**.
 - Datum je datum objave na YouTube-u. Hutbe su obično održane dan ranije.
+- **Arapski u transkriptima:** imam treba da presluša 6 mjesta označenih za provjeru: drugi dio hutbe
+  u `FBOlD4Vc82E` i `voLOTKD84Vg`, sura El-Felek u `-QKGCdrGiRQ`, En-Neml 19 u `Dnqhzz-b4gw` i ilahija u
+  `fZ_cV_h1pcc`. Početak `0NxaZJg1zQA` (0:00–1:09) nije bilo moguće prepoznati. Detalji su u
+  `docs/lektura-transkripata.md`.
 - **Transkripti:** 253 mjesta su označena kao `[nejasno]`, a sporna mjesta po videu (sa vremenom) su
   u `docs/lektura-transkripata.md`. Preporuka je da imam presluša ta mjesta. Ispravke idu u
   `data/transkripti-lektura/<id>.json`.
