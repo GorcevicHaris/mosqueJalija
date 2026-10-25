@@ -1,0 +1,112 @@
+---
+/**
+ * Logo Džamije na Jaliji — inline SVG (bez dodatnog HTTP zahtjeva).
+ * Znak: osmokraka zvijezda (hatam) sa siluetom džamije — kuća-džamija s četvorovodnim krovom,
+ * doksatom s lučnim prozorima i vitkom munarom s drvenim šerefetom, fenjerom i kupastim krovom.
+ * Izvor geometrije: docs/logo.md (fajlovi u public/logo/ su generisani iz iste geometrije).
+ *
+ * Props:
+ *  - variant: 'znak' (samo znak) | 'horizontalni' (znak + naziv + NOVI PAZAR)
+ *  - size: visina znaka u px (podrazumijevano 44). Ispod 40 px automatski se koristi pojednostavljen crtež.
+ *  - inverse: za smaragdne/tamne zone (bez polja zvijezde, svjetlija zlatna, krem tekst)
+ *  - decorative: true kad je logo unutar linka/naslova koji već ima tekst "Džamija na Jaliji" (aria-hidden)
+ *  - class: dodatna klasa
+ *
+ * Boje se mogu prepisati CSS varijablama: --logo-field, --logo-gold, --logo-cream, --logo-ink, --logo-city.
+ */
+interface Props {
+  variant?: 'znak' | 'horizontalni';
+  size?: number;
+  inverse?: boolean;
+  decorative?: boolean;
+  class?: string;
+}
+const { variant = 'znak', size = 44, inverse = false, decorative = false, class: cls } = Astro.props;
+
+const GEO = {"star":"M50,3.3L63.68,16.98L83.02,16.98L83.02,36.32L96.7,50L83.02,63.68L83.02,83.02L63.68,83.02L50,96.7L36.32,83.02L16.98,83.02L16.98,63.68L3.3,50L16.98,36.32L16.98,16.98L36.32,16.98Z","inner":"M50,6.8L62.65,19.45L80.55,19.45L80.55,37.35L93.2,50L80.55,62.65L80.55,80.55L62.65,80.55L50,93.2L37.35,80.55L19.45,80.55L19.45,62.65L6.8,50L19.45,37.35L19.45,19.45L37.35,19.45Z","rosette":"M50,85.6L51.05,86.65L52.55,86.65L52.55,88.15L53.6,89.2L52.55,90.25L52.55,91.75L51.05,91.75L50,92.8L48.95,91.75L47.45,91.75L47.45,90.25L46.4,89.2L47.45,88.15L47.45,86.65L48.95,86.65ZM51.1 89.2a1.1 1.1 0 1 0 -2.2 0a1.1 1.1 0 1 0 2.2 0Z","full":{"gold":"M30.55 16.6h0.9v8.2h-0.9ZM31 18.2m-1.35 0a1.35 1.35 0 1 0 2.7 0a1.35 1.35 0 1 0 -2.7 0ZM31 21.1m-1.55 0a1.55 1.55 0 1 0 3.1 0a1.55 1.55 0 1 0 -3.1 0ZM31 23.4L36.2 34.8Q36.9 36.1 37.8 36.6H24.2Q25.1 36.1 25.8 34.8ZM25.9 36.6h1.2v5h-1.2ZM30.4 36.6h1.2v5h-1.2ZM34.9 36.6h1.2v5h-1.2ZM25.2 41.6H36.8V47.2Q36.8 47.800000000000004 36.199999999999996 47.800000000000004H25.8Q25.2 47.800000000000004 25.2 47.2ZM36.6 47.2L52 38.2H66L81.4 47.2ZM38 53.5L41.800000000000004 49.9H59.8L63.6 53.5ZM64 72.8L66.2 70.5H76.80000000000001L79 72.8Z","cream":"M26.1 48.5h9.8v1.5h-9.8ZM27.3 50h7.4v30.2h-7.4ZM62.6 48.5h16.8v31.7h-16.8ZM38.6 70.8h24v9.4h-24ZM38.6 48.5h24v0.5h-24ZM40.2 54.6h21.2v15h-21.2Z","holes":"M42.8 64.3V58.1A1.8 1.8 0 0 1 46.4 58.1V64.3ZM42.8 66.9h3.6v3.4h-3.6ZM49 64.3V58.1A1.8 1.8 0 0 1 52.6 58.1V64.3ZM49 66.9h3.6v3.4h-3.6ZM55.2 64.3V58.1A1.8 1.8 0 0 1 58.8 58.1V64.3ZM55.2 66.9h3.6v3.4h-3.6ZM65.7 58.3V52.6A1.5 1.5 0 0 1 68.7 52.6V58.3ZM65.7 61.9h3v4.6h-3ZM73.3 58.3V52.6A1.5 1.5 0 0 1 76.3 52.6V58.3ZM73.3 61.9h3v4.6h-3ZM68 74h5.6v6.2h-5.6ZM41 70.8H42.2V73ZM59.4 70.8H60.6V73ZM44.4 74.2h3v3h-3ZM54.2 74.2h3v3h-3Z","ground":"M20.5 81H79.5V82.10000000000001H20.5Z"},"mid":{"gold":"M30.55 16.6h0.9v8.2h-0.9ZM31 18.2m-1.35 0a1.35 1.35 0 1 0 2.7 0a1.35 1.35 0 1 0 -2.7 0ZM31 21.1m-1.55 0a1.55 1.55 0 1 0 3.1 0a1.55 1.55 0 1 0 -3.1 0ZM31 23.4L36.2 34.8Q36.9 36.1 37.8 36.6H24.2Q25.1 36.1 25.8 34.8ZM25.8 36.6h1.6v5h-1.6ZM30.2 36.6h1.6v5h-1.6ZM34.6 36.6h1.6v5h-1.6ZM25.2 41.6H36.8V47.2Q36.8 47.800000000000004 36.199999999999996 47.800000000000004H25.8Q25.2 47.800000000000004 25.2 47.2ZM36.6 47.2L52 38.2H66L81.4 47.2ZM38 53.5L41.800000000000004 49.9H59.8L63.6 53.5ZM64 72.8L66.2 70.5H76.80000000000001L79 72.8Z","cream":"M26.1 48.5h9.8v1.5h-9.8ZM27.3 50h7.4v30.2h-7.4ZM62.6 48.5h16.8v31.7h-16.8ZM38.6 70.8h24v9.4h-24ZM38.6 48.5h24v0.5h-24ZM40.2 54.6h21.2v15h-21.2Z","holes":"M42.35 64.3V58.4A2.1 2.1 0 0 1 46.55 58.4V64.3ZM48.7 64.3V58.4A2.1 2.1 0 0 1 52.9 58.4V64.3ZM55.05 64.3V58.4A2.1 2.1 0 0 1 59.25 58.4V64.3ZM65.7 58.3V52.9A1.8 1.8 0 0 1 69.3 52.9V58.3ZM73.3 58.3V52.9A1.8 1.8 0 0 1 76.9 52.9V58.3ZM68 74h5.6v6.2h-5.6Z","ground":"M20.5 81H79.5V82.10000000000001H20.5Z"}};
+
+const d = size < 40 ? GEO.mid : GEO.full;
+const detailed = size >= 40;
+const uid = 'lg' + Math.random().toString(36).slice(2, 8);
+const title = 'Džamija na Jaliji';
+const isZnak = variant === 'znak';
+const labelled = isZnak && !decorative;
+---
+<span class:list={['logo', `logo--${variant}`, { 'logo--inverse': inverse }, cls]} style={`--logo-size:${size}px`}>
+  <svg
+    class="logo__znak"
+    viewBox="0 0 100 100"
+    width={size}
+    height={size}
+    role={labelled ? 'img' : undefined}
+    aria-labelledby={labelled ? `${uid}-t` : undefined}
+    aria-hidden={labelled ? undefined : 'true'}
+    focusable="false"
+  >
+    {labelled && <title id={`${uid}-t`}>{title}</title>}
+    <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+      <rect width="100" height="100" fill="#fff" />
+      <path d={d.holes} fill="#000" />
+    </mask>
+    <path class="logo__field" d={GEO.star} stroke-width="2.6" stroke-linejoin="round" />
+    {detailed && <path class="logo__inner" d={GEO.inner} fill="none" stroke-width="0.7" stroke-linejoin="round" />}
+    <g mask={`url(#${uid}-m)`}>
+      <path class="logo__cream" d={d.cream} />
+      <path class="logo__gold" d={d.gold} />
+    </g>
+    <path class="logo__gold" d={d.ground} />
+    {detailed && <path class="logo__gold" d={GEO.rosette} fill-rule="evenodd" />}
+  </svg>
+  {!isZnak && (
+    <span class="logo__text" aria-hidden={decorative ? 'true' : undefined}>
+      <span class="logo__name">Džamija na Jaliji</span>
+      <span class="logo__city">Novi Pazar</span>
+    </span>
+  )}
+</span>
+
+<style>
+  .logo {
+    /* Brend boje: polje = tamni smaragd (u tamnoj temi još tamniji), zlato iz tokena za ukrase */
+    --_field: var(--logo-field, var(--inverse-bg, #0c3b2e));
+    --_gold: var(--logo-gold, var(--color-accent-bright, #c9a24a));
+    --_cream: var(--logo-cream, #f7f1e3);
+    --_ink: var(--logo-ink, var(--color-text, #1c2a23));
+    --_city: var(--logo-city, var(--color-accent, #7f5c10));
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--logo-size) * 0.26);
+    line-height: 1;
+    color: var(--_ink);
+  }
+  .logo--inverse {
+    --_field: transparent;
+    --_gold: var(--logo-gold, var(--inverse-accent, #e2bf6e));
+    --_ink: var(--logo-ink, var(--inverse-text, #f6efdd));
+    --_city: var(--logo-city, var(--inverse-accent, #e2bf6e));
+  }
+  .logo__znak { flex: none; display: block; overflow: visible; }
+  .logo__field { fill: var(--_field); stroke: var(--_gold); }
+  .logo__inner { stroke: var(--_gold); opacity: 0.55; }
+  .logo__gold { fill: var(--_gold); }
+  .logo__cream { fill: var(--_cream); }
+  .logo__text { display: flex; flex-direction: column; gap: calc(var(--logo-size) * 0.1); min-width: 0; }
+  .logo__name {
+    font-family: var(--font-serif, 'Fraunces', Georgia, serif);
+    font-variation-settings: 'opsz' 72, 'SOFT' 40, 'WONK' 0;
+    font-weight: 560;
+    font-size: calc(var(--logo-size) * 0.42);
+    letter-spacing: -0.005em;
+    color: var(--_ink);
+    white-space: nowrap;
+  }
+  .logo__city {
+    font-family: var(--font-sans, 'Manrope', system-ui, sans-serif);
+    font-weight: 700;
+    font-size: max(10px, calc(var(--logo-size) * 0.17));
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--_city);
+    white-space: nowrap;
+  }
+</style>
