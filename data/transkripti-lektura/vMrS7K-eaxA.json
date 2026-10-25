@@ -10,7 +10,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
   },
   {
    "od": 32.1,
@@ -123,6 +125,13 @@
    "tekst": "I zbog toga je ona najljepša, najljepša, najljepša priča. Potpuna, potpuna priča. Potpuna priča."
   },
   {
+   "od": 635.3,
+   "do": 640.2,
+   "tekst": "بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„…objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
    "od": 640.2,
    "do": 656.2,
    "tekst": "„A“, kaže, „ti prije nisi znao, nisi znao za ovu priču.“ Također, od mu'džiza, kako kažu učenjaci, jeste da ova priča nije spomenuta u prijašnjim knjigama, to jest ovu priču nisu znali niti Jevreji, niti kršćani."
@@ -142,5 +151,6 @@
    "do": 714.7,
    "tekst": "Allah vam dao svako dobro."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

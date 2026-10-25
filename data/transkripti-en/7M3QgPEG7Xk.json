@@ -13,17 +13,42 @@
   {
    "od": 0.5,
    "do": 41,
-   "tekst": "إن الحمد لله نحمده ونستعينه ونستغفره"
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
    "od": 41,
+   "do": 50.6,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
+  },
+  {
+   "od": 50.6,
+   "do": 58.9,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger."
+  },
+  {
+   "od": 58.9,
    "do": 81.2,
-   "tekst": "ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فلا مضل له ومن يضلل فلا هادي له، وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده ورسوله، أرسله الله بالحق بشيرا ونذيرا وسراجا منيرا، لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين."
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah sent him with the truth as a bearer of glad tidings, a warner and a light-giving lamp, to warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May Allah the Exalted bless him and his good and pure family and his noble companions, the rightly guided who guided others, and grant him abundant peace until the Day of Judgement."
   },
   {
    "od": 81.2,
+   "do": 93.4,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah says in His noble Book: “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). To proceed:"
+  },
+  {
+   "od": 93.4,
    "do": 122.3,
-   "tekst": "قال الله في كتابه الكريم: يا أيها الذين آمنوا اتقوا الله حق تقاته وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. أَمَّا بَعْدُ. Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds, the Lord of the Day of Judgement, the Lord of jinn and mankind. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), our Prophet, upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah"
+   "tekst": "Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds, the Lord of the Day of Judgement, the Lord of jinn and mankind. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), our Prophet, upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah"
   },
   {
    "od": 122.3,
@@ -116,6 +141,13 @@
    "tekst": "And then we see that these are our brothers who pray together with us in the same row. But, unfortunately, money is a trial."
   },
   {
+   "od": 644.8,
+   "do": 648.2,
+   "tekst": "إِنَّمَا أَمْوَالُكُمْ وَأَوْلَادُكُمْ فِتْنَةٌ",
+   "jezik": "ar",
+   "prevod": "“Your wealth and your children are but a trial…” (At-Taghabun 64:15)"
+  },
+  {
    "od": 648.2,
    "do": 656.8,
    "tekst": "\"Truly, your wealth and your children – they are your trial,\" says Allah, subhanahu wa ta'ala."
@@ -172,8 +204,16 @@
   },
   {
    "od": 844.8,
-   "do": 887.2,
-   "tekst": "That is why a person should fear these sins, guard himself against these sins, these trials, because in them lies ruin for a person and for the whole of society. I ask Allah, subhanahu wa ta'ala, to help us be among those who will have istiqamah on the straight path. I ask Him, the Exalted, subhanahu wa ta'ala, to forgive our sins and the sins of our parents. I ask Him, the Exalted, to admit us into Jannah. Amin, ya Rabbal-'alamin. Barakallahu li wa lakum fil-Qur'anil-'azim, wa nafa'ani wa iyyakum bima fihi minal-ayati wadh-dhikril-hakim. Aqulu qawli hadha wa astaghfirullaha li wa lakum, fastaghfiruhu, innahu huwal-Ghafurur-Rahim."
+   "do": 879.4,
+   "tekst": "That is why a person should fear these sins, guard himself against these sins, these trials, because in them lies ruin for a person and for the whole of society. I ask Allah, subhanahu wa ta'ala, to help us be among those who will have istiqamah on the straight path. I ask Him, the Exalted, subhanahu wa ta'ala, to forgive our sins and the sins of our parents. I ask Him, the Exalted, to admit us into Jannah. Amin, ya Rabbal-'alamin."
+  },
+  {
+   "od": 881.2,
+   "do": 886.7,
+   "tekst": "أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

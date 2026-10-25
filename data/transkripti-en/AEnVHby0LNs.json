@@ -12,18 +12,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 37.8,
-   "tekst": "[Arabic recitation]"
+   "do": 41.5,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ تَعَالَى وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, the Exalted, seek His help and ask His forgiveness."
   },
   {
-   "od": 37.8,
-   "do": 78.3,
-   "tekst": "Nahmaduhu ta'ala wa nasta'inuhu wa nastaghfiruhu, wa na'udhu billahi min shururi anfusina wa min sayyi'ati a'malina. Man yahdihillahu fala mudilla lah, wa man yudlilhu fala hadiya lah. Ash-hadu an la ilaha illallahu wahdahu la sharika lah, wa ash-hadu anna sayyidana wa nabiyyana Muhammadan 'abduhu wa habibuhu wa rasuluhu, arsalahullahu tabaraka wa ta'ala bil-huda wa dinil-haqqi li yuzhirahu 'alad-dini kullihi wa law karihal-kafirun. Fa salawatu Rabbi wa salamuhu 'alayhi wa 'ala alihi wa sahbihi wa man sara 'ala nahjihi waqtafa atharahu ila yawmid-din. Ridwanullahi ta'ala 'alayna"
+   "od": 41.5,
+   "do": 52.4,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْهُ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
   },
   {
-   "od": 78.3,
+   "od": 52.4,
+   "do": 62,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ سَيِّدَنَا وَنَبِيَّنَا مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that our master and prophet Muhammad is His servant, His beloved and His messenger."
+  },
+  {
+   "od": 62,
+   "do": 76.6,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَبَارَكَ وَتَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ فَصَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى آلِهِ وَصَحْبِهِ وَمَنْ سَارَ عَلَى نَهْجِهِ وَاقْتَفَى أَثَرَهُ إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah, Blessed and Exalted, sent him with guidance and the religion of truth to make it prevail over all religion, even if the disbelievers dislike it. May the blessings and peace of my Lord be upon him and upon his family and companions and upon those who follow his way and tread in his footsteps until the Day of Judgement."
+  },
+  {
+   "od": 76.6,
+   "do": 80.1,
+   "tekst": "رِضْوَانُ اللَّهِ تَعَالَى عَلَيْنَا وَعَلَيْهِمْ أَجْمَعِينَ فَأَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "May the pleasure of Allah the Exalted be upon us and upon all of them. To proceed:"
+  },
+  {
+   "od": 80.1,
    "do": 95.1,
-   "tekst": "wa 'alayhim ajma'in. Fa amma ba'd. Respected brothers, honoured believers! The most important act of worship that Allah the Exalted, subhanahu wa ta'ala, has prescribed for His servants is the prayer, salah."
+   "tekst": "Respected brothers, honoured believers! The most important act of worship that Allah the Exalted, subhanahu wa ta'ala, has prescribed for His servants is the prayer, salah."
   },
   {
    "od": 97.6,
@@ -109,6 +134,13 @@
    "od": 450.9,
    "do": 459.8,
    "tekst": "How will we dress, how will we [unclear], what will we wear? This is a conversation with the Lord of all the worlds. And do you know what Allah said to him first?"
+  },
+  {
+   "od": 459.8,
+   "do": 466.8,
+   "tekst": "فَاسْتَمِعْ لِمَا يُوحَىٰ ۝ إِنَّنِي أَنَا اللَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدْنِي وَأَقِمِ الصَّلَاةَ لِذِكْرِي",
+   "jezik": "ar",
+   "prevod": "“…so listen to what is revealed: ‘Indeed, I am Allah; there is no god but Me, so worship Me and establish prayer for My remembrance.’” (Ta-Ha 20:13–14)"
   },
   {
    "od": 466.8,
@@ -277,8 +309,11 @@
   },
   {
    "od": 1175.6,
-   "do": 1178.1,
-   "tekst": "Barakallahu li wa lakum fil-Qur'anil-'azim."
+   "do": 1186.5,
+   "tekst": "بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ أَقُولُ مَا تَسْمَعُونَ وَأَسْتَغْفِرُ اللَّهَ الْعَظِيمَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "May Allah bless me and you through the Mighty Qur’an and benefit me and you with the verses and the wise reminder it contains. I say what you hear and ask Allah the Almighty for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

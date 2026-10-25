@@ -9,8 +9,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 28.8,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 28.8,
    "do": 46.9,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. Nakon što Jusufova braća dođoše u Egipat zajedno sa Benjaminom i uđoše kod Jusufa u rezidenciju, Jusuf odvoji svoga brata Benjamina, pa ga zagrli."
+   "tekst": "Nakon što Jusufova braća dođoše u Egipat zajedno sa Benjaminom i uđoše kod Jusufa u rezidenciju, Jusuf odvoji svoga brata Benjamina, pa ga zagrli."
   },
   {
    "od": 47.2,
@@ -86,6 +100,13 @@
    "od": 380.4,
    "do": 394.3,
    "tekst": "Pa kaže Allah, subhanehu ve te'ala: Mi smo, kaže, podučili ovdje Jusufa ovom varkom kako da njegov brat ostane u Egiptu. A njegov brat je sve znao za to, to jest Benjamin. Šta kažu njegova braća?"
+  },
+  {
+   "od": 394.3,
+   "do": 398.9,
+   "tekst": "إِنْ يَسْرِقْ فَقَدْ سَرَقَ أَخٌ لَهُ مِنْ قَبْلُ",
+   "jezik": "ar",
+   "prevod": "„Ako je on ukrao, ukrao je i prije njegov brat.“ (Jusuf, 77)"
   },
   {
    "od": 398.9,
@@ -184,13 +205,16 @@
   },
   {
    "od": 940.3,
-   "do": 982.6,
-   "tekst": "nakon ta četiri rekata, da ostane da klanja četiri rekata. Ili da dođe – znači, kada već dolazi u neparnim noćima – da dođe i u tim parnim noćima; neće mu ništa biti 45 minuta. Tako da čovjek treba da se potrudi, a bogami ni do Dženneta nije lako doći, jer je put do Dženneta pun, hajmo reći, prepreka i trnja, dok je put do Džehennema lagan, sve uživanje, svi prohtjevi. Pa zato čovjek treba da pazi i da vodi računa. Allah vam dao svako dobro. Ve sallallahu ala nebijjina Muhammedin"
+   "do": 980.1,
+   "tekst": "nakon ta četiri rekata, da ostane da klanja četiri rekata. Ili da dođe – znači, kada već dolazi u neparnim noćima – da dođe i u tim parnim noćima; neće mu ništa biti 45 minuta. Tako da čovjek treba da se potrudi, a bogami ni do Dženneta nije lako doći, jer je put do Dženneta pun, hajmo reći, prepreka i trnja, dok je put do Džehennema lagan, sve uživanje, svi prohtjevi. Pa zato čovjek treba da pazi i da vodi računa. Allah vam dao svako dobro."
   },
   {
-   "od": 982.6,
+   "od": 980.1,
    "do": 984.7,
-   "tekst": "ve ala alihi ve sahbihi. Ve-s-selamu alejkum."
+   "tekst": "وَصَلَّى اللَّهُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ، وَالسَّلَامُ عَلَيْكُمْ",
+   "jezik": "ar",
+   "prevod": "Neka Allah blagoslovi našeg Vjerovjesnika Muhammeda, njegovu porodicu i ashabe. Neka je mir s vama."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

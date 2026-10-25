@@ -13,7 +13,9 @@
   {
    "od": 0.5,
    "do": 42.1,
-   "tekst": "Bismillahir-Rahmanir-Rahim. Alhamdulillah, was-salatu was-salamu 'ala Rasulillah, wa 'ala alihi wa sahbihi, amma ba'd."
+   "tekst": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ، الْحَمْدُ لِلَّهِ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، وَعَلَى آلِهِ وَصَحْبِهِ، أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "In the name of Allah, the Most Gracious, the Most Merciful. Praise be to Allah, and blessings and peace be upon the Messenger of Allah, his family and companions. To proceed:"
   },
   {
    "od": 43.8,
@@ -450,5 +452,6 @@
    "do": 2038.9,
    "tekst": "and of those who followed him. Amin, ya Rabbal-'alamin. May Allah reward you. As-salamu alaykum wa rahmatullahi wa barakatuhu. [unclear] Alhamdulillahi Rabbil-'alamin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

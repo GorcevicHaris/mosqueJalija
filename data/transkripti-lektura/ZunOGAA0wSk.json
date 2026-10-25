@@ -10,7 +10,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
   },
   {
    "od": 31.4,
@@ -108,6 +110,13 @@
    "tekst": "ako Allah da, sigurni – sigurni od progona, od gladi, od svega."
   },
   {
+   "od": 463.6,
+   "do": 467.2,
+   "tekst": "وَرَفَعَ أَبَوَيْهِ عَلَى الْعَرْشِ",
+   "jezik": "ar",
+   "prevod": "„I podiže roditelje svoje na prijesto…“ (Jusuf, 100)"
+  },
+  {
    "od": 467.2,
    "do": 483.6,
    "tekst": "I kaže: postavi svoje roditelje na prijesto, na njegov prijesto, gdje je on sjedio, gdje je boravio. Pa mu, kaže, oni učiniše sedždu, sedždu pozdrava."
@@ -202,5 +211,6 @@
    "do": 961.4,
    "tekst": "Pa ćemo, ako Bog da, sutra i taj zadnji dio završiti. InšaAllah. Allah vam dao svako dobro, pa se vidimo sutra."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

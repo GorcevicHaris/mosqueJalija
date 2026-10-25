@@ -8,19 +8,44 @@
  "lektura": "2026-10-25",
  "segmenti": [
   {
-   "od": 0.1,
-   "do": 39.3,
-   "tekst": "Elhamdulillah… [učenje na arapskom]"
+   "od": 1,
+   "do": 43.7,
+   "tekst": "الْحَمْدُ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
-   "od": 70.1,
-   "do": 87.8,
-   "tekst": "…aled-dini kullihi, ve lev kerihel-kafirun, ve lev kerihel-mušrikun. Fe salavatu Rabbi ve selamuhu alejhi ve ala alihit-tajjibinet-tahirin, ve ashabihil-kiramil-hudatil-muhtedin, ve menittebe'ahum bi ihsanin ila jevmid-din."
+   "od": 43.7,
+   "do": 55.4,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
   },
   {
-   "od": 88.2,
+   "od": 55.4,
+   "do": 65.1,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob i poslanik."
+  },
+  {
+   "od": 65.1,
+   "do": 74.6,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ وَلَوْ كَرِهَ الْمُشْرِكُونَ",
+   "jezik": "ar",
+   "prevod": "Uzvišeni Allah ga je poslao s uputom i pravom vjerom da je uzdigne iznad svih vjera, makar to bilo mrsko nevjernicima i makar to bilo mrsko mnogobošcima (usp. Et-Tevba, 33; Es-Saff, 8–9)."
+  },
+  {
+   "od": 74.6,
+   "do": 91.8,
+   "tekst": "فَصَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَمَنِ اتَّبَعَهُمْ بِإِحْسَانٍ إِلَى يَوْمِ الدِّينِ رِضْوَانُ اللَّهِ تَعَالَى عَلَيْنَا وَعَلَيْهِمْ أَجْمَعِينَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Neka su salavati i selami moga Gospodara na njega i na njegovu dobru i čistu porodicu i njegove plemenite ashabe, upućene koji su i druge upućivali, i na one koji ih u dobru slijede do Sudnjeg dana. Neka je Allahovo zadovoljstvo na nama i na svima njima. A zatim:"
+  },
+  {
+   "od": 93.8,
    "do": 109.5,
-   "tekst": "Ridvanullahi te'ala alejna ve alejhim edžmein. Emma ba'd. Sva slava i sva zahvala pripadaju Uzvišenom Gospodaru svih svjetova, na svim nebrojenim blagodatima, na svim blagodatima kojih smo svjesni, a i onim kojih svjesni nismo."
+   "tekst": "Sva slava i sva zahvala pripadaju Uzvišenom Gospodaru svih svjetova, na svim nebrojenim blagodatima, na svim blagodatima kojih smo svjesni, a i onim kojih svjesni nismo."
   },
   {
    "od": 111.3,
@@ -279,8 +304,16 @@
   },
   {
    "od": 1370.6,
+   "do": 1375.4,
+   "tekst": "u društvu poslanika, šehida, dobrih Allahovih robova, a divno li je to društvo!"
+  },
+  {
+   "od": 1375.5,
    "do": 1386.6,
-   "tekst": "u društvu poslanika, šehida, dobrih Allahovih robova, a divno li je to društvo! Barekallahu li ve lekum fil-Kur'anil-azim, ve nefe'ani ve ijjakum bima fihi minel-ajati vez-zikril-hakim. Ekulu ma tesme'une ve estagfirullahel-azime li ve lekum, festagfiruhu, innehu huvel-Gafurur-Rahim."
+   "tekst": "بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ أَقُولُ مَا تَسْمَعُونَ وَأَسْتَغْفِرُ اللَّهَ الْعَظِيمَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "Neka Allah blagoslovi mene i vas Veličanstvenim Kur’anom i neka mene i vas okoristi ajetima i mudrom opomenom koji su u njemu. Govorim ovo što čujete i molim Allaha Veličanstvenog za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

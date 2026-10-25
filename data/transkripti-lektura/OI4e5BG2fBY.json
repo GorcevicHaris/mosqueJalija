@@ -9,13 +9,15 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 40,
-   "tekst": "[učenje na arapskom]"
+   "do": 42,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
   },
   {
-   "od": 40,
+   "od": 42,
    "do": 71.7,
-   "tekst": "…ve ala alihi ve sahbihi edžmein. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova. Zahvala Njemu što nas je večeras okupio ovdje da izučavamo Njegovu vjeru, da samo Njega obožavamo, da slijedimo Njegovog Poslanika Muhammeda, sallallahu alejhi ve sellem. Neka je Allahovo zadovoljstvo na ashabe Poslanika Muhammeda, sallallahu alejhi ve sellem, i na sve one koji slijede njihov put."
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova. Zahvala Njemu što nas je večeras okupio ovdje da izučavamo Njegovu vjeru, da samo Njega obožavamo, da slijedimo Njegovog Poslanika Muhammeda, sallallahu alejhi ve sellem. Neka je Allahovo zadovoljstvo na ashabe Poslanika Muhammeda, sallallahu alejhi ve sellem, i na sve one koji slijede njihov put."
   },
   {
    "od": 72.1,
@@ -313,6 +315,13 @@
    "tekst": "Šta znači, draga braćo? Kaže Poslanik, to jest kaže ulema: ovo znači čuvaj Allahove granice, drži se onoga što ti je Allah, subhanehu ve te'ala, naredio i kloni se onoga što ti je zabranio – On će te čuvati."
   },
   {
+   "od": 1439.7,
+   "do": 1443,
+   "tekst": "احْفَظِ اللَّهَ تَجِدْهُ تُجَاهَكَ",
+   "jezik": "ar",
+   "prevod": "„Čuvaj Allaha, naći ćeš Ga pred sobom.“ (hadis, Tirmizi)"
+  },
+  {
    "od": 1443,
    "do": 1461.6,
    "tekst": "„Čuvaj Allaha, naći ćeš Ga pored sebe“, to jest naći ćeš Ga kao pomagača u svakoj situaciji. Ako budeš čuvao Njegove granice i ne budeš prelazio Njegove granice, On će te pomagati u svakoj situaciji."
@@ -482,5 +491,6 @@
    "do": 2349.1,
    "tekst": "Kada izađemo napolje, da predočimo ljudima ovo u najljepšem svjetlu. I svi smo mi, svi smo mi pozivači, i svi smo mi svjedoci da sam ja ovo vama prenio, pa i vi prenesite drugima. Molim Allaha, subhanehu ve te'ala, da nas učini od Njegovih iskrenih, dobrih robova. Molim Njega Uzvišenog da nas sačuva džehennemske vatre. Molim Njega Uzvišenog da samo Njega obožavamo. Amin, ja Rabbel-alemin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

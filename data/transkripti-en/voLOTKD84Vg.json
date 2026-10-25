@@ -12,13 +12,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 66.6,
-   "tekst": "[Arabic recitation]"
+   "do": 40.7,
+   "tekst": "الْحَمْدُ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "All praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
-   "od": 66.6,
+   "od": 40.7,
+   "do": 52.5,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
+  },
+  {
+   "od": 52.5,
+   "do": 61,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger."
+  },
+  {
+   "od": 61,
+   "do": 83.7,
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah sent him with the truth as a bearer of glad tidings, a warner and a light-giving lamp, to warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May Allah the Exalted bless him and his good and pure family and his noble companions, the rightly guided who guided others, and grant him abundant peace until the Day of Judgement."
+  },
+  {
+   "od": 83.7,
+   "do": 96.5,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah says in His noble Book: “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). To proceed:"
+  },
+  {
+   "od": 96.5,
    "do": 107.2,
-   "tekst": "لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يا أيها الذين آمنوا اتقوا الله حق تقاته ولا تموتن إلا وأنتم مسلمون. أما بعد. Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment."
+   "tekst": "Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment."
   },
   {
    "od": 107.8,
@@ -202,13 +232,24 @@
   },
   {
    "od": 992.1,
-   "do": 1032.1,
-   "tekst": "Near, near is the day [unclear] – for some today, for some tomorrow – the angel of death will come, and [unclear] before Allah, subhanahu wa ta'ala. Alhamdulillahi hamdan kamilan, was-salatu was-salamu 'ala nabiyyina Muhammadin wa 'ala alihi wa sahbihi ajma'in, ta'ziman li nabiyyihi wa takriman li fakhamati sha'nihi [unclear]. قال عز وجل من قائل مخبرا وآمرا: إن الله وملائكته يصلون على النبي يا أيها الذين آمنوا صلوا عليه وسلموا تسليما. اللهم بارك على محمد وعلى آل محمد كما باركت على إبراهيم وعلى آل إبراهيم"
+   "do": 1001.8,
+   "tekst": "Near, near is the day [unclear] – for some today, for some tomorrow – the angel of death will come, and [unclear] before Allah, subhanahu wa ta'ala."
   },
   {
-   "od": 1032.1,
+   "od": 1001.8,
+   "do": 1017.2,
+   "tekst": "الحمد لله حمد الكاملين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين، تعظيما لنبيه وتكريما لفخامة شأن شرف الصفي، قال عز وجل من قائل مخبرا وآمرا",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah… (part not clearly recognised), and blessings and peace be upon our Prophet Muhammad, his family and all his companions – in reverence for His Prophet and in honour of the lofty rank of the Chosen One. The Mighty and Majestic says, informing and commanding:",
+   "provjeriti": true
+  },
+  {
+   "od": 1017.2,
    "do": 1034.2,
-   "tekst": "إنك حميد مجيد."
+   "tekst": "إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
+   "jezik": "ar",
+   "prevod": "“Indeed, Allah and His angels send blessings upon the Prophet. O you who believe, send blessings upon him and greet him with peace.” (Al-Ahzab 33:56). O Allah, bless Muhammad and the family of Muhammad as You blessed Ibrahim and the family of Ibrahim; You are indeed Praiseworthy, Glorious."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

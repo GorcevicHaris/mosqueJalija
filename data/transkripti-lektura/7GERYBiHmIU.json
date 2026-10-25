@@ -9,13 +9,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 65.4,
-   "tekst": "[učenje na arapskom]"
+   "do": 40,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
-   "od": 65.4,
+   "od": 40,
+   "do": 50,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
+  },
+  {
+   "od": 50,
+   "do": 63.9,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob i poslanik. Allah ga je poslao s istinom kao donosioca radosnih vijesti, opominjača i svjetiljku koja sija."
+  },
+  {
+   "od": 63.9,
+   "do": 80.4,
+   "tekst": "لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Da opominje one čija su srca živa i da se obistini Riječ protiv nevjernika (Ja-Sin, 70). Neka Uzvišeni Allah blagoslovi njega i njegovu dobru i čistu porodicu i njegove plemenite ashabe, upućene koji su i druge upućivali, i neka mu podari obilan selam do Sudnjeg dana."
+  },
+  {
+   "od": 80.4,
+   "do": 91.8,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah kaže u Svojoj plemenitoj Knjizi: „O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102). A zatim:"
+  },
+  {
+   "od": 91.8,
    "do": 107.1,
-   "tekst": "…كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يا أيها الذين آمنوا اتقوا الله حق تقاته ولا تموتن إلا وأنتم مسلمون. أما بعد. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana, Gospodaru džinna i ljudi. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda,"
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana, Gospodaru džinna i ljudi. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda,"
   },
   {
    "od": 107.1,
@@ -143,9 +173,12 @@
    "tekst": "da nas učini od jakih muslimana. A nadam se, inšaAllah, da je to vrijeme, ako Bog da, blizu. Molim Njega Uzvišenog da nas sastavi u Džennetu. Amin."
   },
   {
-   "od": 804.1,
+   "od": 800.5,
    "do": 812,
-   "tekst": "…بما فيه من الآيات والذكر الحكيم. أقول قولي هذا وأستغفر الله لي ولكم فاستغفروه إنه هو الغفور الرحيم."
+   "tekst": "بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "Neka Allah blagoslovi mene i vas Veličanstvenim Kur’anom i neka mene i vas okoristi ajetima i mudrom opomenom koji su u njemu. Ovo govorim i molim Allaha za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

@@ -9,18 +9,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 37.8,
-   "tekst": "[učenje na arapskom]"
+   "do": 41.5,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ تَعَالَى وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; Njega Uzvišenog hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
-   "od": 37.8,
-   "do": 78.3,
-   "tekst": "Nahmeduhu te'ala ve neste'inuhu ve nestagfiruhu, ve ne'uzu billahi min šururi enfusina ve min sejjiati a'malina. Men jehdihillahu fela mudille leh, ve men judlilhu fela hadije leh. Ešhedu en la ilahe illallahu vahdehu la šerike leh, ve ešhedu enne sejjidena ve nebijjena Muhammeden abduhu ve habibuhu ve resuluhu, erselehullahu tebareke ve te'ala bil-huda ve dinil-hakki li juzhirehu aled-dini kullihi ve lev kerihel-kafirun. Fe salavatu Rabbi ve selamuhu alejhi ve ala alihi ve sahbihi ve men sare ala nehdžihi vektefa eserehu ila jevmid-din. Ridvanullahi te'ala alejna"
+   "od": 41.5,
+   "do": 52.4,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْهُ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
   },
   {
-   "od": 78.3,
+   "od": 52.4,
+   "do": 62,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ سَيِّدَنَا وَنَبِيَّنَا مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je naš prvak i vjerovjesnik Muhammed Njegov rob, miljenik i poslanik."
+  },
+  {
+   "od": 62,
+   "do": 76.6,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَبَارَكَ وَتَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ فَصَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى آلِهِ وَصَحْبِهِ وَمَنْ سَارَ عَلَى نَهْجِهِ وَاقْتَفَى أَثَرَهُ إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah, Blagoslovljeni i Uzvišeni, poslao ga je s uputom i pravom vjerom da je uzdigne iznad svih vjera, makar to bilo mrsko nevjernicima. Neka su salavati i selami moga Gospodara na njega i na njegovu porodicu i ashabe i na one koji idu njegovim putem i slijede njegove stope do Sudnjeg dana."
+  },
+  {
+   "od": 76.6,
+   "do": 80.1,
+   "tekst": "رِضْوَانُ اللَّهِ تَعَالَى عَلَيْنَا وَعَلَيْهِمْ أَجْمَعِينَ فَأَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Neka je Allahovo zadovoljstvo na nama i na svima njima. A zatim:"
+  },
+  {
+   "od": 80.1,
    "do": 95.1,
-   "tekst": "ve alejhim edžma'in. Fe emma ba'd. Poštovana braćo, cijenjeni mu'mini! Najvažniji ibadet koji je Uzvišeni Allah, subhanehu ve te'ala, propisao svojim robovima jeste namaz."
+   "tekst": "Poštovana braćo, cijenjeni mu'mini! Najvažniji ibadet koji je Uzvišeni Allah, subhanehu ve te'ala, propisao svojim robovima jeste namaz."
   },
   {
    "od": 97.6,
@@ -106,6 +131,13 @@
    "od": 450.9,
    "do": 459.8,
    "tekst": "Kako ćemo da se obučemo, kako ćemo da [nejasno], da se odjenemo? Ovo je razgovor sa Gospodarom svih svjetova. I znate li šta mu je Allah prvo rekao?"
+  },
+  {
+   "od": 459.8,
+   "do": 466.8,
+   "tekst": "فَاسْتَمِعْ لِمَا يُوحَىٰ ۝ إِنَّنِي أَنَا اللَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدْنِي وَأَقِمِ الصَّلَاةَ لِذِكْرِي",
+   "jezik": "ar",
+   "prevod": "„…pa slušaj ono što ti se objavljuje: ‘Ja sam, zaista, Allah, nema boga osim Mene, zato Me obožavaj i namaz obavljaj da bi Me se sjećao.’“ (Ta-Ha, 13–14)"
   },
   {
    "od": 466.8,
@@ -274,8 +306,11 @@
   },
   {
    "od": 1175.6,
-   "do": 1178.1,
-   "tekst": "Barekallahu li ve lekum fil-Kur'anil-azim."
+   "do": 1186.5,
+   "tekst": "بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ أَقُولُ مَا تَسْمَعُونَ وَأَسْتَغْفِرُ اللَّهَ الْعَظِيمَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "Neka Allah blagoslovi mene i vas Veličanstvenim Kur’anom i neka mene i vas okoristi ajetima i mudrom opomenom koji su u njemu. Govorim ovo što čujete i molim Allaha Veličanstvenog za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

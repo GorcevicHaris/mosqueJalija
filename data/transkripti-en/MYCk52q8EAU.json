@@ -12,8 +12,17 @@
  "segmenti": [
   {
    "od": 0,
-   "do": 27,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين."
+   "do": 20.4,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.4,
+   "do": 26.9,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
   },
   {
    "od": 27,
@@ -130,5 +139,6 @@
    "do": 632.7,
    "tekst": "\"I know from Allah what you do not know.\" So this is Yaqub's interpretation and his advice to his son. I ask Allah, subhanahu wa ta'ala, to reward you with every good for listening attentively. I ask Him, the Exalted, to forgive us our sins. I ask Him, the Exalted, that we, in sha Allah, complete this tafsir by the end of the month of Ramadan. Amin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

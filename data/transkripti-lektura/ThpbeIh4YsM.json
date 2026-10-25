@@ -9,13 +9,15 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 39.5,
-   "tekst": "[učenje na arapskom]"
+   "do": 42,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
   },
   {
-   "od": 39.5,
+   "od": 42.9,
    "do": 62,
-   "tekst": "…ve ala alihi ve sahbihi edžmein. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put, put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem."
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put, put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem."
   },
   {
    "od": 63.5,
@@ -43,9 +45,11 @@
    "tekst": "Zar Allah, subhanehu ve te'ala, kao takav ne zaslužuje da bude obožavan, to jest da Ga izdvojimo u ibadetu, da samo Njemu činimo ibadet? Da li iko, pored Allaha, subhanehu ve te'ala, pored svega ovoga što smo nabrajali, zaslužuje da bude obožavan?"
   },
   {
-   "od": 168.6,
-   "do": 203.8,
-   "tekst": "[učenje na arapskom]"
+   "od": 174.2,
+   "do": 191.9,
+   "tekst": "وَلَئِنْ سَأَلْتَهُمْ مَنْ خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ لَيَقُولُنَّ اللَّهُ",
+   "jezik": "ar",
+   "prevod": "„A ako ih upitaš ko je stvorio nebesa i Zemlju, sigurno će reći: ‘Allah!’“ (Lukman, 25; Ez-Zumer, 38)"
   },
   {
    "od": 203.9,
@@ -69,8 +73,15 @@
   },
   {
    "od": 301.3,
+   "do": 314.8,
+   "tekst": "ili činjenje ibadeta samo Njemu! Kaže Allah, subhanehu ve te'ala: a nismo poslali poslanika na zemaljsku kuglu, a da mu nismo objavili – šta?"
+  },
+  {
+   "od": 316.2,
    "do": 319.6,
-   "tekst": "ili činjenje ibadeta samo Njemu! Kaže Allah, subhanehu ve te'ala: a nismo poslali poslanika na zemaljsku kuglu, a da mu nismo objavili – šta? „Ennehu la ilahe illa ene fa'budun.“"
+   "tekst": "أَنَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدُونِ",
+   "jezik": "ar",
+   "prevod": "„…da nema boga osim Mene, pa Me obožavajte!“ (El-Enbija, 25)"
   },
   {
    "od": 319.7,
@@ -79,8 +90,15 @@
   },
   {
    "od": 359.8,
+   "do": 367.7,
+   "tekst": "فَقَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ مَا لَكُمْ مِنْ إِلَٰهٍ غَيْرُهُ إِنِّي أَخَافُ عَلَيْكُمْ عَذَابَ يَوْمٍ عَظِيمٍ",
+   "jezik": "ar",
+   "prevod": "„…pa je rekao: ‘O narode moj, Allaha obožavajte, vi drugog boga osim Njega nemate! Ja se, zaista, bojim za vas kazne Velikog dana.’“ (El-E'raf, 59)"
+  },
+  {
+   "od": 367.7,
    "do": 390.3,
-   "tekst": "fe kale ja kavmi'budullahe ma lekum min ilahin gajruhu, inni ehafu alejkum azabe jevmin azim.“ Kaže: i Nuha, alejhis-selam, smo poslali svome narodu. Šta je rekao Nuh, alejhis-selam, njegovom narodu? „Ja kavmi'budullahe ma lekum min ilahin gajruhu“ – o narode moj, obožavajte Allaha, jer vi nemate drugog istinskog božanstva koje zaslužuje da bude obožavano osim Allaha."
+   "tekst": "Kaže: i Nuha, alejhis-selam, smo poslali svome narodu. Šta je rekao Nuh, alejhis-selam, njegovom narodu? „Ja kavmi'budullahe ma lekum min ilahin gajruhu“ – o narode moj, obožavajte Allaha, jer vi nemate drugog istinskog božanstva koje zaslužuje da bude obožavano osim Allaha."
   },
   {
    "od": 390.6,
@@ -99,8 +117,15 @@
   },
   {
    "od": 474.3,
+   "do": 477.2,
+   "tekst": "أَنِ اعْبُدُوا اللَّهَ وَاجْتَنِبُوا الطَّاغُوتَ",
+   "jezik": "ar",
+   "prevod": "„…da Allaha obožavaju, a da se kumira klone.“ (En-Nahl, 36)"
+  },
+  {
+   "od": 477.2,
    "do": 509.5,
-   "tekst": "„أَنِ اعْبُدُوا اللَّهَ وَاجْتَنِبُوا الطَّاغُوتَ“ – da, kaže, obožavaju Allaha i da se klone taguta. Šta je tagut, draga braćo? Kaže šejhul-islam Ibn Tejmijje: tagut je sve ono u čemu čovjek pretjeruje, prelazi granice, bilo to u obožavanju, u slijeđenju, u pokornosti. Mi danas, nažalost, mislimo da je ibadet, ili činjenje ibadeta, samo da čovjek dođe i da spusti glavu na sedždu"
+   "tekst": "Da, kaže, obožavaju Allaha i da se klone taguta. Šta je tagut, draga braćo? Kaže šejhul-islam Ibn Tejmijje: tagut je sve ono u čemu čovjek pretjeruje, prelazi granice, bilo to u obožavanju, u slijeđenju, u pokornosti. Mi danas, nažalost, mislimo da je ibadet, ili činjenje ibadeta, samo da čovjek dođe i da spusti glavu na sedždu"
   },
   {
    "od": 510.8,
@@ -317,5 +342,6 @@
    "do": 1571.4,
    "tekst": "šta čovjek ne smije da radi, ili da usmjeri osim Allahu, subhanehu ve te'ala. [nejasno] Ovo je bio samo neki mali uvod o bitnosti obožavanja samo Allaha, subhanehu ve te'ala, gdje smo citirali kur'anske ajete i hadise koje bilježe Buhari i Muslim. Molim Allaha, subhanehu ve te'ala, da vas nagradi svakim dobrom, da vam poveća deredže na ovom i na budućem svijetu. Molim Njega Uzvišenog da nas sačuva svakog šerra. Amin, ja Rabbel-alemin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

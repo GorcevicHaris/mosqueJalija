@@ -12,18 +12,38 @@
  "segmenti": [
   {
    "od": 2.4,
-   "do": 43.3,
-   "tekst": "[Arabic recitation]"
+   "do": 43.2,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ وَنَسْتَهْدِيهِ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, seek His help, ask His forgiveness and seek His guidance."
   },
   {
-   "od": 44.1,
-   "do": 61.1,
-   "tekst": "Wa na'udhu billahi ta'ala min shururi anfusina wa min sayyi'ati a'malina. Man yahdihillahu fala mudilla lah, wa man yudlil fala hadiya lah. Wa ash-hadu an la ilaha illallahu wahdahu la sharika lah."
+   "od": 43.2,
+   "do": 56.1,
+   "tekst": "وَنَعُوذُ بِاللَّهِ تَعَالَى مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah the Exalted from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
   },
   {
-   "od": 61.1,
-   "do": 85.5,
-   "tekst": "Wa ash-hadu anna Muhammadan 'abduhu wa habibuhu wa rasuluh. Arsalahullahu ta'ala bil-huda wa dinil-haqqi li yuzhirahu 'alad-dini kullihi wa law karihal-kafirun. Allahumma, Rabbishrah li sadri wa yassir li amri wahlul 'uqdatan min lisani yafqahu qawli."
+   "od": 56.1,
+   "do": 66.7,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant, His beloved and His messenger."
+  },
+  {
+   "od": 66.7,
+   "do": 75.2,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ",
+   "jezik": "ar",
+   "prevod": "Allah the Exalted sent him with guidance and the religion of truth to make it prevail over all religion, even if the disbelievers dislike it."
+  },
+  {
+   "od": 75.2,
+   "do": 85.6,
+   "tekst": "اللَّهُمَّ رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي",
+   "jezik": "ar",
+   "prevod": "“O Allah, my Lord, expand my chest for me, ease my task for me and untie the knot from my tongue, so that they may understand my speech.” (cf. Ta-Ha 20:25–28)"
   },
   {
    "od": 86.7,
@@ -195,5 +215,6 @@
    "do": 885.3,
    "tekst": "Of course, the circle widens; it extends to the neighbourhood, to other people, Muslims and so on. We say this asking the Exalted Lord to forgive my sins and yours; you too ask Him."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

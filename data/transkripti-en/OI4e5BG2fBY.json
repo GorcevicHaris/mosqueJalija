@@ -12,13 +12,15 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 40,
-   "tekst": "[Arabic recitation]"
+   "do": 42,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
   },
   {
-   "od": 40,
+   "od": 42,
    "do": 71.7,
-   "tekst": "…wa ala alihi wa sahbihi ajma'in. Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds. Praise be to Him for gathering us here this evening to study His religion, to worship Him alone, and to follow His Messenger Muhammad, sallallahu alayhi wa sallam (peace be upon him). May Allah's pleasure be upon the companions of the Prophet Muhammad, sallallahu alayhi wa sallam, and upon all those who follow their path."
+   "tekst": "Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds. Praise be to Him for gathering us here this evening to study His religion, to worship Him alone, and to follow His Messenger Muhammad, sallallahu alayhi wa sallam (peace be upon him). May Allah's pleasure be upon the companions of the Prophet Muhammad, sallallahu alayhi wa sallam, and upon all those who follow their path."
   },
   {
    "od": 72.1,
@@ -316,6 +318,13 @@
    "tekst": "What does it mean, dear brothers? The Prophet says, that is, the scholars say: this means guard the limits set by Allah, hold to what Allah, subhanahu wa ta'ala, has commanded you and keep away from what He has forbidden you – and He will guard you."
   },
   {
+   "od": 1439.7,
+   "do": 1443,
+   "tekst": "احْفَظِ اللَّهَ تَجِدْهُ تُجَاهَكَ",
+   "jezik": "ar",
+   "prevod": "“Be mindful of Allah, and you will find Him before you.” (hadith, at-Tirmidhi)"
+  },
+  {
    "od": 1443,
    "do": 1461.6,
    "tekst": "“Guard Allah, and you will find Him beside you,” that is, you will find Him as a helper in every situation. If you guard His limits and do not transgress His limits, He will help you in every situation."
@@ -485,5 +494,6 @@
    "do": 2349.1,
    "tekst": "When we go out, to present this to people in the most beautiful light. And all of us, all of us are callers, and all of us are witnesses that I have conveyed this to you, so you too convey it to others. I ask Allah, subhanahu wa ta'ala, to make us among His sincere, good servants. I ask Him, the Exalted, to protect us from the Fire of Jahannam. I ask Him, the Exalted, that we worship Him alone. Amin, ya Rabb al-alamin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

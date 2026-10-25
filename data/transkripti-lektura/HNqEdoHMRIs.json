@@ -9,8 +9,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 27.1,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i ashabe."
+  },
+  {
+   "od": 27.1,
    "do": 42.4,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. Ovo jutro, to jest ovaj posljednji sabah u ovome mjesecu ramazanu, završavamo tefsir sure Jusuf."
+   "tekst": "Ovo jutro, to jest ovaj posljednji sabah u ovome mjesecu ramazanu, završavamo tefsir sure Jusuf."
   },
   {
    "od": 42.4,
@@ -34,8 +48,15 @@
   },
   {
    "od": 148.1,
+   "do": 152.3,
+   "tekst": "وَمَا تَسْأَلُهُمْ عَلَيْهِ مِنْ أَجْرٍ ۚ إِنْ هُوَ إِلَّا ذِكْرٌ لِلْعَالَمِينَ",
+   "jezik": "ar",
+   "prevod": "„A ti od njih za to nikakvu nagradu ne tražiš – on je samo opomena svjetovima.“ (Jusuf, 104)"
+  },
+  {
+   "od": 152.3,
    "do": 188.2,
-   "tekst": "„وَمَا تَسْأَلُهُمْ عَلَيْهِ مِنْ أَجْرٍ إِنْ هُوَ إِلَّا ذِكْرٌ لِلْعَالَمِينَ“ Kaže: ti, Božiji Poslaniče, ne tražiš nagradu, nadoknadu za ovaj Kur'an. „In huve illa zikrun lil-alemin“ – doista, kaže, on je samo opomena svjetovima. Doista, Kur'an je samo opomena svjetovima. „Ve ma ekserun-nasi ve lev haraste bi mu'minin. Ve ma tes'eluhum alejhi min edžrin, in huve illa zikrun lil-alemin. Ve keejjin min ajetin fis-semavati vel-erdi jemurrune alejha ve hum anha mu'ridun.“ Kaže: mnogo je ajeta,"
+   "tekst": "Kaže: ti, Božiji Poslaniče, ne tražiš nagradu, nadoknadu za ovaj Kur'an. „In huve illa zikrun lil-alemin“ – doista, kaže, on je samo opomena svjetovima. Doista, Kur'an je samo opomena svjetovima. „Ve ma ekserun-nasi ve lev haraste bi mu'minin. Ve ma tes'eluhum alejhi min edžrin, in huve illa zikrun lil-alemin. Ve keejjin min ajetin fis-semavati vel-erdi jemurrune alejha ve hum anha mu'ridun.“ Kaže: mnogo je ajeta,"
   },
   {
    "od": 188.2,
@@ -58,6 +79,13 @@
    "tekst": "„Jemurrune alejha ve hum anha mu'ridun.“ Dalje kaže Allah, subhanehu ve te'ala, Poslaniku, nakon ovih ajeta, kaže: „Kul hazihi sebili ed'u ilallah“ – reci, Božiji Poslaniče: ovo je moj put, ovo je put u koji ja pozivam,"
   },
   {
+   "od": 288.4,
+   "do": 292.4,
+   "tekst": "عَلَىٰ بَصِيرَةٍ أَنَا وَمَنِ اتَّبَعَنِي",
+   "jezik": "ar",
+   "prevod": "„…na osnovu jasnog dokaza, i ja i oni koji me slijede…“ (Jusuf, 108)"
+  },
+  {
    "od": 292.4,
    "do": 311.4,
    "tekst": "imajući jasne dokaze. Put u koji pozivam, a to je put islama, imana, vjerovanja i obožavanja samo Allaha, subhanehu ve te'ala. Imajući jasne dokaze."
@@ -74,8 +102,15 @@
   },
   {
    "od": 353.2,
+   "do": 359.2,
+   "tekst": "Nakon toga, Allah, subhanehu ve te'ala, [nejasno] Svoga Poslanika, kaže:"
+  },
+  {
+   "od": 359.2,
    "do": 370.4,
-   "tekst": "Nakon toga, Allah, subhanehu ve te'ala, [nejasno] Svoga Poslanika, kaže: „Hatta izestej'eser-rusulu ve zannu ennehum kad kuzibu džaehum nasruna fe nudždžije men neša', ve la juraddu be'suna anil-kavmil-mudžrimin.“"
+   "tekst": "حَتَّىٰ إِذَا اسْتَيْأَسَ الرُّسُلُ وَظَنُّوا أَنَّهُمْ قَدْ كُذِبُوا جَاءَهُمْ نَصْرُنَا فَنُجِّيَ مَنْ نَشَاءُ ۖ وَلَا يُرَدُّ بَأْسُنَا عَنِ الْقَوْمِ الْمُجْرِمِينَ",
+   "jezik": "ar",
+   "prevod": "„A kada su poslanici izgubili nadu i pomislili da su utjerani u laž, došla im je Naša pomoć, pa je spašen onaj koga Smo htjeli; a kazna Naša od naroda zlikovačkog neće biti odbijena.“ (Jusuf, 110)"
   },
   {
    "od": 370.4,
@@ -167,5 +202,6 @@
    "do": 781.6,
    "tekst": "Ne smije čovjek da bude od tih. To onda tu ima neki veliki, veliki, veliki problem. Nego treba da budemo od onih pravih, dobrih, dobrih mu'mina: kada odemo sa ovoga dunjaluka, da budemo od onih koji su se odmorili, a ne od onih od kojih su se drugi odmorili. I molimo Allaha, subhanehu ve te'ala, da nam oprosti grijehe, grijehe naših roditelja i uvede nas u Džennet. Amin, ja Rabbel-alemin. Es-selamu alejkum ve rahmetullahi te'ala ve berekatuhu."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

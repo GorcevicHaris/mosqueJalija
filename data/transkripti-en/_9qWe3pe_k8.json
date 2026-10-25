@@ -12,13 +12,36 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 12.7,
+   "tekst": "جَدِّدْ حَيَاةَ الْقَلْبِ بِالْقُرْآنِ كَيْ تَطْمَئِنَّ الرُّوحُ بِالْإِيمَانِ",
+   "jezik": "ar",
+   "prevod": "Renew the life of the heart with the Qur’an, so that the soul may find peace in faith."
+  },
+  {
+   "od": 12.7,
+   "do": 30.2,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, seek His help and ask His forgiveness. We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
+  },
+  {
+   "od": 30.2,
    "do": 43.1,
-   "tekst": "جدد حياة القلب بالقرآن كي تطمئن الروح بالإيمان. إن الحمد لله نحمده ونستعينه ونستغفره، ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فلا مضل له ومن يضلل فلا هادي له، وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده ورسوله، أرسله الله تبارك وتعالى بالهدى ودين الحق،"
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، أَرْسَلَهُ اللَّهُ تَبَارَكَ وَتَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger. Allah, Blessed and Exalted, sent him with guidance and the religion of truth."
   },
   {
    "od": 43.1,
+   "do": 55.6,
+   "tekst": "لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ، صَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى الصَّحَابَةِ وَالتَّابِعِينَ وَمَنْ تَبِعَهُمْ بِإِحْسَانٍ إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "To warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May the blessings and peace of my Lord be upon him, upon the companions, the successors and those who follow them in excellence until the Day of Judgement."
+  },
+  {
+   "od": 55.6,
    "do": 83.1,
-   "tekst": "لينذر من كان حيا ويحق القول على الكافرين، صلوات ربي وسلامه عليه وعلى الصحابة والتابعين ومن تبعهم بإحسان إلى يوم الدين. Dear and respected brothers, honoured members of the congregation, honoured believers, first of all, boundless praise be to Allah the Exalted, the Lord of all the worlds, the Master of the Day of Judgement, the Most Gracious and Most Merciful, for making us adherents of the only religion recognised by Him, the religion of Islam."
+   "tekst": "Dear and respected brothers, honoured members of the congregation, honoured believers, first of all, boundless praise be to Allah the Exalted, the Lord of all the worlds, the Master of the Day of Judgement, the Most Gracious and Most Merciful, for making us adherents of the only religion recognised by Him, the religion of Islam."
   },
   {
    "od": 83.8,
@@ -284,6 +307,14 @@
    "od": 1193.9,
    "do": 1195.6,
    "tekst": "and Islam be proudly practised."
+  },
+  {
+   "od": 1195.6,
+   "do": 1209,
+   "tekst": "آمِينَ يَا رَبَّ الْعَالَمِينَ. أَلَا إِنَّ أَحْسَنَ الْكَلَامِ وَأَبْلَغَ النِّظَامِ كَلَامُ اللَّهِ الْمَلِكِ الْعَزِيزِ الْعَلَّامِ، كَمَا قَالَ اللَّهُ تَبَارَكَ وَتَعَالَى فِي نَظْمِ الْكَلَامِ: وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنْصِتُوا لَعَلَّكُمْ تُرْحَمُونَ",
+   "jezik": "ar",
+   "prevod": "Amen, O Lord of the worlds. Indeed, the finest speech and the most eloquent composition is the speech of Allah, the King, the Mighty, the All-Knowing, as Allah, Blessed and Exalted, says in His ordered speech: “And when the Qur’an is recited, listen to it and be silent, that you may receive mercy.” (Al-A'raf 7:204)"
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

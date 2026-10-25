@@ -12,13 +12,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 70.4,
-   "tekst": "[Arabic recitation]"
+   "do": 42.8,
+   "tekst": "الْحَمْدُ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "All praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
-   "od": 70.5,
+   "od": 42.8,
+   "do": 53.1,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
+  },
+  {
+   "od": 53.1,
+   "do": 61.2,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger."
+  },
+  {
+   "od": 61.2,
+   "do": 83.8,
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah sent him with the truth as a bearer of glad tidings, a warner and a light-giving lamp, to warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May Allah the Exalted bless him and his good and pure family and his noble companions, the rightly guided who guided others, and grant him abundant peace until the Day of Judgement."
+  },
+  {
+   "od": 83.8,
+   "do": 94.8,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah says in His noble Book: “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). To proceed:"
+  },
+  {
+   "od": 94.8,
    "do": 120.3,
-   "tekst": "صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. أما بعد. Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of the worlds, the Lord of the Day of Judgement, the Lord of jinn and mankind, and blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
+   "tekst": "Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of the worlds, the Lord of the Day of Judgement, the Lord of jinn and mankind, and blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
   },
   {
    "od": 120.3,
@@ -112,13 +142,46 @@
   },
   {
    "od": 560.5,
+   "do": 562.6,
+   "tekst": "I ask Him, the Exalted, to bring us together in Jannah (Paradise)."
+  },
+  {
+   "od": 562.6,
+   "do": 571.4,
+   "tekst": "آمِينَ يَا رَبَّ الْعَالَمِينَ بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ",
+   "jezik": "ar",
+   "prevod": "Amen, O Lord of the worlds. May Allah bless me and you through the Mighty Qur’an and benefit me and you with the verses and the wise reminder it contains."
+  },
+  {
+   "od": 571.4,
+   "do": 577.7,
+   "tekst": "أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
+  },
+  {
+   "od": 577.7,
+   "do": 590.1,
+   "tekst": "الحمد لله حمد الكاملين",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah… (part not clearly recognised)",
+   "provjeriti": true
+  },
+  {
+   "od": 590.1,
    "do": 602.9,
-   "tekst": "I ask Him, the Exalted, to bring us together in Jannah (Paradise). آمين يا رب العالمين. بارك الله لي ولكم في القرآن العظيم، ونفعني وإياكم بما فيه من الآيات والذكر الحكيم. أقول قولي هذا وأستغفر الله لي ولكم فاستغفروه إنه هو الغفور الرحيم. والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين، تعظيما لنبيه وتكريما لفخامته شأن شرف صفي، قال عز وجل من قائل مخبرا وآمرا:"
+   "tekst": "وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ، تعظيما لنبيه وتكريما لفخامة شأن شرف الصفي، قال عز وجل من قائل مخبرا وآمرا",
+   "jezik": "ar",
+   "prevod": "And blessings and peace be upon our Prophet Muhammad, his family and all his companions – in reverence for His Prophet and in honour of the lofty rank of the Chosen One. The Mighty and Majestic says, informing and commanding:",
+   "provjeriti": true
   },
   {
    "od": 602.9,
-   "do": 619.3,
-   "tekst": "إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا. اللهم بارك على محمد وعلى آل محمد كما باركت على إبراهيم وعلى آل إبراهيم إنك حميد مجيد."
+   "do": 619.5,
+   "tekst": "إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
+   "jezik": "ar",
+   "prevod": "“Indeed, Allah and His angels send blessings upon the Prophet. O you who believe, send blessings upon him and greet him with peace.” (Al-Ahzab 33:56). O Allah, bless Muhammad and the family of Muhammad as You blessed Ibrahim and the family of Ibrahim; You are indeed Praiseworthy, Glorious."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

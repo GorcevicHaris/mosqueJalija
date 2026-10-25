@@ -9,8 +9,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 26.2,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 26.2,
    "do": 40.8,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. Nastavljamo sa tefsirom sure Jusuf. Nakon što Jusuf bi zatvoren u zatvoru, sa njim uđoše još dvojica mladića."
+   "tekst": "Nastavljamo sa tefsirom sure Jusuf. Nakon što Jusuf bi zatvoren u zatvoru, sa njim uđoše još dvojica mladića."
   },
   {
    "od": 41.1,
@@ -46,6 +60,13 @@
    "od": 176.8,
    "do": 196.3,
    "tekst": "„Već sam“, kaže, „vettebe'tu millete aba'i Ibrahime ve Ishake ve Ja'kub“ – „nego sam“, kaže, „ostao da slijedim vjeru mog pradjeda Ibrahima, djeda Ishaka i mog oca Jakuba, i ostao sam na njihovoj vjeri.“"
+  },
+  {
+   "od": 196.3,
+   "do": 200.1,
+   "tekst": "مَا كَانَ لَنَا أَنْ نُشْرِكَ بِاللَّهِ مِنْ شَيْءٍ",
+   "jezik": "ar",
+   "prevod": "„Nama ne priliči da ikoga Allahu ravnim smatramo…“ (Jusuf, 38)"
   },
   {
    "od": 200.1,
@@ -188,6 +209,13 @@
    "tekst": "Ne može ovaj Jusuf da se sjeti, kad nije spomenuto da je on bilo šta zaboravio. Jer je on cijelo vrijeme spominjao Allaha, subhanehu ve te'ala, i cijelo vrijeme se oslanjao na Allaha. Znate i sami te ove ajete koje smo spominjali."
   },
   {
+   "od": 905.3,
+   "do": 908.7,
+   "tekst": "فَلَبِثَ فِي السِّجْنِ بِضْعَ سِنِينَ",
+   "jezik": "ar",
+   "prevod": "„I on ostade u zatvoru nekoliko godina.“ (Jusuf, 42)"
+  },
+  {
    "od": 908.7,
    "do": 925.4,
    "tekst": "Pa poslije toga Jusuf je ostao u zatvoru određen broj godina. „Bid'u“ na arapskom znači od 3 do 10 godina. Pa je, kaže, većina učenjaka na tome, kažu, da je ostao 7 godina u zatvoru."
@@ -212,5 +240,6 @@
    "do": 991.3,
    "tekst": "Allah vam dao svako dobro. Es-selamu alejkum ve rahmetullahi ve berekatuh."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

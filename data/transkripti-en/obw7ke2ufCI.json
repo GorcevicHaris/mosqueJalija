@@ -12,18 +12,36 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 43,
-   "tekst": "[Arabic recitation]"
+   "do": 43.1,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
-   "od": 44.5,
-   "do": 88.7,
-   "tekst": "Wa na'udhu billahi min shururi anfusina wa min sayyi'ati a'malina. Man yahdihillahu fala mudilla lah, wa man yudlil fala hadiya lah. Wa ashhadu an la ilaha illallahu wahdahu la sharika lah, wa ashhadu anna Muhammadan 'abduhu wa rasuluh. Arsalahullahu bil-haqqi bashiran wa nadhiran wa sirajan munira, لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يا أيها الذين آمنوا اتقوا الله حق تقاته"
+   "od": 43.1,
+   "do": 53.3,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
   },
   {
-   "od": 88.7,
+   "od": 53.3,
+   "do": 81.5,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger. Allah sent him with the truth as a bearer of glad tidings, a warner and a light-giving lamp, to warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May Allah the Exalted bless him and his good and pure family and his noble companions, the rightly guided who guided others, and grant him abundant peace until the Day of Judgement."
+  },
+  {
+   "od": 81.5,
+   "do": 92.5,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah says in His noble Book: “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). To proceed:"
+  },
+  {
+   "od": 92.5,
    "do": 135.3,
-   "tekst": "ولا تموتن إلا وأنتم مسلمون. أما بعد. Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment, the One who knows what human hearts conceal and what is in people's chests. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), who warned us, us believers, that in the human body there is an organ: if it is sound, the whole body will be sound."
+   "tekst": "Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment, the One who knows what human hearts conceal and what is in people's chests. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), who warned us, us believers, that in the human body there is an organ: if it is sound, the whole body will be sound."
   },
   {
    "od": 136.5,
@@ -147,8 +165,16 @@
   },
   {
    "od": 737.9,
+   "do": 750.9,
+   "tekst": "may be sound. I ask Allah, subhanahu wa ta'ala, to make us among those who take lessons, to make us among His sincere, good servants. I ask Him, the Exalted, to unite us in Jannah (Paradise) just as He has united us today."
+  },
+  {
+   "od": 750.9,
    "do": 757.9,
-   "tekst": "may be sound. I ask Allah, subhanahu wa ta'ala, to make us among those who take lessons, to make us among His sincere, good servants. I ask Him, the Exalted, to unite us in Jannah (Paradise) just as He has united us today. آمين يا رب العالمين. أقول قولي هذا وأستغفر الله لي ولكم فاستغفروه إنه هو الغفور الرحيم."
+   "tekst": "آمِينَ يَا رَبَّ الْعَالَمِينَ أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "Amen, O Lord of the worlds. I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

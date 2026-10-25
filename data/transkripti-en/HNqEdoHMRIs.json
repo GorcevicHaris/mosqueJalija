@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 27.1,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and companions."
+  },
+  {
+   "od": 27.1,
    "do": 42.4,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. This morning, that is, at this last Fajr prayer of this month of Ramadan, we are completing the tafsir (exegesis) of Surah Yusuf."
+   "tekst": "This morning, that is, at this last Fajr prayer of this month of Ramadan, we are completing the tafsir (exegesis) of Surah Yusuf."
   },
   {
    "od": 42.4,
@@ -37,8 +51,15 @@
   },
   {
    "od": 148.1,
+   "do": 152.3,
+   "tekst": "وَمَا تَسْأَلُهُمْ عَلَيْهِ مِنْ أَجْرٍ ۚ إِنْ هُوَ إِلَّا ذِكْرٌ لِلْعَالَمِينَ",
+   "jezik": "ar",
+   "prevod": "“And you do not ask them for any reward for it; it is nothing but a reminder to the worlds.” (Yusuf 12:104)"
+  },
+  {
+   "od": 152.3,
    "do": 188.2,
-   "tekst": "\"وَمَا تَسْأَلُهُمْ عَلَيْهِ مِنْ أَجْرٍ إِنْ هُوَ إِلَّا ذِكْرٌ لِلْعَالَمِينَ\" He says: you, O Messenger of Allah, do not ask for a reward, a payment, for this Qur'an. \"In huwa illa dhikrun lil-'alamin\" – truly, He says, it is only a reminder to the worlds. Truly, the Qur'an is only a reminder to the worlds. \"Wa ma aktharun-nasi wa law harasta bi mu'minin. Wa ma tas'aluhum 'alayhi min ajrin, in huwa illa dhikrun lil-'alamin. Wa ka'ayyin min ayatin fis-samawati wal-ardi yamurruna 'alayha wa hum 'anha mu'ridun.\" He says: there are many signs,"
+   "tekst": "He says: you, O Messenger of Allah, do not ask for a reward, a payment, for this Qur'an. \"In huwa illa dhikrun lil-'alamin\" – truly, He says, it is only a reminder to the worlds. Truly, the Qur'an is only a reminder to the worlds. \"Wa ma aktharun-nasi wa law harasta bi mu'minin. Wa ma tas'aluhum 'alayhi min ajrin, in huwa illa dhikrun lil-'alamin. Wa ka'ayyin min ayatin fis-samawati wal-ardi yamurruna 'alayha wa hum 'anha mu'ridun.\" He says: there are many signs,"
   },
   {
    "od": 188.2,
@@ -61,6 +82,13 @@
    "tekst": "\"Yamurruna 'alayha wa hum 'anha mu'ridun.\" Allah, subhanahu wa ta'ala, then says to the Prophet, after these ayat: \"Qul hadhihi sabili ad'u ilallah\" – say, O Messenger of Allah: this is my way, this is the way to which I invite,"
   },
   {
+   "od": 288.4,
+   "do": 292.4,
+   "tekst": "عَلَىٰ بَصِيرَةٍ أَنَا وَمَنِ اتَّبَعَنِي",
+   "jezik": "ar",
+   "prevod": "“…with clear insight, I and those who follow me…” (Yusuf 12:108)"
+  },
+  {
    "od": 292.4,
    "do": 311.4,
    "tekst": "with clear proofs. The way to which I invite, and that is the way of Islam, of iman, of faith and of worshipping Allah alone, subhanahu wa ta'ala. With clear proofs."
@@ -77,8 +105,15 @@
   },
   {
    "od": 353.2,
+   "do": 359.2,
+   "tekst": "After that, Allah, subhanahu wa ta'ala, [unclear] His Messenger, He says:"
+  },
+  {
+   "od": 359.2,
    "do": 370.4,
-   "tekst": "After that, Allah, subhanahu wa ta'ala, [unclear] His Messenger, He says: \"Hatta idhastay'asar-rusulu wa zannu annahum qad kudhibu ja'ahum nasruna fa nujjiya man nasha', wa la yuraddu ba'suna 'anil-qawmil-mujrimin.\""
+   "tekst": "حَتَّىٰ إِذَا اسْتَيْأَسَ الرُّسُلُ وَظَنُّوا أَنَّهُمْ قَدْ كُذِبُوا جَاءَهُمْ نَصْرُنَا فَنُجِّيَ مَنْ نَشَاءُ ۖ وَلَا يُرَدُّ بَأْسُنَا عَنِ الْقَوْمِ الْمُجْرِمِينَ",
+   "jezik": "ar",
+   "prevod": "“Until, when the messengers despaired and thought that they had been denied, Our help came to them, and whoever We willed was saved; and Our punishment cannot be turned back from the criminal people.” (Yusuf 12:110)"
   },
   {
    "od": 370.4,
@@ -170,5 +205,6 @@
    "do": 781.6,
    "tekst": "A person must not be one of those. Then there is some big, big, big problem there. Rather, we should be among the true, good, good believers: when we leave this world, let us be among those who found rest, and not among those from whom others found rest. And we ask Allah, subhanahu wa ta'ala, to forgive our sins and the sins of our parents, and to admit us into Jannah (Paradise). Amin, ya Rabbal-'alamin. As-salamu alaykum wa rahmatullahi ta'ala wa barakatuh."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

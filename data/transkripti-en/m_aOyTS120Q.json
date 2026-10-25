@@ -12,8 +12,18 @@
  "segmenti": [
   {
    "od": 0,
-   "do": 17.1,
-   "tekst": "[Arabic recitation]"
+   "do": 3.3,
+   "tekst": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+   "jezik": "ar",
+   "prevod": "In the name of Allah, the Most Gracious, the Most Merciful."
+  },
+  {
+   "od": 3.3,
+   "do": 25.3,
+   "tekst": "مَا أَنْزَلْنَا عَلَيْكَ الْقُرْآنَ لِتَشْقَىٰ ۝ إِلَّا تَذْكِرَةً لِمَنْ يَخْشَىٰ ۝ تَنْزِيلًا مِمَّنْ خَلَقَ الْأَرْضَ وَالسَّمَاوَاتِ الْعُلَى",
+   "jezik": "ar",
+   "prevod": "“We have not sent down the Qur’an to you to cause you distress, but as a reminder for those who fear – a revelation from the One who created the earth and the lofty heavens.” (Ta-Ha 20:2–4)"
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

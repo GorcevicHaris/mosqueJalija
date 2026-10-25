@@ -11,19 +11,44 @@
  "izvorniJezik": "bs",
  "segmenti": [
   {
-   "od": 1.1,
+   "od": 1.2,
    "do": 42.8,
-   "tekst": "نحمده ونستعينه ونستغفره"
+   "tekst": "الْحَمْدُ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "All praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
    "od": 42.8,
+   "do": 53.6,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
+  },
+  {
+   "od": 53.6,
+   "do": 61.8,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger."
+  },
+  {
+   "od": 61.8,
    "do": 84.4,
-   "tekst": "ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فلا مضل له ومن يضلل فلا هادي له، وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده ورسوله، أرسله الله بالحق بشيرا ونذيرا وسراجا منيرا، لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين."
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah sent him with the truth as a bearer of glad tidings, a warner and a light-giving lamp, to warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May Allah the Exalted bless him and his good and pure family and his noble companions, the rightly guided who guided others, and grant him abundant peace until the Day of Judgement."
   },
   {
    "od": 84.4,
+   "do": 95,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah says in His noble Book: “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). To proceed:"
+  },
+  {
+   "od": 95,
    "do": 121.6,
-   "tekst": "قال الله في كتابه الكريم: يا أيها الذين آمنوا اتقوا الله حق تقاته ولا تموتن إلا وأنتم مسلمون. أما بعد. Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment, Lord of jinn and mankind, and blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
+   "tekst": "Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment, Lord of jinn and mankind, and blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
   },
   {
    "od": 121.6,
@@ -177,8 +202,16 @@
   },
   {
    "od": 794.3,
+   "do": 807.5,
+   "tekst": "I ask Allah, subhanahu wa ta'ala, to make us among those who reform the condition of their community, and not among those who destroy it. I ask Him, the Exalted, to forgive us our sins and the sins of our parents, and to admit us into Jannah (Paradise). Amin, ya Rabb al-alamin."
+  },
+  {
+   "od": 807.5,
    "do": 819.7,
-   "tekst": "I ask Allah, subhanahu wa ta'ala, to make us among those who reform the condition of their community, and not among those who destroy it. I ask Him, the Exalted, to forgive us our sins and the sins of our parents, and to admit us into Jannah (Paradise). Amin, ya Rabb al-alamin. Barakallahu li wa lakum fil-Qur'an al-'azim, wa nafa'ani wa iyyakum bima fihi min al-ayati wadh-dhikr al-hakim. Aqulu qawli hadha wa astaghfirullaha li wa lakum, fastaghfiruhu, innahu huwa al-Ghafur ar-Rahim."
+   "tekst": "بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "May Allah bless me and you through the Mighty Qur’an and benefit me and you with the verses and the wise reminder it contains. I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

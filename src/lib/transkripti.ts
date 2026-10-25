@@ -13,8 +13,20 @@ export interface TranskriptSegment {
   od: number;
   /** kraj u sekundama */
   do: number;
+  /** tekst segmenta; kod arapskog segmenta (jezik "ar") arapski tekst (arapsko pismo) */
   tekst: string;
+  /** "ar" = arapski dio (uvod/završetak hutbe, ajet, hadis, dova); bez polja = jezik transkripta */
+  jezik?: 'ar';
+  /** prevod arapskog segmenta na jezik transkripta (bosanski u lekturi, engleski u en verziji) */
+  prevod?: string;
+  /** true = arapski tekst nije pouzdano prepoznat (treba preslušati) */
+  provjeriti?: boolean;
 }
+
+/** Da li je segment arapski dio (prikazuje se arapskim pismom, sa prevodom ispod). */
+export const jeArapski = (s: TranskriptSegment): boolean => s.jezik === 'ar';
+/** Tekst segmenta za pretragu/kopiranje: kod arapskog segmenta prevod (ako postoji). */
+export const tekstZaPretragu = (s: TranskriptSegment): string => (jeArapski(s) ? (s.prevod ?? '') : s.tekst);
 
 export interface Transkript {
   id: string;
@@ -30,6 +42,8 @@ export interface Transkript {
   lektorisano?: boolean;
   /** samo engleski prevod (data/transkripti-en/): naslov predavanja na engleskom */
   naslov?: string;
+  /** ISO datum dodavanja arapskih segmenata (drugi prolaz whispera, -l ar) */
+  arapski?: string;
   segmenti: TranskriptSegment[];
 }
 
@@ -129,18 +143,20 @@ export function vrijemeTekst(sek: number): string {
 
 /** Običan tekst (za .txt, kopiranje, pretragu). */
 export function transkriptTekst(t: Transkript, saVremenom = false): string {
-  return t.segmenti.map((s) => (saVremenom ? `[${vrijemeTekst(s.od)}] ${s.tekst}` : s.tekst)).join(saVremenom ? '\n\n' : ' ');
+  const tekst = (s: TranskriptSegment) => (jeArapski(s) && s.prevod ? `${s.tekst}\n${s.prevod}` : s.tekst);
+  return t.segmenti.map((s) => (saVremenom ? `[${vrijemeTekst(s.od)}] ${tekst(s)}` : tekst(s))).join(saVremenom ? '\n\n' : ' ');
 }
 
 export function brojRijeci(t: Transkript): number {
   let n = 0;
-  for (const s of t.segmenti) n += s.tekst.split(/\s+/).filter(Boolean).length;
+  // arapski segment se broji po prevodu (to se čita), inače po tekstu
+  for (const s of t.segmenti) n += (jeArapski(s) && s.prevod ? s.prevod : s.tekst).split(/\s+/).filter(Boolean).length;
   return n;
 }
 
 /**
  * Kompaktni podaci za pretragu transkripata (endpoint /pretraga-transkripti.json).
- * Oblik: { v: 1, t: [[id, [[odSekundi, tekst], …]], …] }.
+ * Oblik: { v: 1, t: [[id, [[odSekundi, tekst], …]], …] }. Za arapske segmente tekst je prevod.
  * `maxZnakova` ograničava tekst po videu (dugi snimci) da JSON ostane razuman.
  */
 export type TPretragaStavka = [string, [number, string][]];
@@ -158,8 +174,10 @@ export function transkriptiZaPretragu(maxZnakova = 40_000, samo?: Set<string>): 
     const seg: [number, string][] = [];
     for (const s of tr.segmenti) {
       if (znakova >= maxZnakova) break;
-      if (s.tekst.startsWith('[')) continue; // oznake tipa "[arapski / nije transkribovano]"
-      const tekst = s.tekst.length + znakova > maxZnakova ? s.tekst.slice(0, maxZnakova - znakova) : s.tekst;
+      // arapski segment se pretražuje po prevodu (arapsko pismo se ne indeksira)
+      const izvor = tekstZaPretragu(s);
+      if (!izvor || izvor.startsWith('[')) continue; // oznake tipa "[arapski / nije transkribovano]"
+      const tekst = izvor.length + znakova > maxZnakova ? izvor.slice(0, maxZnakova - znakova) : izvor;
       seg.push([Math.floor(s.od), tekst]);
       znakova += tekst.length;
     }

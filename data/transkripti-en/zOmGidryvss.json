@@ -12,8 +12,15 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 6.4,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 6.4,
    "do": 41.7,
-   "tekst": "Alhamdulillahi Rabbil-'alamin, was-salatu was-salamu 'ala nabiyyina Muhammadin wa 'ala alihi wa sahbihi ajma'in. Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path of Muhammad, sallallahu alayhi wa sallam. Dear brothers, respected members of the congregation, this faith of ours, the din of Islam, teaches us to guard the rights of brotherhood, to guard the right of our Muslim brother,"
+   "tekst": "Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path of Muhammad, sallallahu alayhi wa sallam. Dear brothers, respected members of the congregation, this faith of ours, the din of Islam, teaches us to guard the rights of brotherhood, to guard the right of our Muslim brother,"
   },
   {
    "od": 42.7,
@@ -42,8 +49,15 @@
   },
   {
    "od": 136.1,
+   "do": 141.5,
+   "tekst": "to abandon him when things are hardest for him. The Prophet, sallallahu alayhi wa sallam, further says:"
+  },
+  {
+   "od": 141.5,
    "do": 151.5,
-   "tekst": "to abandon him when things are hardest for him. The Prophet, sallallahu alayhi wa sallam, further says: \"Man kana fi hajati akhihi, kanallahu fi hajatihi.\""
+   "tekst": "مَنْ كَانَ فِي حَاجَةِ أَخِيهِ كَانَ اللَّهُ فِي حَاجَتِهِ",
+   "jezik": "ar",
+   "prevod": "“Whoever helps his brother in his need, Allah will help him in his need.” (hadith, al-Bukhari and Muslim)"
   },
   {
    "od": 152.3,
@@ -80,5 +94,6 @@
    "do": 323.7,
    "tekst": "The shame of one's Muslim brother should be covered."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

@@ -62,8 +62,15 @@
   },
   {
    "od": 215.3,
+   "do": 217.3,
+   "tekst": "ذَٰلِكَ قَوْلُهُمْ بِأَفْوَاهِهِمْ",
+   "jezik": "ar",
+   "prevod": "“That is their saying with their mouths…” (At-Tawbah 9:30)"
+  },
+  {
+   "od": 217.3,
    "do": 235.5,
-   "tekst": "\"ذَلِكَ قَوْلُهُمْ بِأَفْوَاهِهِمْ\" – that is only, that is only their saying, from their own whims. This saying resembles the saying of the unbelievers before them."
+   "tekst": "That is only, that is only their saying, from their own whims. This saying resembles the saying of the unbelievers before them."
   },
   {
    "od": 236.1,
@@ -149,6 +156,13 @@
    "od": 600,
    "do": 612.3,
    "tekst": "Yatawara minal-qawmi min su'i ma bushshira bih\" – He says: he hides from the people, so that they would not mock him because of what he had been given, that is, because he had had a daughter."
+  },
+  {
+   "od": 612.3,
+   "do": 616.2,
+   "tekst": "أَيُمْسِكُهُ عَلَىٰ هُونٍ أَمْ يَدُسُّهُ فِي التُّرَابِ",
+   "jezik": "ar",
+   "prevod": "“…should he keep it in humiliation or bury it in the dust?” (An-Nahl 16:59)"
   },
   {
    "od": 616.2,
@@ -540,5 +554,6 @@
    "do": 2444.2,
    "tekst": "We ask Allah, subhanahu wa ta'ala, to reward you with every, every good, for listening attentively, for coming this evening to spend time together here and learn about Allah's religion. And I ask Allah, subhanahu wa ta'ala, to forgive our sins and the sins of our parents, and to bring us together in Jannah. Amin, ya Rabbal-'alamin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

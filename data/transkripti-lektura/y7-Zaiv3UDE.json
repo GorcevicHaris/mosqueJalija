@@ -10,17 +10,37 @@
   {
    "od": 0.5,
    "do": 41.4,
-   "tekst": "إن الحمد لله نحمده ونستعينه ونستغفره"
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
    "od": 41.4,
+   "do": 53.7,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
+  },
+  {
+   "od": 53.7,
+   "do": 62.2,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob i poslanik."
+  },
+  {
+   "od": 62.2,
    "do": 85,
-   "tekst": "ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فلا مضل له ومن يضلل فلا هادي له، وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده ورسوله، أرسله الله بالحق بشيرا ونذيرا وسراجا منيرا، لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين."
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah ga je poslao s istinom kao donosioca radosnih vijesti, opominjača i svjetiljku koja sija, da opominje one čija su srca živa i da se obistini Riječ protiv nevjernika (Ja-Sin, 70). Neka Uzvišeni Allah blagoslovi njega i njegovu dobru i čistu porodicu i njegove plemenite ashabe, upućene koji su i druge upućivali, i neka mu podari obilan selam do Sudnjeg dana."
   },
   {
    "od": 85,
-   "do": 97.6,
-   "tekst": "قال الله في كتابه الكريم: يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. أما بعد."
+   "do": 97,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah kaže u Svojoj plemenitoj Knjizi: „O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102). A zatim:"
   },
   {
    "od": 115.1,
@@ -84,8 +104,15 @@
   },
   {
    "od": 494.6,
+   "do": 500.6,
+   "tekst": "وَلَا تَقْتُلُوا أَوْلَادَكُمْ مِنْ إِمْلَاقٍ ۖ نَحْنُ نَرْزُقُكُمْ وَإِيَّاهُمْ",
+   "jezik": "ar",
+   "prevod": "„I ne ubijajte djecu svoju zbog neimaštine – Mi i vas i njih hranimo…“ (El-En'am, 151)"
+  },
+  {
+   "od": 500.6,
    "do": 514,
-   "tekst": "„وَلَا تَقْتُلُوا أَوْلَادَكُمْ مِنْ إِمْلَاقٍ نَحْنُ نَرْزُقُكُمْ وَإِيَّاهُمْ“ – i kaže: nemoj da ubijate svoju djecu iz straha od neimaštine. Mi vas opskrbljujemo, i njih također."
+   "tekst": "I kaže: nemoj da ubijate svoju djecu iz straha od neimaštine. Mi vas opskrbljujemo, i njih također."
   },
   {
    "od": 514,
@@ -224,8 +251,16 @@
   },
   {
    "od": 1241.9,
+   "do": 1267.9,
+   "tekst": "I to su ovih deset, deset stvari koje nam Allah, subhanehu ve te'ala, oporučuje, u kojima je korist i za čovjeka, za pojedinca, i za cijelu, i za cijelu zajednicu. Molim Allaha, subhanehu ve te'ala, da nas učini od onih koji svoje obaveze ispunjavaju prema Allahu, subhanehu ve te'ala, da nas učini od onih koji samo Njega obožavaju. Molim Njega Uzvišenog da nas sastavi u Džennetu. Amin, ja Rabbel-alemin."
+  },
+  {
+   "od": 1267.9,
    "do": 1274,
-   "tekst": "I to su ovih deset, deset stvari koje nam Allah, subhanehu ve te'ala, oporučuje, u kojima je korist i za čovjeka, za pojedinca, i za cijelu, i za cijelu zajednicu. Molim Allaha, subhanehu ve te'ala, da nas učini od onih koji svoje obaveze ispunjavaju prema Allahu, subhanehu ve te'ala, da nas učini od onih koji samo Njega obožavaju. Molim Njega Uzvišenog da nas sastavi u Džennetu. Amin, ja Rabbel-alemin. Ekulu kavli haza ve estagfirullahe li ve lekum, festagfiruhu, innehu huvel-Gafurur-Rahim."
+   "tekst": "أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "Ovo govorim i molim Allaha za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

@@ -13,7 +13,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
   },
   {
    "od": 30.2,
@@ -51,6 +53,13 @@
    "tekst": "That is the situation today, unfortunately. But Yusuf, alayhis-salam, did not want that. And that is why this story of his is special. What does Yusuf, alayhis-salam, say?"
   },
   {
+   "od": 217,
+   "do": 221.2,
+   "tekst": "اجْعَلْنِي عَلَىٰ خَزَائِنِ الْأَرْضِ",
+   "jezik": "ar",
+   "prevod": "“Appoint me over the storehouses of the land…” (Yusuf 12:55)"
+  },
+  {
    "od": 221.2,
    "do": 241.7,
    "tekst": "He says: \"Make me,\" or \"appoint me\" minister of finance, the one who will take care of the finances. \"Inni hafizun 'alim\" – truly I know how to safeguard money, but also how to distribute it, in what way to spend it."
@@ -67,8 +76,15 @@
   },
   {
    "od": 296,
+   "do": 303.1,
+   "tekst": "وَإِنْ أُعْطِيتَهَا عَنْ غَيْرِ مَسْأَلَةٍ أُعِنْتَ عَلَيْهَا",
+   "jezik": "ar",
+   "prevod": "“…but if you are given it without asking for it, you will be helped in it.” (hadith, al-Bukhari and Muslim)"
+  },
+  {
+   "od": 303.1,
    "do": 323.9,
-   "tekst": "وَإِنْ أُعْطِيتَهَا عَنْ غَيْرِ مَسْأَلَةٍ أُعِنْتَ عَلَيْهَا\" – \"But if,\" he says, \"you obtain authority without seeking it,\" he says, \"you will be helped.\" Does this case of Yusuf, alayhis-salatu was-salam, now conflict with what the Prophet, sallallahu alayhi wa sallam, conveyed to us through Abdur-Rahman?"
+   "tekst": "But if,\" he says, \"you obtain authority without seeking it,\" he says, \"you will be helped.\" Does this case of Yusuf, alayhis-salatu was-salam, now conflict with what the Prophet, sallallahu alayhi wa sallam, conveyed to us through Abdur-Rahman?"
   },
   {
    "od": 323.9,
@@ -126,6 +142,13 @@
    "tekst": "\"Nusibu bi rahmatina\" – We bestow rahmah, mercy, on whomever We will. And this is not exclusively for Yusuf, but for everyone who works, who is good, who is honest."
   },
   {
+   "od": 607.3,
+   "do": 610.6,
+   "tekst": "وَلَا نُضِيعُ أَجْرَ الْمُحْسِنِينَ",
+   "jezik": "ar",
+   "prevod": "“…and We do not allow the reward of those who do good to be lost.” (Yusuf 12:56)"
+  },
+  {
    "od": 610.6,
    "do": 628.1,
    "tekst": "Allah will not allow the reward of those who do good to be lost. Not only Yusuf's, but that of all who do good. Allah will not allow it: whoever does good will be repaid with good."
@@ -175,5 +198,6 @@
    "do": 842.1,
    "tekst": "Or the image of Abu Bakr or Umar, and so on. So a person should avoid these things. That is why, dear brothers, we have the Book, and Allah has granted all of us the ability to read, or the lectures that our scholars have given on these topics. So a person should make an effort, make a little effort, to read and also to listen to a lecture or two. Now we will, in sha Allah, continue, continue further. May Allah grant you every good. As-salamu alaykum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

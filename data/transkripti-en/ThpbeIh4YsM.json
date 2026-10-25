@@ -12,13 +12,15 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 39.5,
-   "tekst": "[Arabic recitation]"
+   "do": 42,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
   },
   {
-   "od": 39.5,
+   "od": 42.9,
    "do": 62,
-   "tekst": "…wa ala alihi wa sahbihi ajma'in. Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
+   "tekst": "Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
   },
   {
    "od": 63.5,
@@ -46,9 +48,11 @@
    "tekst": "Does Allah, subhanahu wa ta'ala, as such not deserve to be worshipped, that is, that we single Him out in worship, that we perform worship for Him alone? Does anyone, besides Allah, subhanahu wa ta'ala, besides all of this that we have listed, deserve to be worshipped?"
   },
   {
-   "od": 168.6,
-   "do": 203.8,
-   "tekst": "[Arabic recitation]"
+   "od": 174.2,
+   "do": 191.9,
+   "tekst": "وَلَئِنْ سَأَلْتَهُمْ مَنْ خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ لَيَقُولُنَّ اللَّهُ",
+   "jezik": "ar",
+   "prevod": "“And if you ask them who created the heavens and the earth, they will surely say, ‘Allah.’” (Luqman 31:25; Az-Zumar 39:38)"
   },
   {
    "od": 203.9,
@@ -72,8 +76,15 @@
   },
   {
    "od": 301.3,
+   "do": 314.8,
+   "tekst": "or performing worship for Him alone! Allah, subhanahu wa ta'ala, says: and We did not send a messenger to the globe of the Earth except that We revealed to him – what?"
+  },
+  {
+   "od": 316.2,
    "do": 319.6,
-   "tekst": "or performing worship for Him alone! Allah, subhanahu wa ta'ala, says: and We did not send a messenger to the globe of the Earth except that We revealed to him – what? “Annahu la ilaha illa ana fa'budun.”"
+   "tekst": "أَنَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدُونِ",
+   "jezik": "ar",
+   "prevod": "“…that there is no god but Me, so worship Me.” (Al-Anbiya 21:25)"
   },
   {
    "od": 319.7,
@@ -82,8 +93,15 @@
   },
   {
    "od": 359.8,
+   "do": 367.7,
+   "tekst": "فَقَالَ يَا قَوْمِ اعْبُدُوا اللَّهَ مَا لَكُمْ مِنْ إِلَٰهٍ غَيْرُهُ إِنِّي أَخَافُ عَلَيْكُمْ عَذَابَ يَوْمٍ عَظِيمٍ",
+   "jezik": "ar",
+   "prevod": "“…and he said, ‘O my people, worship Allah; you have no god other than Him. Indeed, I fear for you the punishment of a tremendous Day.’” (Al-A'raf 7:59)"
+  },
+  {
+   "od": 367.7,
    "do": 390.3,
-   "tekst": "fa qala ya qawmi'budullaha ma lakum min ilahin ghayruhu, inni akhafu alaykum 'adhaba yawmin azim.” He says: and We sent Nuh, alayhis-salam, to his people. What did Nuh, alayhis-salam, say to his people? “Ya qawmi'budullaha ma lakum min ilahin ghayruhu” – O my people, worship Allah, for you have no other true deity worthy of worship except Allah."
+   "tekst": "He says: and We sent Nuh, alayhis-salam, to his people. What did Nuh, alayhis-salam, say to his people? “Ya qawmi'budullaha ma lakum min ilahin ghayruhu” – O my people, worship Allah, for you have no other true deity worthy of worship except Allah."
   },
   {
    "od": 390.6,
@@ -102,8 +120,15 @@
   },
   {
    "od": 474.3,
+   "do": 477.2,
+   "tekst": "أَنِ اعْبُدُوا اللَّهَ وَاجْتَنِبُوا الطَّاغُوتَ",
+   "jezik": "ar",
+   "prevod": "“…that they worship Allah and avoid false gods.” (An-Nahl 16:36)"
+  },
+  {
+   "od": 477.2,
    "do": 509.5,
-   "tekst": "“أَنِ اعْبُدُوا اللَّهَ وَاجْتَنِبُوا الطَّاغُوتَ” – that, He says, they worship Allah and avoid taghut. What is taghut, dear brothers? Shaykh al-Islam Ibn Taymiyyah says: taghut is everything in which a person goes to excess, transgresses the limits, whether in worship, in following, or in obedience. Today, unfortunately, we think that ibadah, or performing worship, is only that a person comes and lowers his head in prostration"
+   "tekst": "That, He says, they worship Allah and avoid taghut. What is taghut, dear brothers? Shaykh al-Islam Ibn Taymiyyah says: taghut is everything in which a person goes to excess, transgresses the limits, whether in worship, in following, or in obedience. Today, unfortunately, we think that ibadah, or performing worship, is only that a person comes and lowers his head in prostration"
   },
   {
    "od": 510.8,
@@ -320,5 +345,6 @@
    "do": 1571.4,
    "tekst": "what a person must not do, or direct to anyone except Allah, subhanahu wa ta'ala. [unclear] This was only a small introduction about the importance of worshipping Allah alone, subhanahu wa ta'ala, in which we quoted Qur'anic verses and hadiths recorded by Bukhari and Muslim. I ask Allah, subhanahu wa ta'ala, to reward you with every good, to raise your ranks in this world and the world to come. I ask Him, the Exalted, to protect us from every evil. Amin, ya Rabb al-alamin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

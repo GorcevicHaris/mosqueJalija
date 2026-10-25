@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 26.2,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 26.2,
    "do": 40.8,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. We continue with the tafsir (commentary) of Surah Yusuf. After Yusuf was locked up in prison, two more young men came in with him."
+   "tekst": "We continue with the tafsir (commentary) of Surah Yusuf. After Yusuf was locked up in prison, two more young men came in with him."
   },
   {
    "od": 41.1,
@@ -49,6 +63,13 @@
    "od": 176.8,
    "do": 196.3,
    "tekst": "\"Rather,\" he says, \"wattaba'tu millata aba'i Ibrahima wa Ishaqa wa Ya'qub\" – \"but I have,\" he says, \"remained following the religion of my great-grandfather Ibrahim, my grandfather Ishaq and my father Yaqub, and I have remained upon their religion.\""
+  },
+  {
+   "od": 196.3,
+   "do": 200.1,
+   "tekst": "مَا كَانَ لَنَا أَنْ نُشْرِكَ بِاللَّهِ مِنْ شَيْءٍ",
+   "jezik": "ar",
+   "prevod": "“It is not for us to associate anything with Allah…” (Yusuf 12:38)"
   },
   {
    "od": 200.1,
@@ -191,6 +212,13 @@
    "tekst": "It cannot be Yusuf who remembered, since it is not mentioned that he forgot anything. Because he was mentioning Allah, subhanahu wa ta'ala, the whole time, and the whole time he relied on Allah. You yourselves know these verses that we have mentioned."
   },
   {
+   "od": 905.3,
+   "do": 908.7,
+   "tekst": "فَلَبِثَ فِي السِّجْنِ بِضْعَ سِنِينَ",
+   "jezik": "ar",
+   "prevod": "“So he remained in prison for several years.” (Yusuf 12:42)"
+  },
+  {
    "od": 908.7,
    "do": 925.4,
    "tekst": "So after that Yusuf remained in prison a certain number of years. \"Bid'\" in Arabic means from 3 to 10 years. And, it is said, most scholars hold that he remained in prison for 7 years."
@@ -215,5 +243,6 @@
    "do": 991.3,
    "tekst": "May Allah grant you every good. As-salamu alaykum wa rahmatullahi wa barakatuh."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

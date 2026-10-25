@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 28.2,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 28.2,
    "do": 45.1,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. After Allah, subhanahu wa ta'ala, informed us, at the beginning of Surah Yusuf, about the dream of Yusuf, alayhis-salam (peace be upon him), and his father's advice,"
+   "tekst": "After Allah, subhanahu wa ta'ala, informed us, at the beginning of Surah Yusuf, about the dream of Yusuf, alayhis-salam (peace be upon him), and his father's advice,"
   },
   {
    "od": 45.1,
@@ -128,12 +142,17 @@
   {
    "od": 616.1,
    "do": 617.7,
-   "tekst": "and \"Qul a'udhu bi Rabbin-nas\" are so important."
+   "tekst": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
+   "jezik": "ar",
+   "prevod": "“Say, ‘I seek refuge in the Lord of mankind…’” (An-Nas 114:1)"
   },
   {
    "od": 617.7,
    "do": 650.5,
-   "tekst": "[Arabic recitation]"
+   "tekst": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+   "jezik": "ar",
+   "prevod": "“Say, ‘I seek refuge in the Lord of daybreak from the evil of what He has created, and from the evil of darkness when it settles, and from the evil of those who blow on knots, and from the evil of an envier when he envies.’” (Al-Falaq 113:1–5)",
+   "provjeriti": true
   },
   {
    "od": 650.5,
@@ -155,5 +174,6 @@
    "do": 722,
    "tekst": "That is all for today, and in sha Allahu ta'ala we will continue tomorrow, tomorrow. May Allah grant you every good."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

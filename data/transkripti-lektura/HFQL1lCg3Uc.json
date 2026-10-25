@@ -10,7 +10,9 @@
   {
    "od": 0.5,
    "do": 42.1,
-   "tekst": "Bismillahir-Rahmanir-Rahim. Elhamdulillah, ves-salatu ves-selamu ala Resulillah, ve ala alihi ve sahbihi, emma ba'd."
+   "tekst": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ، الْحَمْدُ لِلَّهِ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، وَعَلَى آلِهِ وَصَحْبِهِ، أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "U ime Allaha, Milostivog, Samilosnog. Hvala Allahu, a salavat i selam na Allahovog Poslanika, njegovu porodicu i ashabe. A zatim:"
   },
   {
    "od": 43.8,
@@ -447,5 +449,6 @@
    "do": 2038.9,
    "tekst": "i onih koji su ga slijedili. Amin, ja Rabbel-alemin. Allah vas nagradio. Es-selamu alejkum ve rahmetullahi ve berekatuhu. [nejasno] Elhamdulillahi Rabbil-alemin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

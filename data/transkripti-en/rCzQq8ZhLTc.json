@@ -13,22 +13,35 @@
   {
    "od": 0.5,
    "do": 40.9,
-   "tekst": "Alhamdulillah, yuhiqqul-haqqa wa yubtilul-batila wa law karihal-mujrimun."
+   "tekst": "الْحَمْدُ لِلَّهِ يُحِقُّ الْحَقَّ وَيُبْطِلُ الْبَاطِلَ وَلَوْ كَرِهَ الْمُجْرِمُونَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Who establishes the truth and abolishes falsehood, even if the criminals dislike it (cf. Al-Anfal 8:8)."
   },
   {
    "od": 41.4,
    "do": 57.3,
-   "tekst": "Wa nash-hadu an la ilaha illallahu wahdahu la sharika lah, wa nash-hadu anna Muhammadan 'abduhu wa habibuhu wa safiyyuhu wa khaliluhu, addal-amanata wa ballagha-r-risalata wa nasahal-ummata wa jahada fi sabilillahi haqqa jihadihi hatta atahul-yaqin."
+   "tekst": "وَنَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَنَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَصَفِيُّهُ وَخَلِيلُهُ أَدَّى الْأَمَانَةَ وَبَلَّغَ الرِّسَالَةَ وَنَصَحَ الْأُمَّةَ وَجَاهَدَ فِي سَبِيلِ اللَّهِ حَقَّ جِهَادِهِ حَتَّى أَتَاهُ الْيَقِينُ",
+   "jezik": "ar",
+   "prevod": "We bear witness that there is no god but Allah alone, Who has no partner, and we bear witness that Muhammad is His servant, His beloved, His chosen one and His close friend. He fulfilled the trust, conveyed the message, gave sincere counsel to the ummah and strove in the way of Allah as He deserves, until certainty (death) came to him."
   },
   {
    "od": 57.7,
-   "do": 76.1,
-   "tekst": "Wa tarakana 'alal-mahajjatil-bayda', layluha ka-nahariha, la yazighu 'anha ba'dahu illa halik. Qalallahu ta'ala fi kitabihil-karim: Bismillahir-Rahmanir-Rahim. Ya ayyuhal-ladhina amanuttaqullaha haqqa tuqatihi wa la tamutunna illa wa antum muslimun."
+   "do": 64.7,
+   "tekst": "وَتَرَكَنَا عَلَى الْمَحَجَّةِ الْبَيْضَاءِ لَيْلُهَا كَنَهَارِهَا لَا يَزِيغُ عَنْهَا بَعْدَهُ إِلَّا هَالِكٌ",
+   "jezik": "ar",
+   "prevod": "He left us upon the clear white path whose night is like its day; none strays from it after him except one who is ruined."
   },
   {
-   "od": 76.2,
+   "od": 64.7,
+   "do": 79.4,
+   "tekst": "قَالَ اللَّهُ تَعَالَى فِي كِتَابِهِ الْكَرِيمِ بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ صَدَقَ اللَّهُ الْعَظِيمُ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah the Exalted says in His noble Book: In the name of Allah, the Most Gracious, the Most Merciful. “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). Allah the Almighty has spoken the truth. To proceed:"
+  },
+  {
+   "od": 79.4,
    "do": 113.2,
-   "tekst": "Sadaqallahul-'azim. Amma ba'd. All glory and praise belong to Allah, jalla sha'nuhu (exalted is His majesty), the Lord of all creation, the Lord of the known and the unknown, the Lord of the Day of Judgement, the Lord of the noble Throne. May sincere blessings and peace be upon Muhammad, sallallahu alayhi wa sallam (peace be upon him), the best man who ever walked the face of the earth, the best of all the prophets and messengers. May sincere blessings and peace be upon him, upon his honourable, esteemed and respected family, upon his virtuous companions, and upon all those who follow the path of Islam, the path of the Qur'an, the path of salvation, until the Day of Judgement. Allahumma amin."
+   "tekst": "All glory and praise belong to Allah, jalla sha'nuhu (exalted is His majesty), the Lord of all creation, the Lord of the known and the unknown, the Lord of the Day of Judgement, the Lord of the noble Throne. May sincere blessings and peace be upon Muhammad, sallallahu alayhi wa sallam (peace be upon him), the best man who ever walked the face of the earth, the best of all the prophets and messengers. May sincere blessings and peace be upon him, upon his honourable, esteemed and respected family, upon his virtuous companions, and upon all those who follow the path of Islam, the path of the Qur'an, the path of salvation, until the Day of Judgement. Allahumma amin."
   },
   {
    "od": 113.9,
@@ -81,6 +94,13 @@
    "tekst": "Then Allah, jalla sha'nuhu, says: \"O people, did you think that We created you in vain?\" Did you think that We created you just like that, merely to be created, that you have no mission and no role in this world,"
   },
   {
+   "od": 317.3,
+   "do": 320.8,
+   "tekst": "وَأَنَّكُمْ إِلَيْنَا لَا تُرْجَعُونَ",
+   "jezik": "ar",
+   "prevod": "“…and that you would not be returned to Us?” (Al-Mu'minun 23:115)"
+  },
+  {
    "od": 320.8,
    "do": 342.1,
    "tekst": "\"and that you would not be returned to Us?\" What is Allah, jalla sha'nuhu, saying here, brothers? Allah is sending us a message: O My servants – here Allah addresses all of mankind and says – O My servants, do you think that you will not return to your Lord? Live freely as long as you like, do what you like, but know that one day you will surely return to the Lord."
@@ -129,6 +149,13 @@
    "od": 487.4,
    "do": 495.5,
    "tekst": "\"By no means.\" There is no chance. It will be nothing but a mere wish, a mere spoken word."
+  },
+  {
+   "od": 495.5,
+   "do": 498.7,
+   "tekst": "وَمِنْ وَرَائِهِمْ بَرْزَخٌ إِلَىٰ يَوْمِ يُبْعَثُونَ",
+   "jezik": "ar",
+   "prevod": "“…and behind them is a barrier until the Day they are resurrected.” (Al-Mu'minun 23:100)"
   },
   {
    "od": 498.7,
@@ -197,8 +224,16 @@
   },
   {
    "od": 788,
+   "do": 824.1,
+   "tekst": "I ask Allah, jalla sha'nuhu, to make easy for us [unclear] and good deeds and everything of words and deeds with which Allah, jalla sha'nuhu, is pleased. I ask Him, the Exalted, to make it easy for us to abandon sinning and every deed or word with which the Exalted Lord is not pleased. And a supplication that the Prophet, alayhis-salam, recited very often was, or went like this: \"My Lord, nothing is easy except what You make easy.\" So we ask You, our Lord, to make every khayr, every good, easy for us on this blessed day and at this blessed hour."
+  },
+  {
+   "od": 824.1,
    "do": 829.4,
-   "tekst": "I ask Allah, jalla sha'nuhu, to make easy for us [unclear] and good deeds and everything of words and deeds with which Allah, jalla sha'nuhu, is pleased. I ask Him, the Exalted, to make it easy for us to abandon sinning and every deed or word with which the Exalted Lord is not pleased. And a supplication that the Prophet, alayhis-salam, recited very often was, or went like this: \"My Lord, nothing is easy except what You make easy.\" So we ask You, our Lord, to make every khayr, every good, easy for us on this blessed day and at this blessed hour. \"وَأَقُولُ قَوْلِي هَذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ\""
+   "tekst": "وَأَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "And I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

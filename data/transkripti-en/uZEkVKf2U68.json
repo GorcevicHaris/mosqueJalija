@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 28.8,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 28.8,
    "do": 46.9,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. After Yusuf's brothers came to Egypt together with Benjamin and entered upon Yusuf in his residence, Yusuf took his brother Benjamin aside and embraced him."
+   "tekst": "After Yusuf's brothers came to Egypt together with Benjamin and entered upon Yusuf in his residence, Yusuf took his brother Benjamin aside and embraced him."
   },
   {
    "od": 47.2,
@@ -89,6 +103,13 @@
    "od": 380.4,
    "do": 394.3,
    "tekst": "So Allah, subhanahu wa ta'ala, says: We, He says, taught Yusuf here this stratagem, how his brother could remain in Egypt. And his brother, that is Benjamin, knew all about it. What do his brothers say?"
+  },
+  {
+   "od": 394.3,
+   "do": 398.9,
+   "tekst": "إِنْ يَسْرِقْ فَقَدْ سَرَقَ أَخٌ لَهُ مِنْ قَبْلُ",
+   "jezik": "ar",
+   "prevod": "“If he has stolen – a brother of his stole before.” (Yusuf 12:77)"
   },
   {
    "od": 398.9,
@@ -187,13 +208,16 @@
   },
   {
    "od": 940.3,
-   "do": 982.6,
-   "tekst": "after those four rak'ahs, to stay and pray four more rak'ahs. Or to come – meaning, since he already comes on the odd nights – to come on the even nights as well; 45 minutes won't hurt him. So a person should make an effort, and, by God, it is not easy to reach Jannah (Paradise) either, because the road to Jannah is full of, let's say, obstacles and thorns, while the road to Jahannam (Hellfire) is easy, all enjoyment, all desires. That is why a person should be careful and mindful. May Allah grant you every good. Wa sallallahu 'ala nabiyyina Muhammadin"
+   "do": 980.1,
+   "tekst": "after those four rak'ahs, to stay and pray four more rak'ahs. Or to come – meaning, since he already comes on the odd nights – to come on the even nights as well; 45 minutes won't hurt him. So a person should make an effort, and, by God, it is not easy to reach Jannah (Paradise) either, because the road to Jannah is full of, let's say, obstacles and thorns, while the road to Jahannam (Hellfire) is easy, all enjoyment, all desires. That is why a person should be careful and mindful. May Allah grant you every good."
   },
   {
-   "od": 982.6,
+   "od": 980.1,
    "do": 984.7,
-   "tekst": "wa 'ala alihi wa sahbihi. Was-salamu alaykum."
+   "tekst": "وَصَلَّى اللَّهُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ، وَالسَّلَامُ عَلَيْكُمْ",
+   "jezik": "ar",
+   "prevod": "May Allah bless our Prophet Muhammad, his family and companions. Peace be upon you."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

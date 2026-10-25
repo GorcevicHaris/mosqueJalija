@@ -1,5 +1,7 @@
 // Podaci za pretragu po transkriptima predavanja. Učitava se lijeno (tek kad korisnik pretražuje),
 // pa ne opterećuje stranicu /pretraga. Vidi src/lib/transkripti-pretraga.ts.
+// Arapski segmenti (jezik "ar") ulaze preko prevoda (bosanski), pa se npr. „bojte se Allaha“
+// nalazi i u arapskom uvodu hutbe; arapsko pismo se ne indeksira (manji JSON).
 import type { APIRoute } from 'astro';
 import { predavanja } from '../lib/data';
 import { transkriptiZaPretragu } from '../lib/transkripti';

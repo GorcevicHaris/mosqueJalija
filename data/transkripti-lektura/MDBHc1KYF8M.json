@@ -10,17 +10,42 @@
   {
    "od": 0.5,
    "do": 43.2,
-   "tekst": "[učenje na arapskom]"
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
-   "od": 44.5,
-   "do": 84.9,
-   "tekst": "Ve ne'uzu billahi min šururi enfusina ve min sejjiati a'malina. Men jehdihillahu fela mudille leh, ve men judlilhu fela hadije leh. Ve ešhedu en la ilahe illallahu vahdehu la šerike leh, ve ešhedu enne sejjidena ve nebijjena Muhammeden abduhu ve habibuhu ve resuluhu, erselehullahu tebareke ve te'ala bil-huda ve dinil-hakki li juzhirehu aled-dini kullihi ve lev kerihel-kafirun. Es-salavatu Rabbi ve selamuhu alejhi ve ala alihi ve sahbihi ve men sare ala nehdžihi vektefa eserehu ila jevmid-din. Ridvanullahi te'ala alejna ve alejhim edžma'in."
+   "od": 43.2,
+   "do": 54.5,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
   },
   {
-   "od": 84.9,
+   "od": 54.5,
+   "do": 64.9,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ سَيِّدَنَا وَنَبِيَّنَا مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je naš prvak i vjerovjesnik Muhammed Njegov rob, miljenik i poslanik."
+  },
+  {
+   "od": 64.9,
+   "do": 81.6,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَبَارَكَ وَتَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ فَصَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى آلِهِ وَصَحْبِهِ وَمَنْ سَارَ عَلَى نَهْجِهِ وَاقْتَفَى أَثَرَهُ إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah, Blagoslovljeni i Uzvišeni, poslao ga je s uputom i pravom vjerom da je uzdigne iznad svih vjera, makar to bilo mrsko nevjernicima. Neka su salavati i selami moga Gospodara na njega i na njegovu porodicu i ashabe i na one koji idu njegovim putem i slijede njegove stope do Sudnjeg dana."
+  },
+  {
+   "od": 81.6,
+   "do": 85.8,
+   "tekst": "رِضْوَانُ اللَّهِ تَعَالَى عَلَيْنَا وَعَلَيْهِمْ أَجْمَعِينَ ثُمَّ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Neka je Allahovo zadovoljstvo na nama i na svima njima. A zatim:"
+  },
+  {
+   "od": 85.8,
    "do": 125.5,
-   "tekst": "Fe emma ba'd. Poštovana braćo, cijenjeni mu'mini! Svaka sura u Kur'anu časnom je zasebna priča. 114 sura – svaka od njih predstavlja najljepšu bašču, koja sa svojom ljepotom, sadržinom, poukama i porukama, i konstrukcijom izražaja i riječi predstavlja zasebnost."
+   "tekst": "Poštovana braćo, cijenjeni mu'mini! Svaka sura u Kur'anu časnom je zasebna priča. 114 sura – svaka od njih predstavlja najljepšu bašču, koja sa svojom ljepotom, sadržinom, poukama i porukama, i konstrukcijom izražaja i riječi predstavlja zasebnost."
   },
   {
    "od": 125.5,
@@ -46,6 +71,13 @@
    "od": 235.6,
    "do": 250.7,
    "tekst": "Govori: „Utrošio sam nebrojeno i mnogobrojno blago svoje.“ Zar on misli da ga niko ne vidi?"
+  },
+  {
+   "od": 250.7,
+   "do": 254.3,
+   "tekst": "أَلَمْ نَجْعَلْ لَهُ عَيْنَيْنِ",
+   "jezik": "ar",
+   "prevod": "„Zar Mi njemu nismo dali oka dva…“ (El-Beled, 8)"
   },
   {
    "od": 254.3,
@@ -282,5 +314,6 @@
    "do": 1436.4,
    "tekst": "ummeta Muhammeda, sallallahu alejhi ve sellem, posebno šehidima Gaze, i da njihovu žrtvu učiniš zalogom za pobjedu ummeta Muhammeda, sallallahu alejhi ve sellem. Amin, ja Rabbel-alemin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

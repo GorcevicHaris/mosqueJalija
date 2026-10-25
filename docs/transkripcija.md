@@ -13,6 +13,10 @@ YouTube za ove snimke nema titlove ni automatske titlove, pa se govor pretvara u
 | `data/transkripti-lektura/<id>.json` | lektorisana verzija (isti format + `"lektorisano": true`); **ima prednost** nad automatskom; skripta za transkripciju je nikad ne dira |
 | `scripts/transkripcija/transkribuj.mjs` | preuzimanje zvuka + whisper + obrada (Node, bez npm paketa) |
 | `scripts/transkripcija/obrada.mjs` | čišćenje i spajanje segmenata u pasuse |
+| `scripts/transkripcija/arapski.mjs` | **drugi korak**: arapski dijelovi (whisper `-l ar`) — pokreće ga `transkribuj.mjs` sam |
+| `scripts/transkripcija/arapski-obrada.mjs` | kandidatski dijelovi, prepoznavanje transliteracije, filtriranje halucinacija |
+| `scripts/transkripcija/arapski-spajanje.mjs` | ubacivanje arapskih segmenata u transkript (plan izmjena, isti za bs i en) |
+| `scripts/transkripcija/arapski-tekstovi.mjs` | poznati tekstovi (uvod/završetak hutbe, salavat, česti ajeti) sa harakatima i prevodom |
 | `src/lib/transkripti.ts` | čitanje transkripata pri buildu (`getTranskript(id)`, `transkriptiZaPretragu()`) |
 | `src/lib/transkripti-pretraga.ts` | pretraga u pregledaču (lijeno učitavanje JSON-a) |
 | `src/components/predavanja/Transkript.astro` | prikaz na stranici predavanja |
@@ -33,6 +37,22 @@ Format `data/transkripti/<id>.json`:
 ```
 
 `od`/`do` su sekunde od početka snimka. Segmenti su pasusi od ~15–40 s.
+
+**Arapski segmenti** (uvod i završetak hutbe, ajeti, hadisi, dove) su zasebni segmenti:
+
+```json
+{ "od": 0.5, "do": 40.4, "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ", "jezik": "ar",
+  "prevod": "Zaista, hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo." }
+```
+
+- `tekst` je arapskim pismom; `prevod` je na jeziku fajla (bosanski u `data/transkripti*/`, engleski u
+  `data/transkripti-en/`); za ajete na kraju prevoda stoji izvor, npr. „(Ali Imran, 102)“ / „(Al Imran 3:102)“.
+- `"provjeriti": true` — arapski tekst nije pouzdano prepoznat (whisperov tekst, nije ispravljen prema
+  poznatom tekstu); na stranici stoji napomena, a imam/urednik ga treba preslušati.
+- Na vrhu fajla `"arapski": "2026-10-25"` = datum arapskog prolaza.
+- Stranica (`Transkript.astro`) ih prikazuje arapskim pismom (Amiri, `lang="ar" dir="rtl"`), prevod ispod
+  prigušeno, u oba jezička prikaza; pretraga u transkriptu i pretraga sajta (`/pretraga-transkripti.json`)
+  pretražuju prevod; „Kopiraj tekst“/„.txt“ sadrže arapski tekst i prevod.
 
 ## Potrebno (jednom)
 
@@ -74,6 +94,66 @@ Skripta je nastavljiva: prekinite je (Ctrl+C) i pokrenite ponovo — preskače g
 Zvuk (`.m4a`) ostaje u radnom folderu (keš), `.wav` se briše nakon obrade (`--zadrzi-audio` ga čuva).
 Promjenljive okruženja: `WHISPER_MODEL` (npr. `ggml-large-v3.bin`), `WHISPER_JEZIK` (podrazumijevano `bs`),
 `WHISPER_PROMPT`, `JALIJA_TRANSKRIPCIJA_DIR`.
+
+## Drugi korak: arapski dijelovi (`arapski.mjs`)
+
+Bosanski prolaz (`-l bs`) arapske dijelove ne prepoznaje pouzdano: uvod hutbe („إِنَّ الْحَمْدَ لِلَّهِ…“),
+učenje ajeta, hadise i završne dove ili „proguta“ (rupa u vremenu, oznaka `[arapski / nije transkribovano]`,
+„Al-Fatiha.“ preko 60 s), ili ih napiše latinicom („Innel hamde lillahi…“), ili arapskim pismom bez harakata.
+Zato `transkribuj.mjs` poslije bosanskog prolaza sam pokreće **drugi korak** (`--bez-arapskog` ga preskače):
+
+```sh
+node scripts/transkripcija/arapski.mjs --id tb5geb6Gxcg        # jedan video (ponovo: --force)
+node scripts/transkripcija/arapski.mjs                         # svi videi bez arapskog prolaza
+node scripts/transkripcija/arapski.mjs --samo-spajanje --id X  # samo ponovo upiši sačuvani prolaz
+```
+
+1. **Kandidati** — dijelovi snimka koji u bosanskom prolazu NISU jasan bosanski govor: oznake, arapsko
+   pismo, transliteracija, segmenti sa malo riječi na dugo vrijeme, rupe između segmenata ≥ 3 s (u prva
+   ~3 min i zadnje ~2 min snimka već od 1,5 s). Gledaju se i fini segmenti sirovog izlaza (`raw/<id>.json`).
+   Isječci ±1 s, 16 kHz mono wav.
+2. **whisper-cli `-l ar`** na svim isječcima odjednom (model `ggml-large-v3.bin`, `WHISPER_MODEL_AR`
+   mijenja model), beam 5, VAD kao u prvom koraku.
+3. **Filtriranje** — poznate halucinacije (`اشتركوا في القناة` = „pretplatite se na kanal“ i sl.),
+   ćirilica, petlje; provjera jezika (`whisper -dl`, samo za redove ≥ 5 s): ako je govor sigurno slavenski,
+   red se odbacuje. Na bosanskom govoru `-l ar` daje besmislice arapskim pismom, zato se arapski red
+   prihvata **samo** tamo gdje bosanski prolaz nije dao jasan bosanski govor; arapski citat usred
+   bosanske rečenice ostaje u bosanskom tekstu kakav jeste. U rupama usred govora prihvataju se samo
+   redovi ≥ 2,5 s ili poznat tekst.
+4. **Upis** u `data/transkripti/<id>.json` (`arapski-spajanje.mjs`): oznake/arapski/transliterisani
+   segmenti koje arapski prolaz pokriva zamjenjuju se arapskim segmentima; miješani segment (arapski
+   početak/kraj + bosanski) dijeli se na granici iz finih segmenata, bosanski tekst ostaje nepromijenjen;
+   **poznati tekstovi** (`arapski-tekstovi.mjs`: hutbetul-hadže, salavat, „Barekallahu li ve lekum…“,
+   „Ekulu kavli haza…“, Ali Imran 102, El-Ahzab 56, česte formule) dobijaju tačan tekst sa harakatima i
+   prevod; sve ostalo ostaje kako je whisper prepoznao, bez prevoda, sa `"provjeriti": true`.
+   Sirovi rezultat prolaza je u `~/Library/Caches/jalija-transkripcija/arapski/<id>.json`.
+
+Lektorisane verzije (`data/transkripti-lektura/`, `data/transkripti-en/`) skripta **ne dira**. Za novi video
+poslije lekture: arapske segmente iz automatskog transkripta prenijeti u lekturu i en verziju (isti
+`od`/`do` u oba fajla!), ispraviti arapski (ajet: tačan tekst sa harakatima samo kad je sura:ajet sigurno
+utvrđen) i dopisati `prevod` (bosanski / engleski) — vidi `docs/lektura-transkripata.md`.
+Provjera poravnanja: oba fajla moraju imati isti broj segmenata i ista vremena.
+Za postojećih 81 snimak to je urađeno 2026-10-25 (arapski prolaz `large-v3-turbo` + ručni pregled svakog
+snimka; 351 arapski segment) — vidi `docs/lektura-transkripata.md`, odjeljak „Arapski segmenti“.
+
+**Benchmark modela** (arapski uvod hutbe, 4 snimka × 85–100 s, poređenje sa poznatim tekstom
+hutbetul-hadže, bez harakata; Apple M4, istovremeno sa drugim poslom):
+
+| Model | Greška po riječima (WER) | Vrijeme za 4 isječka |
+|---|---|---|
+| `large-v3-turbo` | 13,1 % (8,6 / 8,6 / 8,6 / 27,2 %) | 81 s |
+| `large-v3` | **8,3 %** (9,7 / 5,4 / 7,1 / 11,1 %) | 160 s |
+
+`large-v3` je izabran kao podrazumijevani model arapskog prolaza (`ggml-large-v3.bin`, ~3,1 GB:
+`curl -L -o ~/Library/Caches/jalija-transkripcija/models/ggml-large-v3.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin`);
+turbo ostaje za provjeru jezika. Oba modela na početku dugo otegnutog „إِنَّ الْحَمْدَ لِلَّهِ“ (~40 s)
+često čuju samo „نحمده ونستعينه ونستغفره“, a na bosanskom govoru izmišljaju „اشتركوا في القناة“
+(„pretplatite se na kanal“) — zato filtriranje i pravila iz tačke 3.
+
+**Ispravke iz admina** (tabela `transkript_ispravke`) vezane su za **indeks segmenta**. Ubacivanje
+arapskih segmenata mijenja indekse, pa se arapski prolaz na transkriptu koji već ima ispravke u bazi
+radi tek nakon što se ispravke prenesu u JSON (ili obrišu). Pri dodavanju arapskih segmenata u svih 81
+transkripata (2026-10-25) tabela je bila prazna, pa je ponovno indeksiranje bilo bezbjedno.
 
 ## Postavke i trajanje
 

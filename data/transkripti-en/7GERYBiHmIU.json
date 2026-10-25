@@ -12,13 +12,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 65.4,
-   "tekst": "[Arabic recitation]"
+   "do": 40,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
-   "od": 65.4,
+   "od": 40,
+   "do": 50,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
+  },
+  {
+   "od": 50,
+   "do": 63.9,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger. Allah sent him with the truth as a bearer of glad tidings, a warner and a light-giving lamp."
+  },
+  {
+   "od": 63.9,
+   "do": 80.4,
+   "tekst": "لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "To warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May Allah the Exalted bless him and his good and pure family and his noble companions, the rightly guided who guided others, and grant him abundant peace until the Day of Judgement."
+  },
+  {
+   "od": 80.4,
+   "do": 91.8,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah says in His noble Book: “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). To proceed:"
+  },
+  {
+   "od": 91.8,
    "do": 107.1,
-   "tekst": "…كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يا أيها الذين آمنوا اتقوا الله حق تقاته ولا تموتن إلا وأنتم مسلمون. أما بعد. Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds, the Lord of the Day of Judgement, the Lord of jinn and mankind. May blessings and peace be upon His Messenger, the beloved Muhammad,"
+   "tekst": "Praise belongs to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds, the Lord of the Day of Judgement, the Lord of jinn and mankind. May blessings and peace be upon His Messenger, the beloved Muhammad,"
   },
   {
    "od": 107.1,
@@ -146,9 +176,12 @@
    "tekst": "to make us strong Muslims. And I hope, in sha Allah, that this time is, in sha Allah, near. I ask Him, the Exalted, to bring us together in Jannah (Paradise). Amin."
   },
   {
-   "od": 804.1,
+   "od": 800.5,
    "do": 812,
-   "tekst": "…بما فيه من الآيات والذكر الحكيم. أقول قولي هذا وأستغفر الله لي ولكم فاستغفروه إنه هو الغفور الرحيم."
+   "tekst": "بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "May Allah bless me and you through the Mighty Qur’an and benefit me and you with the verses and the wise reminder it contains. I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

@@ -9,8 +9,17 @@
  "segmenti": [
   {
    "od": 0,
-   "do": 44.7,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. …na njegove drugove ashabe i na sve one koji slijede njegov put. Amin, ja Rabbel-alemin."
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 28.8,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
   },
   {
    "od": 44.7,
@@ -152,5 +161,6 @@
    "do": 842.6,
    "tekst": "Ne znamo šta je mudrost, šta se krije iza toga. Allah, subhanehu ve te'ala, će to obelodaniti, ako Bog da, ako Bog da brzo. Molim Allaha, subhanehu ve te'ala, da nam pomogne, da nam oprosti grijehe. Ako Bog da, sutra nastavljamo sa ovom predivnom, lijepom pričom. Molim Allaha, subhanehu ve te'ala, da vas nagradi svakim dobrom. Es-selamu alejkum ve rahmetullahi te'ala."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

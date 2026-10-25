@@ -13,12 +13,30 @@
   {
    "od": 2.7,
    "do": 49.9,
-   "tekst": "إن الحمد لله نستعينه تعالى ونستغفره ونستهديه، ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فهو المهتد ومن يضلل فأولئك هم الخاسرون، أشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده وحبيبه وخليله وصفيه من خلقه، أدى الأمانة وبلغ الرسالة ونصح الأمة وكشف الله به الغمة وجاهد في الله حق جهاده حتى أتاه اليقين، صلى الله عليه وعلى الصحابة أجمعين ومن تبعه بإحسان واقتفى أثره إلى يوم الدين."
+   "tekst": "إن الحمد لله نستعينه تعالى ونستغفره ونستهديه، ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فهو المهتد ومن يضلل فأولئك هم الخاسرون، أشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده وحبيبه وخليله وصفيه من خلقه، أدى الأمانة وبلغ الرسالة ونصح الأمة وكشف الله به الغمة وجاهد في الله حق جهاده حتى أتاه اليقين، صلى الله عليه وعلى الصحابة أجمعين ومن تبعه بإحسان واقتفى أثره إلى يوم الدين.",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we seek His help, the Exalted, and ask His forgiveness and guidance. We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides is rightly guided, and whomever He leaves astray – those are the losers (cf. Al-A'raf 7:178). I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant, His beloved, His close friend and His chosen one among His creation. He fulfilled the trust, conveyed the message, gave sincere counsel to the ummah – through him Allah removed the gloom – and strove for Allah as He deserves, until certainty (death) came to him. May Allah bless him and all the companions, and those who follow him in excellence and tread in his footsteps until the Day of Judgement."
   },
   {
    "od": 49.9,
+   "do": 60.5,
+   "tekst": "أَلَا إِنَّ أَصْدَقَ الْكَلَامِ كَلَامُ اللَّهِ، وَخَيْرَ الْهَدْيِ هَدْيُ مُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ، وَشَرَّ الْأُمُورِ مُحْدَثَاتُهَا",
+   "jezik": "ar",
+   "prevod": "Indeed, the truest speech is the speech of Allah, the best guidance is the guidance of Muhammad, peace be upon him, and the worst of matters are the newly invented ones (from a hadith, Muslim)."
+  },
+  {
+   "od": 60.5,
+   "do": 68.3,
+   "tekst": "يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ",
+   "jezik": "ar",
+   "prevod": "“O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102)"
+  },
+  {
+   "od": 68.3,
    "do": 88.1,
-   "tekst": "ألا إن أصدق الكلام كلام الله، وخير الهدي هدي محمد صلى الله عليه وسلم، وشر الأمور محدثاتها. يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ مِنْ نَفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً ۚ وَاتَّقُوا اللَّهَ الَّذِي تَسَاءَلُونَ بِهِ وَالْأَرْحَامَ ۚ إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا. Thumma amma ba'd."
+   "tekst": "يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ مِنْ نَفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً ۚ وَاتَّقُوا اللَّهَ الَّذِي تَسَاءَلُونَ بِهِ وَالْأَرْحَامَ ۚ إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا ثُمَّ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "“O mankind, fear your Lord, who created you from a single soul, created from it its mate and spread from both of them many men and women. And fear Allah, through whom you ask one another, and the ties of kinship. Indeed, Allah is ever watchful over you.” (An-Nisa 4:1). To proceed:"
   },
   {
    "od": 89.9,
@@ -240,5 +258,6 @@
    "do": 1164.3,
    "tekst": "We ask Allah, tabaraka wa ta'ala, to forgive us our weaknesses, sins and shortcomings. We ask Him to admit us into Jannah, us, our families, all Muslims. Finally, we ask Allah to help Islam and the Muslims, especially the oppressed, wherever they may be. We ask Allah to make us on top, victorious, dignified. We ask Allah, tabaraka wa ta'ala, for guidance, we ask for mercy, we ask for Jannah. Amin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

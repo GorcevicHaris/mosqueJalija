@@ -12,8 +12,17 @@
  "segmenti": [
   {
    "od": 0,
-   "do": 26.8,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين."
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 27.3,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
   },
   {
    "od": 27.3,
@@ -71,6 +80,13 @@
    "tekst": "What does Yusuf say? He says, Yusuf, alayhis-salam, says: “No, no, no,” he says, “she,” he says, “asked me to commit fornication with her; it wasn't me, I didn't want that.” He cut it off at once."
   },
   {
+   "od": 283.6,
+   "do": 287.4,
+   "tekst": "وَشَهِدَ شَاهِدٌ مِنْ أَهْلِهَا",
+   "jezik": "ar",
+   "prevod": "“…and a witness from her own family testified…” (Yusuf 12:26)"
+  },
+  {
    "od": 287.4,
    "do": 318.8,
    "tekst": "Then a witness from her family testified – not from his family, but from her family, and a relative, in sha Allah, will not lie against a relative. So there was wisdom in this witness being from her family. The mufassirun (Qur'an commentators) say that this witness was her paternal cousin; some say he was her maternal cousin; some say he was a friend of this chief minister, his best friend, and her relative."
@@ -96,9 +112,16 @@
    "tekst": "If it is from behind, then she is lying, because she tried to stop him from getting out."
   },
   {
-   "od": 426.3,
+   "od": 422.4,
+   "do": 432.6,
+   "tekst": "فَلَمَّا رَأَىٰ قَمِيصَهُ قُدَّ مِنْ دُبُرٍ قَالَ إِنَّهُ مِنْ كَيْدِكُنَّ ۖ إِنَّ كَيْدَكُنَّ عَظِيمٌ",
+   "jezik": "ar",
+   "prevod": "“So when he saw his shirt torn from the back, he said, ‘Indeed, this is of your plotting; indeed, your plotting is great.’” (Yusuf 12:28)"
+  },
+  {
+   "od": 432.6,
    "do": 466.3,
-   "tekst": "“…qudda min duburin qala innahu min kaydikunna, inna kaydakunna 'azim.” So when he saw that the shirt was torn, ripped from behind: “This is,” he said, “one of your schemes,” said this husband. “This is,” he said, “one of your schemes” – and a man knows his wife best – “indeed,” he said, “your schemes” – he means women here – “indeed,” he said, “your schemes are great.” Now there is an interesting detail here, dear brothers."
+   "tekst": "So when he saw that the shirt was torn, ripped from behind: “This is,” he said, “one of your schemes,” said this husband. “This is,” he said, “one of your schemes” – and a man knows his wife best – “indeed,” he said, “your schemes” – he means women here – “indeed,” he said, “your schemes are great.” Now there is an interesting detail here, dear brothers."
   },
   {
    "od": 466.3,
@@ -160,5 +183,6 @@
    "do": 738.8,
    "tekst": "That is all, in sha Allah, for today. May Allah grant you every good and give you long life in khayr (goodness). As-salamu alaykum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

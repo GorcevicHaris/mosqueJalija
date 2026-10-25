@@ -13,17 +13,35 @@
   {
    "od": 1,
    "do": 48.8,
-   "tekst": "الحمد لله يحق الحق ويبطل الباطل ولو كره المجرمون"
+   "tekst": "الْحَمْدُ لِلَّهِ يُحِقُّ الْحَقَّ وَيُبْطِلُ الْبَاطِلَ وَلَوْ كَرِهَ الْمُجْرِمُونَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Who establishes the truth and abolishes falsehood, even if the criminals dislike it (cf. Al-Anfal 8:8)."
   },
   {
    "od": 48.8,
-   "do": 73.3,
-   "tekst": "ونشهد أن لا إله إلا الله وحده لا شريك له، ونشهد أن محمدا عبده وحبيبه وصفيه وخليله، أدى الأمانة وبلغ الرسالة ونصح الأمة وجاهد في سبيل الله حق جهاده حتى أتاه اليقين، وتركنا على المحجة البيضاء، ليلها كنهارها، لا يزيغ عنها بعده إلا هالك."
+   "do": 58,
+   "tekst": "وَنَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَنَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَصَفِيُّهُ وَخَلِيلُهُ",
+   "jezik": "ar",
+   "prevod": "We bear witness that there is no god but Allah alone, Who has no partner, and we bear witness that Muhammad is His servant, His beloved, His chosen one and His close friend."
   },
   {
-   "od": 73.8,
+   "od": 58,
+   "do": 73.3,
+   "tekst": "أَدَّى الْأَمَانَةَ وَبَلَّغَ الرِّسَالَةَ وَنَصَحَ الْأُمَّةَ وَجَاهَدَ فِي سَبِيلِ اللَّهِ حَقَّ جِهَادِهِ حَتَّى أَتَاهُ الْيَقِينُ وَتَرَكَنَا عَلَى الْمَحَجَّةِ الْبَيْضَاءِ لَيْلُهَا كَنَهَارِهَا لَا يَزِيغُ عَنْهَا بَعْدَهُ إِلَّا هَالِكٌ",
+   "jezik": "ar",
+   "prevod": "He fulfilled the trust, conveyed the message, gave sincere counsel to the ummah and strove in the way of Allah as He deserves, until certainty (death) came to him. He left us upon the clear white path whose night is like its day; none strays from it after him except one who is ruined."
+  },
+  {
+   "od": 73.3,
+   "do": 87.1,
+   "tekst": "قَالَ اللَّهُ تَعَالَى فِي كِتَابِهِ الْكَرِيمِ بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ صَدَقَ اللَّهُ الْعَظِيمُ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah the Exalted says in His noble Book: In the name of Allah, the Most Gracious, the Most Merciful. “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). Allah the Almighty has spoken the truth. To proceed:"
+  },
+  {
+   "od": 87.8,
    "do": 114.8,
-   "tekst": "Qalallahu ta'ala fi kitabihil-karim: Bismillahir-Rahmanir-Rahim. Ya ayyuhal-ladhina amanuttaqullaha haqqa tuqatihi wa la tamutunna illa wa antum muslimun. Sadaqallahul-'azim. Amma ba'd. All glory and praise belong to Allah, jalla sha'nuhu (exalted is His majesty), the Lord of all creation, the Lord of the known and the unknown, the Lord of the Day of Judgement, the Lord of the noble Throne. May sincere blessings and peace be upon the best man who ever walked the face of the earth, Muhammad, upon his honourable and greatly respected family, upon his companions, and upon all those who follow the path of Islam, the path of the Qur'an, the path of salvation, until the Day of Judgement. Allahumma amin."
+   "tekst": "All glory and praise belong to Allah, jalla sha'nuhu (exalted is His majesty), the Lord of all creation, the Lord of the known and the unknown, the Lord of the Day of Judgement, the Lord of the noble Throne. May sincere blessings and peace be upon the best man who ever walked the face of the earth, Muhammad, upon his honourable and greatly respected family, upon his companions, and upon all those who follow the path of Islam, the path of the Qur'an, the path of salvation, until the Day of Judgement. Allahumma amin."
   },
   {
    "od": 115.4,
@@ -173,7 +191,10 @@
   {
    "od": 744.8,
    "do": 750.7,
-   "tekst": "Wa aqulu qawli hadha wa astaghfirullaha li wa lakum, fastaghfiruhu, innahu huwal-Ghafurur-Rahim."
+   "tekst": "وَأَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "And I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

@@ -9,8 +9,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 30.1,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 30.1,
    "do": 48.6,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. Nakon što Jusufova braća optužiše svoga oca riječima: „Inne ebana lefi dalalin mubin“ – doista je naš otac u očitoj zabludi."
+   "tekst": "Nakon što Jusufova braća optužiše svoga oca riječima: „Inne ebana lefi dalalin mubin“ – doista je naš otac u očitoj zabludi."
   },
   {
    "od": 48.6,
@@ -26,6 +40,13 @@
    "od": 100.3,
    "do": 115.6,
    "tekst": "gdje ne može otac da ga viđa, kako bi se otac okrenuo vama i njegova ljubav bila rezervisana samo za vas."
+  },
+  {
+   "od": 115.6,
+   "do": 123.2,
+   "tekst": "وَتَكُونُوا مِنْ بَعْدِهِ قَوْمًا صَالِحِينَ",
+   "jezik": "ar",
+   "prevod": "„…a poslije toga bit ćete dobri ljudi.“ (Jusuf, 9)"
   },
   {
    "od": 124.6,
@@ -73,9 +94,23 @@
    "tekst": "Pa, kaže, i reče jedan od njih, kaže: „Nemojte da ubijete Jusufa, nećemo baš toliko daleko da idemo."
   },
   {
+   "od": 335.6,
+   "do": 339.2,
+   "tekst": "وَأَلْقُوهُ فِي غَيَابَتِ الْجُبِّ",
+   "jezik": "ar",
+   "prevod": "„…nego ga bacite na dno bunara…“ (Jusuf, 10)"
+  },
+  {
    "od": 339.2,
    "do": 347.2,
    "tekst": "Imam“, kaže, „drugo rješenje: da ga“, kaže, „bacimo u bunar. Da ga bacimo u bunar."
+  },
+  {
+   "od": 347.2,
+   "do": 350.4,
+   "tekst": "يَلْتَقِطْهُ بَعْضُ السَّيَّارَةِ",
+   "jezik": "ar",
+   "prevod": "„…pa će ga naći neki putnici…“ (Jusuf, 10)"
   },
   {
    "od": 350.4,
@@ -127,5 +162,6 @@
    "do": 576.6,
    "tekst": "inšaAllahu te'ala. Molim Allaha, subhanehu ve te'ala, da vas poživi u hajru, pa se, ako Bog da, sutra vidimo. Es-selamu alejkum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

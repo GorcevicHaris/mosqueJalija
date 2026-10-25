@@ -9,13 +9,36 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 12.7,
+   "tekst": "جَدِّدْ حَيَاةَ الْقَلْبِ بِالْقُرْآنِ كَيْ تَطْمَئِنَّ الرُّوحُ بِالْإِيمَانِ",
+   "jezik": "ar",
+   "prevod": "Obnovi život srca Kur’anom, da bi se duša smirila imanom."
+  },
+  {
+   "od": 12.7,
+   "do": 30.2,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo. Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
+  },
+  {
+   "od": 30.2,
    "do": 43.1,
-   "tekst": "جدد حياة القلب بالقرآن كي تطمئن الروح بالإيمان. إن الحمد لله نحمده ونستعينه ونستغفره، ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فلا مضل له ومن يضلل فلا هادي له، وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده ورسوله، أرسله الله تبارك وتعالى بالهدى ودين الحق،"
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، أَرْسَلَهُ اللَّهُ تَبَارَكَ وَتَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob i poslanik. Allah, Blagoslovljeni i Uzvišeni, poslao ga je s uputom i pravom vjerom."
   },
   {
    "od": 43.1,
+   "do": 55.6,
+   "tekst": "لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ، صَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى الصَّحَابَةِ وَالتَّابِعِينَ وَمَنْ تَبِعَهُمْ بِإِحْسَانٍ إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Da opominje one čija su srca živa i da se obistini Riječ protiv nevjernika (Ja-Sin, 70). Neka su salavati i selami moga Gospodara na njega, na ashabe, tabi'ine i na one koji ih u dobru slijede do Sudnjeg dana."
+  },
+  {
+   "od": 55.6,
    "do": 83.1,
-   "tekst": "لينذر من كان حيا ويحق القول على الكافرين، صلوات ربي وسلامه عليه وعلى الصحابة والتابعين ومن تبعهم بإحسان إلى يوم الدين. Draga i poštovana braćo, cijenjene džematlije, cijenjeni vjernici, prije svega neka je neizmjerna hvala Uzvišenom Allahu, Gospodaru svih svjetova, Vladaru Sudnjega dana, Milostivom i Samilosnom, što nas je učinio pripadnicima kod Njega jedine priznate vjere, vjere islama."
+   "tekst": "Draga i poštovana braćo, cijenjene džematlije, cijenjeni vjernici, prije svega neka je neizmjerna hvala Uzvišenom Allahu, Gospodaru svih svjetova, Vladaru Sudnjega dana, Milostivom i Samilosnom, što nas je učinio pripadnicima kod Njega jedine priznate vjere, vjere islama."
   },
   {
    "od": 83.8,
@@ -281,6 +304,14 @@
    "od": 1193.9,
    "do": 1195.6,
    "tekst": "i islam ponosno praktikuje."
+  },
+  {
+   "od": 1195.6,
+   "do": 1209,
+   "tekst": "آمِينَ يَا رَبَّ الْعَالَمِينَ. أَلَا إِنَّ أَحْسَنَ الْكَلَامِ وَأَبْلَغَ النِّظَامِ كَلَامُ اللَّهِ الْمَلِكِ الْعَزِيزِ الْعَلَّامِ، كَمَا قَالَ اللَّهُ تَبَارَكَ وَتَعَالَى فِي نَظْمِ الْكَلَامِ: وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنْصِتُوا لَعَلَّكُمْ تُرْحَمُونَ",
+   "jezik": "ar",
+   "prevod": "Amin, o Gospodaru svjetova. Zaista, najljepši govor i najrječitiji sklad jeste govor Allaha, Vladara, Silnog, Sveznajućeg, kao što Allah, Blagoslovljeni i Uzvišeni, kaže u Svom skladnom govoru: „A kada se uči Kur’an, slušajte ga i šutite, da biste milost zadobili.“ (El-E'raf, 204)"
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

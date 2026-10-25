@@ -12,8 +12,15 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 5.1,
+   "tekst": "وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "And blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 5.1,
    "do": 43,
-   "tekst": "…alamin, was-salatu was-salamu 'ala nabiyyina Muhammadin wa 'ala alihi wa sahbihi ajma'in. Allah, subhanahu wa ta'ala (glorified and exalted is He), says: “Innama ya'muru masajidallahi man amana billahi wal-yawm al-akhiri wa aqama as-salata wa ata az-zakata wa lam yakhsha illallah, fa 'asa ula'ika an yakunu min al-muhtadin.” Indeed, the masjids of Allah, the mosques of Allah, are maintained only by those who believe in Allah, who believe in Allah and in the Hereafter, who perform the prayer, give zakah and fear no one except Allah, subhanahu wa ta'ala – and such are rightly guided, such are rightly guided."
+   "tekst": "Allah, subhanahu wa ta'ala (glorified and exalted is He), says: “Innama ya'muru masajidallahi man amana billahi wal-yawm al-akhiri wa aqama as-salata wa ata az-zakata wa lam yakhsha illallah, fa 'asa ula'ika an yakunu min al-muhtadin.” Indeed, the masjids of Allah, the mosques of Allah, are maintained only by those who believe in Allah, who believe in Allah and in the Hereafter, who perform the prayer, give zakah and fear no one except Allah, subhanahu wa ta'ala – and such are rightly guided, such are rightly guided."
   },
   {
    "od": 44.9,
@@ -85,5 +92,6 @@
    "do": 481.5,
    "tekst": "[Devotional song (ilahija) in Bosnian – lyrics not translated]"
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

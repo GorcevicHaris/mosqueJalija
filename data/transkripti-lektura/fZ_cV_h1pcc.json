@@ -10,7 +10,11 @@
   {
    "od": 1.3,
    "do": 19.6,
-   "tekst": "Nevvir kalbi bil-Kur'an, vešrah sadri bil-iman, vagfir zenbi ja Rahman, ve [nejasno] ja Mennan."
+   "tekst": "نَوِّرْ قَلْبِي بِالْقُرْآنِ، وَاشْرَحْ صَدْرِي بِالْإِيمَانِ، وَاغْفِرْ ذَنْبِي يَا رَحْمَٰنُ، … يَا مَنَّانُ",
+   "jezik": "ar",
+   "prevod": "Obasjaj mi srce Kur’anom, otvori mi grudi imanom, oprosti mi grijeh, o Milostivi, … o Darovatelju! (dova; dio pred kraj nije jasno prepoznat)",
+   "provjeriti": true
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

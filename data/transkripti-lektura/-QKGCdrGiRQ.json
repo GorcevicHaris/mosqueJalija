@@ -9,8 +9,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 28.2,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 28.2,
    "do": 45.1,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. Nakon što nas je Allah, subhanehu ve te'ala, obavijestio, na početku sure Jusuf, o snu Jusufa, alejhis-selam, i savjetu njegovog oca,"
+   "tekst": "Nakon što nas je Allah, subhanehu ve te'ala, obavijestio, na početku sure Jusuf, o snu Jusufa, alejhis-selam, i savjetu njegovog oca,"
   },
   {
    "od": 45.1,
@@ -125,12 +139,17 @@
   {
    "od": 616.1,
    "do": 617.7,
-   "tekst": "„Kul e'uzu bi Rabbin-nas“."
+   "tekst": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
+   "jezik": "ar",
+   "prevod": "„Reci: ‘Utječem se Gospodaru ljudi…’“ (En-Nas, 1)"
   },
   {
    "od": 617.7,
    "do": 650.5,
-   "tekst": "[učenje na arapskom]"
+   "tekst": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+   "jezik": "ar",
+   "prevod": "„Reci: ‘Utječem se Gospodaru svitanja od zla onoga što On stvara, i od zla mrkle noći kada se razlije, i od zla onih koje pušu u čvorove, i od zla zavidnika kada zavidi.’“ (El-Felek, 1–5)",
+   "provjeriti": true
   },
   {
    "od": 650.5,
@@ -152,5 +171,6 @@
    "do": 722,
    "tekst": "Za danas toliko, pa ćemo, inšaAllahu te'ala, sutra, sutra nastaviti. Allah vam dao svako dobro."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

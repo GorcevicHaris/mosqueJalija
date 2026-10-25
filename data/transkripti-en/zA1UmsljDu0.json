@@ -12,8 +12,17 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
    "do": 26.4,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين."
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
   },
   {
    "od": 26.4,
@@ -44,6 +53,13 @@
    "od": 161.4,
    "do": 170.9,
    "tekst": "and then: \"He gave us food, hosted us, but he told us that if we do not bring our brother next time, there will be no food for us.\""
+  },
+  {
+   "od": 170.9,
+   "do": 176.9,
+   "tekst": "مُنِعَ مِنَّا الْكَيْلُ فَأَرْسِلْ مَعَنَا أَخَانَا نَكْتَلْ وَإِنَّا لَهُ لَحَافِظُونَ",
+   "jezik": "ar",
+   "prevod": "“…the measure has been denied to us, so send our brother with us that we may obtain the measure; and indeed we will guard him.” (Yusuf 12:63)"
   },
   {
    "od": 176.9,
@@ -104,6 +120,13 @@
    "od": 462.7,
    "do": 495.3,
    "tekst": "When they opened those loads that Yusuf had prepared for them, they found the goods with which they had paid for this food. Yusuf had returned them; he did not want to take from them the goods with which they had paid for the food. \"O father, what more can we ask for? You see how merciful this man is, how good he is towards us!"
+  },
+  {
+   "od": 495.3,
+   "do": 500.4,
+   "tekst": "هَٰذِهِ بِضَاعَتُنَا رُدَّتْ إِلَيْنَا",
+   "jezik": "ar",
+   "prevod": "“…this is our merchandise, returned to us…” (Yusuf 12:65)"
   },
   {
    "od": 501.3,
@@ -195,5 +218,6 @@
    "do": 908.4,
    "tekst": "the month of Ramadan to the end and, in sha Allah, find Laylat al-Qadr. Amin, ya Rabbal-'alamin. As-salamu alaykum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

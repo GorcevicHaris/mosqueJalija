@@ -12,8 +12,15 @@
  "segmenti": [
   {
    "od": 0.4,
+   "do": 6.4,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 6.4,
    "do": 31.7,
-   "tekst": "Alhamdulillahi Rabbil-'alamin, was-salatu was-salamu 'ala nabiyyina Muhammadin wa 'ala alihi wa sahbihi ajma'in. Praise and thanks belong to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds, the Lord of the Day of Judgement. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
+   "tekst": "Praise and thanks belong to Allah alone, the Exalted, subhanahu wa ta'ala, the Lord of all the worlds, the Lord of the Day of Judgement. May blessings and peace be upon His Messenger, the beloved Muhammad, sallallahu alayhi wa sallam (peace be upon him), upon his family, upon his companions, and upon all those who follow the path, the path of the Qur'an, the path of the Sunnah of Muhammad, sallallahu alayhi wa sallam."
   },
   {
    "od": 33.8,
@@ -197,8 +204,15 @@
   },
   {
    "od": 997.3,
+   "do": 1003.7,
+   "tekst": "وَأَمَّا الَّذِينَ فِي قُلُوبِهِمْ مَرَضٌ فَزَادَتْهُمْ رِجْسًا إِلَىٰ رِجْسِهِمْ وَمَاتُوا وَهُمْ كَافِرُونَ",
+   "jezik": "ar",
+   "prevod": "“But as for those in whose hearts is disease, it adds filth to their filth, and they die while they are disbelievers.” (At-Tawbah 9:125)"
+  },
+  {
+   "od": 1003.7,
    "do": 1013.9,
-   "tekst": "\"وَأَمَّا الَّذِينَ فِي قُلُوبِهِمْ مَرَضٌ فَزَادَتْهُمْ رِجْسًا إِلَى رِجْسِهِمْ وَمَاتُوا وَهُمْ كَافِرُونَ\" – but, He says, for those who do not believe, this, He says, this surah adds doubt and unbelief to the unbelief in which they already were."
+   "tekst": "But, He says, for those who do not believe, this, He says, this surah adds doubt and unbelief to the unbelief in which they already were."
   },
   {
    "od": 1015,
@@ -335,5 +349,6 @@
    "do": 1652.4,
    "tekst": "it is part of belief, and after that prayer and so on, good character (akhlaq) – so that a person has something to return with to the Lord, to Allah, subhanahu wa ta'ala."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

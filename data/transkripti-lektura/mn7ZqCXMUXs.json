@@ -10,7 +10,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
   },
   {
    "od": 31.4,
@@ -84,8 +86,15 @@
   },
   {
    "od": 360.3,
+   "do": 363.3,
+   "tekst": "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ",
+   "jezik": "ar",
+   "prevod": "„Gospodar tvoj je odredio da ne obožavate nikoga osim Njega…“ (El-Isra, 23)"
+  },
+  {
+   "od": 363.3,
    "do": 378.5,
-   "tekst": "„وَقَضَى رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ“ – a tvoj Gospodar ti naređuje da ne obožavaš nikog drugog osim Njega. „وَبِالْوَالِدَيْنِ إِحْسَانًا“ – i kaže: da se prema roditeljima lijepo ophodiš, da se lijepo ophodiš prema roditeljima."
+   "tekst": "A tvoj Gospodar ti naređuje da ne obožavaš nikog drugog osim Njega. „وَبِالْوَالِدَيْنِ إِحْسَانًا“ – i kaže: da se prema roditeljima lijepo ophodiš, da se lijepo ophodiš prema roditeljima."
   },
   {
    "od": 378.8,
@@ -162,5 +171,6 @@
    "do": 820.9,
    "tekst": "Ne može drugačije. Ne može čovjek da bude dobar, a da ima loše prijatelje, ili obrnuto. Nikako. Nego, samo ako si dobar, imaš dobre prijatelje. Ako si dobar, one loše prijatelje ćeš da ostaviš. Toliko za danas. Pa ćemo, ako Bog da, sutra nastaviti. Allah vam dao svako dobro."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

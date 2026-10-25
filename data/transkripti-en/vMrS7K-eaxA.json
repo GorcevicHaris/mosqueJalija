@@ -13,7 +13,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
   },
   {
    "od": 32.1,
@@ -126,6 +128,13 @@
    "tekst": "And that is why it is the most beautiful, most beautiful, most beautiful story. A complete, complete story. A complete story."
   },
   {
+   "od": 635.3,
+   "do": 640.2,
+   "tekst": "بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“…in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
    "od": 640.2,
    "do": 656.2,
    "tekst": "\"And,\" He says, \"before this you did not know, you did not know of this story.\" Also among its miracles, as the scholars say, is that this story was not mentioned in the earlier scriptures; that is, neither the Jews nor the Christians knew this story."
@@ -145,5 +154,6 @@
    "do": 714.7,
    "tekst": "May Allah grant you every good."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

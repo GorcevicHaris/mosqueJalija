@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 26.4,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 26.4,
    "do": 31.6,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. Today we continue with the tafsir (commentary) of Surah Yusuf."
+   "tekst": "Today we continue with the tafsir (commentary) of Surah Yusuf."
   },
   {
    "od": 61.7,
@@ -126,6 +140,13 @@
    "tekst": "because when they saw how beautiful Yusuf, alayhis-salam (peace be upon him), was… What does this wife of this prime minister say to them?"
   },
   {
+   "od": 548.4,
+   "do": 552.7,
+   "tekst": "قَالَتْ فَذَٰلِكُنَّ الَّذِي لُمْتُنَّنِي فِيهِ",
+   "jezik": "ar",
+   "prevod": "“She said, ‘That is the one about whom you blamed me…’” (Yusuf 12:32)"
+  },
+  {
    "od": 552.7,
    "do": 567.2,
    "tekst": "She says: \"This is the one you blamed me for.\" She says: \"You saw him once and you cut your hands, while I,\" she says, \"see him every day. I look at him every day."
@@ -165,5 +186,6 @@
    "do": 715.9,
    "tekst": "After this, Yusuf, alayhis-salam, turned to the Most High Lord, asking Him to protect him from this woman, and also from these women, which we will, in sha Allahu ta'ala, talk about tomorrow. May Allah grant you every good, and, in sha Allah, we will see each other tomorrow."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

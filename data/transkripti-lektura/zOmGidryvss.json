@@ -9,8 +9,15 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 6.4,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 6.4,
    "do": 41.7,
-   "tekst": "Elhamdulillahi Rabbil-alemin, ves-salatu ves-selamu ala nebijjina Muhammedin ve ala alihi ve sahbihi edžmein. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put Muhammeda, sallallahu alejhi ve sellem. Draga braćo, cijenjene džematlije, ova naša vjera, din islam, nas uči da čuvamo bratski hak, da čuvamo pravo svoga brata muslimana,"
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put Muhammeda, sallallahu alejhi ve sellem. Draga braćo, cijenjene džematlije, ova naša vjera, din islam, nas uči da čuvamo bratski hak, da čuvamo pravo svoga brata muslimana,"
   },
   {
    "od": 42.7,
@@ -39,8 +46,15 @@
   },
   {
    "od": 136.1,
+   "do": 141.5,
+   "tekst": "da ga pusti kada mu je najteže. Kaže dalje Poslanik, sallallahu alejhi ve sellem:"
+  },
+  {
+   "od": 141.5,
    "do": 151.5,
-   "tekst": "da ga pusti kada mu je najteže. Kaže dalje Poslanik, sallallahu alejhi ve sellem: „Men kane fi hadžeti ehihi, kanallahu fi hadžetihi.“"
+   "tekst": "مَنْ كَانَ فِي حَاجَةِ أَخِيهِ كَانَ اللَّهُ فِي حَاجَتِهِ",
+   "jezik": "ar",
+   "prevod": "„Ko bude u pomoći svome bratu, Allah će biti u pomoći njemu.“ (hadis, Buhari i Muslim)"
   },
   {
    "od": 152.3,
@@ -77,5 +91,6 @@
    "do": 323.7,
    "tekst": "Treba da se prekrije sramota svoga brata muslimana."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

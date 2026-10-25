@@ -10,12 +10,30 @@
   {
    "od": 2.7,
    "do": 49.9,
-   "tekst": "إن الحمد لله نستعينه تعالى ونستغفره ونستهديه، ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فهو المهتد ومن يضلل فأولئك هم الخاسرون، أشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده وحبيبه وخليله وصفيه من خلقه، أدى الأمانة وبلغ الرسالة ونصح الأمة وكشف الله به الغمة وجاهد في الله حق جهاده حتى أتاه اليقين، صلى الله عليه وعلى الصحابة أجمعين ومن تبعه بإحسان واقتفى أثره إلى يوم الدين."
+   "tekst": "إن الحمد لله نستعينه تعالى ونستغفره ونستهديه، ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فهو المهتد ومن يضلل فأولئك هم الخاسرون، أشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده وحبيبه وخليله وصفيه من خلقه، أدى الأمانة وبلغ الرسالة ونصح الأمة وكشف الله به الغمة وجاهد في الله حق جهاده حتى أتاه اليقين، صلى الله عليه وعلى الصحابة أجمعين ومن تبعه بإحسان واقتفى أثره إلى يوم الدين.",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; od Njega Uzvišenog pomoć tražimo, od Njega oprost i uputu molimo. Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, on je na Pravom putu, a koga On ostavi u zabludi – takvi su izgubljeni (usp. El-E'raf, 178). Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob, miljenik, prijatelj i odabranik među Njegovim stvorenjima. Izvršio je emanet, dostavio poslanicu, savjetovao ummet – Allah je preko njega otklonio tminu – i borio se na Allahovom putu onako kako treba, sve dok mu nije došla smrt. Neka Allah blagoslovi njega i sve ashabe, i one koji ga u dobru slijede i idu njegovim stopama do Sudnjeg dana."
   },
   {
    "od": 49.9,
+   "do": 60.5,
+   "tekst": "أَلَا إِنَّ أَصْدَقَ الْكَلَامِ كَلَامُ اللَّهِ، وَخَيْرَ الْهَدْيِ هَدْيُ مُحَمَّدٍ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ، وَشَرَّ الْأُمُورِ مُحْدَثَاتُهَا",
+   "jezik": "ar",
+   "prevod": "Zaista, najistinitiji govor je Allahov govor, najbolja uputa je uputa Muhammeda, sallallahu alejhi ve sellem, a najgore stvari su novotarije (iz hadisa, Muslim)."
+  },
+  {
+   "od": 60.5,
+   "do": 68.3,
+   "tekst": "يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ",
+   "jezik": "ar",
+   "prevod": "„O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102)"
+  },
+  {
+   "od": 68.3,
    "do": 88.1,
-   "tekst": "ألا إن أصدق الكلام كلام الله، وخير الهدي هدي محمد صلى الله عليه وسلم، وشر الأمور محدثاتها. يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ مِنْ نَفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً ۚ وَاتَّقُوا اللَّهَ الَّذِي تَسَاءَلُونَ بِهِ وَالْأَرْحَامَ ۚ إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا. Summe emma ba'd."
+   "tekst": "يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ مِنْ نَفْسٍ وَاحِدَةٍ وَخَلَقَ مِنْهَا زَوْجَهَا وَبَثَّ مِنْهُمَا رِجَالًا كَثِيرًا وَنِسَاءً ۚ وَاتَّقُوا اللَّهَ الَّذِي تَسَاءَلُونَ بِهِ وَالْأَرْحَامَ ۚ إِنَّ اللَّهَ كَانَ عَلَيْكُمْ رَقِيبًا ثُمَّ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "„O ljudi, bojte se Gospodara svoga, Koji vas je od jednog čovjeka stvorio – a od njega je stvorio njegovu ženu – i od njih dvoje mnogo ljudi i žena rasijao. I bojte se Allaha, s čijim imenom jedni od drugih tražite, i čuvajte rodbinske veze, jer Allah, zaista, nad vama bdi.“ (En-Nisa, 1). A zatim:"
   },
   {
    "od": 89.9,
@@ -237,5 +255,6 @@
    "do": 1164.3,
    "tekst": "Allaha, tebareke ve te'ala, molimo da nam oprosti naše slabosti i grijehe i propuste. Njega molimo da nas u Džennet uvede, nas, naše porodice, sve muslimane. Allaha na kraju molimo da pomogne islam i muslimane, posebno one potlačene, gdje god oni bili. Allaha molimo da nas učini gornjima, pobjednicima, dostojanstvenima. Allaha, tebareke ve te'ala, molimo za uputu, molimo za milost, molimo za Džennet. Amin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

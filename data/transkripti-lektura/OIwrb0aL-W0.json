@@ -59,8 +59,15 @@
   },
   {
    "od": 215.3,
+   "do": 217.3,
+   "tekst": "ذَٰلِكَ قَوْلُهُمْ بِأَفْوَاهِهِمْ",
+   "jezik": "ar",
+   "prevod": "„To su riječi njihove, iz usta njihovih…“ (Et-Tevba, 30)"
+  },
+  {
+   "od": 217.3,
    "do": 235.5,
-   "tekst": "„ذَلِكَ قَوْلُهُمْ بِأَفْوَاهِهِمْ“ – to je samo, to je samo njihov govor, od njihovih prohtjeva. Sliči ovaj govor govoru onih nevjernika prije njih."
+   "tekst": "To je samo, to je samo njihov govor, od njihovih prohtjeva. Sliči ovaj govor govoru onih nevjernika prije njih."
   },
   {
    "od": 236.1,
@@ -146,6 +153,13 @@
    "od": 600,
    "do": 612.3,
    "tekst": "Jetevara minel-kavmi min su'i ma buššire bih“ – kaže: krije se od naroda, da ga ne bi ismijavali zbog onoga što je dobio, to jest što je dobio kćer."
+  },
+  {
+   "od": 612.3,
+   "do": 616.2,
+   "tekst": "أَيُمْسِكُهُ عَلَىٰ هُونٍ أَمْ يَدُسُّهُ فِي التُّرَابِ",
+   "jezik": "ar",
+   "prevod": "„…da li da ga zadrži, ponižen, ili da ga u zemlju zarije?“ (En-Nahl, 59)"
   },
   {
    "od": 616.2,
@@ -537,5 +551,6 @@
    "do": 2444.2,
    "tekst": "Molimo Allaha, subhanehu ve te'ala, da vas nagradi svakim, svakim dobrom, što ste pomno slušali, što ste došli večeras da se družimo ovdje i učimo o Allahovoj vjeri. I molim Allaha, subhanehu ve te'ala, da nam oprosti grijehe, grijehe naših roditelja, da nas sastavi u Džennetu. Amin, ja Rabbel-alemin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

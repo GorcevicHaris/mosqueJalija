@@ -9,8 +9,17 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
    "do": 26.4,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين."
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
   },
   {
    "od": 26.4,
@@ -41,6 +50,13 @@
    "od": 161.4,
    "do": 170.9,
    "tekst": "i onda: „Dao nam je hrane, ugostio nas, ali nam je rekao da, ako ne dovedemo sljedeći put brata, da nema hrane za nas.“"
+  },
+  {
+   "od": 170.9,
+   "do": 176.9,
+   "tekst": "مُنِعَ مِنَّا الْكَيْلُ فَأَرْسِلْ مَعَنَا أَخَانَا نَكْتَلْ وَإِنَّا لَهُ لَحَافِظُونَ",
+   "jezik": "ar",
+   "prevod": "„…uskraćena nam je hrana, zato pošalji s nama brata našeg da dobijemo hranu, a mi ćemo ga, zaista, čuvati.“ (Jusuf, 63)"
   },
   {
    "od": 176.9,
@@ -101,6 +117,13 @@
    "od": 462.7,
    "do": 495.3,
    "tekst": "Kada otvoriše one tovare što im je Jusuf spremio, nađoše one stvari kojima su platili ovu hranu. Jusuf im je vratio, nije htio da im uzme te stvari kojima su oni platili hranu. „O oče, šta više da tražimo? Vidiš kako je ovaj čovjek milostiv, kako je dobar prema nama!"
+  },
+  {
+   "od": 495.3,
+   "do": 500.4,
+   "tekst": "هَٰذِهِ بِضَاعَتُنَا رُدَّتْ إِلَيْنَا",
+   "jezik": "ar",
+   "prevod": "„…evo, naša roba nam je vraćena…“ (Jusuf, 65)"
   },
   {
    "od": 501.3,
@@ -192,5 +215,6 @@
    "do": 908.4,
    "tekst": "mjesec ramazan do kraja i, ako Bog da, da nađemo noć Lejletul-kadr. Amin, ja Rabbel-alemin. Es-selamu alejkum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

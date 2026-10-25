@@ -10,7 +10,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
   },
   {
    "od": 31.2,
@@ -152,5 +154,6 @@
    "do": 744.4,
    "tekst": "Allah oprašta grijehe onome ko se iskreno, iskreno pokaje, makar koliko bili ti grijesi veliki. Jakub, alejhis-selam, naredi da se vrate u Egipat i da traže Jusufa i njegovog brata Benjamina. Toliko za danas, ako Bog da, pa sutra nastavljamo. Nije ostalo još puno, još malo je ostalo. Allah da vas nagradi svakim dobrom."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

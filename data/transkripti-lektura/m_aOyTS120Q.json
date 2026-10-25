@@ -9,8 +9,18 @@
  "segmenti": [
   {
    "od": 0,
-   "do": 17.1,
-   "tekst": "[učenje na arapskom]"
+   "do": 3.3,
+   "tekst": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+   "jezik": "ar",
+   "prevod": "U ime Allaha, Milostivog, Samilosnog."
+  },
+  {
+   "od": 3.3,
+   "do": 25.3,
+   "tekst": "مَا أَنْزَلْنَا عَلَيْكَ الْقُرْآنَ لِتَشْقَىٰ ۝ إِلَّا تَذْكِرَةً لِمَنْ يَخْشَىٰ ۝ تَنْزِيلًا مِمَّنْ خَلَقَ الْأَرْضَ وَالسَّمَاوَاتِ الْعُلَى",
+   "jezik": "ar",
+   "prevod": "„Mi tebi Kur’an nismo objavili da se mučiš, nego kao pouku onome koji se boji – objavu od Onoga Koji je stvorio Zemlju i nebesa visoka.“ (Ta-Ha, 2–4)"
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

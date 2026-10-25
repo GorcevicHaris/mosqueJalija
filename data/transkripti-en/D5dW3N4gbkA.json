@@ -12,8 +12,17 @@
  "segmenti": [
   {
    "od": 0,
-   "do": 44.7,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. …upon his companions and upon all those who follow his path. Amin, ya Rabbal-'alamin."
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 28.8,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
   },
   {
    "od": 44.7,
@@ -155,5 +164,6 @@
    "do": 842.6,
    "tekst": "We do not know what the wisdom is, what lies behind it. Allah, subhanahu wa ta'ala, will reveal it, in sha Allah, in sha Allah soon. I ask Allah, subhanahu wa ta'ala, to help us and to forgive our sins. In sha Allah, tomorrow we continue with this wonderful, beautiful story. I ask Allah, subhanahu wa ta'ala, to reward you with every good. As-salamu alaykum wa rahmatullahi ta'ala."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

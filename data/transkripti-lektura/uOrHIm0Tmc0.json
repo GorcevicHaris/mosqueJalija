@@ -10,17 +10,35 @@
   {
    "od": 1,
    "do": 48.8,
-   "tekst": "الحمد لله يحق الحق ويبطل الباطل ولو كره المجرمون"
+   "tekst": "الْحَمْدُ لِلَّهِ يُحِقُّ الْحَقَّ وَيُبْطِلُ الْبَاطِلَ وَلَوْ كَرِهَ الْمُجْرِمُونَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Koji istinu utvrđuje, a neistinu poništava, makar to bilo mrsko zločincima (usp. El-Enfal, 8)."
   },
   {
    "od": 48.8,
-   "do": 73.3,
-   "tekst": "ونشهد أن لا إله إلا الله وحده لا شريك له، ونشهد أن محمدا عبده وحبيبه وصفيه وخليله، أدى الأمانة وبلغ الرسالة ونصح الأمة وجاهد في سبيل الله حق جهاده حتى أتاه اليقين، وتركنا على المحجة البيضاء، ليلها كنهارها، لا يزيغ عنها بعده إلا هالك."
+   "do": 58,
+   "tekst": "وَنَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَنَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَصَفِيُّهُ وَخَلِيلُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočimo da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočimo da je Muhammed Njegov rob, miljenik, odabranik i prijatelj."
   },
   {
-   "od": 73.8,
+   "od": 58,
+   "do": 73.3,
+   "tekst": "أَدَّى الْأَمَانَةَ وَبَلَّغَ الرِّسَالَةَ وَنَصَحَ الْأُمَّةَ وَجَاهَدَ فِي سَبِيلِ اللَّهِ حَقَّ جِهَادِهِ حَتَّى أَتَاهُ الْيَقِينُ وَتَرَكَنَا عَلَى الْمَحَجَّةِ الْبَيْضَاءِ لَيْلُهَا كَنَهَارِهَا لَا يَزِيغُ عَنْهَا بَعْدَهُ إِلَّا هَالِكٌ",
+   "jezik": "ar",
+   "prevod": "Izvršio je emanet, dostavio poslanicu, savjetovao ummet i borio se na Allahovom putu onako kako treba, sve dok mu nije došla smrt. Ostavio nas je na jasnom, bijelom putu čija je noć kao dan – od njega poslije njega skreće samo onaj ko propada."
+  },
+  {
+   "od": 73.3,
+   "do": 87.1,
+   "tekst": "قَالَ اللَّهُ تَعَالَى فِي كِتَابِهِ الْكَرِيمِ بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ صَدَقَ اللَّهُ الْعَظِيمُ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Uzvišeni Allah kaže u Svojoj plemenitoj Knjizi: U ime Allaha, Milostivog, Samilosnog. „O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102). Istinu je rekao Allah Veličanstveni. A zatim:"
+  },
+  {
+   "od": 87.8,
    "do": 114.8,
-   "tekst": "Kale Allahu te'ala fi kitabihil-kerim: Bismillahir-Rahmanir-Rahim. Ja ejjuhellezine amenu-ttekullahe hakka tukatihi ve la temutunne illa ve entum muslimun. Sadekallahul-azim. Emma ba'd. Sva slava i zahvala pripadaju Allahu, dželle šanuhu, Gospodaru svega stvorenog, Gospodaru znanog i neznanog, Gospodaru Sudnjeg dana, Gospodaru Arša plemenitog. Neka su iskreni salavati i selami na najboljeg čovjeka koji je ikada kročio zemaljskom kuglom, Muhammeda, njegovu časnu, vrlo poštovanu porodicu, njegove drugove ashabe i sve one koji slijede put islama, put Kur'ana, put spasa do Sudnjeg dana. Allahumme amin."
+   "tekst": "Sva slava i zahvala pripadaju Allahu, dželle šanuhu, Gospodaru svega stvorenog, Gospodaru znanog i neznanog, Gospodaru Sudnjeg dana, Gospodaru Arša plemenitog. Neka su iskreni salavati i selami na najboljeg čovjeka koji je ikada kročio zemaljskom kuglom, Muhammeda, njegovu časnu, vrlo poštovanu porodicu, njegove drugove ashabe i sve one koji slijede put islama, put Kur'ana, put spasa do Sudnjeg dana. Allahumme amin."
   },
   {
    "od": 115.4,
@@ -170,7 +188,10 @@
   {
    "od": 744.8,
    "do": 750.7,
-   "tekst": "Ve ekulu kavli haza ve estagfirullahe li ve lekum, festagfiruhu, innehu huvel-Gafurur-Rahim."
+   "tekst": "وَأَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "I ovo govorim i molim Allaha za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

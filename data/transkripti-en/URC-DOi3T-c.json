@@ -12,18 +12,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 38.1,
-   "tekst": "[Arabic recitation]"
+   "do": 42.5,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ تَعَالَى وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, the Exalted, seek His help and ask His forgiveness."
   },
   {
-   "od": 38.1,
-   "do": 78.2,
-   "tekst": "Nahmaduhu ta'ala wa nasta'inuhu wa nastaghfiruhu wa na'udhu billahi min shururi anfusina wa min sayyi'ati a'malina. Man yahdihillahu fala mudilla lah, wa man yudlilhu fala hadiya lah. Wa ashhadu an la ilaha illallahu wahdahu la sharika lah, wa ashhadu anna sayyidana wa nabiyyana Muhammadan 'abduhu wa habibuhu wa rasuluh. Arsalahullahu tabaraka wa ta'ala bil-huda wa dini al-haqqi li yuzhirahu 'ala ad-dini kullihi wa law kariha al-kafirun. Fa salawatu Rabbi"
+   "od": 42.5,
+   "do": 54.5,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْهُ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
   },
   {
-   "od": 78.2,
+   "od": 54.5,
+   "do": 66.9,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ سَيِّدَنَا وَنَبِيَّنَا مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that our master and prophet Muhammad is His servant, His beloved and His messenger."
+  },
+  {
+   "od": 66.9,
+   "do": 85.2,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَبَارَكَ وَتَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ فَصَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى آلِهِ وَصَحْبِهِ وَمَنْ سَارَ عَلَى نَهْجِهِ وَاقْتَفَى أَثَرَهُ إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah, Blessed and Exalted, sent him with guidance and the religion of truth to make it prevail over all religion, even if the disbelievers dislike it. May the blessings and peace of my Lord be upon him and upon his family and companions and upon those who follow his way and tread in his footsteps until the Day of Judgement."
+  },
+  {
+   "od": 85.2,
+   "do": 90.8,
+   "tekst": "رِضْوَانُ اللَّهِ تَعَالَى عَلَيْنَا وَعَلَيْهِمْ أَجْمَعِينَ ثُمَّ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "May the pleasure of Allah the Exalted be upon us and upon all of them. To proceed:"
+  },
+  {
+   "od": 90.8,
    "do": 102.2,
-   "tekst": "wa salamuhu 'alayhi wa 'ala alihi wa sahbihi wa man sara 'ala nahjihi waqtafa atharahu ila yawm id-din. Ridwanullahi ta'ala 'alayna wa 'alayhim ajma'in. Thumma amma ba'd. Respected brothers, esteemed believers, esteemed… Allah, Allah is the Creator of everything."
+   "tekst": "Respected brothers, esteemed believers, esteemed… Allah, Allah is the Creator of everything."
   },
   {
    "od": 104.1,
@@ -162,8 +187,18 @@
   },
   {
    "od": 818,
+   "do": 825.7,
+   "tekst": "آمِينَ يَا رَبَّ الْعَالَمِينَ بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ",
+   "jezik": "ar",
+   "prevod": "Amen, O Lord of the worlds. May Allah bless me and you through the Mighty Qur’an and benefit me and you with the verses and the wise reminder it contains."
+  },
+  {
+   "od": 825.7,
    "do": 833.4,
-   "tekst": "Ya Rabb al-alamin. Barakallahu li wa lakum fil-Qur'an al-'azim, وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ، أَقُولُ مَا تَسْمَعُونَ وَأَسْتَغْفِرُ اللَّهَ الْعَظِيمَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ."
+   "tekst": "أَقُولُ مَا تَسْمَعُونَ وَأَسْتَغْفِرُ اللَّهَ الْعَظِيمَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "I say what you hear and ask Allah the Almighty for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

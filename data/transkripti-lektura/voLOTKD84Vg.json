@@ -9,13 +9,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 66.6,
-   "tekst": "[učenje na arapskom]"
+   "do": 40.7,
+   "tekst": "الْحَمْدُ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
-   "od": 66.6,
+   "od": 40.7,
+   "do": 52.5,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
+  },
+  {
+   "od": 52.5,
+   "do": 61,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob i poslanik."
+  },
+  {
+   "od": 61,
+   "do": 83.7,
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah ga je poslao s istinom kao donosioca radosnih vijesti, opominjača i svjetiljku koja sija, da opominje one čija su srca živa i da se obistini Riječ protiv nevjernika (Ja-Sin, 70). Neka Uzvišeni Allah blagoslovi njega i njegovu dobru i čistu porodicu i njegove plemenite ashabe, upućene koji su i druge upućivali, i neka mu podari obilan selam do Sudnjeg dana."
+  },
+  {
+   "od": 83.7,
+   "do": 96.5,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah kaže u Svojoj plemenitoj Knjizi: „O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102). A zatim:"
+  },
+  {
+   "od": 96.5,
    "do": 107.2,
-   "tekst": "لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يا أيها الذين آمنوا اتقوا الله حق تقاته ولا تموتن إلا وأنتم مسلمون. أما بعد. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana."
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana."
   },
   {
    "od": 107.8,
@@ -199,13 +229,24 @@
   },
   {
    "od": 992.1,
-   "do": 1032.1,
-   "tekst": "Blizu je, blizu, dan [nejasno] – nekom danas, nekom sutra – doći će melek smrti, i [nejasno] pred Allaha, subhanehu ve te'ala. Elhamdulillahi hamden kamilen, ves-salatu ves-selamu ala nebijjina Muhammedin ve ala alihi ve sahbihi edžmein, ta'zimen li nebijjihi ve tekrimen li fehameti še'nihi [nejasno]. قال عز وجل من قائل مخبرا وآمرا: إن الله وملائكته يصلون على النبي يا أيها الذين آمنوا صلوا عليه وسلموا تسليما. اللهم بارك على محمد وعلى آل محمد كما باركت على إبراهيم وعلى آل إبراهيم"
+   "do": 1001.8,
+   "tekst": "Blizu je, blizu, dan [nejasno] – nekom danas, nekom sutra – doći će melek smrti, i [nejasno] pred Allaha, subhanehu ve te'ala."
   },
   {
-   "od": 1032.1,
+   "od": 1001.8,
+   "do": 1017.2,
+   "tekst": "الحمد لله حمد الكاملين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين، تعظيما لنبيه وتكريما لفخامة شأن شرف الصفي، قال عز وجل من قائل مخبرا وآمرا",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu… (dio nije jasno prepoznat), a salavat i selam na našeg Vjerovjesnika Muhammeda, njegovu porodicu i sve njegove ashabe – iz poštovanja prema Njegovom Vjerovjesniku i iskazivanja počasti uzvišenom položaju Odabranika. Uzvišeni i Slavni kaže, obavještavajući i naređujući:",
+   "provjeriti": true
+  },
+  {
+   "od": 1017.2,
    "do": 1034.2,
-   "tekst": "إنك حميد مجيد."
+   "tekst": "إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
+   "jezik": "ar",
+   "prevod": "„Allah i Njegovi meleki zaista blagoslivljaju Vjerovjesnika. O vjernici, i vi ga blagoslivljajte i šaljite mu selam!“ (El-Ahzab, 56). Allahu moj, daj berićet Muhammedu i porodici Muhammedovoj kao što si dao berićet Ibrahimu i porodici Ibrahimovoj – Ti si, zaista, Hvaljeni i Slavni."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

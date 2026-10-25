@@ -9,8 +9,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 26.1,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 26.1,
    "do": 43.2,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. Nastavljamo sa tefsirom sure Jusuf. Nakon što se priče po gradu proširiše da je gradonačelnikova žena pozvala Jusufa na zinaluk,"
+   "tekst": "Nastavljamo sa tefsirom sure Jusuf. Nakon što se priče po gradu proširiše da je gradonačelnikova žena pozvala Jusufa na zinaluk,"
   },
   {
    "od": 43.2,
@@ -29,8 +43,10 @@
   },
   {
    "od": 120.5,
-   "do": 137,
-   "tekst": "[učenje na arapskom]"
+   "do": 125,
+   "tekst": "قَالَ رَبِّ السِّجْنُ أَحَبُّ إِلَيَّ مِمَّا يَدْعُونَنِي إِلَيْهِ",
+   "jezik": "ar",
+   "prevod": "„Reče: ‘Gospodaru moj, draža mi je tamnica od onoga na šta me one navode.’“ (Jusuf, 33)"
   },
   {
    "od": 137,
@@ -142,5 +158,6 @@
    "do": 751.2,
    "tekst": "Što ideš? Što se pobadaš pet puta dnevno?“ Pa dođe rođak – nećeš da se rukuješ sa rođakom, jer je haram: „Što nećeš da se rukuješ? Kako nećeš?“ Pa napadi sa ove, pa sa one strane, i tako, i tako dalje, od raznih ljudi. Znači, ova vjera je isto kao žeravica, kao žeravica, i samo će je držati onaj ko je dovoljno, ko je dovoljno jak, kao što je to bio Jusuf, alejhis-salatu ves-selam. Es-selamu alejkum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

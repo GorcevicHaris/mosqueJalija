@@ -12,13 +12,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 69.2,
-   "tekst": "[Arabic recitation]"
+   "do": 42,
+   "tekst": "الْحَمْدُ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "All praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
-   "od": 69.2,
+   "od": 42,
+   "do": 53.7,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
+  },
+  {
+   "od": 53.7,
+   "do": 62.3,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that Muhammad is His servant and messenger."
+  },
+  {
+   "od": 62.3,
+   "do": 87,
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah sent him with the truth as a bearer of glad tidings, a warner and a light-giving lamp, to warn whoever is alive (of heart) and so that the Word may be fulfilled against the disbelievers (Ya-Sin 36:70). May Allah the Exalted bless him and his good and pure family and his noble companions, the rightly guided who guided others, and grant him abundant peace until the Day of Judgement."
+  },
+  {
+   "od": 87,
+   "do": 98.7,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah says in His noble Book: “O you who believe, fear Allah as He deserves to be feared, and do not die except as Muslims.” (Al Imran 3:102). To proceed:"
+  },
+  {
+   "od": 98.7,
    "do": 110.2,
-   "tekst": "لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment,"
+   "tekst": "Praise belongs to the One, Exalted Allah, subhanahu wa ta'ala (glorified and exalted is He), Lord of all the worlds, Lord of the Day of Judgment,"
   },
   {
    "od": 110.5,
@@ -102,8 +132,15 @@
   },
   {
    "od": 497.7,
+   "do": 502.5,
+   "tekst": "وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ",
+   "jezik": "ar",
+   "prevod": "“…and will provide for him from where he does not expect.” (At-Talaq 65:3)"
+  },
+  {
+   "od": 502.5,
    "do": 538.7,
-   "tekst": "“وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ” – and will provide for him from where he does not expect. What a beautiful promise of Allah, subhanahu wa ta'ala! The most beautiful example of this, my brothers, is the example of Yusuf, alayhis-salatu was-salam, who was thrown into a well as a child, then they found him and sold him to a rich man in Egypt,"
+   "tekst": "And will provide for him from where he does not expect. What a beautiful promise of Allah, subhanahu wa ta'ala! The most beautiful example of this, my brothers, is the example of Yusuf, alayhis-salatu was-salam, who was thrown into a well as a child, then they found him and sold him to a rich man in Egypt,"
   },
   {
    "od": 538.7,
@@ -132,8 +169,10 @@
   },
   {
    "od": 625.5,
-   "do": 642.7,
-   "tekst": "[Arabic recitation]"
+   "do": 633.1,
+   "tekst": "رَبِّ قَدْ آتَيْتَنِي مِنَ الْمُلْكِ وَعَلَّمْتَنِي مِنْ تَأْوِيلِ الْأَحَادِيثِ",
+   "jezik": "ar",
+   "prevod": "“My Lord, You have given me something of sovereignty and taught me the interpretation of dreams…” (Yusuf 12:101)"
   },
   {
    "od": 642.7,
@@ -187,13 +226,16 @@
   },
   {
    "od": 881.1,
-   "do": 921.6,
-   "tekst": "And that is why every person, every mu'min, every Muslim must and should trade with Allah, so that he may succeed in this world and, by Allah, in the Hereafter too. I ask Allah, subhanahu wa ta'ala, to make us among those who fear only Him. I ask Him, the Exalted, to forgive us our sins and the sins of our parents. I ask Him, the Exalted, to unite us in Jannah (Paradise). Amin, ya Rabb al-alamin. Aqulu qawli hadha wa astaghfirullaha li wa lakum,"
+   "do": 918.6,
+   "tekst": "And that is why every person, every mu'min, every Muslim must and should trade with Allah, so that he may succeed in this world and, by Allah, in the Hereafter too. I ask Allah, subhanahu wa ta'ala, to make us among those who fear only Him. I ask Him, the Exalted, to forgive us our sins and the sins of our parents. I ask Him, the Exalted, to unite us in Jannah (Paradise). Amin, ya Rabb al-alamin."
   },
   {
-   "od": 921.6,
+   "od": 918.6,
    "do": 925,
-   "tekst": "فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ"
+   "tekst": "أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "I say these words of mine and ask Allah for forgiveness for myself and for you, so ask Him for forgiveness; truly He is the Oft-Forgiving, the Most Merciful."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

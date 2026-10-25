@@ -9,8 +9,15 @@
  "segmenti": [
   {
    "od": 0.4,
+   "do": 6.4,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 6.4,
    "do": 31.7,
-   "tekst": "Elhamdulillahi Rabbil-alemin, ves-salatu ves-selamu ala nebijjina Muhammedin ve ala alihi ve sahbihi edžmein. Zahvala i hvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put, put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem."
+   "tekst": "Zahvala i hvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana. Neka je salavat i selam na Njegovog Poslanika, miljenika Muhammeda, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put, put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem."
   },
   {
    "od": 33.8,
@@ -194,8 +201,15 @@
   },
   {
    "od": 997.3,
+   "do": 1003.7,
+   "tekst": "وَأَمَّا الَّذِينَ فِي قُلُوبِهِمْ مَرَضٌ فَزَادَتْهُمْ رِجْسًا إِلَىٰ رِجْسِهِمْ وَمَاتُوا وَهُمْ كَافِرُونَ",
+   "jezik": "ar",
+   "prevod": "„A onima u čijim je srcima bolest, ona dodaje pokvarenost njihovoj pokvarenosti, i oni umiru kao nevjernici.“ (Et-Tevba, 125)"
+  },
+  {
+   "od": 1003.7,
    "do": 1013.9,
-   "tekst": "„وَأَمَّا الَّذِينَ فِي قُلُوبِهِمْ مَرَضٌ فَزَادَتْهُمْ رِجْسًا إِلَى رِجْسِهِمْ وَمَاتُوا وَهُمْ كَافِرُونَ“ – a, kaže, onima koji ne vjeruju, ovo im, kaže, ova sura povećava sumnju i nevjerstvo na ono nevjerstvo u kojem su već bili."
+   "tekst": "A, kaže, onima koji ne vjeruju, ovo im, kaže, ova sura povećava sumnju i nevjerstvo na ono nevjerstvo u kojem su već bili."
   },
   {
    "od": 1015,
@@ -332,5 +346,6 @@
    "do": 1652.4,
    "tekst": "jeste od vjerovanja, pa poslije namaza i tako dalje, ahlaka – da čovjek ima sa nečim da se vrati Gospodaru, Allahu, subhanehu ve te'ala."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

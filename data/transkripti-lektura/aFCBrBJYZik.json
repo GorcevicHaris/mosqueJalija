@@ -9,18 +9,38 @@
  "segmenti": [
   {
    "od": 2.4,
-   "do": 43.3,
-   "tekst": "[učenje na arapskom]"
+   "do": 43.2,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ وَنَسْتَهْدِيهِ",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo, od Njega oprost molimo i od Njega uputu tražimo."
   },
   {
-   "od": 44.1,
-   "do": 61.1,
-   "tekst": "Ve neuzu billahi te'ala min šururi enfusina ve min sejjiati a'malina. Men jehdihillahu fela mudille leh, ve men judlil fela hadije leh. Ve ešhedu en la ilahe illallahu vahdehu la šerike leh."
+   "od": 43.2,
+   "do": 56.1,
+   "tekst": "وَنَعُوذُ بِاللَّهِ تَعَالَى مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا، مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Uzvišenom Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
   },
   {
-   "od": 61.1,
-   "do": 85.5,
-   "tekst": "Ve ešhedu enne Muhammeden abduhu ve habibuhu ve resuluh. Erselehullahu te'ala bil-huda ve dinil-hakki li juzhirehu aled-dini kullihi ve lev kerihel-kafirun. Allahumme, Rabbi-šrah li sadri ve jessir li emri vahlul ukdeten min lisani jefkahu kavli."
+   "od": 56.1,
+   "do": 66.7,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob, miljenik i poslanik."
+  },
+  {
+   "od": 66.7,
+   "do": 75.2,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ",
+   "jezik": "ar",
+   "prevod": "Uzvišeni Allah ga je poslao s uputom i pravom vjerom da je uzdigne iznad svih vjera, makar to bilo mrsko nevjernicima."
+  },
+  {
+   "od": 75.2,
+   "do": 85.6,
+   "tekst": "اللَّهُمَّ رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي",
+   "jezik": "ar",
+   "prevod": "„Allahu moj, Gospodaru moj, prostranim učini prsa moja, olakšaj mi posao moj i odriješi uzao s jezika moga da bi razumjeli govor moj.“ (usp. Taha, 25–28)"
   },
   {
    "od": 86.7,
@@ -192,5 +212,6 @@
    "do": 885.3,
    "tekst": "Svakako, krug se širi, ide na komšiluk, ide na ostale ljude, muslimane i tome slično. Kažemo ovo moleći Uzvišenoga Gospodara da oprosti grijehe meni i vama, molite Ga i vi."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

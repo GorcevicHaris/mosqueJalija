@@ -32,6 +32,44 @@ Nije rađeno:
 - dijelovi na arapskom koje whisper nije prepoznao (npr. „Al-Fatiha.“ preko 60 s uvoda hutbe) zamijenjeni su oznakom „[učenje na arapskom]“;
 - uklanjane su samo očite whisper halucinacije (ponovljeni identični redovi, „Hvala na gledanju“, „Titlovi…“, muzičke note) – svako takvo uklanjanje je navedeno ispod.
 
+## Arapski segmenti (2026-10-25)
+
+Arapski dijelovi (uvod i završetak hutbe, učenje ajeta, hadisi, dove) su dodati kao zasebni segmenti
+`{ "od", "do", "tekst": "<arapski>", "jezik": "ar", "prevod": "<prevod>" }` u **oba** fajla
+(`data/transkripti-lektura/` i `data/transkripti-en/`, isti broj segmenata i ista vremena; `prevod` je
+bosanski odnosno engleski), a na vrhu fajla stoji `"arapski": "2026-10-25"`. Postupak (79 snimaka sa
+govorom; `WA79h85BTKU` i `eTjV_BlQIqk` nemaju govor):
+
+- arapski prolaz whispera (`-l ar`, `scripts/transkripcija/arapski.mjs`) na dijelovima koje bosanski prolaz
+  nije prepoznao (oznake, rupe, arapsko pismo, transliteracija, početak/kraj snimka), zatim ručni pregled
+  svakog snimka;
+- poznati tekstovi (hutbetul-hadže i njene varijante, „Barekallahu li ve lekum…“, „Ekulu kavli haza…“,
+  salavat, Ali Imran 102, En-Nisa 1, El-Ahzab 56, Jusuf 3 na početku svakog tefsira…) zamijenjeni su tačnim
+  tekstom sa harakatima; ajeti su prepoznati po suri i ajetu i napisani prema mushafu, uz prevod i izvor,
+  npr. „(Jusuf, 33)“ / „(Yusuf 12:33)“; prevodi su vlastiti (značenjski), ne preuzeti iz objavljenih prevoda;
+- oznake `[učenje na arapskom]`, „progutani“ segmenti (npr. „Sallallahu alejhi ve sellem.“ preko 30 s) i
+  potpuno transliterisani segmenti („Ve neuzu billahi…“) su zamijenjeni arapskim segmentima; miješani
+  segment (arapski početak/kraj + bosanski tekst) je podijeljen na granici iz finih segmenata whispera, a
+  bosanski/engleski dio teksta je ostao kakav je bio (uklonjen je samo arapski/transliterisani dio);
+- arapski citat usred bosanske rečenice (citat pa prevod) ostao je u tekstu kakav jeste;
+- ono što je whisper „čuo“ na bosanskom govoru (besmislice arapskim pismom, „اشتركوا في القناة“) odbačeno je;
+- bosanski tekst koji je bio izgubljen ispod oznake (npr. prevod ajeta odmah poslije učenja) nije
+  rekonstruisan — to vrijeme je ostalo bez teksta.
+
+**Za preslušavanje** (`"provjeriti": true` — tekst nije sigurno prepoznat; na stranici piše napomena):
+
+- `FBOlD4Vc82E` 9:37–10:02 i `voLOTKD84Vg` 16:41 — početak druge hutbe („الحمد لله حمد الكاملين…“, „تعظيما
+  لنبيه وتكريما لفخامة شأن شرف الصفي…“): formula nije sigurno prepoznata.
+- `-QKGCdrGiRQ` 10:17 — sura El-Felek; whisper je čuo prvi i četvrti ajet, ostatak je dopunjen po redoslijedu sure.
+- `Dnqhzz-b4gw` 1:13 — En-Neml 19: moguće da je proučen i dio „وَعَلَىٰ وَالِدَيَّ وَأَنْ أَعْمَلَ صَالِحًا تَرْضَاهُ“ koji nije prepoznat.
+- `fZ_cV_h1pcc` 0:01 — dova/ilahija „نَوِّرْ قَلْبِي بِالْقُرْآنِ…“; riječ pred „يَا مَنَّانُ“ nije jasna.
+
+Preostala oznaka: `0NxaZJg1zQA` 0:00–1:09 `[učenje na arapskom]` — ni drugi pokušaj (large-v3) nije dao
+upotrebljiv tekst.
+
+Indeksi segmenata su se promijenili (admin ispravke u tabeli `transkript_ispravke` su vezane za indeks
+segmenta; tabela je u tom trenutku bila prazna).
+
 ## Za provjeru (imam)
 
 Lektura je rađena bez preslušavanja snimka. Ispod su, po videu, mjesta gdje je tumačenje nesigurno – vrijeme (min:sek) se odnosi na početak segmenta u snimku. Preporuka: preslušati ta mjesta i po potrebi ispraviti tekst direktno u `data/transkripti-lektura/<id>.json`.

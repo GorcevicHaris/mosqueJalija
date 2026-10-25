@@ -9,13 +9,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 69.2,
-   "tekst": "[učenje na arapskom]"
+   "do": 42,
+   "tekst": "الْحَمْدُ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
-   "od": 69.2,
+   "od": 42,
+   "do": 53.7,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
+  },
+  {
+   "od": 53.7,
+   "do": 62.3,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob i poslanik."
+  },
+  {
+   "od": 62.3,
+   "do": 87,
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah ga je poslao s istinom kao donosioca radosnih vijesti, opominjača i svjetiljku koja sija, da opominje one čija su srca živa i da se obistini Riječ protiv nevjernika (Ja-Sin, 70). Neka Uzvišeni Allah blagoslovi njega i njegovu dobru i čistu porodicu i njegove plemenite ashabe, upućene koji su i druge upućivali, i neka mu podari obilan selam do Sudnjeg dana."
+  },
+  {
+   "od": 87,
+   "do": 98.7,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah kaže u Svojoj plemenitoj Knjizi: „O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102). A zatim:"
+  },
+  {
+   "od": 98.7,
    "do": 110.2,
-   "tekst": "لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم: يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana,"
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana,"
   },
   {
    "od": 110.5,
@@ -99,8 +129,15 @@
   },
   {
    "od": 497.7,
+   "do": 502.5,
+   "tekst": "وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ",
+   "jezik": "ar",
+   "prevod": "„…i opskrbit će ga odakle se i ne nada.“ (Et-Talak, 3)"
+  },
+  {
+   "od": 502.5,
    "do": 538.7,
-   "tekst": "„وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ“ – i opskrbit će ga odakle se i ne nada. Kako lijepo obećanje Allaha, subhanehu ve te'ala! Najljepši primjer, moja braćo, za ovo jeste primjer Jusufa, alejhis-salatu ves-selam, koji je bio bačen kao mali u bunar, pa su ga našli, a onda prodali jednom bogatašu u Egiptu,"
+   "tekst": "I opskrbit će ga odakle se i ne nada. Kako lijepo obećanje Allaha, subhanehu ve te'ala! Najljepši primjer, moja braćo, za ovo jeste primjer Jusufa, alejhis-salatu ves-selam, koji je bio bačen kao mali u bunar, pa su ga našli, a onda prodali jednom bogatašu u Egiptu,"
   },
   {
    "od": 538.7,
@@ -129,8 +166,10 @@
   },
   {
    "od": 625.5,
-   "do": 642.7,
-   "tekst": "[učenje na arapskom]"
+   "do": 633.1,
+   "tekst": "رَبِّ قَدْ آتَيْتَنِي مِنَ الْمُلْكِ وَعَلَّمْتَنِي مِنْ تَأْوِيلِ الْأَحَادِيثِ",
+   "jezik": "ar",
+   "prevod": "„Gospodaru moj, Ti si mi vlast dao i tumačenju snova me naučio…“ (Jusuf, 101)"
   },
   {
    "od": 642.7,
@@ -184,13 +223,16 @@
   },
   {
    "od": 881.1,
-   "do": 921.6,
-   "tekst": "I zato svaki čovjek, svaki mu'min, svaki musliman mora i treba da trguje sa Allahom, kako bi uspio na ovome, a bogami i na onome svijetu. Molim Allaha, subhanehu ve te'ala, da nas učini od onih koji se samo Njega boje. Molim Njega Uzvišenog da nam oprosti grijehe, grijehe naših roditelja. Molim Njega Uzvišenog da nas sastavi u Džennetu. Amin, ja Rabbel-alemin. Ekulu kavli haza ve estagfirullahe li ve lekum,"
+   "do": 918.6,
+   "tekst": "I zato svaki čovjek, svaki mu'min, svaki musliman mora i treba da trguje sa Allahom, kako bi uspio na ovome, a bogami i na onome svijetu. Molim Allaha, subhanehu ve te'ala, da nas učini od onih koji se samo Njega boje. Molim Njega Uzvišenog da nam oprosti grijehe, grijehe naših roditelja. Molim Njega Uzvišenog da nas sastavi u Džennetu. Amin, ja Rabbel-alemin."
   },
   {
-   "od": 921.6,
+   "od": 918.6,
    "do": 925,
-   "tekst": "فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ"
+   "tekst": "أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "Ovo govorim i molim Allaha za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

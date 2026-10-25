@@ -6,6 +6,11 @@
 //   node scripts/transkripcija/transkribuj.mjs --limit 5         # najviše 5 videa
 //   node scripts/transkripcija/transkribuj.mjs --force --id X     # ponovo, i kad transkript postoji
 //   node scripts/transkripcija/transkribuj.mjs --samo-obrada      # samo ponovna obrada sačuvanih sirovih izlaza
+//   node scripts/transkripcija/transkribuj.mjs --bez-arapskog     # bez drugog koraka (arapski prolaz, arapski.mjs)
+//
+// Poslije bosanske transkripcije automatski se pokreće drugi korak — arapski.mjs (whisper -l ar na
+// dijelovima koje bosanski prolaz nije prepoznao: uvod/završetak hutbe, ajeti, dove); uz --samo-obrada
+// se ponovo upisuje sačuvani arapski prolaz (arapski.mjs --samo-spajanje).
 //
 // Potrebno: ffmpeg, whisper-cli (brew install ffmpeg whisper-cpp), yt-dlp, model u radnom folderu.
 // Radni folder (audio, modeli, sirovi izlaz) je VAN projekta: ~/Library/Caches/jalija-transkripcija
@@ -41,7 +46,7 @@ const PROMPT =
 
 // ---------- argumenti ----------
 const argv = process.argv.slice(2);
-const opt = { ids: [], limit: Infinity, force: false, samoObrada: false, zadrziAudio: false };
+const opt = { ids: [], limit: Infinity, force: false, samoObrada: false, zadrziAudio: false, bezArapskog: false };
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === '--id') opt.ids.push(argv[++i]);
@@ -49,8 +54,9 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--force') opt.force = true;
   else if (a === '--samo-obrada') opt.samoObrada = true;
   else if (a === '--zadrzi-audio') opt.zadrziAudio = true;
+  else if (a === '--bez-arapskog') opt.bezArapskog = true;
   else if (a === '-h' || a === '--help') {
-    console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 16).join('\n'));
+    console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 22).join('\n'));
     process.exit(0);
   } else {
     console.error(`Nepoznat argument: ${a}`);
@@ -157,6 +163,16 @@ function snimi(id, sirovoPut, video) {
   return t;
 }
 
+/** Drugi korak: arapski prolaz (arapski.mjs) za navedene videe. */
+function arapskiKorak(ids, dodatno = []) {
+  if (opt.bezArapskog || !ids.length) return 0;
+  console.log(`\nDrugi korak — arapski dijelovi (${ids.length} videa):`);
+  const r = spawnSync(process.execPath, [join(dirname(fileURLToPath(import.meta.url)), 'arapski.mjs'), ...dodatno, ...ids.flatMap((id) => ['--id', id])], {
+    stdio: 'inherit',
+  });
+  return r.status ?? 1;
+}
+
 // ---------- glavni tok ----------
 const predavanja = JSON.parse(readFileSync(join(KORIJEN, 'data/predavanja.json'), 'utf8'))
   .slice()
@@ -167,14 +183,20 @@ for (const d of [IZLAZ, MODELI, AUDIO, WAV, SIROVO]) mkdirSync(d, { recursive: t
 
 if (opt.samoObrada) {
   let n = 0;
+  const obradjeni = [];
   for (const f of readdirSync(SIROVO).filter((x) => x.endsWith('.json'))) {
     const id = f.replace(/\.json$/, '');
     if (opt.ids.length && !opt.ids.includes(id)) continue;
     if (!poId.has(id)) continue;
-    if (snimi(id, join(SIROVO, f), poId.get(id))) n++;
+    if (snimi(id, join(SIROVO, f), poId.get(id))) {
+      n++;
+      obradjeni.push(id);
+    }
   }
   console.log(`Ponovo obrađeno: ${n}`);
-  process.exit(0);
+  // obrada piše samo bosanske segmente → ponovo upiši sačuvani arapski prolaz (bez ponovnog prepoznavanja)
+  const saArapskim = obradjeni.filter((id) => existsSync(join(RAD, 'arapski', `${id}.json`)));
+  process.exit(arapskiKorak(saArapskim, ['--samo-spajanje']) ? 1 : 0);
 }
 
 provjeriAlate();
@@ -189,6 +211,7 @@ console.log(`Za transkripciju: ${lista.length} videa, ${(ukupnoSek / 3600).toFix
 const start = Date.now();
 let gotovo = 0;
 let greske = 0;
+const zaArapski = [];
 for (const p of lista) {
   const t0 = Date.now();
   process.stdout.write(`[${gotovo + greske + 1}/${lista.length}] ${p.id} (${Math.round((p.trajanje || 0) / 60)} min) … `);
@@ -202,6 +225,7 @@ for (const p of lista) {
     }
     const t = snimi(p.id, sirovoPut, p);
     gotovo++;
+    if (t && t.segmenti.length) zaArapski.push(p.id);
     const sek = (Date.now() - t0) / 1000;
     console.log(`ok, ${t ? t.segmenti.length : 0} pasusa, ${sek.toFixed(0)} s${p.trajanje ? ` (${(p.trajanje / sek).toFixed(1)}× brže od stvarnog vremena)` : ''}`);
   } catch (e) {
@@ -211,4 +235,5 @@ for (const p of lista) {
   }
 }
 console.log(`Gotovo: ${gotovo}, greške: ${greske}, ukupno ${((Date.now() - start) / 60000).toFixed(1)} min.`);
-process.exit(greske ? 1 : 0);
+const arGreske = arapskiKorak(zaArapski, ['--force']);
+process.exit(greske || arGreske ? 1 : 0);

@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 26.1,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 26.1,
    "do": 43.2,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. We continue with the tafsir (exegesis) of Surah Yusuf. After the stories spread around the city that the mayor's wife had tried to seduce Yusuf into zina (fornication),"
+   "tekst": "We continue with the tafsir (exegesis) of Surah Yusuf. After the stories spread around the city that the mayor's wife had tried to seduce Yusuf into zina (fornication),"
   },
   {
    "od": 43.2,
@@ -32,8 +46,10 @@
   },
   {
    "od": 120.5,
-   "do": 137,
-   "tekst": "[Arabic recitation]"
+   "do": 125,
+   "tekst": "قَالَ رَبِّ السِّجْنُ أَحَبُّ إِلَيَّ مِمَّا يَدْعُونَنِي إِلَيْهِ",
+   "jezik": "ar",
+   "prevod": "“He said, ‘My Lord, prison is dearer to me than that to which they invite me.’” (Yusuf 12:33)"
   },
   {
    "od": 137,
@@ -145,5 +161,6 @@
    "do": 751.2,
    "tekst": "Why do you go? Why do you keep bobbing up and down five times a day?\" Then a relative comes – you won't shake hands with your female relative, because it is haram: \"Why won't you shake hands? What do you mean you won't?\" And attacks from this side and from that side, and so on, and so forth, from all kinds of people. So this faith is just like a burning ember, like a burning ember, and only the one who is strong enough, strong enough will hold on to it, as Yusuf, alayhis-salatu was-salam, was. As-salamu alaykum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

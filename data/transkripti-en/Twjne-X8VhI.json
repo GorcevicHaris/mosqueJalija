@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 30.1,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 30.1,
    "do": 48.6,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. After Yusuf's brothers accused their father with the words: \"Inna abana lafi dalalin mubin\" – indeed, our father is in clear error."
+   "tekst": "After Yusuf's brothers accused their father with the words: \"Inna abana lafi dalalin mubin\" – indeed, our father is in clear error."
   },
   {
    "od": 48.6,
@@ -29,6 +43,13 @@
    "od": 100.3,
    "do": 115.6,
    "tekst": "where our father cannot see him, so that our father will turn to you and his love will be reserved for you alone."
+  },
+  {
+   "od": 115.6,
+   "do": 123.2,
+   "tekst": "وَتَكُونُوا مِنْ بَعْدِهِ قَوْمًا صَالِحِينَ",
+   "jezik": "ar",
+   "prevod": "“…and after that you will be a righteous people.” (Yusuf 12:9)"
   },
   {
    "od": 124.6,
@@ -76,9 +97,23 @@
    "tekst": "And one of them said: \"Do not kill Yusuf, let us not go that far."
   },
   {
+   "od": 335.6,
+   "do": 339.2,
+   "tekst": "وَأَلْقُوهُ فِي غَيَابَتِ الْجُبِّ",
+   "jezik": "ar",
+   "prevod": "“…but throw him into the bottom of the well…” (Yusuf 12:10)"
+  },
+  {
    "od": 339.2,
    "do": 347.2,
    "tekst": "I have,\" he says, \"another solution: let us throw him into a well. Let us throw him into a well."
+  },
+  {
+   "od": 347.2,
+   "do": 350.4,
+   "tekst": "يَلْتَقِطْهُ بَعْضُ السَّيَّارَةِ",
+   "jezik": "ar",
+   "prevod": "“…some travellers will pick him up…” (Yusuf 12:10)"
   },
   {
    "od": 350.4,
@@ -130,5 +165,6 @@
    "do": 576.6,
    "tekst": "in sha Allahu ta'ala. I ask Allah, subhanahu wa ta'ala, to keep you in goodness, and, in sha Allah, we will see each other tomorrow. As-salamu alaykum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

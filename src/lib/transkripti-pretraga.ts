@@ -1,6 +1,7 @@
 // Pretraga po transkriptima — za pregledač (bez import.meta.glob, bez velikih podataka u bundle-u).
 // Podaci se lijeno učitavaju sa /pretraga-transkripti.json (src/pages/pretraga-transkripti.json.ts)
-// tek kad korisnik nešto traži.
+// tek kad korisnik nešto traži. Za arapske segmente transkripta tekst u podacima je njihov prevod
+// (transkriptiZaPretragu u ./transkripti.ts), pa pretraga pogađa i prevode ajeta, hadisa i dova.
 import type { TPretragaPodaci } from './transkripti';
 import { normalizuj, tokeni } from './extras/normalizuj';
 

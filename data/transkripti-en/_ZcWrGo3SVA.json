@@ -13,7 +13,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
   },
   {
    "od": 30.8,
@@ -26,9 +28,11 @@
    "tekst": "So they obeyed their father and returned to Egypt, to seek news, that is, tidings of Yusuf and his brother, and of course to obtain food, because that drought had hit them hard; they had, that is, literally nothing."
   },
   {
-   "od": 99.6,
-   "do": 130.3,
-   "tekst": "[Arabic recitation]"
+   "od": 102.7,
+   "do": 116.9,
+   "tekst": "قَالُوا يَا أَيُّهَا الْعَزِيزُ مَسَّنَا وَأَهْلَنَا الضُّرُّ وَجِئْنَا بِبِضَاعَةٍ مُزْجَاةٍ فَأَوْفِ لَنَا الْكَيْلَ وَتَصَدَّقْ عَلَيْنَا ۖ إِنَّ اللَّهَ يَجْزِي الْمُتَصَدِّقِينَ",
+   "jezik": "ar",
+   "prevod": "“O ‘Aziz, hardship has touched us and our family, and we have come with goods of little value; so give us full measure and be charitable to us. Indeed, Allah rewards the charitable.” (Yusuf 12:88)"
   },
   {
    "od": 130.6,
@@ -57,8 +61,15 @@
   },
   {
    "od": 274.6,
+   "do": 312.4,
+   "tekst": "That is this world. A person cannot escape it in any way. He cannot escape it in any way. On the other hand, it in no way means – when we see a man living well, enjoying blessings, but he is not at the mosque, nor at any religious gatherings, he is nowhere to be seen – that a person should think that because he is like that, Allah has somehow raised him up. Or, as Allah, subhanahu wa ta'ala, says:"
+  },
+  {
+   "od": 312.4,
    "do": 316.9,
-   "tekst": "That is this world. A person cannot escape it in any way. He cannot escape it in any way. On the other hand, it in no way means – when we see a man living well, enjoying blessings, but he is not at the mosque, nor at any religious gatherings, he is nowhere to be seen – that a person should think that because he is like that, Allah has somehow raised him up. Or, as Allah, subhanahu wa ta'ala, says: \"وَلَا يَحْسَبَنَّ الَّذِينَ كَفَرُوا أَنَّمَا نُمْلِي لَهُمْ خَيْرٌ لِأَنْفُسِهِمْ\""
+   "tekst": "وَلَا يَحْسَبَنَّ الَّذِينَ كَفَرُوا أَنَّمَا نُمْلِي لَهُمْ خَيْرٌ لِأَنْفُسِهِمْ",
+   "jezik": "ar",
+   "prevod": "“And let not those who disbelieve think that Our giving them respite is good for them…” (Al Imran 3:178)"
   },
   {
    "od": 316.9,
@@ -180,5 +191,6 @@
    "do": 922.1,
    "tekst": "I ask Him, the Exalted, to help us complete the fast for what remains of this month. I ask Him, the Exalted, that we may have reached Laylat al-Qadr (the Night of Power). I ask Him, the Exalted, to forgive our sins and the sins of our parents, and to admit us into Jannah (Paradise). Amin, ya Rabbal-'alamin. As-salamu alaykum wa rahmatullah."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

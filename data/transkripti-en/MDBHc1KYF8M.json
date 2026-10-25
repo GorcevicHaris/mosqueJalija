@@ -13,17 +13,42 @@
   {
    "od": 0.5,
    "do": 43.2,
-   "tekst": "[Arabic recitation]"
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Indeed, all praise belongs to Allah; we praise Him, seek His help and ask His forgiveness."
   },
   {
-   "od": 44.5,
-   "do": 84.9,
-   "tekst": "Wa na'udhu billahi min shururi anfusina wa min sayyi'ati a'malina. Man yahdihillahu fala mudilla lah, wa man yudlilhu fala hadiya lah. Wa ashhadu an la ilaha illallahu wahdahu la sharika lah, wa ashhadu anna sayyidana wa nabiyyana Muhammadan 'abduhu wa habibuhu wa rasuluhu, arsalahullahu tabaraka wa ta'ala bil-huda wa dinil-haqqi liyuzhirahu 'alad-dini kullihi wa law karihal-kafirun. As-salawatu Rabbi wa salamuhu 'alayhi wa 'ala alihi wa sahbihi wa man sara 'ala nahjihi waqtafa atharahu ila yawmid-din. Ridwanullahi ta'ala 'alayna wa 'alayhim ajma'in."
+   "od": 43.2,
+   "do": 54.5,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "We seek refuge in Allah from the evils of our souls and from our bad deeds. Whomever Allah guides, none can lead astray, and whomever He leaves astray, none can guide."
   },
   {
-   "od": 84.9,
+   "od": 54.5,
+   "do": 64.9,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ سَيِّدَنَا وَنَبِيَّنَا مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "I bear witness that there is no god but Allah alone, Who has no partner, and I bear witness that our master and prophet Muhammad is His servant, His beloved and His messenger."
+  },
+  {
+   "od": 64.9,
+   "do": 81.6,
+   "tekst": "أَرْسَلَهُ اللَّهُ تَبَارَكَ وَتَعَالَى بِالْهُدَى وَدِينِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّينِ كُلِّهِ وَلَوْ كَرِهَ الْكَافِرُونَ فَصَلَوَاتُ رَبِّي وَسَلَامُهُ عَلَيْهِ وَعَلَى آلِهِ وَصَحْبِهِ وَمَنْ سَارَ عَلَى نَهْجِهِ وَاقْتَفَى أَثَرَهُ إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah, Blessed and Exalted, sent him with guidance and the religion of truth to make it prevail over all religion, even if the disbelievers dislike it. May the blessings and peace of my Lord be upon him and upon his family and companions and upon those who follow his way and tread in his footsteps until the Day of Judgement."
+  },
+  {
+   "od": 81.6,
+   "do": 85.8,
+   "tekst": "رِضْوَانُ اللَّهِ تَعَالَى عَلَيْنَا وَعَلَيْهِمْ أَجْمَعِينَ ثُمَّ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "May the pleasure of Allah the Exalted be upon us and upon all of them. To proceed:"
+  },
+  {
+   "od": 85.8,
    "do": 125.5,
-   "tekst": "Fa amma ba'd. Respected brothers, esteemed believers (mu'minun)! Every surah in the noble Qur'an is a story of its own. 114 surahs – each of them is the most beautiful garden, which with its beauty, its content, its lessons and messages, and the construction of its expression and words, stands as something unique."
+   "tekst": "Respected brothers, esteemed believers (mu'minun)! Every surah in the noble Qur'an is a story of its own. 114 surahs – each of them is the most beautiful garden, which with its beauty, its content, its lessons and messages, and the construction of its expression and words, stands as something unique."
   },
   {
    "od": 125.5,
@@ -49,6 +74,13 @@
    "od": 235.6,
    "do": 250.7,
    "tekst": "He says: \"I have spent countless and abundant treasures of mine.\" Does he think that no one sees him?"
+  },
+  {
+   "od": 250.7,
+   "do": 254.3,
+   "tekst": "أَلَمْ نَجْعَلْ لَهُ عَيْنَيْنِ",
+   "jezik": "ar",
+   "prevod": "“Have We not made for him two eyes…” (Al-Balad 90:8)"
   },
   {
    "od": 254.3,
@@ -285,5 +317,6 @@
    "do": 1436.4,
    "tekst": "of the ummah of Muhammad, sallallahu alayhi wa sallam, especially the martyrs of Gaza, and to make their sacrifice a pledge of victory for the ummah of Muhammad, sallallahu alayhi wa sallam. Amin, ya Rabbal-'alamin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

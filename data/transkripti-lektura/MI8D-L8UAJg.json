@@ -9,8 +9,17 @@
  "segmenti": [
   {
    "od": 0,
-   "do": 26.8,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين."
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
+  },
+  {
+   "od": 20.3,
+   "do": 27.3,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
   },
   {
    "od": 27.3,
@@ -68,6 +77,13 @@
    "tekst": "Šta kaže Jusuf? Kaže, kaže Jusuf, alejhis-selam: „Ne, ne, ne“, kaže, „ona je“, kaže, „tražila od mene da počinim blud sa njom; nisam ja, ja to nisam htio.“ Odmah je presjekao."
   },
   {
+   "od": 283.6,
+   "do": 287.4,
+   "tekst": "وَشَهِدَ شَاهِدٌ مِنْ أَهْلِهَا",
+   "jezik": "ar",
+   "prevod": "„…a jedan čovjek iz njene porodice posvjedoči…“ (Jusuf, 26)"
+  },
+  {
    "od": 287.4,
    "do": 318.8,
    "tekst": "Pa je posvjedočio svjedok iz njene porodice – ne iz njegove porodice, nego iz njene porodice, a rođak, inšaAllah, neće slagati na rođaka. Pa je od mudrosti što je iz njene porodice bio ovaj svjedok. Kažu mufessiri da je ovaj svjedok bio njen amidžić, neko kaže da je bio njen daidžić, neko kaže da je bio drug ovog premijera, njegov najbolji drug, a njen rođak."
@@ -93,9 +109,16 @@
    "tekst": "Ako je straga, onda ona laže, jer je ona pokušala da ga spriječi da izađe."
   },
   {
-   "od": 426.3,
+   "od": 422.4,
+   "do": 432.6,
+   "tekst": "فَلَمَّا رَأَىٰ قَمِيصَهُ قُدَّ مِنْ دُبُرٍ قَالَ إِنَّهُ مِنْ كَيْدِكُنَّ ۖ إِنَّ كَيْدَكُنَّ عَظِيمٌ",
+   "jezik": "ar",
+   "prevod": "„I kada on vidje da je košulja njegova straga razderana, reče: ‘Ovo je jedno od vaših lukavstava – lukavstva su vaša, zaista, velika!’“ (Jusuf, 28)"
+  },
+  {
+   "od": 432.6,
    "do": 466.3,
-   "tekst": "„…kudde min duburin kale innehu min kejdikunne, inne kejdekunne azim.“ Pa kada vidje da je košulja pocijepana, potrgana straga: „Ovo je“, kaže, „jedna od vaših spletki“, reče ovaj muž. „Ovo je“, kaže, „jedna od vaših spletki“ – a čovjek najbolje poznaje svoju hanumu – „doista su“, kaže, „vaše spletke“ – misli ovdje na žene – „doista su“, kaže, „vaše spletke velike.“ Sada je jedan zanimljiv detalj, draga braćo, ovdje."
+   "tekst": "Pa kada vidje da je košulja pocijepana, potrgana straga: „Ovo je“, kaže, „jedna od vaših spletki“, reče ovaj muž. „Ovo je“, kaže, „jedna od vaših spletki“ – a čovjek najbolje poznaje svoju hanumu – „doista su“, kaže, „vaše spletke“ – misli ovdje na žene – „doista su“, kaže, „vaše spletke velike.“ Sada je jedan zanimljiv detalj, draga braćo, ovdje."
   },
   {
    "od": 466.3,
@@ -157,5 +180,6 @@
    "do": 738.8,
    "tekst": "Toliko, inšaAllah, za danas. Allah da vam da svako dobro, da vas poživi u hajru. Es-selamu alejkum."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

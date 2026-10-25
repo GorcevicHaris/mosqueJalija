@@ -13,7 +13,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
   },
   {
    "od": 31.4,
@@ -111,6 +113,13 @@
    "tekst": "if Allah wills, in safety – safe from persecution, from hunger, from everything."
   },
   {
+   "od": 463.6,
+   "do": 467.2,
+   "tekst": "وَرَفَعَ أَبَوَيْهِ عَلَى الْعَرْشِ",
+   "jezik": "ar",
+   "prevod": "“And he raised his parents upon the throne…” (Yusuf 12:100)"
+  },
+  {
    "od": 467.2,
    "do": 483.6,
    "tekst": "And it says: he raised his parents onto the throne, onto his throne, where he sat, where he resided. And, it says, they made prostration to him, a prostration of greeting."
@@ -205,5 +214,6 @@
    "do": 961.4,
    "tekst": "So, in sha Allah, tomorrow we will finish that last part as well. In sha Allah. May Allah grant you every good, and we will see each other tomorrow."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

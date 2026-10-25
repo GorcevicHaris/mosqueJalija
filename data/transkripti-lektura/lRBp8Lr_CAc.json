@@ -10,7 +10,9 @@
   {
    "od": 0.5,
    "do": 41.5,
-   "tekst": "Elhamdulillahi Rabbil-alemin, ves-salatu ves-selamu ala nebijjina Muhammedin ve ala alihi ve sahbihi edžmein."
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Gospodaru svjetova, a salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
   },
   {
    "od": 41.5,
@@ -248,6 +250,13 @@
    "tekst": "Vi ste, o ummete Muhammedov, najbolji ljudi. Zbog čega? Zbog čega su najbolji ljudi? Zbog čega smo mi najbolji ummet?"
   },
   {
+   "od": 1068.9,
+   "do": 1073.4,
+   "tekst": "تَأْمُرُونَ بِالْمَعْرُوفِ وَتَنْهَوْنَ عَنِ الْمُنْكَرِ",
+   "jezik": "ar",
+   "prevod": "„…naređujete dobro, a od zla odvraćate…“ (Ali Imran, 110)"
+  },
+  {
    "od": 1074.5,
    "do": 1095.3,
    "tekst": "Naređujete da se čini dobro, a odvraćate od onoga lošeg. Ovdje „el-ma'ruf“ znači sve ono što je šerijatski, ili šerijatom, potvrđeno da je dobro, i razumom; također i loše:"
@@ -284,8 +293,15 @@
   },
   {
    "od": 1193,
+   "do": 1195.7,
+   "tekst": "يَأْمُرُونَ بِالْمَعْرُوفِ وَيَنْهَوْنَ عَنِ الْمُنْكَرِ",
+   "jezik": "ar",
+   "prevod": "„…traže da se čini dobro, a od zla odvraćaju…“ (Et-Tevba, 71)"
+  },
+  {
+   "od": 1195.7,
    "do": 1222.2,
-   "tekst": "„يَأْمُرُونَ بِالْمَعْرُوفِ وَيَنْهَوْنَ عَنِ الْمُنْكَرِ“ – naređuju dobro, a odvraćaju, a odvraćaju od zla. Pa vidimo da su vjernici, vjernici jedni drugima, jedni drugima pomagači. I nema vjerniku drugog pomagača osim Allaha, subhanehu ve te'ala, pa onda vjernika."
+   "tekst": "Naređuju dobro, a odvraćaju, a odvraćaju od zla. Pa vidimo da su vjernici, vjernici jedni drugima, jedni drugima pomagači. I nema vjerniku drugog pomagača osim Allaha, subhanehu ve te'ala, pa onda vjernika."
   },
   {
    "od": 1222.8,
@@ -359,8 +375,15 @@
   },
   {
    "od": 1530,
+   "do": 1532.6,
+   "tekst": "وَهُوَ فِي الْآخِرَةِ مِنَ الْخَاسِرِينَ",
+   "jezik": "ar",
+   "prevod": "„…i on će na ahiretu biti među izgubljenima.“ (Ali Imran, 85)"
+  },
+  {
+   "od": 1532.6,
    "do": 1547.6,
-   "tekst": "„وَهُوَ فِي الْآخِرَةِ مِنَ الْخَاسِرِينَ“ – a, kaže, na ahiretu će biti od onih koji su propali. To jest, neće ući u Džennet onaj ko nije zadovoljan islamom kao vjerom."
+   "tekst": "A, kaže, na ahiretu će biti od onih koji su propali. To jest, neće ući u Džennet onaj ko nije zadovoljan islamom kao vjerom."
   },
   {
    "od": 1548.2,
@@ -427,5 +450,6 @@
    "do": 1877.4,
    "tekst": "Zato treba jedni druge da volimo, jedni druge da poštujemo, jedni druge da ne uhodimo, jedni druge da ne ismijavamo, jedni druge da ne ogovaramo. I tako, samo tako ćemo uspjeti, inšaAllah, i kao džemat i kao muslimani na ovim prostorima. I samo tako ćemo, ako Bog da, ako Bog da, zajedno ući u Džennet. Amin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

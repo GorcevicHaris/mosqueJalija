@@ -9,18 +9,43 @@
  "segmenti": [
   {
    "od": 0.5,
-   "do": 41.3,
-   "tekst": "إن الحمد لله نحمده ونستعينه ونستغفره"
+   "do": 40.8,
+   "tekst": "إِنَّ الْحَمْدَ لِلَّهِ نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ",
+   "jezik": "ar",
+   "prevod": "Zaista, hvala pripada Allahu; Njega hvalimo, od Njega pomoć tražimo i od Njega oprost molimo."
   },
   {
-   "od": 41.3,
-   "do": 82.2,
-   "tekst": "ونعوذ بالله من شرور أنفسنا ومن سيئات أعمالنا، من يهده الله فلا مضل له ومن يضلل فلا هادي له، وأشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدا عبده ورسوله، أرسله الله بالحق بشيرا ونذيرا وسراجا منيرا، لينذر من كان حيا ويحق القول على الكافرين، صلى الله تعالى عليه وعلى آله الطيبين الطاهرين وأصحابه الكرام الهداة المهتدين وسلم تسليما كثيرا إلى يوم الدين. قال الله في كتابه الكريم:"
+   "od": 40.8,
+   "do": 50.6,
+   "tekst": "وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا مَنْ يَهْدِهِ اللَّهُ فَلَا مُضِلَّ لَهُ، وَمَنْ يُضْلِلْ فَلَا هَادِيَ لَهُ",
+   "jezik": "ar",
+   "prevod": "Utječemo se Allahu od zla naših duša i od naših loših djela. Koga Allah uputi, njega niko ne može zavesti, a koga On ostavi u zabludi, njega niko ne može uputiti."
   },
   {
-   "od": 82.2,
+   "od": 50.6,
+   "do": 58.7,
+   "tekst": "وَأَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+   "jezik": "ar",
+   "prevod": "Svjedočim da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočim da je Muhammed Njegov rob i poslanik."
+  },
+  {
+   "od": 58.7,
+   "do": 79.8,
+   "tekst": "أَرْسَلَهُ اللَّهُ بِالْحَقِّ بَشِيرًا وَنَذِيرًا وَسِرَاجًا مُنِيرًا لِيُنْذِرَ مَنْ كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ صَلَّى اللَّهُ تَعَالَى عَلَيْهِ وَعَلَى آلِهِ الطَّيِّبِينَ الطَّاهِرِينَ وَأَصْحَابِهِ الْكِرَامِ الْهُدَاةِ الْمُهْتَدِينَ وَسَلَّمَ تَسْلِيمًا كَثِيرًا إِلَى يَوْمِ الدِّينِ",
+   "jezik": "ar",
+   "prevod": "Allah ga je poslao s istinom kao donosioca radosnih vijesti, opominjača i svjetiljku koja sija, da opominje one čija su srca živa i da se obistini Riječ protiv nevjernika (Ja-Sin, 70). Neka Uzvišeni Allah blagoslovi njega i njegovu dobru i čistu porodicu i njegove plemenite ashabe, upućene koji su i druge upućivali, i neka mu podari obilan selam do Sudnjeg dana."
+  },
+  {
+   "od": 79.8,
+   "do": 90.4,
+   "tekst": "قَالَ اللَّهُ فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Allah kaže u Svojoj plemenitoj Knjizi: „O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102). A zatim:"
+  },
+  {
+   "od": 90.4,
    "do": 126.3,
-   "tekst": "يا أيها الذين آمنوا اتقوا الله حق تقاته ولا تموتن إلا وأنتم مسلمون. أما بعد. Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana, Gospodaru džinna i ljudi, a salavat i selam Njegovom Poslaniku, miljeniku Muhammedu, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put, put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem. Draga braćo, cijenjene džematlije, naš Poslanik Muhammed, sallallahu alejhi ve sellem, bio je najrječitiji čovjek."
+   "tekst": "Zahvala pripada jedinom Uzvišenom Allahu, subhanehu ve te'ala, Gospodaru svih svjetova, Gospodaru Sudnjeg dana, Gospodaru džinna i ljudi, a salavat i selam Njegovom Poslaniku, miljeniku Muhammedu, sallallahu alejhi ve sellem, na njegovu porodicu, na njegove drugove ashabe i na sve one koji slijede put, put Kur'ana, put sunneta Muhammeda, sallallahu alejhi ve sellem. Draga braćo, cijenjene džematlije, naš Poslanik Muhammed, sallallahu alejhi ve sellem, bio je najrječitiji čovjek."
   },
   {
    "od": 126.9,
@@ -88,6 +113,13 @@
    "tekst": "i da čuvaju svoja stidna mjesta.“ Ne može čovjek da sačuva svoje stidno mjesto bez spuštanja pogleda. Također kaže Allah, subhanehu ve te'ala:"
   },
   {
+   "od": 445.8,
+   "do": 449.1,
+   "tekst": "وَقُلْ لِلْمُؤْمِنَاتِ يَغْضُضْنَ مِنْ أَبْصَارِهِنَّ وَيَحْفَظْنَ فُرُوجَهُنَّ",
+   "jezik": "ar",
+   "prevod": "„I reci vjernicama neka obore poglede svoje i neka čuvaju stidna mjesta svoja…“ (En-Nur, 31)"
+  },
+  {
    "od": 449.1,
    "do": 466.5,
    "tekst": "„I reci vjernicama da spuste poglede svoje“, a kada spuste poglede svoje, one će, naravno, sačuvati i svoja stidna mjesta. Tako i kod čovjeka, i tako i kod žene."
@@ -104,23 +136,44 @@
   },
   {
    "od": 531.7,
-   "do": 550.3,
-   "tekst": "da nas učini od Njegovih iskrenih robova. Molim Njega Uzvišenog da nam oprosti grijehe, grijehe naših roditelja. Molim Njega Uzvišenog da nas uvede u Džennet. Amin, ja Rabbel-alemin. Barekallahu li ve lekum fil-Kur'anil-azim, ve nefe'ani ve ijjakum bima fihi minel-ajati vez-zikril-hakim."
+   "do": 542.8,
+   "tekst": "da nas učini od Njegovih iskrenih robova. Molim Njega Uzvišenog da nam oprosti grijehe, grijehe naših roditelja. Molim Njega Uzvišenog da nas uvede u Džennet. Amin, ja Rabbel-alemin."
   },
   {
-   "od": 550.8,
+   "od": 543.4,
+   "do": 556.4,
+   "tekst": "بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ أَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "Neka Allah blagoslovi mene i vas Veličanstvenim Kur’anom i neka mene i vas okoristi ajetima i mudrom opomenom koji su u njemu. Ovo govorim i molim Allaha za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
+  },
+  {
+   "od": 556.4,
+   "do": 579.2,
+   "tekst": "اللَّهُ أَكْبَرُ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+   "jezik": "ar",
+   "prevod": "Allah je najveći. Hvala Allahu, Gospodaru svjetova."
+  },
+  {
+   "od": 579.2,
    "do": 591.8,
-   "tekst": "أقول قولي هذا وأستغفر الله لي ولكم فاستغفروه إنه هو الغفور الرحيم. … الله أكبر. الحمد لله رب العالمين، الرحمن الرحيم، مالك يوم الدين، إياك نعبد وإياك نستعين،"
+   "tekst": "الرَّحْمَٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+   "jezik": "ar",
+   "prevod": "Milostivom, Samilosnom, Vladaru Sudnjeg dana! Samo Tebe obožavamo i samo od Tebe pomoć tražimo. (El-Fatiha, 1–5)"
   },
   {
    "od": 591.8,
    "do": 620,
-   "tekst": "اهدنا الصراط المستقيم، صراط الذين أنعمت عليهم غير المغضوب عليهم ولا الضالين."
+   "tekst": "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+   "jezik": "ar",
+   "prevod": "„Uputi nas na Pravi put, put onih kojima si milost darovao, a ne onih na koje si se rasrdio, niti onih koji su zalutali!“ (El-Fatiha, 6–7)"
   },
   {
    "od": 620,
    "do": 653.8,
-   "tekst": "شهد الله أنه لا إله إلا هو والملائكة وأولو العلم قائما بالقسط، لا إله إلا هو العزيز الحكيم."
+   "tekst": "شَهِدَ اللَّهُ أَنَّهُ لَا إِلَٰهَ إِلَّا هُوَ وَالْمَلَائِكَةُ وَأُولُو الْعِلْمِ قَائِمًا بِالْقِسْطِ ۚ لَا إِلَٰهَ إِلَّا هُوَ الْعَزِيزُ الْحَكِيمُ",
+   "jezik": "ar",
+   "prevod": "„Allah svjedoči da nema boga osim Njega – a i meleki i oni koji posjeduju znanje – On pravedno upravlja; nema boga osim Njega, Silnog i Mudrog.“ (Ali Imran, 18)"
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

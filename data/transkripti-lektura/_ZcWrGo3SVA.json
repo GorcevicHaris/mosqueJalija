@@ -10,7 +10,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "„Mi ti kazujemo najljepše kazivanje objavljujući ti ovaj Kur’an, a ti prije njega o tome nisi ništa znao.“ (Jusuf, 3)"
   },
   {
    "od": 30.8,
@@ -23,9 +25,11 @@
    "tekst": "Pa oni poslušaše oca i vratiše se u Egipat, da traže vijesti, to jest haber o Jusufu i njegovom bratu, i naravno da uzmu hrane, jer ih je baš pogodila ta suša, nisu imali, znači, bukvalno ništa."
   },
   {
-   "od": 99.6,
-   "do": 130.3,
-   "tekst": "[učenje na arapskom]"
+   "od": 102.7,
+   "do": 116.9,
+   "tekst": "قَالُوا يَا أَيُّهَا الْعَزِيزُ مَسَّنَا وَأَهْلَنَا الضُّرُّ وَجِئْنَا بِبِضَاعَةٍ مُزْجَاةٍ فَأَوْفِ لَنَا الْكَيْلَ وَتَصَدَّقْ عَلَيْنَا ۖ إِنَّ اللَّهَ يَجْزِي الْمُتَصَدِّقِينَ",
+   "jezik": "ar",
+   "prevod": "„O vladaru, nas i porodicu našu snašla je nevolja, a donijeli smo malo robe, pa nam podaj punu mjeru i udijeli nam milostinju; Allah, zaista, nagrađuje one koji milostinju dijele.“ (Jusuf, 88)"
   },
   {
    "od": 130.6,
@@ -54,8 +58,15 @@
   },
   {
    "od": 274.6,
+   "do": 312.4,
+   "tekst": "To je dunjaluk. Ne može čovjek da se spasi toga nikako. Nikako ne može da se spasi toga. Sa druge strane, nikako ne znači, kada vidimo čovjeka da lijepo živi, da uživa u blagodatima, ali nema ga niti u džamiji, niti na nekim vjerskim okupljanjima, nema ga nigdje – nema čovjek da misli da je takav, da ga je Allah nešto uzdigao. Ili, kaže Allah, subhanehu ve te'ala:"
+  },
+  {
+   "od": 312.4,
    "do": 316.9,
-   "tekst": "To je dunjaluk. Ne može čovjek da se spasi toga nikako. Nikako ne može da se spasi toga. Sa druge strane, nikako ne znači, kada vidimo čovjeka da lijepo živi, da uživa u blagodatima, ali nema ga niti u džamiji, niti na nekim vjerskim okupljanjima, nema ga nigdje – nema čovjek da misli da je takav, da ga je Allah nešto uzdigao. Ili, kaže Allah, subhanehu ve te'ala: „وَلَا يَحْسَبَنَّ الَّذِينَ كَفَرُوا أَنَّمَا نُمْلِي لَهُمْ خَيْرٌ لِأَنْفُسِهِمْ“"
+   "tekst": "وَلَا يَحْسَبَنَّ الَّذِينَ كَفَرُوا أَنَّمَا نُمْلِي لَهُمْ خَيْرٌ لِأَنْفُسِهِمْ",
+   "jezik": "ar",
+   "prevod": "„Neka nikako ne misle oni koji ne vjeruju da je za njih dobro to što im Mi vremena dajemo…“ (Ali Imran, 178)"
   },
   {
    "od": 316.9,
@@ -177,5 +188,6 @@
    "do": 922.1,
    "tekst": "Molim Njega Uzvišenog da nam pomogne da ispostimo i ovo što je ostalo od mjeseca. Molim Njega Uzvišenog da smo dosegli noć Lejletul-kadra. Molim Njega Uzvišenog da nam oprosti grijehe, grijehe naših roditelja, da nas uvede u Džennet. Amin, ja Rabbel-alemin. Es-selamu alejkum ve rahmetullah."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

@@ -13,7 +13,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
   },
   {
    "od": 31.2,
@@ -155,5 +157,6 @@
    "do": 744.4,
    "tekst": "Allah forgives the sins of whoever sincerely, sincerely repents, however great those sins may be. Yaqub, alayhis-salam, ordered them to return to Egypt and to search for Yusuf and his brother Benjamin. That is enough for today, in sha Allah, and tomorrow we continue. There is not much left, just a little more is left. May Allah reward you with every good."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

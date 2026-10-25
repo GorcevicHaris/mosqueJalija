@@ -13,7 +13,9 @@
   {
    "od": 0.5,
    "do": 41.5,
-   "tekst": "Alhamdulillahi Rabbil-'alamin, was-salatu was-salamu 'ala nabiyyina Muhammadin wa 'ala alihi wa sahbihi ajma'in."
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
   },
   {
    "od": 41.5,
@@ -251,6 +253,13 @@
    "tekst": "You, O ummah of Muhammad, are the best people. Why? Why are they the best people? Why are we the best ummah?"
   },
   {
+   "od": 1068.9,
+   "do": 1073.4,
+   "tekst": "تَأْمُرُونَ بِالْمَعْرُوفِ وَتَنْهَوْنَ عَنِ الْمُنْكَرِ",
+   "jezik": "ar",
+   "prevod": "“…you enjoin what is right and forbid what is wrong…” (Al Imran 3:110)"
+  },
+  {
    "od": 1074.5,
    "do": 1095.3,
    "tekst": "You enjoin what is good and forbid what is bad. Here \"al-ma'ruf\" means everything that has been confirmed as good by the Shari'ah, or through the Shari'ah, and by reason; and likewise the bad:"
@@ -287,8 +296,15 @@
   },
   {
    "od": 1193,
+   "do": 1195.7,
+   "tekst": "يَأْمُرُونَ بِالْمَعْرُوفِ وَيَنْهَوْنَ عَنِ الْمُنْكَرِ",
+   "jezik": "ar",
+   "prevod": "“…they enjoin what is right and forbid what is wrong…” (At-Tawbah 9:71)"
+  },
+  {
+   "od": 1195.7,
    "do": 1222.2,
-   "tekst": "\"يَأْمُرُونَ بِالْمَعْرُوفِ وَيَنْهَوْنَ عَنِ الْمُنْكَرِ\" – they enjoin good and forbid, and forbid evil. So we see that believers, believers are helpers to one another, to one another. And a believer has no other helper except Allah, subhanahu wa ta'ala, and then the believer."
+   "tekst": "They enjoin good and forbid, and forbid evil. So we see that believers, believers are helpers to one another, to one another. And a believer has no other helper except Allah, subhanahu wa ta'ala, and then the believer."
   },
   {
    "od": 1222.8,
@@ -362,8 +378,15 @@
   },
   {
    "od": 1530,
+   "do": 1532.6,
+   "tekst": "وَهُوَ فِي الْآخِرَةِ مِنَ الْخَاسِرِينَ",
+   "jezik": "ar",
+   "prevod": "“…and in the Hereafter he will be among the losers.” (Al Imran 3:85)"
+  },
+  {
+   "od": 1532.6,
    "do": 1547.6,
-   "tekst": "\"وَهُوَ فِي الْآخِرَةِ مِنَ الْخَاسِرِينَ\" – and, He says, in the Hereafter he will be among the losers. That is, whoever is not content with Islam as his religion will not enter Jannah."
+   "tekst": "And, He says, in the Hereafter he will be among the losers. That is, whoever is not content with Islam as his religion will not enter Jannah."
   },
   {
    "od": 1548.2,
@@ -430,5 +453,6 @@
    "do": 1877.4,
    "tekst": "That is why we should love one another, respect one another, not spy on one another, not mock one another, not backbite one another. And in this way, only in this way will we succeed, in sha Allah, both as a congregation and as Muslims in these lands. And only in this way will we, in sha Allah, in sha Allah, enter Jannah together. Amin."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

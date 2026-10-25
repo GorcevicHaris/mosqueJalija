@@ -10,22 +10,35 @@
   {
    "od": 0.5,
    "do": 40.9,
-   "tekst": "Elhamdulillah, juhikkul-hakka ve jubtilul-batile ve lev kerihel-mudžrimun."
+   "tekst": "الْحَمْدُ لِلَّهِ يُحِقُّ الْحَقَّ وَيُبْطِلُ الْبَاطِلَ وَلَوْ كَرِهَ الْمُجْرِمُونَ",
+   "jezik": "ar",
+   "prevod": "Hvala Allahu, Koji istinu utvrđuje, a neistinu poništava, makar to bilo mrsko zločincima (usp. El-Enfal, 8)."
   },
   {
    "od": 41.4,
    "do": 57.3,
-   "tekst": "Ve nešhedu en la ilahe illallahu vahdehu la šerike leh, ve nešhedu enne Muhammeden abduhu ve habibuhu ve safijjuhu ve haliluhu, edda-l-emanete ve bellega-r-risalete ve nasaha-l-ummete ve džahede fi sebilillahi hakka džihadihi hatta etahul-jekin."
+   "tekst": "وَنَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَنَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَحَبِيبُهُ وَصَفِيُّهُ وَخَلِيلُهُ أَدَّى الْأَمَانَةَ وَبَلَّغَ الرِّسَالَةَ وَنَصَحَ الْأُمَّةَ وَجَاهَدَ فِي سَبِيلِ اللَّهِ حَقَّ جِهَادِهِ حَتَّى أَتَاهُ الْيَقِينُ",
+   "jezik": "ar",
+   "prevod": "Svjedočimo da nema boga osim Allaha, Jedinog, Koji nema sudruga, i svjedočimo da je Muhammed Njegov rob, miljenik, odabranik i prijatelj. Izvršio je emanet, dostavio poslanicu, savjetovao ummet i borio se na Allahovom putu onako kako treba, sve dok mu nije došla smrt."
   },
   {
    "od": 57.7,
-   "do": 76.1,
-   "tekst": "Ve terekena ala-l-mehadždžetil-bejda', lejluha ke neheriha, la jezigu anha ba'dehu illa halik. Kalallahu te'ala fi kitabihil-kerim: Bismillahir-Rahmanir-Rahim. Ja ejjuhellezine amenu-ttekullahe hakka tukatihi ve la temutunne illa ve entum muslimun."
+   "do": 64.7,
+   "tekst": "وَتَرَكَنَا عَلَى الْمَحَجَّةِ الْبَيْضَاءِ لَيْلُهَا كَنَهَارِهَا لَا يَزِيغُ عَنْهَا بَعْدَهُ إِلَّا هَالِكٌ",
+   "jezik": "ar",
+   "prevod": "Ostavio nas je na jasnom, bijelom putu čija je noć kao dan – od njega poslije njega skreće samo onaj ko propada."
   },
   {
-   "od": 76.2,
+   "od": 64.7,
+   "do": 79.4,
+   "tekst": "قَالَ اللَّهُ تَعَالَى فِي كِتَابِهِ الْكَرِيمِ بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ صَدَقَ اللَّهُ الْعَظِيمُ أَمَّا بَعْدُ",
+   "jezik": "ar",
+   "prevod": "Uzvišeni Allah kaže u Svojoj plemenitoj Knjizi: U ime Allaha, Milostivog, Samilosnog. „O vjernici, bojte se Allaha onako kako Ga se treba bojati i ne umirite drugačije nego kao muslimani!“ (Ali Imran, 102). Istinu je rekao Allah Veličanstveni. A zatim:"
+  },
+  {
+   "od": 79.4,
    "do": 113.2,
-   "tekst": "Sadekallahul-azim. Emma ba'd. Sva slava i zahvala pripadaju Allahu, dželle šanuhu, Gospodaru svega stvorenog, Gospodaru znanog i neznanog, Gospodaru Sudnjeg dana, Gospodaru Arša plemenitog. Neka su iskreni salavati i selami na Muhammeda, sallallahu alejhi ve sellem, najboljeg čovjeka koji je ikada kročio zemaljskom kuglom, najboljeg od svih vjerovjesnika i poslanika. Neka su iskreni salavati i selami na njega, njegovu časnu, cijenjenu, poštovanu porodicu, njegove vrle drugove ashabe i sve one koji slijede put islama, put Kur'ana, put spasa do Sudnjega dana. Allahumme amin."
+   "tekst": "Sva slava i zahvala pripadaju Allahu, dželle šanuhu, Gospodaru svega stvorenog, Gospodaru znanog i neznanog, Gospodaru Sudnjeg dana, Gospodaru Arša plemenitog. Neka su iskreni salavati i selami na Muhammeda, sallallahu alejhi ve sellem, najboljeg čovjeka koji je ikada kročio zemaljskom kuglom, najboljeg od svih vjerovjesnika i poslanika. Neka su iskreni salavati i selami na njega, njegovu časnu, cijenjenu, poštovanu porodicu, njegove vrle drugove ashabe i sve one koji slijede put islama, put Kur'ana, put spasa do Sudnjega dana. Allahumme amin."
   },
   {
    "od": 113.9,
@@ -78,6 +91,13 @@
    "tekst": "Zatim Allah, dželle šanuhu, kaže: „O ljudi, mislite li vi da smo vas uzalud stvorili?“ Mislite li vi da smo vas tek onako stvorili, da biste stvoreni bili, da nemate svoju misiju i ulogu na ovom svijetu,"
   },
   {
+   "od": 317.3,
+   "do": 320.8,
+   "tekst": "وَأَنَّكُمْ إِلَيْنَا لَا تُرْجَعُونَ",
+   "jezik": "ar",
+   "prevod": "„…i da Nam se nećete vratiti?“ (El-Mu'minun, 115)"
+  },
+  {
    "od": 320.8,
    "do": 342.1,
    "tekst": "„i da se Nama nećete vratiti?“ Šta Allah, dželle šanuhu, ovdje kaže, braćo? Allah nam šalje poruku: o robovi Moji – ovdje se Allah obraća čitavom čovječanstvu i kaže – o robovi Moji, mislite li da se nećete vratiti svom Gospodaru? Živite slobodno koliko god hoćete, radite šta hoćete, ali znajte da ćete se sigurno jednog dana vratiti Gospodaru."
@@ -126,6 +146,13 @@
    "od": 487.4,
    "do": 495.5,
    "tekst": "„Nikako.“ Šanse nema. To će biti samo puka želja, puka izgovorena riječ."
+  },
+  {
+   "od": 495.5,
+   "do": 498.7,
+   "tekst": "وَمِنْ وَرَائِهِمْ بَرْزَخٌ إِلَىٰ يَوْمِ يُبْعَثُونَ",
+   "jezik": "ar",
+   "prevod": "„…a ispred njih je berzah, sve do Dana kada će biti proživljeni.“ (El-Mu'minun, 100)"
   },
   {
    "od": 498.7,
@@ -194,8 +221,16 @@
   },
   {
    "od": 788,
+   "do": 824.1,
+   "tekst": "Molim Allaha, dželle šanuhu, da nam olakša [nejasno] i dobra djela i sve ono čime je Allah, dželle šanuhu, zadovoljan od riječi i djela. Molim Njega Uzvišenog da nam olakša da napustimo griješenje i svako djelo ili riječ kojim Uzvišeni Gospodar nije zadovoljan. A dova koju je učio jako često Poslanik, alejhis-selam, bila je, ili glasila je: „Gospodaru, ništa nije lahko osim ako Ti to lahkim učiniš.“ Pa Te molimo, Gospodaru, da nam svaki hajr, svako dobro, u ovom mubarek danu i ovom mubarek času olakšaš."
+  },
+  {
+   "od": 824.1,
    "do": 829.4,
-   "tekst": "Molim Allaha, dželle šanuhu, da nam olakša [nejasno] i dobra djela i sve ono čime je Allah, dželle šanuhu, zadovoljan od riječi i djela. Molim Njega Uzvišenog da nam olakša da napustimo griješenje i svako djelo ili riječ kojim Uzvišeni Gospodar nije zadovoljan. A dova koju je učio jako često Poslanik, alejhis-selam, bila je, ili glasila je: „Gospodaru, ništa nije lahko osim ako Ti to lahkim učiniš.“ Pa Te molimo, Gospodaru, da nam svaki hajr, svako dobro, u ovom mubarek danu i ovom mubarek času olakšaš. „وَأَقُولُ قَوْلِي هَذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ“"
+   "tekst": "وَأَقُولُ قَوْلِي هَٰذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ",
+   "jezik": "ar",
+   "prevod": "I ovo govorim i molim Allaha za oprost i sebi i vama, pa i vi od Njega oprost tražite – On je, zaista, Onaj Koji prašta i Milostiv je."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

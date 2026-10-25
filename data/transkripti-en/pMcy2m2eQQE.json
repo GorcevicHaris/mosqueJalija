@@ -12,8 +12,22 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 20.3,
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
+  },
+  {
+   "od": 20.3,
+   "do": 27,
+   "tekst": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "Praise be to Allah, Lord of the worlds, and blessings and peace be upon our Prophet Muhammad and upon his family and all his companions."
+  },
+  {
+   "od": 27,
    "do": 31.2,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين. الحمد لله رب العالمين، والصلاة والسلام على نبينا محمد وعلى آله وصحبه أجمعين. We continue further with the tafsir (commentary) of Surah Yusuf."
+   "tekst": "We continue further with the tafsir (commentary) of Surah Yusuf."
   },
   {
    "od": 32.8,
@@ -122,6 +136,13 @@
   },
   {
    "od": 594.4,
+   "do": 604.6,
+   "tekst": "قَالُوا وَأَقْبَلُوا عَلَيْهِمْ مَاذَا تَفْقِدُونَ ۝ قَالُوا نَفْقِدُ صُوَاعَ الْمَلِكِ وَلِمَنْ جَاءَ بِهِ حِمْلُ بَعِيرٍ وَأَنَا بِهِ زَعِيمٌ",
+   "jezik": "ar",
+   "prevod": "“They said, turning towards them, ‘What are you missing?’ They said, ‘We are missing the king’s measuring cup; whoever brings it shall have a camel-load, and I am its guarantor.’” (Yusuf 12:71–72)"
+  },
+  {
+   "od": 604.6,
    "do": 613.8,
    "tekst": "They say: \"We have lost,\" or \"we are looking for the king's vessel.\""
   },
@@ -155,5 +176,6 @@
    "do": 802.9,
    "tekst": "May Allah reward you."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

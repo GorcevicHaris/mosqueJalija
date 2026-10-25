@@ -9,8 +9,15 @@
  "segmenti": [
   {
    "od": 0,
+   "do": 5.1,
+   "tekst": "وَالصَّلَاةُ وَالسَّلَامُ عَلَى نَبِيِّنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ",
+   "jezik": "ar",
+   "prevod": "A salavat i selam na našeg Vjerovjesnika Muhammeda i na njegovu porodicu i sve njegove ashabe."
+  },
+  {
+   "od": 5.1,
    "do": 43,
-   "tekst": "…alemin, ves-salatu ves-selamu ala nebijjina Muhammedin ve ala alihi ve sahbihi edžmein. Kaže Allah, subhanehu ve te'ala: „Innema ja'muru mesadžidallahi men amene billahi vel-jevmil-ahiri ve ekames-salate ve atez-zekate ve lem jahše illallah, fe 'asa ulaike en jekunu minel-muhtedin.“ Doista Allahove mesdžide, Allahove džamije održavaju samo oni koji vjeruju u Allaha, koji vjeruju u Allaha i u onaj svijet, koji obavljaju namaz, daju zekat i ne boje se nikoga osim Allaha, subhanehu ve te'ala – i takvi su na uputi, takvi su na uputi."
+   "tekst": "Kaže Allah, subhanehu ve te'ala: „Innema ja'muru mesadžidallahi men amene billahi vel-jevmil-ahiri ve ekames-salate ve atez-zekate ve lem jahše illallah, fe 'asa ulaike en jekunu minel-muhtedin.“ Doista Allahove mesdžide, Allahove džamije održavaju samo oni koji vjeruju u Allaha, koji vjeruju u Allaha i u onaj svijet, koji obavljaju namaz, daju zekat i ne boje se nikoga osim Allaha, subhanehu ve te'ala – i takvi su na uputi, takvi su na uputi."
   },
   {
    "od": 44.9,
@@ -82,5 +89,6 @@
    "do": 481.5,
    "tekst": "Na bekijskom [nejasno] rahmet ashabima i [nejasno] dovu tiho svim bosanskim…"
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }

@@ -7,7 +7,10 @@
 // prikazuju se samo za aktivni jezik — na stranici je jedan transkript.
 // Klik na vrijeme šalje window CustomEvent 'jalija:seek' {sekunde}; ako player na stranici to ne
 // podržava (nema [data-ytf-seek]), link otvara YouTube na tom mjestu.
-import { brojRijeci, getTranskript, getTranskriptEn, vrijemeTekst } from '../../lib/transkripti';
+// Arapski segmenti (jezik "ar": uvod/završetak hutbe, ajeti, hadisi, dove) prikazuju se arapskim pismom
+// (lang="ar", dir="rtl", Amiri), sa prevodom (prevod) ispod — u oba jezička prikaza; pretraga, kopiranje
+// i .txt obuhvataju i prevod.
+import { brojRijeci, getTranskript, getTranskriptEn, jeArapski, vrijemeTekst } from '../../lib/transkripti';
 import type { Transkript } from '../../lib/transkripti';
 
 interface Props {
@@ -162,9 +165,19 @@ const verzije = [t && { kod: 'bs' as const, tr: t }, en && { kod: 'en' as const,
             >
               {vrijemeTekst(s.od)}
             </a>
-            {(() => {
+            {jeArapski(s) ? (
+              <div class="tr__arapski">
+                <p class="tr__txt tr__ar" lang="ar" dir="rtl" data-tr-t>{s.tekst}</p>
+                {s.prevod && <p class="tr__txt tr__prevod" data-tr-t>{s.prevod}</p>}
+                {s.provjeriti && (
+                  <p class="tr__provjeri">
+                    {kod === 'en' ? 'Arabic text recognised automatically — not yet verified.' : 'Arapski tekst je automatski prepoznat — nije još provjeren.'}
+                  </p>
+                )}
+              </div>
+            ) : (() => {
               const v = vrstaOdlomka(s.tekst);
-              return <p class:list={['tr__txt', { 'tr__txt--ar': v.ar }]} dir={v.dir}>{s.tekst}</p>;
+              return <p class:list={['tr__txt', { 'tr__txt--ar': v.ar }]} dir={v.dir} data-tr-t>{s.tekst}</p>;
             })()}
           </li>
         ))}
@@ -254,19 +267,20 @@ const verzije = [t && { kod: 'bs' as const, tr: t }, en && { kod: 'en' as const,
   interface Lista {
     ol: HTMLOListElement;
     segs: HTMLLIElement[];
-    txts: HTMLElement[];
-    izvorni: string[];
+    /** po segmentu: elementi sa tekstom (običan odlomak = 1; arapski = arapski tekst + prevod) */
+    txts: HTMLElement[][];
+    izvorni: string[][];
     vremena: string[];
   }
 
   function lista(ol: HTMLOListElement): Lista {
     const segs = [...ol.querySelectorAll<HTMLLIElement>('.tr__seg')];
-    const txts = segs.map((li) => li.querySelector<HTMLElement>('.tr__txt')!);
+    const txts = segs.map((li) => [...li.querySelectorAll<HTMLElement>('[data-tr-t]')]);
     return {
       ol,
       segs,
       txts,
-      izvorni: txts.map((p) => p.textContent || ''),
+      izvorni: txts.map((el) => el.map((p) => p.textContent || '')),
       vremena: segs.map((li) => li.querySelector('.tr__time')?.textContent?.trim() || ''),
     };
   }
@@ -302,7 +316,7 @@ const verzije = [t && { kod: 'bs' as const, tr: t }, en && { kod: 'en' as const,
     function ocisti(l: Lista) {
       l.segs.forEach((li, i) => {
         li.hidden = false;
-        l.txts[i].textContent = l.izvorni[i];
+        l.txts[i].forEach((el, k) => (el.textContent = l.izvorni[i][k]));
       });
     }
     let tajmer = 0;
@@ -316,13 +330,18 @@ const verzije = [t && { kod: 'bs' as const, tr: t }, en && { kod: 'en' as const,
       }
       let n = 0;
       l.segs.forEach((li, i) => {
-        const html = oznaci(l.izvorni[i], toks);
-        li.hidden = html === null;
-        if (html === null) l.txts[i].textContent = l.izvorni[i];
-        else {
-          l.txts[i].innerHTML = html;
-          n++;
-        }
+        // arapski segment: pogodak u arapskom tekstu ili u prevodu
+        let nadjen = false;
+        l.txts[i].forEach((el, k) => {
+          const html = oznaci(l.izvorni[i][k], toks);
+          if (html === null) el.textContent = l.izvorni[i][k];
+          else {
+            el.innerHTML = html;
+            nadjen = true;
+          }
+        });
+        li.hidden = !nadjen;
+        if (nadjen) n++;
       });
       status.textContent = n ? TEKST[jezik].pogodaka(n) : TEKST[jezik].nema;
     }
@@ -391,7 +410,7 @@ const verzije = [t && { kod: 'bs' as const, tr: t }, en && { kod: 'en' as const,
         location.href.split('#')[0],
         TEKST[jezik].napomena,
         '',
-        ...l.izvorni.map((t, i) => `[${l.vremena[i]}] ${t}`),
+        ...l.izvorni.map((t, i) => `[${l.vremena[i]}] ${t.join('\n')}`),
       ]
         .filter((x, i) => x || i > 1)
         .join('\n');
@@ -607,6 +626,17 @@ const verzije = [t && { kod: 'bs' as const, tr: t }, en && { kod: 'en' as const,
   .tr__time:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
   .tr__txt { margin: 0; font-size: 1.02rem; line-height: 1.7; overflow-wrap: anywhere; }
   .tr__txt--ar { color: var(--color-text-muted); font-style: italic; }
+  /* arapski segment: arapsko pismo (Amiri), desno-nalijevo, prevod ispod */
+  .tr__arapski { display: grid; gap: var(--space-1); min-width: 0; }
+  .tr__ar {
+    font-family: var(--font-arabic);
+    font-size: 1.32rem;
+    line-height: 2;
+    text-align: right;
+    color: var(--color-text);
+  }
+  .tr__prevod { color: var(--color-text-muted); font-size: 0.96rem; line-height: 1.6; }
+  .tr__provjeri { margin: 0; font-size: 0.78rem; color: var(--color-text-muted); font-style: italic; }
   .tr__txt :global(mark) {
     background: var(--color-accent-soft);
     color: inherit;

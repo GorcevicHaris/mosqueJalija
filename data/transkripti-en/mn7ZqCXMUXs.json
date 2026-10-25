@@ -13,7 +13,9 @@
   {
    "od": 0,
    "do": 20.3,
-   "tekst": "نحن نقص عليك أحسن القصص بما أوحينا إليك هذا القرآن وإن كنت من قبله لمن الغافلين"
+   "tekst": "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ وَإِنْ كُنْتَ مِنْ قَبْلِهِ لَمِنَ الْغَافِلِينَ",
+   "jezik": "ar",
+   "prevod": "“We relate to you the best of stories in revealing to you this Qur’an, though before it you were among the unaware.” (Yusuf 12:3)"
   },
   {
    "od": 31.4,
@@ -87,8 +89,15 @@
   },
   {
    "od": 360.3,
+   "do": 363.3,
+   "tekst": "وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ",
+   "jezik": "ar",
+   "prevod": "“Your Lord has decreed that you worship none but Him…” (Al-Isra 17:23)"
+  },
+  {
+   "od": 363.3,
    "do": 378.5,
-   "tekst": "\"وَقَضَى رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ\" – and your Lord has decreed that you worship none but Him. \"وَبِالْوَالِدَيْنِ إِحْسَانًا\" – and He says: that you treat your parents well, that you treat your parents well."
+   "tekst": "And your Lord has decreed that you worship none but Him. \"وَبِالْوَالِدَيْنِ إِحْسَانًا\" – and He says: that you treat your parents well, that you treat your parents well."
   },
   {
    "od": 378.8,
@@ -165,5 +174,6 @@
    "do": 820.9,
    "tekst": "It cannot be otherwise. A person cannot be good and have bad friends, or the other way round. Not at all. Rather, only if you are good will you have good friends. If you are good, you will leave those bad friends. That is all for today. In sha Allah, we will continue tomorrow. May Allah grant you every good."
   }
- ]
+ ],
+ "arapski": "2026-10-25"
 }
