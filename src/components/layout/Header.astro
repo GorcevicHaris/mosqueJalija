@@ -29,6 +29,7 @@ const email = dzamija.kontakt.email;
       {yt && (
         <li><a href={yt} target="_blank" rel="noopener"><Icon name="youtube" size={15} /><span>YouTube</span></a></li>
       )}
+      <li><a href={url('/admin')} rel="nofollow"><Icon name="lock" size={15} /><span>Admin</span></a></li>
     </ul>
   </div>
 </aside>
@@ -108,6 +109,9 @@ const email = dzamija.kontakt.email;
         </form>
         <a class="btn btn--gold btn--block" href={url('/donacije')}>
           <Icon name="heart" size={18} /> Doniraj
+        </a>
+        <a class="btn btn--ghost btn--block" href={url('/admin')} rel="nofollow">
+          <Icon name="lock" size={18} /> Admin prijava
         </a>
       </div>
     </nav>
