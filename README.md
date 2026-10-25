@@ -34,7 +34,9 @@ npm run preview    # pregled build-a
 ## Admin panel i baza (Supabase)
 
 Urednici mijenjaju sadržaj na **https://gorcevicharis.github.io/mosqueJalija/admin/**, bez pristupa
-kodu. U adminu se uređuju obavještenja, objave, podaci o džamiji, imami, galerija, dove, raspored,
+kodu. Ulaz je link „Prijava za urednike“ u podnožju sajta. Prijava ide preko linka na e-mail ili
+lozinkom (nalog sa lozinkom pravi administrator u Supabase → Authentication → Users → Add user).
+Prvi administrator je upisan u tabelu `urednici`. Ostale urednike admin dodaje u sekciji „Urednici“. U adminu se uređuju obavještenja, objave, podaci o džamiji, imami, galerija, dove, raspored,
 ispravke predavanja, inbox poruka, prijave i pitanja. Sadržaj je u Supabase bazi; sajt ga čita pri
 buildu, a nova obavještenja i direktno u pregledaču. Workflow `.github/workflows/osvjezi-sadrzaj.yml`
 obnavlja sajt svakih 15 minuta.

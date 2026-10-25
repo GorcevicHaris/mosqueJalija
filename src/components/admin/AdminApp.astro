@@ -31,7 +31,7 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
   <!-- Prijava -->
   <section class="adm-ekran card" data-ekran="prijava" hidden aria-labelledby="adm-prijava-naslov">
     <h1 id="adm-prijava-naslov" tabindex="-1">Prijava za urednike</h1>
-    <p class="muted">Upišite svoju e-mail adresu. Poslaćemo vam link za prijavu i šestocifreni kod — bez lozinke.</p>
+    <p class="muted">Upišite svoju e-mail adresu. Poslaćemo vam link za prijavu — bez lozinke.</p>
     <p class="adm-poruka" data-prijava-status hidden></p>
 
     <form class="adm-prijava" data-prijava-korak="1" novalidate>
@@ -43,9 +43,9 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
     </form>
 
     <form class="adm-prijava" data-prijava-korak="2" novalidate hidden>
-      <p>Poslali smo e-mail na <strong data-prijava-adresa></strong>. Otvorite link iz poruke{' '}<em>ili</em>{' '}upišite kod ovdje (korisno ako se link otvori u drugom pregledaču ili na drugom uređaju).</p>
+      <p>Poslali smo e-mail na <strong data-prijava-adresa></strong>. Otvorite link iz poruke na ovom uređaju. Ako poruka sadrži i šestocifreni kod, možete ga upisati ovdje.</p>
       <div class="field">
-        <label for="adm-kod">Kod iz e-maila</label>
+        <label for="adm-kod">Kod iz e-maila (ako ga ima)</label>
         <input class="input adm-kod" id="adm-kod" name="kod" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="10" pattern="[0-9]*" required />
       </div>
       <button type="submit" class="btn btn--primary btn--block">Prijavi se</button>

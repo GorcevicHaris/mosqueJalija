@@ -43,11 +43,11 @@ Detalji: `docs/QA-izvjestaj.md`.
 | **Vaktija** | Računa se lokalno i kalibrisana je prema vaktija.ba (Novi Pazar); mjesečna tabela, štampa, CSV |
 | **Islamski kalendar** | Hidžretski datumi i važni dani sa odbrojavanjem |
 | **Obavještenja / Objave** | Iz baze; novo obavještenje se na sajtu vidi odmah |
-| **Mekteb, Online upis, Raspored, Pitaj imama** | Online prijava za mekteb, halke i Školu Kur'ana; sedmični raspored; pitanja imamu sa objavljenim odgovorima |
+| **Mekteb, Online upis, Raspored, Pitaj imama** | Jednostavne stranice u jednoj koloni: online prijava za mekteb, halke i Školu Kur'ana, sedmični raspored, pitanja imamu sa objavljenim odgovorima |
 | **Dove, Kur'an i hadisi, Pravila ponašanja, Učenje Kur'ana, Mediji** | Isto kao na uzoru |
 | **Islamski alati** | Kibla kompas (koristi senzor telefona), digitalni tesbih, zekat kalkulator, ramazanska imsakija, podsjetnik za namaz i vaktija u kalendaru telefona |
 | **Donacije** | IPS QR kod za uplatu (pojavi se kad se unese račun), kopiranje podataka |
-| **Kontakt** | Mapa, navigacija; poruke se spremaju u bazu, a admin ih čita u inboxu |
+| **Kontakt** | Google Maps mapa i navigacija; poruke se spremaju u bazu, a admin ih čita u inboxu |
 | **Pretraga** | Pretražuje cijeli sajt, uključujući izgovoreni tekst svih predavanja |
 | **RSS, aplikacija** | RSS za predavanja i obavještenja; sajt se može instalirati na telefon kao aplikacija |
 
@@ -66,7 +66,7 @@ Ima 15 sekcija i u njima se mijenja **sve**:
 Kad se nešto sačuva u adminu, nova obavještenja se na sajtu vide odmah. Ostale izmjene se pojavljuju
 za ~15–20 minuta, jer se sajt automatski obnavlja iz baze svakih 15 minuta.
 
-Prijava ide preko linka i šestocifrenog koda na e-mail, ili lozinkom.
+Prijava ide preko linka na e-mail ili lozinkom. Ulaz je link „Prijava za urednike“ u podnožju sajta.
 
 **Sigurnost:**
 - svaka tabela ima RLS pravila, a Supabase sigurnosna provjera ne prijavljuje upozorenja;
@@ -111,25 +111,33 @@ Prijava ide preko linka i šestocifrenog koda na e-mail, ili lozinkom.
 6. Lični brojevi telefona predavača sa plakata za upis **nisu objavljeni**.
 7. Prevodi ajeta, hadisa i dova su urađeni po ustaljenim prevodima, sa tačnim izvorima.
 8. Sedmični raspored je prepisan iz stvarnih Instagram objava džemata (oktobar 2026.), sa izvorom.
+9. **Jednostavan raspored stranica** (na tvoj zahtjev): sadržaj ide u jednoj koloni, odozgo prema
+   dolje, sa kraćim tekstom i manjim naslovima kartica. Kartice u mreži ostale su samo za liste
+   (predavanja, imami, alati).
+10. **Sve mape vode na Google Maps** (ugrađena mapa, navigacija, izvor adrese).
 
-## ⚠️ Šta još treba uraditi ti (jednokratno)
+## Prijava u admin i šta je podešeno
 
-1. **Supabase podešavanja prijave** (2 minute, u svom pregledaču):
-   - https://supabase.com/dashboard/project/rcpdboohgumvezbtafrg/auth/url-configuration
-     - Site URL: `https://gorcevicharis.github.io/mosqueJalija/admin/`
-     - Redirect URLs: `https://gorcevicharis.github.io/mosqueJalija/admin/**` i
-       `http://localhost:4330/mosqueJalija/admin/**`
-   - https://supabase.com/dashboard/project/rcpdboohgumvezbtafrg/auth/templates: u šablone
-     **Magic Link** i **Confirm signup** dodati `<p>Ili upišite kod: <strong>{{ .Token }}</strong></p>`.
-2. **Prvi administrator:** javi e-mail adresu (ili sam u Supabase → Table Editor → `urednici` dodaj red
-   sa svojim e-mailom i ulogom `admin`).
-3. **E-mail za ostale urednike.** Supabase-ov ugrađeni e-mail servis šalje samo članovima tvog Supabase
-   tima. Za imama i sekretara imaš dvije opcije:
+Već podešeno:
+- **Supabase prijava:** Site URL i redirect adrese za `/mosqueJalija/admin/` (javni sajt) i
+  `localhost:4330` (razvoj).
+- **Prvi administrator:** harisgorcevic1000@gmail.com.
+- **Ulaz u admin:** diskretan link „Prijava za urednike“ dolje u podnožju svake stranice (nije u
+  glavnom meniju; Google ga ne indeksira).
+
+Kako se prijaviti: „Prijava za urednike“ → upiši e-mail → „Pošalji link za prijavu“ → otvori link iz
+e-maila na istom uređaju.
+
+Šta još treba uraditi ti:
+1. **Probaj prijavu** na gore opisani način.
+2. **Ostali urednici (imam, sekretar).** Supabase-ov ugrađeni e-mail servis šalje samo članovima tvog
+   Supabase tima (najviše ~2 e-maila na sat). Imaš dvije opcije:
    - **(a)** Supabase → Authentication → Users → **Add user** → e-mail + lozinka + „Auto confirm“, pa
      u adminu, u sekciji „Urednici“, dodaj tu adresu. Urednik se prijavljuje preko „Imam lozinku“.
-   - **(b)** Podesi besplatni SMTP (npr. Resend, Brevo) u Authentication → SMTP Settings, i onda
-     prijava linkom radi za sve.
-4. **Vlastiti domen (preporuka):** kupi npr. `dzamijanajaliji.rs`, a ja podesim sajt na njega.
+   - **(b)** Podesi besplatni SMTP (npr. Resend ili Brevo) u Authentication → Emails → SMTP Settings.
+     Tada prijava linkom radi za sve, a u e-mail šablon se može dodati i šestocifreni kod
+     (`{{ .Token }}`). Bez SMTP-a Supabase ne dozvoljava izmjenu šablona.
+3. **Vlastiti domen (preporuka):** kupi npr. `dzamijanajaliji.rs`, a ja podesim sajt na njega.
 
 ## Šta treba da mi dostavite (džemat)
 
