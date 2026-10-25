@@ -143,6 +143,8 @@ Već podešeno:
 - **Supabase prijava:** Site URL i redirect adrese za `/mosqueJalija/admin/` (javni sajt) i
   `localhost:4330` (razvoj).
 - **Prvi administrator:** harisgorcevic1000@gmail.com.
+- **Lozinke urednika:** najmanje 12 znakova, obavezna mala i velika slova, brojevi i simboli.
+  Zaštita od procurjelih lozinki (HaveIBeenPwned) postoji samo na Supabase Pro planu, pa nije uključena.
 - **Ulaz u admin:** diskretan link „Prijava za urednike“ dolje u podnožju svake stranice (nije u
   glavnom meniju; Google ga ne indeksira).
 
