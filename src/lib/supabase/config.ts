@@ -1,13 +1,18 @@
 // Podešavanje veze sa Supabase bazom (sadržaj sajta).
 // PUBLIC_SUPABASE_URL i PUBLIC_SUPABASE_ANON_KEY su JAVNI po dizajnu (ključ je "anon"/"publishable");
 // podatke štite RLS politike u bazi (supabase/migrations/0002_rls.sql).
-// Ako varijable nisu postavljene, sajt radi kao ranije: sve se čita iz data/*.json.
+// Ako varijable nisu postavljene, koriste se javne vrijednosti projekta džamije ispod (svaki posjetilac
+// ih ionako vidi u JS-u sajta), pa build radi i na hostingu bez podešenih varijabli (npr. Vercel).
+// Prazna vrijednost ('') isključuje bazu: sve se tada čita iz data/*.json.
 // Bez zavisnosti — smije se uvoziti i u klijentskim skriptama (Vite ugrađuje PUBLIC_* vrijednosti).
 
-export const SUPABASE_URL: string = String(import.meta.env.PUBLIC_SUPABASE_URL ?? '')
+export const JAVNI_SUPABASE_URL = 'https://rcpdboohgumvezbtafrg.supabase.co';
+export const JAVNI_SUPABASE_KLJUC = 'sb_publishable_bgyu3pp5MhPQKjztthGCzw_YPF_cunR';
+
+export const SUPABASE_URL: string = String(import.meta.env.PUBLIC_SUPABASE_URL ?? JAVNI_SUPABASE_URL)
   .trim()
   .replace(/\/+$/, '');
-export const SUPABASE_ANON_KEY: string = String(import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? '').trim();
+export const SUPABASE_ANON_KEY: string = String(import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? JAVNI_SUPABASE_KLJUC).trim();
 
 /** true = baza je podešena (obje varijable postoje i URL je ispravan). */
 export const supabaseUkljucen: boolean = /^https:\/\/[^/]+$/.test(SUPABASE_URL) && SUPABASE_ANON_KEY.length > 20;

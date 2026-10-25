@@ -3,10 +3,12 @@
 //
 // PRAVILO: nikad ne logovati lične podatke (tijelo zahtjeva, imena, e-mailove) u konzolu.
 
-const URL_BAZE = ((import.meta.env.PUBLIC_SUPABASE_URL as string | undefined) ?? '').trim().replace(/\/+$/, '');
-const KLJUC = ((import.meta.env.PUBLIC_SUPABASE_ANON_KEY as string | undefined) ?? '').trim();
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '../supabase/config';
 
-/** true ako su PUBLIC_SUPABASE_URL i PUBLIC_SUPABASE_ANON_KEY postavljeni u vrijeme builda. */
+const URL_BAZE = SUPABASE_URL;
+const KLJUC = SUPABASE_ANON_KEY;
+
+/** true ako je baza podešena (varijable iz builda ili javne vrijednosti iz src/lib/supabase/config.ts). */
 export const imaSupabase = Boolean(URL_BAZE && KLJUC);
 
 export type VrstaGreske = 'mreza' | 'prava' | 'validacija' | 'limit' | 'nema-tabele' | 'server' | 'konfiguracija';
