@@ -3,7 +3,7 @@ import { url } from '../../lib/url';
 import { dzamija } from '../../lib/data';
 import { glavniMeni, isGroup, isActive, stripBase } from './nav';
 import Icon from '../ui/Icon.astro';
-import StarEmblem from '../ui/StarEmblem.astro';
+import Logo from '../ui/Logo.astro';
 
 const current = stripBase(Astro.url.pathname);
 const mjesto = [dzamija.grad, dzamija.drzava].filter(Boolean).join(', ');
@@ -36,7 +36,7 @@ const email = dzamija.kontakt.email;
 <header class="site-header" data-site-header>
   <div class="container site-header__inner">
     <a class="brand" href={url('/')}>
-      <StarEmblem size={42} class="brand__emblem" />
+      <Logo size={42} decorative class="brand__emblem" />
       <span class="brand__text">
         <span class="brand__name">Džamija na Jaliji</span>
         <span class="brand__sub">{dzamija.grad ?? 'Džemat · Predavanja · Vaktija'}</span>

@@ -7,6 +7,7 @@ import Placeholder from '../components/ui/Placeholder.astro';
 import StatTile from '../components/ui/StatTile.astro';
 import Icon from '../components/ui/Icon.astro';
 import StarEmblem from '../components/ui/StarEmblem.astro';
+import Logo from '../components/ui/Logo.astro';
 import AjetHadisDana from '../components/ui/AjetHadisDana.astro';
 import SocialLinks from '../components/ui/SocialLinks.astro';
 import { url } from '../lib/url';
@@ -181,7 +182,7 @@ const korisno = [
             <img src={imgSrc(naslovnaSlika.src)} alt={naslovnaSlika.alt} loading="lazy" decoding="async" width="600" height="760" />
           ) : (
             <div class="arch-frame__ornament theme-inverse pattern-bg" aria-hidden="true">
-              <StarEmblem size={150} />
+              <Logo size={150} inverse decorative />
             </div>
           )}
         </div>

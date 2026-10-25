@@ -2,7 +2,7 @@
 import { url } from '../../lib/url';
 import { dzamija, punaAdresa } from '../../lib/data';
 import Icon from '../ui/Icon.astro';
-import StarEmblem from '../ui/StarEmblem.astro';
+import Logo from '../ui/Logo.astro';
 import SocialLinks from '../ui/SocialLinks.astro';
 import Placeholder from '../ui/Placeholder.astro';
 
@@ -53,7 +53,7 @@ const kolone = [
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
       <a class="footer-brand" href={url('/')}>
-        <StarEmblem size={52} />
+        <Logo size={52} inverse decorative />
         <span>Džamija na Jaliji</span>
       </a>
       <p class="site-footer__about">

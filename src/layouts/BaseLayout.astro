@@ -60,7 +60,7 @@ const jsonLd = {
   ...(dzamija.nazivArapski && { alternateName: dzamija.nazivArapski }),
   url: homeUrl,
   image: new URL(url('/og-image.png'), site).href,
-  logo: new URL(url('/favicon.svg'), site).href,
+  logo: new URL(url('/logo/logo-znak-512.png'), site).href,
   ...(dzamija.kratakOpis && { description: dzamija.kratakOpis }),
   ...(adresa && { address: adresa }),
   ...(dzamija.koordinate?.potvrdjeno && {
