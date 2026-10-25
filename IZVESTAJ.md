@@ -149,8 +149,15 @@ Sve od ovoga se može unijeti i **direktno u admin panelu**.
 ### Sadržaj
 6. **Bolje fotografije za dva predavača:** Dženan ef. Kamešničanin i Ferid Fijuljanin (sadašnji
    kadrovi su mutni).
-7. **Biografije** Muhameda Metjahića i Edina ef. Salihovića (o njima nisam našao ništa), te željena
-   titula za hfz. Abdurahmana ef. Kujevića.
+7. **Predavači.** Biografije su istražene i nezavisno provjerene prema stanju u oktobru 2026, a svaka
+   tvrdnja ima izvor (tabela: `docs/provjera-imama.md`). Potvrdite:
+   - titulu hfz. Abdurahmana ef. Kujevića. Na sajtu je bez „muftija“, jer je Mešihat 19. 2. 2025.
+     ukinuo regionalne muftije; danas vodi Vakufsku direkciju;
+   - studije hfz. Admira ef. Jašarevića (izvor je samo njegov Instagram) i da li je on imam džamije;
+   - da li je hfz. Ferid Fijuljanin imam u Berlinu;
+   - sadašnju funkciju Dženana ef. Kamešničanina;
+   - osnovne podatke o Muhamedu Metjahiću i Edinu ef. Salihoviću. O njima nema pouzdanih izvora,
+     pa su navedeni samo podaci sa kanala.
 8. **Mekteb:** dani, termini, uzrasti; potvrda sedmičnog rasporeda halki.
 9. **Historija:** kapacitet, arhitekta/izvođač, arapski naziv (ako postoji).
 10. Koja je **Facebook stranica** zvanična (pronađene su dvije).
