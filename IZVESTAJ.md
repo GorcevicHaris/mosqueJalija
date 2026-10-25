@@ -11,9 +11,23 @@ pristupa kodu.
 - **Repozitorij:** https://github.com/GorcevicHaris/mosqueJalija (javan)
 - **Baza:** Supabase projekat `dzamija-na-jaliji` (Frankfurt, besplatni plan)
 
-Rezultati provjere: build bez grešaka i upozorenja, `astro check` 0 grešaka, 0 pokvarenih linkova i
-0 grešaka pristupačnosti (axe). Lighthouse na mobilnom daje 92–100 u sve četiri kategorije. Detalji
-su u `docs/QA-izvjestaj.md`.
+Rezultati provjere (dva kruga testiranja):
+- build sa bazom i bez nje: 124 stranice, 0 grešaka i upozorenja;
+- `astro check`: 0 grešaka, 0 upozorenja;
+- 0 pokvarenih linkova;
+- 0 grešaka pristupačnosti (axe, 35 tipova stranica, obje teme);
+- 0 grešaka u konzoli na svih 124 stranice (360, 768 i 1280 px).
+
+Lighthouse na mobilnom:
+
+| Kategorija | Ocjena |
+|---|---|
+| Performanse | 94–98 |
+| Pristupačnost | 100 |
+| Dobre prakse | 100 |
+| SEO | 100 |
+
+Detalji: `docs/QA-izvjestaj.md`.
 
 ## Šta sajt ima
 
