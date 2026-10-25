@@ -27,7 +27,16 @@ Lighthouse na mobilnom:
 | Dobre prakse | 100 |
 | SEO | 100 |
 
-Detalji: `docs/QA-izvjestaj.md`.
+Na objavljenom sajtu, poslije svih izmjena, provjereno je i:
+- svih 124 stranice na širini telefona;
+- 230 internih linkova;
+- 27 kombinacija filtera predavanja (brojevi se tačno poklapaju sa podacima);
+- admin prijava i prava.
+
+Sve je prošlo. Detalji: `docs/QA-izvjestaj.md`.
+
+**YouTube kanal:** u zadatku je umjesto linka stajalo „[UBACI LINK]“. Korišten je kanal koji si dao u
+razgovoru: https://www.youtube.com/@D%C5%BEamijanaJaliji (ID kanala `UCyw1ppQVijYlaQ6BicgZTVg`).
 
 ## Šta sajt ima
 

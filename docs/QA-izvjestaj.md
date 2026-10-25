@@ -201,3 +201,18 @@ uspjeha; `/raspored` iz baze; „Danas u džamiji“ (nedjelja bez termina → s
 - Transkripti su mašinski (govor sa ekavskim/dijalekatskim oblicima ostaje kako je izgovoren; jasno označeno).
 - Živi sajt još nema ispravke iz ovog kruga dok orkestrator ne objavi commit.
 - Ostala ograničenja iz prvog kruga (§6) važe i dalje (placeholderi za kontakt, donacije, džumu; fotografije Mešihata traže dozvolu).
+
+## Treći krug — provjera objavljenog sajta (25. 10. 2026.)
+
+Sve na javnoj adresi https://gorcevicharis.github.io/mosqueJalija/, poslije pojednostavljenja dizajna:
+
+| Provjera | Rezultat |
+|---|---|
+| Svih 124 stranice na 375 px (sitemapa + 404 + admin + prikaz) | status 200, 0 horizontalnog skrola, svaka ima `h1`, 0 JS grešaka, 0 grešaka u konzoli |
+| Interni linkovi (121 stranica iz sitemape, 230 jedinstvenih linkova) | 0 pokvarenih |
+| Filteri predavanja: 8 imama, 7 kategorija, 4 serije, 2 godine, 3 kombinacije, pretraga „dzennet“ / „DŽENNET“, sortiranje | 27/27 tačno, broj rezultata jednak broju u `data/predavanja.json`, filteri ostaju u URL-u |
+| „Učitaj još“, najstarije prvo, /hutbe | 12 → 24; prvo je „Opasnost javnog razvrata“ (23. 7. 2025., najstarije); /hutbe = 36 |
+| Mobilni filteri | dugme „Filteri“ otvara panel, filter radi, nema skrola |
+| Mape | sve vode na Google Maps; u buildu nema OpenStreetMap ni Apple Maps linkova |
+| Admin | javni /admin povezan sa bazom; nalog admina se prijavio linkom iz e-maila; u bazi potvrđena prava urednika i admina (pisanje testirano u poništenoj transakciji) |
+| Build / `astro check` | 124 stranice, 0 grešaka; 0 grešaka, 0 upozorenja, 0 napomena |
