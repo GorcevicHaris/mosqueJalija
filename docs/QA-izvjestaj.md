@@ -132,3 +132,72 @@ link `ig.me`; mekteb → tekst prijave u međuspremniku; „Podijeli“ bez Web 
 - Vaktija je izračunata (±1–2 min od zvanične), hidžretski datumi ±1 dan — naznačeno na stranicama.
 - Putanje u `manifest.webmanifest` su fiksne (`/mosqueJalija/`) — pri prelasku na vlastiti domen promijeniti ručno.
 - Web Share API (mobilni) nije testiran na stvarnom uređaju; testirana je rezerva (kopiranje linka).
+
+---
+
+## Drugi krug (završni)
+
+Datum: 25. 10. 2026. Produkcijski build sa `.env` (`npx astro preview --port 4332`), JSON build bez varijabli
+(`/tmp/dist-qa2-json`, lokalni statički server), živi sajt (ugrađeni pregledač). Headless Chrome preko privremenih
+puppeteer-core/axe-core/Lighthouse u scratch folderu — `package.json` nije diran.
+
+### Šta je testirano
+
+| Oblast | Rezultat |
+|---|---|
+| Build | `npm run build` i JSON build: 124 stranice, 0 grešaka/upozorenja. `npx astro check`: 0/0/0 (prije: 8 upozorenja u `scripts/transkripcija/obrada.mjs` — ispravljeno) |
+| Linkovi | 257 fajlova u oba builda: 0 pokvarenih internih linkova/resursa, sve sa `/mosqueJalija/`. Sitemap 121 URL, bez `/admin` i `/obavjestenja/prikaz`; `robots.txt` ispravan; jedinstveni naslovi/opisi (noindex: 404, admin, prikaz) |
+| Raspored/konzola | svih 124 stranice × 360/768/1280 × svijetla/tamna: 0 grešaka u konzoli, 0 horizontalnog skrola, tačno jedan vidljiv `h1`, površine za dodir ≥ 40 px (jedini nalaz: OSM pločice na `/kontakt` pri 6. uzastopnom učitavanju — ograničenje OSM servera, samostalno čisto) |
+| Pristupačnost | axe (WCAG 2.1 AA + best-practice) na 35 tipova stranica + dinamička stanja (filteri, `?q=`, `#t-N`, `?mjesec=`, `?m=`, `?program=`) × 375/1280 × obje teme, i JSON build: **0 prekršaja** |
+| Živi sajt | početna, `/raspored` (9 termina iz baze), `/upis` (Supabase obrazac), predavanje `#t-111`, `/admin` (ekran prijave), `/galerija`, `/predavanja` na 375/768/1280, svijetla/tamna: bez grešaka i skrola |
+
+Funkcionalno (sve prolazi): filteri/pretraga (ž=z, „džennet“ 5)/sortiranje (dio 1, 2, 3)/„Učitaj još“ (fokus)/URL u novoj
+kartici; transkript — otvaranje, pretraga sa `<mark>`, Esc, kopiranje (tekst sa vremenima), `.txt`, klik na vrijeme →
+iframe `start=93`, drugi klik → `seekTo`, `#t-111` otvara i označava odlomak; `/pretraga` sa rezultatima iz transkripata
+(link `#t-N`); vaktija (odbrojavanje, mjesec, CSV), kalendar, kibla (137,4°, London 119,0°), tesbih (pamćenje, potvrda
+brisanja), zekat (2,5 %, nisab), ramazan (29 dana, `.ics`/CSV), podsjetnik (`.ics` 155 termina, CRLF, redovi ≤ 75 B);
+obrasci: validacija (sažetak, fokus), roditelj se pojavi za uzrast < 15, `?program=`, po jedno slanje → 201 + kartica
+uspjeha; `/raspored` iz baze; „Danas u džamiji“ (nedjelja bez termina → skriveno); dopuna obavještenja; lightbox
+(Esc, strelice, potpis, fokus nazad); fotografije imama; `/donacije` samo placeholderi, bez izmišljenog računa;
+`/admin` validacija oba obrasca bez slanja e-maila; JSON build: „Supabase nije podešen“ + rezervni obrasci.
+
+### Pronađene greške i ispravke
+
+1. **Lighthouse početna 85** (FCP 2,9 s: prije prvog prikaza preuzimalo se ~480 KB, među njima arapski Amiri 106 KB za
+   ajet daleko ispod). → `content-visibility: auto` za sekcije ispod prvog ekrana (`index.astro`): **94**, CLS pri skrolu 0.
+2. Mekteb/ostali podmeniji (desktop): prelazak mišem otvori podmeni, a klik na isto dugme ga zatvori. → prvi klik poslije
+   hover-otvaranja ostavlja meni otvoren (`Header.astro`).
+3. `/obavjestenja/prikaz`: HEAD provjera statične stranice davala 404 u konzoli za svaku objavu iz baze. → lista statičnih
+   slugova ugrađena u stranicu (bez mrežnog zahtjeva; radi i bez Supabase-a).
+4. Pretraga: `/alati/*` nisu bili u indeksu („zekat“ nije nalazio kalkulator) → dodati sa ključnim riječima; status
+   „1 rezultat“ uz 10 pogodaka u transkriptima → „2 rezultata … (i 10 u transkriptima predavanja)“.
+5. `#t-N` otvarao transkript, ali „Pokreni video“ je kretao od početka → kreće od tog odlomka.
+6. axe: kontrast prošlog izlaska sunca u vaktiji (2,4:1; providnost) → prigušena boja; tesbih „−1“ (oznaka ≠ tekst).
+7. Dodir < 40 px: vremena u transkriptu (32 px), datum u gornjoj traci (38), čip aktivnog filtera (34), „Imami i
+   predavači“ na profilu, „Izvor: mesihat.org“ na početnoj, vibracija u tesbihu → 40+ px (nevidljivo proširenje gdje
+   raspored ne smije da se mijenja).
+8. Sitno: `<img>` bez `src` u lightboxu; „tačnost oko 0 m“ u kibli; „in šā Allāh“ → „inšallah“.
+
+### Lighthouse (mobilni, lokalni preview)
+
+| Stranica | Perf. | Pristupačnost | Najbolje prakse | SEO | LCP | CLS |
+|---|---|---|---|---|---|---|
+| `/` | 94 (prije 85) | 100 | 100 | 100 | 2,9 s | 0,004 |
+| `/predavanja/` | 98 | 100 | 100 | 100 | 2,3 s | 0,002 |
+| `/predavanja/-QKGCdrGiRQ/` | 94 | 100 | 100 | 100 | 3,0 s | 0,013 |
+| `/pitaj-imama/` | 97 | 100 | 100 | 100 | 2,3 s | 0,001 |
+| `/upis/`, `/raspored/` | 98 | 100 | 100 | 100 | 2,2 s | ≤ 0,05 |
+
+### Testni redovi u bazi (obrisati u adminu)
+
+- `poruke`: 1 red — ime „TEST — obrisati“, `test@example.com`
+- `prijave`: 1 red — ime_prezime i roditelj „TEST — obrisati“, `test@example.com`, tel. 060 000 0000, program Mekteb, uzrast 9
+- `pitanja`: 1 red — ime „TEST — obrisati“, `test@example.com`
+
+### Preostala ograničenja
+
+- Prijava urednika (magic link/kod, lozinka) nije testirana do kraja — namjerno bez slanja e-maila i bez diranja `urednici`/auth.
+- `pretraga-transkripti.json` ≈ 790 KB (267 KB gzip) — učitava se tek kod upita od 3+ znaka.
+- Transkripti su mašinski (govor sa ekavskim/dijalekatskim oblicima ostaje kako je izgovoren; jasno označeno).
+- Živi sajt još nema ispravke iz ovog kruga dok orkestrator ne objavi commit.
+- Ostala ograničenja iz prvog kruga (§6) važe i dalje (placeholderi za kontakt, donacije, džumu; fotografije Mešihata traže dozvolu).

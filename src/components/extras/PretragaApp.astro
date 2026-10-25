@@ -153,6 +153,8 @@ const stavkiRijec = (n: number) => {
       if (pog.length && !zadnji.length) {
         none.hidden = true;
         status.textContent = `Pronađeno samo u transkriptima predavanja (${pog.length}).`;
+      } else if (pog.length) {
+        status.textContent = `${zadnji.length} ${rijec(zadnji.length)} za „${upit}“ (i ${pog.length} u transkriptima predavanja)`;
       }
       trBox.innerHTML = pog.length
         ? `<h2 class="sr-group__title" id="sr-g-tr">Izgovoreno u predavanjima <span class="badge badge--muted">${pog.length}</span></h2>` +

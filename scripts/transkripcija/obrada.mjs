@@ -58,7 +58,7 @@ function skratiPetlje(t) {
 // Ujednačavanje pisanja. Namjerno konzervativno — mijenja samo očigledne varijante.
 const ZAMJENE = [
   // Allah (i padeži), Bog ostaje kako je izgovoreno
-  [/\ballah(a|u|om|ov|ova|ove|ovo|ovu|ovom|ovih|ovim|ovoj)?\b/giu, (m, k = '') => 'Allah' + k.toLowerCase()],
+  [/\ballah(a|u|om|ov|ova|ove|ovo|ovu|ovom|ovih|ovim|ovoj)?\b/giu, (_m, k = '') => 'Allah' + k.toLowerCase()],
   [/\bdž?d?ž?el+e[ -]?š?s?anuh?u\b/giu, 'dželle šanuhu'],
   [/\bdželle šanuhu\b/giu, 'dželle šanuhu'],
   // sallallahu alejhi ve sellem (whisper piše i arapsko-engleske varijante: alayhi wa sallam, alihi wa sallam…)
@@ -66,17 +66,17 @@ const ZAMJENE = [
   [/\b(?:a|e)l(?:ej|ey|ay|aj)hi\s*(?:ve|we|wa|va)\s*-?\s*s+[ae]l+[ae]m[ae]?\b/giu, 'alejhi ve sellem'],
   [/\bsubhan[ae]h[uū]\s*(?:ve|we|wa|va)\s*-?\s*t[ae]'?[aā]l[aā]\b/giu, "subhanehu ve te'ala"],
   [/\balejhis+-?selam\b/giu, 'alejhis-selam'],
-  [/\bradij?(j)?al+ahu\s+anh(u|a|um)\b/giu, (m, _j, k) => 'radijallahu anh' + k.toLowerCase()],
+  [/\bradij?(j)?al+ahu\s+anh(u|a|um)\b/giu, (_m, _j, k) => 'radijallahu anh' + k.toLowerCase()],
   [/\bkur'?a?n(a|u|om)?\b/giu, (m, k = '') => (/^kur/i.test(m) && /'|kuran/i.test(m) ? "Kur'an" + k.toLowerCase() : m)],
-  [/\bkur[’`´]an(a|u|om)?\b/giu, (m, k = '') => "Kur'an" + k.toLowerCase()],
-  [/\bposlanik(a|u|om|ov|ova|ove|ovo|ovu|ovom|ovih|ovim|ovoj)?\b/gu, (m, k = '') => 'Poslanik' + k],
-  [/\bresul(ul+ah|ulah|ullaha|ullahu|ullahom)\b/giu, (m, k) => 'Resul' + k.toLowerCase().replace(/^ulah/, 'ullah')],
-  [/\bmuham+ed(a|u|om|ov|ova|ove|ovu)?\b/giu, (m, k = '') => 'Muhammed' + k.toLowerCase()],
+  [/\bkur[’`´]an(a|u|om)?\b/giu, (_m, k = '') => "Kur'an" + k.toLowerCase()],
+  [/\bposlanik(a|u|om|ov|ova|ove|ovo|ovu|ovom|ovih|ovim|ovoj)?\b/gu, (_m, k = '') => 'Poslanik' + k],
+  [/\bresul(ul+ah|ulah|ullaha|ullahu|ullahom)\b/giu, (_m, k) => 'Resul' + k.toLowerCase().replace(/^ulah/, 'ullah')],
+  [/\bmuham+ed(a|u|om|ov|ova|ove|ovu)?\b/giu, (_m, k = '') => 'Muhammed' + k.toLowerCase()],
   [/\bbismil+ah\b/giu, 'Bismillah'],
   [/\belhamdulil+ah\b/giu, 'elhamdulillah'],
   [/\binša'?al+ah\b/giu, "inša'Allah"],
   [/\bmaša'?al+ah\b/giu, "maša'Allah"],
-  [/\bramazan(a|u|om)?\b/gu, (m, k = '') => 'Ramazan' + k],
+  [/\bramazan(a|u|om)?\b/gu, (_m, k = '') => 'Ramazan' + k],
   [/\bdžum[aeiu]\b/gu, (m) => m], // ostaje malim slovom
   [/\bhz\.\s*/giu, 'hz. '],
   // whisper ponekad "numeriše" arapske rečenice: "… حي 1. لينذر" → bez brojeva
@@ -92,7 +92,7 @@ export function ujednaci(t) {
 }
 
 const kraj = (t) => /[.!?…]["”»)]*$/.test(t.trim());
-const velikoPocetno = (t) => t.replace(/^(["„“«(]*)(\p{Ll})/u, (m, a, b) => a + b.toUpperCase());
+const velikoPocetno = (t) => t.replace(/^(["„“«(]*)(\p{Ll})/u, (_m, a, b) => a + b.toUpperCase());
 
 /**
  * @param {object} sirovo  whisper.cpp JSON (-oj)

@@ -142,7 +142,8 @@ const grad = dzamija.grad ?? VAKTIJA_CONFIG.tabela.grad;
   .vt__item.is-current .vt__name, .vt__item.is-current .vt__time { color: var(--color-on-primary); }
   .vt__item.is-next { border-color: var(--color-accent-bright); background: var(--color-accent-soft); }
   .vt__item.is-next .vt__tag { color: var(--color-accent); }
-  .vt__item.is-past:not(.is-current) .vt__time { opacity: 0.6; }
+  /* prošli vakti: prigušena boja umjesto providnosti (kontrast ≥ 4,5:1 i na izlasku sunca) */
+  .vt__item.is-past:not(.is-current) .vt__time { color: var(--color-text-muted); font-weight: 600; }
   .vt__foot {
     margin: 0;
     display: flex;

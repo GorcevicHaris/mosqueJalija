@@ -4,9 +4,12 @@
 // Ako statična stranica postoji, preusmjerava na nju. noindex + izuzeto iz sitemap-a.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { url } from '../../lib/url';
+import { obavjestenja } from '../../lib/data';
+// slugovi koji u ovom buildu imaju statičnu stranicu (/obavjestenja/<slug>/) — bez mrežne provjere (HEAD → 404 u konzoli)
+const staticni = JSON.stringify(obavjestenja.map((o) => o.slug));
 ---
 <BaseLayout title="Obavještenje" description="Obavještenje Džamije na Jaliji." noindex>
-  <article class="op" data-op aria-busy="true">
+  <article class="op" data-op data-staticni={staticni} aria-busy="true">
     <header class="op__hero theme-inverse pattern-bg">
       <div class="container container--narrow">
         <p class="op__back"><a href={url('/obavjestenja')} data-op-lista>← Obavještenja</a></p>
@@ -74,10 +77,9 @@ import { url } from '../../lib/url';
     root.setAttribute('aria-busy', 'false');
   }
 
-  async function postojiStaticna(slug: string): Promise<boolean> {
+  function postojiStaticna(slug: string): boolean {
     try {
-      const r = await fetch(`${BASE}obavjestenja/${slug}/`, { method: 'HEAD', cache: 'no-store' });
-      return r.ok;
+      return (JSON.parse(root.dataset.staticni ?? '[]') as string[]).includes(slug);
     } catch {
       return false;
     }
@@ -86,13 +88,12 @@ import { url } from '../../lib/url';
   async function init() {
     const slug = (new URLSearchParams(location.search).get('slug') ?? '').trim().toLowerCase();
     if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug)) return nijePronadjeno('Link nije ispravan.');
-    if (!supabaseUkljucen) return nijePronadjeno('Baza sadržaja nije podešena.');
-
-    const [staticna, o] = await Promise.all([postojiStaticna(slug), ucitajPoSlugu(slug)]);
-    if (staticna) {
+    if (postojiStaticna(slug)) {
       location.replace(`${BASE}obavjestenja/${slug}/`);
       return;
     }
+    if (!supabaseUkljucen) return nijePronadjeno('Baza sadržaja nije podešena.');
+    const o = await ucitajPoSlugu(slug);
     if (!o) return nijePronadjeno('Možda je uklonjeno ili još nije objavljeno.');
 
     const jeObjava = o.tip === 'objava';

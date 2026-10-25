@@ -39,7 +39,7 @@ const OBIM = +(2 * Math.PI * R).toFixed(2);
     <p class="tb__done" role="status" aria-live="assertive" data-tb-status></p>
 
     <div class="tb__controls">
-      <button type="button" class="btn btn--ghost btn--sm" data-tb-undo aria-label="Oduzmi jedan">−1</button>
+      <button type="button" class="btn btn--ghost btn--sm" data-tb-undo aria-label="−1 (oduzmi jedan)">−1</button>
       <button type="button" class="btn btn--ghost btn--sm" data-tb-reset>Poništi brojač</button>
     </div>
   </div>
@@ -115,7 +115,7 @@ const OBIM = +(2 * Math.PI * R).toFixed(2);
   .tb__target-set { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
   .tb__target-set .input { width: 8rem; }
   .tb__quick { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .tb__check { display: flex; gap: var(--space-2); align-items: flex-start; cursor: pointer; }
+  .tb__check { display: flex; gap: var(--space-2); align-items: flex-start; cursor: pointer; min-height: 40px; padding-block: 0.5rem; }
   .tb__check input { width: 1.2rem; height: 1.2rem; margin-top: 0.25rem; accent-color: var(--color-primary); }
   .tb__stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin: 0; }
   .tb__stats div { background: var(--color-surface-2); border-radius: var(--radius-md); padding: var(--space-3); }

@@ -35,4 +35,7 @@ const isUrl = source ? /^(https?:)?\/\//.test(source) || source.startsWith('/') 
   .stat__value--long { font-size: clamp(1.15rem, 0.8vw + 0.95rem, 1.4rem); line-height: 1.25; }
   .stat__label { font-weight: 600; }
   .stat__source { font-size: 0.82rem; color: var(--color-text-muted); margin-top: var(--space-2); overflow-wrap: anywhere; }
+  /* veća površina za dodir bez promjene rasporeda */
+  .stat__source a { position: relative; }
+  .stat__source a::after { content: ''; position: absolute; inset: -11px -4px; }
 </style>

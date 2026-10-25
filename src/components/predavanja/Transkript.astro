@@ -256,6 +256,9 @@ const uid = `tr-${id.replace(/[^a-zA-Z0-9_-]/g, '')}`;
       if (!li) return;
       details.open = true;
       segs.forEach((s) => s.classList.toggle('is-active', s === li));
+      // dugme „Pokreni video“ tada kreće od tog odlomka (ako video još nije pokrenut)
+      const player = document.querySelector<HTMLElement>('[data-ytf][data-ytf-seek]');
+      if (player && !player.querySelector('iframe')) player.dataset.start = String(li.dataset.od ?? m[1]);
       // poslije otvaranja <details> i nakon što pregledač završi vlastito skrolovanje na hash
       const skroluj = () => li.scrollIntoView({ block: 'start' });
       setTimeout(skroluj, 60);
@@ -376,7 +379,10 @@ const uid = `tr-${id.replace(/[^a-zA-Z0-9_-]/g, '')}`;
     font-variant-numeric: tabular-nums;
     text-decoration: none;
     justify-self: start;
+    position: relative;
   }
+  /* nevidljivo proširenje površine za dodir do 42 px (vizuelno ostaje 32 px) */
+  .tr__time::after { content: ''; position: absolute; inset: -5px -2px; }
   .tr__time:hover { border-color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 10%, transparent); }
   .tr__time:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
   .tr__txt { margin: 0; line-height: 1.65; overflow-wrap: anywhere; }

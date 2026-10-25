@@ -332,6 +332,13 @@ const korisno = [
 </BaseLayout>
 
 <style>
+  /* Sekcije ispod prvog ekrana se iscrtavaju tek kad im se korisnik približi: pregledač ne računa
+     raspored i ne preuzima fontove za njih (npr. arapski Amiri za ajet dana) prije prvog prikaza. */
+  :global(#sadrzaj) > section:not(.hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+
   /* ---------- Hero ---------- */
   .hero {
     position: relative;

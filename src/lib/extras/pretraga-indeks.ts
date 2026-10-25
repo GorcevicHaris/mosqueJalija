@@ -4,6 +4,7 @@
 import { dove, imami, kategorije, obavjestenja, predavanja, serije } from '../data';
 import { glavniMeni, isGroup, type NavLink } from '../../components/layout/nav';
 import { postoji } from './stranice';
+import { ALATI } from '../alati/alati';
 
 /** Predavanje: [id, naslov, datum, imamIdx|-1, kategorijaIdx|-1, serijaIdx|-1, serijaDio|0] */
 export type PIndeks = [string, string, string, number, number, number, number];
@@ -53,6 +54,12 @@ const KLJUCNE: Record<string, string> = {
   '/kontakt': 'kontakt adresa telefon email mapa lokacija poruka',
   '/donacije': 'doniraj donacija uplata racun sadaka vakuf pomoc iban',
   '/kalendar': 'takvim hidzretski islamski kalendar ramazan bajram mevlud kadr lejle asura nova godina',
+  '/alati': 'alati alat kalkulator',
+  '/alati/kibla': 'kibla kabe kompas smjer pravac mekka',
+  '/alati/tesbih': 'tesbih zikr brojac subhanallah elhamdulillah allahu ekber tesbihat',
+  '/alati/zekat': 'zekat nisab zlato srebro kalkulator sadekatul fitr fitra',
+  '/alati/ramazan': 'ramazan imsakija iftar sehur imsak post teravih',
+  '/alati/namaz-podsjetnik': 'podsjetnik obavjestenje alarm namaz kalendar ics',
 };
 
 const DODATNE: NavLink[] = [
@@ -67,6 +74,7 @@ function stranice(): SIndeks[] {
     else linkovi.push(item);
   }
   linkovi.push(...DODATNE);
+  linkovi.push(...ALATI.map((a) => ({ label: a.naziv, href: a.href, opis: a.opis })));
   const vidjeno = new Set<string>();
   const out: SIndeks[] = [];
   for (const l of linkovi) {

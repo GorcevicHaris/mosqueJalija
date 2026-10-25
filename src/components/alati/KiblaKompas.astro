@@ -203,7 +203,9 @@ const strane = [
           const t = { lat: pos.coords.latitude, lng: pos.coords.longitude };
           const f = (x: number) => x.toFixed(3).replace('.', ',');
           prikazi(t, `Vaša lokacija (${f(t.lat)}°, ${f(t.lng)}°)`);
-          elGeoStatus.textContent = `Pravac je izračunat za vašu lokaciju (tačnost oko ${Math.round(pos.coords.accuracy)} m).`;
+          elGeoStatus.textContent = pos.coords.accuracy >= 1
+            ? `Pravac je izračunat za vašu lokaciju (tačnost oko ${Math.round(pos.coords.accuracy).toLocaleString('bs')} m).`
+            : 'Pravac je izračunat za vašu lokaciju.';
           btnReset.hidden = false;
         },
         (err) => {

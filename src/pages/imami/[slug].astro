@@ -109,7 +109,8 @@ const opis =
 <style>
   .im-hero { padding-block: clamp(2.5rem, 6vw, 4rem); }
   .im-hero__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5) var(--space-6); }
-  .im-hero .eyebrow a { color: inherit; }
+  .im-hero .eyebrow a { color: inherit; position: relative; }
+  .im-hero .eyebrow a::after { content: ''; position: absolute; inset: -10px -4px; }
   .im-hero__foto { margin: 0; display: grid; justify-items: center; gap: var(--space-3); max-width: 220px; }
   .im-hero__credit { font-size: 0.75rem; line-height: 1.35; color: var(--inverse-muted); text-align: center; }
   .im-hero__credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
