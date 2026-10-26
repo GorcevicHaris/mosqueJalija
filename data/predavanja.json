@@ -12,7 +12,7 @@
     "serija": null,
     "serijaDio": null,
     "opis": null,
-    "pregledi": 20
+    "pregledi": 97
   },
   {
     "id": "zViIQjXeAd8",
@@ -72,7 +72,7 @@
     "serija": null,
     "serijaDio": null,
     "opis": null,
-    "pregledi": 350
+    "pregledi": 351
   },
   {
     "id": "iWW6haV1w7s",
@@ -927,7 +927,7 @@
     "serija": null,
     "serijaDio": null,
     "opis": null,
-    "pregledi": 2204
+    "pregledi": 2200
   },
   {
     "id": "tWXxPbIrl5o",
@@ -1002,7 +1002,7 @@
     "serija": null,
     "serijaDio": null,
     "opis": null,
-    "pregledi": 1643
+    "pregledi": 1600
   },
   {
     "id": "eTjV_BlQIqk",
@@ -1047,7 +1047,7 @@
     "serija": null,
     "serijaDio": null,
     "opis": "\"Namaz je obavjeza, ali nije teret.\"-M.hfz A.Kujević",
-    "pregledi": 4725
+    "pregledi": 4700
   },
   {
     "id": "Labn-lIyEos",
@@ -1172,7 +1172,7 @@
   {
     "id": "_9qWe3pe_k8",
     "naslov": "Hutba 29.08.2025 - Kulturološka pripadnost Islamu - prof.Dženan ef. Kamešničanin",
-    "naslovCist": "Kulturološka pripadnost islamu",
+    "naslovCist": "Kulturološka pripadnost Islamu",
     "datum": "2025-08-30",
     "trajanje": 1212,
     "thumbnail": "https://i.ytimg.com/vi/_9qWe3pe_k8/maxresdefault.jpg",
@@ -1212,6 +1212,6 @@
     "serija": null,
     "serijaDio": null,
     "opis": null,
-    "pregledi": 2515
+    "pregledi": 2500
   }
 ]
