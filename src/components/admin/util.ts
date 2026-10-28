@@ -71,6 +71,7 @@ export function porukaGreske(e: unknown): string {
     return 'Server trenutno ne može slati e-mail na ovu adresu (nije podešen vlastiti SMTP). Javite se administratoru sajta.';
   if (/rate limit|too many requests|over_email_send_rate_limit|security purposes/i.test(m) || st === '429')
     return 'Previše pokušaja u kratkom vremenu. Sačekajte nekoliko minuta pa pokušajte ponovo.';
+  if (/email address .* is invalid/i.test(m)) return 'Na ovu adresu se ne može poslati e-mail. Prijavite se lozinkom.';
   if (/invalid login credentials/i.test(m)) return 'Pogrešan e-mail ili lozinka.';
   if (/email not confirmed/i.test(m)) return 'E-mail adresa još nije potvrđena. Administrator treba da potvrdi nalog u Supabase-u.';
   if (/signups not allowed|user not found/i.test(m)) return 'Ova adresa nema nalog. Zamolite administratora da vas pozove.';

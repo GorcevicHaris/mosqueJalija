@@ -49,10 +49,12 @@ function korakPrijave(korak: 1 | 2, email?: string) {
   const f2 = $('[data-prijava-korak="2"]')!;
   f1.hidden = korak !== 1;
   f2.hidden = korak !== 2;
+  const link = $<HTMLDetailsElement>('[data-prijava-link]')!;
   if (korak === 2) {
+    link.open = true;
     $('[data-prijava-adresa]')!.textContent = email ?? '';
     $<HTMLInputElement>('#adm-kod')?.focus();
-  } else $<HTMLInputElement>('#adm-email')?.focus();
+  } else $<HTMLInputElement>(link.open ? '#adm-email' : '#adm-email-l')?.focus();
 }
 
 function pokaziPrijavu(porukaTekst?: string, vrsta: 'info' | 'greska' = 'info') {

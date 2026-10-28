@@ -87,7 +87,7 @@ Samo dvije stvari se ne mijenjaju kroz admin, i to namjerno:
 Kad se nešto sačuva u adminu, nova obavještenja se na sajtu vide odmah. Ostale izmjene se pojavljuju
 za ~15–20 minuta, jer se sajt automatski obnavlja iz baze svakih 15 minuta.
 
-Prijava ide linkom na e-mail ili lozinkom („Prijava lozinkom“ ispod forme). Ulaz je dugme „Admin prijava“ u podnožju sajta, „Admin“ u gornjoj traci i „Admin prijava“ u meniju na telefonu.
+Prijava ide e-mailom i lozinkom (glavna forma); link na e-mail je opcija ispod („Prijava linkom na e-mail“). Ulaz je dugme „Admin prijava“ u podnožju sajta, „Admin“ u gornjoj traci i „Admin prijava“ u meniju na telefonu.
 
 **Sigurnost:**
 - svaka tabela ima RLS pravila, a Supabase sigurnosna provjera ne prijavljuje upozorenja;
