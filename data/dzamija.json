@@ -51,13 +51,7 @@
     "instagram": "https://www.instagram.com/dzamija_na_jaliji/"
   },
   "donacije": {
-    "primalac": null,
-    "banka": null,
-    "racun": null,
-    "iban": null,
-    "swift": null,
-    "svrha": null,
-    "napomena": "Podaci za uplatu nisu javno objavljeni. Prije bilo kakve uplate zatražite važeće instrukcije direktno od džemata ili Medžlisa Islamske zajednice Novi Pazar."
+    "napomena": null
   },
   "dzuma": {
     "vrijeme": null,

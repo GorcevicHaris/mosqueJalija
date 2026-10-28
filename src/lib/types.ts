@@ -23,12 +23,6 @@ export interface Dzamija {
   kontakt: { email: string | null; telefon: string | null; napomena: string | null };
   drustveneMreze: { youtube: string; facebook: string | null; instagram: string | null };
   donacije: {
-    primalac: string | null;
-    banka: string | null;
-    racun: string | null;
-    iban: string | null;
-    swift: string | null;
-    svrha: string | null;
     napomena: string | null;
     /** Kontakt za donacije (stranica /donacije); prazno = opšti kontakt džamije. */
     email?: string | null;

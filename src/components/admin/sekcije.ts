@@ -398,7 +398,7 @@ export const imami: DefTabele = {
   tabela: 'imami',
   pk: 'slug',
   naslov: 'Imami i predavači',
-  opis: 'Ime, uloga, biografija i fotografija. Novi predavač se prepoznaje u naslovima YouTube snimaka po imenu i varijantama (aliasi).',
+  opis: 'Ime i varijante imena za filtere predavanja. Biografija i fotografija se prikazuju samo za imama džamije (stranica Imam). Novi predavač se prepoznaje u naslovima YouTube snimaka po imenu i varijantama (aliasi).',
   novoTekst: 'Novi imam / predavač',
   async ucitaj(k: SB) {
     const [im, bio] = await Promise.all([k.from('imami').select('*').order('redoslijed'), k.from('imami_bio').select('*')]);
