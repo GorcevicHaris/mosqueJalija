@@ -188,7 +188,7 @@ export async function dopuniObavjestenja(
 
 /** Javna pitanja sa odgovorima ("Pitaj imama"). */
 export async function ucitajJavnaPitanja(limit = 50) {
-  const rows = await dohvati(`${TABELE.pitanjaJavna}?select=id,pitanje,odgovor,odgovorio,odgovoreno_at,created_at&order=odgovoreno_at.desc.nullslast&limit=${limit}`);
+  const rows = await dohvati(`${TABELE.pitanjaJavna}?select=id,pitanje,odgovor,odgovorio,odgovoreno_at,created_at&odgovor=not.is.null&order=odgovoreno_at.desc.nullslast&limit=${limit}`);
   return rows
     ? rows.map((r) => ({
         id: String(r.id),

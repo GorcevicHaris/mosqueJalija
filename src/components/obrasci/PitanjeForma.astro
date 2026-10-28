@@ -1,6 +1,9 @@
 ---
-// "Pitaj imama" — slanje pitanja u public.pitanja (ime, email, pitanje). Anonimno je dozvoljeno.
-// Odgovor i objava su samo za urednike (admin panel).
+// "Pitaj imama" — slanje pitanja u public.pitanja (javno, ime, email, pitanje) — migracija 0007.
+//  * Javno pitanje: odmah se vidi na /pitaj-imama (ime nije obavezno; e-mail se ne traži).
+//  * Privatna poruka: vidi je samo imam/urednik; ime je obavezno, e-mail nije (za odgovor).
+// Odgovor, sakrivanje i objava su samo za urednike (admin panel). Poslije slanja javnog pitanja
+// stranica dobija događaj `pitanje:poslano` i osvježava listu (bez čekanja na build).
 import './obrasci.css';
 import ObrazacPodnozje from './ObrazacPodnozje.astro';
 import ObrazacUspjeh from './ObrazacUspjeh.astro';
@@ -15,32 +18,51 @@ const { id = 'pitanje' } = Astro.props;
     <form class="ob" id={id} novalidate data-ob-pitanje>
       <div class="ob-summary" role="alert" tabindex="-1" data-ob-summary hidden></div>
 
+      <fieldset class="pq-nacin" aria-describedby={`${id}-nacin-err`}>
+        <legend class="ob-legend">Kako želite pitati? <span class="ob-req" aria-hidden="true">*</span></legend>
+        <div class="pq-nacin__opcije">
+          <label class="pq-opcija">
+            <input type="radio" name="nacin" value="javno" id={`${id}-nacin-javno`} required aria-describedby={`${id}-nacin-javno-opis`} />
+            <span class="pq-opcija__tijelo">
+              <span class="pq-opcija__naslov">Javno pitanje — vidjeće ga svi</span>
+              <span class="pq-opcija__opis" id={`${id}-nacin-javno-opis`}>Pitanje se odmah prikazuje na ovoj stranici, a odgovor imama ispod njega. Ime nije obavezno.</span>
+            </span>
+          </label>
+          <label class="pq-opcija">
+            <input type="radio" name="nacin" value="privatno" id={`${id}-nacin-privatno`} aria-describedby={`${id}-nacin-privatno-opis`} />
+            <span class="pq-opcija__tijelo">
+              <span class="pq-opcija__naslov">Privatna poruka — vidi je samo imam</span>
+              <span class="pq-opcija__opis" id={`${id}-nacin-privatno-opis`}>Ne objavljuje se. Upišite ime, a e-mail ako želite odgovor na njega.</span>
+            </span>
+          </label>
+        </div>
+        <p class="ob-err" id={`${id}-nacin-err`} data-pq-nacin-err></p>
+      </fieldset>
+
       <div class="field ob-polje">
         <label for={`${id}-pitanje`}>Vaše pitanje <span class="ob-req" aria-hidden="true">*</span></label>
         <textarea class="textarea" id={`${id}-pitanje`} name="pitanje" rows="6" required maxlength="3000" aria-describedby={`${id}-pitanje-hint ${id}-pitanje-err`}></textarea>
-        <p class="ob-hint" id={`${id}-pitanje-hint`}>Ne upisujte lične podatke u pitanje — ono može biti objavljeno. <span data-ob-brojac="pitanje">0</span>/3000</p>
+        <p class="ob-hint" id={`${id}-pitanje-hint`}><span data-pq-pitanje-savjet>Ne upisujte lične podatke u pitanje.</span> <span data-ob-brojac="pitanje">0</span>/3000</p>
         <p class="ob-err" id={`${id}-pitanje-err`} data-ob-err="pitanje"></p>
       </div>
 
-      <fieldset class="pq-anon">
-        <legend class="ob-legend">Podaci o vama <span class="ob-opt">(neobavezno — možete pitati anonimno)</span></legend>
-        <div class="ob-red">
-          <div class="field ob-polje">
-            <label for={`${id}-ime`}>Ime</label>
-            <input class="input" id={`${id}-ime`} name="ime" type="text" autocomplete="given-name" maxlength="100" aria-describedby={`${id}-ime-err`} />
-            <p class="ob-err" id={`${id}-ime-err`} data-ob-err="ime"></p>
-          </div>
-          <div class="field ob-polje">
-            <label for={`${id}-email`}>E-mail</label>
-            <input class="input" id={`${id}-email`} name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" aria-describedby={`${id}-email-err ${id}-email-hint`} />
-            <p class="ob-hint" id={`${id}-email-hint`}>Samo ako želite da vam imam odgovori i privatno.</p>
-            <p class="ob-err" id={`${id}-email-err`} data-ob-err="email"></p>
-          </div>
+      <div class="ob-red">
+        <div class="field ob-polje">
+          <label for={`${id}-ime`}><span data-pq-ime-oznaka>Ime</span> <span class="ob-req" aria-hidden="true" data-pq-ime-obavezno hidden>*</span><span class="ob-opt" data-pq-ime-opt> (nije obavezno)</span></label>
+          <input class="input" id={`${id}-ime`} name="ime" type="text" autocomplete="given-name" maxlength="100" placeholder="Ime (nije obavezno)" aria-describedby={`${id}-ime-hint ${id}-ime-err`} />
+          <p class="ob-hint" id={`${id}-ime-hint`} data-pq-ime-savjet>Kod javnog pitanja ime se prikazuje uz pitanje. Ostavite prazno za anonimno.</p>
+          <p class="ob-err" id={`${id}-ime-err`} data-ob-err="ime"></p>
         </div>
-      </fieldset>
+        <div class="field ob-polje" data-pq-email hidden>
+          <label for={`${id}-email`}>E-mail <span class="ob-opt">(nije obavezno)</span></label>
+          <input class="input" id={`${id}-email`} name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" aria-describedby={`${id}-email-hint ${id}-email-err`} />
+          <p class="ob-hint" id={`${id}-email-hint`}>Samo ako želite da vam imam odgovori na e-mail.</p>
+          <p class="ob-err" id={`${id}-email-err`} data-ob-err="email"></p>
+        </div>
+      </div>
 
-      <p class="ob-note">
-        Ime i e-mail se nikada ne objavljuju — vidi ih samo imam/urednik. Za brisanje podataka pišite nam preko
+      <p class="ob-note" data-pq-privatnost aria-live="polite">
+        Izaberite javno pitanje ili privatnu poruku. E-mail se nikada ne objavljuje. Za brisanje podataka pišite nam preko
         <a href={url('/kontakt')}>kontakt stranice</a>.
       </p>
 
@@ -53,18 +75,79 @@ const { id = 'pitanje' } = Astro.props;
 )}
 
 <style>
-  .pq-anon { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-3); min-width: 0; }
-  .pq-anon legend { padding: 0; margin-bottom: var(--space-3); }
+  .pq-nacin { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-3); min-width: 0; }
+  .pq-nacin legend { padding: 0; margin-bottom: var(--space-3); }
+  .pq-nacin__opcije { display: grid; gap: var(--space-3); }
+  @media (min-width: 640px) { .pq-nacin__opcije { grid-template-columns: 1fr 1fr; } }
+  .pq-opcija {
+    display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start;
+    padding: var(--space-3) var(--space-4);
+    min-height: 48px;
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+  .pq-opcija:hover { border-color: var(--color-primary); }
+  .pq-opcija:has(input:checked) { border-color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)); box-shadow: inset 0 0 0 1px var(--color-primary); }
+  .pq-opcija:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .pq-opcija input { width: 1.25em; height: 1.25em; margin: 0.15em 0 0; accent-color: var(--color-primary); }
+  .pq-opcija__tijelo { display: grid; gap: 2px; min-width: 0; }
+  .pq-opcija__naslov { font-weight: 800; line-height: 1.3; }
+  .pq-opcija__opis { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.45; }
+  .pq-nacin[aria-invalid='true'] .pq-opcija { border-color: var(--color-danger); }
+  [data-pq-email][hidden], [data-pq-ime-obavezno][hidden], [data-pq-ime-opt][hidden] { display: none; }
 </style>
 
 <script>
   import { obrazac, EMAIL_RE, iliNull } from '../../lib/obrasci/forma-ui';
 
+  const PRIVATNOST = {
+    '': 'Izaberite javno pitanje ili privatnu poruku. E-mail se nikada ne objavljuje.',
+    javno:
+      'Javno pitanje se odmah prikazuje na ovoj stranici — sa imenom, ako ga upišete. Ne upisujte lične podatke u pitanje. Neprikladna pitanja urednik uklanja.',
+    privatno:
+      'Privatnu poruku vidi samo imam (urednik sajta). Ime i e-mail se nikada ne objavljuju; imam može odgovor objaviti kao opšti savjet, ali bez imena.',
+  } as const;
+
   document.querySelectorAll<HTMLFormElement>('form[data-ob-pitanje]').forEach((form) => {
-    const { el } = obrazac({
+    const radio = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="nacin"]'));
+    const nacinSet = form.querySelector<HTMLFieldSetElement>('.pq-nacin')!;
+    const nacinErr = form.querySelector<HTMLElement>('[data-pq-nacin-err]')!;
+    const imeEl = form.querySelector<HTMLInputElement>('input[name="ime"]')!;
+    const emailOmot = form.querySelector<HTMLElement>('[data-pq-email]')!;
+    const nacin = (): '' | 'javno' | 'privatno' => (radio.find((r) => r.checked)?.value as 'javno' | 'privatno') ?? '';
+    let poslanoJavno = false;
+
+    function primijeni() {
+      const n = nacin();
+      const privatno = n === 'privatno';
+      imeEl.required = privatno;
+      imeEl.placeholder = privatno ? 'Vaše ime' : 'Ime (nije obavezno)';
+      form.querySelector<HTMLElement>('[data-pq-ime-obavezno]')!.hidden = !privatno;
+      form.querySelector<HTMLElement>('[data-pq-ime-opt]')!.hidden = privatno;
+      form.querySelector<HTMLElement>('[data-pq-ime-savjet]')!.textContent = privatno
+        ? 'Obavezno kod privatne poruke (vidi ga samo imam).'
+        : 'Kod javnog pitanja ime se prikazuje uz pitanje. Ostavite prazno za anonimno.';
+      form.querySelector<HTMLElement>('[data-pq-pitanje-savjet]')!.textContent =
+        n === 'javno' ? 'Pitanje će odmah vidjeti svi — ne upisujte lične podatke.' : 'Ne upisujte lične podatke u pitanje.';
+      emailOmot.hidden = !privatno;
+      const nota = form.querySelector<HTMLElement>('[data-pq-privatnost]')!;
+      nota.firstChild!.textContent = `${PRIVATNOST[n]} Za brisanje podataka pišite nam preko `;
+      if (n) {
+        nacinErr.textContent = '';
+        nacinSet.removeAttribute('aria-invalid');
+      }
+    }
+    radio.forEach((r) => r.addEventListener('change', primijeni));
+
+    obrazac({
       form,
       tabela: 'pitanja',
-      uspjeh: 'Imam će ga pregledati. Odgovori se objavljuju na ovoj stranici (bez vašeg imena); ako ste ostavili e-mail, odgovor može stići i privatno.',
+      uspjeh: () =>
+        poslanoJavno
+          ? 'Vaše pitanje je objavljeno — vidi se u listi ispod. Odgovor imama će se pojaviti uz njega.'
+          : 'Privatna poruka je primljena i ne objavljuje se. Ako ste ostavili e-mail, imam vam može odgovoriti na njega.',
       pravila: [
         {
           ime: 'pitanje',
@@ -72,14 +155,40 @@ const { id = 'pitanje' } = Astro.props;
           provjera: (v) =>
             !v ? 'Upišite pitanje.' : v.length < 10 ? `Pitanje je prekratko (još ${10 - v.length} znakova).` : v.length > 3000 ? 'Pitanje je predugo (najviše 3000 znakova).' : '',
         },
-        { ime: 'ime', naziv: 'Ime', provjera: (v) => (v.length > 100 ? 'Ime je predugo (najviše 100 znakova).' : '') },
+        {
+          ime: 'ime',
+          naziv: 'Ime',
+          provjera: (v) =>
+            v.length > 100
+              ? 'Ime je predugo (najviše 100 znakova).'
+              : nacin() === 'privatno' && v.length < 2
+                ? 'Za privatnu poruku upišite ime (najmanje 2 slova).'
+                : '',
+        },
         { ime: 'email', naziv: 'E-mail', provjera: (v) => (v && (!EMAIL_RE.test(v) || v.length > 254) ? 'E-mail adresa nije ispravna (npr. ime@primjer.com).' : '') },
       ],
-      red: () => ({
-        pitanje: el('pitanje').value.trim(),
-        ime: iliNull(el('ime').value),
-        email: iliNull(el('email').value),
-      }),
+      dodatno: () => {
+        if (nacin()) return [];
+        const g = 'Izaberite: javno pitanje ili privatna poruka.';
+        nacinErr.textContent = g;
+        nacinSet.setAttribute('aria-invalid', 'true');
+        return [{ el: radio[0], naziv: 'Način', greska: g }];
+      },
+      red: () => {
+        const javno = nacin() === 'javno';
+        poslanoJavno = javno;
+        return {
+          javno,
+          pitanje: (form.elements.namedItem('pitanje') as HTMLTextAreaElement).value.trim(),
+          ime: iliNull(imeEl.value),
+          email: javno ? null : iliNull((form.elements.namedItem('email') as HTMLInputElement).value),
+        };
+      },
+      poslije: () => {
+        primijeni();
+        document.dispatchEvent(new CustomEvent('pitanje:poslano', { detail: { javno: poslanoJavno } }));
+      },
     });
+    primijeni();
   });
 </script>

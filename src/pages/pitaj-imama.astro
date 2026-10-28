@@ -4,30 +4,31 @@ import PageHero from '../components/ui/PageHero.astro';
 import Icon from '../components/ui/Icon.astro';
 import PitanjeForma from '../components/obrasci/PitanjeForma.astro';
 import { imaSupabase, procitajZaBuild } from '../lib/obrasci/supabase-rest';
-import { UPIT_PITANJA, renderPitanja, type JavnoPitanje } from '../lib/obrasci/pitanja';
+import { UPIT_PITANJA, imaOdgovor, renderPitanja, type JavnoPitanje } from '../lib/obrasci/pitanja';
 import { url } from '../lib/url';
 
-// Build: objavljeni odgovori ulaze u HTML (SEO). Preglednik ih zatim osvježi iz baze.
+// Build: javna pitanja i objavljeni odgovori ulaze u HTML (SEO). Pregledač ih zatim osvježi iz baze
+// (novo javno pitanje se vidi odmah, bez novog builda).
 const { redovi } = imaSupabase ? await procitajZaBuild<JavnoPitanje>('pitanja_javna', UPIT_PITANJA) : { redovi: [] as JavnoPitanje[] };
-const kategorije = [...new Set(redovi.map((p) => p.kategorija).filter((k): k is string => Boolean(k)))].sort((a, b) => a.localeCompare(b, 'sr'));
-const faq = redovi.length
+const odgovorena = redovi.filter(imaOdgovor);
+const faq = odgovorena.length
   ? {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      mainEntity: redovi.slice(0, 50).map((p) => ({
+      mainEntity: odgovorena.slice(0, 50).map((p) => ({
         '@type': 'Question',
         name: p.pitanje.trim(),
-        acceptedAnswer: { '@type': 'Answer', text: p.odgovor.trim() },
+        acceptedAnswer: { '@type': 'Answer', text: p.odgovor!.trim() },
       })),
     }
   : null;
 ---
 <BaseLayout
   title="Pitaj imama"
-  description="Postavite pitanje imamu Džamije na Jaliji (i anonimno) i pročitajte objavljene odgovore na pitanja džemata."
+  description="Postavite pitanje imamu Džamije na Jaliji — javno (vide ga svi, ime nije obavezno) ili kao privatnu poruku — i pročitajte odgovore na pitanja džemata."
 >
   {faq && <script is:inline type="application/ld+json" set:html={JSON.stringify(faq).replace(/</g, '\\u003c')} />}
-  <PageHero eyebrow="Pitanja i odgovori" title="Pitaj imama" subtitle="Imate pitanje o vjeri, ibadetu ili životu džemata? Pitajte — i anonimno." />
+  <PageHero eyebrow="Pitanja i odgovori" title="Pitaj imama" subtitle="Imate pitanje o vjeri, ibadetu ili životu džemata? Pitajte javno — i bez imena — ili pošaljite privatnu poruku imamu." />
 
   <div class="section">
     <div class="container container--narrow flow">
@@ -36,7 +37,7 @@ const faq = redovi.length
         <div class="flow-note" role="note">
           <Icon name="info" size={18} />
           <div>
-            <p>Odgovor se objavljuje nakon što ga imam pregleda — to može potrajati nekoliko dana. Ne objavljujemo sva pitanja.</p>
+            <p><strong>Javno pitanje</strong> se odmah vidi u listi ispod; odgovor imama stiže kad ga pregleda — to može potrajati nekoliko dana. <strong>Privatnu poruku</strong> vidi samo imam.</p>
             <p>Za hitna i lična pitanja (dženaza, vjenčanje, porodica) obratite se džematu <a href={url('/kontakt')}>direktno</a>.</p>
           </div>
         </div>
@@ -46,17 +47,19 @@ const faq = redovi.length
       </section>
 
       <section class="flow__sec pq__odgovori" aria-labelledby="odgovori-naslov">
-        <h2 class="flow__h" id="odgovori-naslov">Objavljeni odgovori</h2>
+        <h2 class="flow__h" id="odgovori-naslov">Pitanja džemata</h2>
+        <p class="muted pq__uvod">Najnovija javna pitanja su na vrhu. Odgovor imama je ispod pitanja; pitanja bez odgovora čekaju da ih imam pregleda.</p>
 
         <div class="pq__alati flow__wide" data-pq-alati hidden={redovi.length === 0}>
           <div class="pq__trazi">
             <label class="visually-hidden" for="pq-trazi">Pretraži pitanja i odgovore</label>
             <Icon name="search" size={18} class="pq__trazi-ikona" />
-            <input class="input pq__trazi-input" id="pq-trazi" type="search" placeholder="Pretraži odgovore (npr. namaz, zekat)" autocomplete="off" data-pq-trazi />
+            <input class="input pq__trazi-input" id="pq-trazi" type="search" placeholder="Pretraži pitanja (npr. namaz, zekat)" autocomplete="off" enterkeyhint="search" data-pq-trazi />
           </div>
-          <ul class="chips" role="list" aria-label="Kategorija" data-pq-kategorije hidden={kategorije.length < 2}>
-            <li><button type="button" class="chip" aria-pressed="true" data-value="">Sve</button></li>
-            {kategorije.map((k) => <li><button type="button" class="chip" aria-pressed="false" data-value={k}>{k}</button></li>)}
+          <ul class="chips" role="list" aria-label="Prikaži" data-pq-filter>
+            <li><button type="button" class="chip" aria-pressed="true" data-value="">Sva</button></li>
+            <li><button type="button" class="chip" aria-pressed="false" data-value="odgovoreno">Odgovorena</button></li>
+            <li><button type="button" class="chip" aria-pressed="false" data-value="ceka">Čekaju odgovor</button></li>
           </ul>
           <p class="muted pq__broj" aria-live="polite" data-pq-broj></p>
         </div>
@@ -65,8 +68,8 @@ const faq = redovi.length
 
         <div class="pq__prazno flow__wide" data-pq-prazno hidden={redovi.length > 0}>
           <Icon name="message" size={24} />
-          <p><strong>Još nema objavljenih odgovora.</strong></p>
-          <p class="muted">Odgovori će se pojaviti ovdje.</p>
+          <p><strong>Još nema javnih pitanja.</strong></p>
+          <p class="muted">Budite prvi — izaberite „Javno pitanje“ u obrascu iznad.</p>
         </div>
         <p class="muted pq__nema-rez" data-pq-nema-rez hidden>Nijedno pitanje ne odgovara pretrazi.</p>
         <p class="muted pq__greska" data-pq-greska hidden></p>
@@ -81,7 +84,7 @@ const faq = redovi.length
   .pq__trazi :global(.pq__trazi-ikona) { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
   .pq__trazi-input { padding-left: 2.6rem; border-radius: var(--radius-full); }
   .pq__alati { display: grid; gap: var(--space-3); margin-bottom: var(--space-4); }
-  .pq__alati[hidden], [data-pq-kategorije][hidden], .pq__prazno[hidden], .pq__nema-rez[hidden], .pq__greska[hidden] { display: none; }
+  .pq__alati[hidden], .pq__prazno[hidden], .pq__nema-rez[hidden], .pq__greska[hidden] { display: none; }
   .pq__broj { margin: 0; font-size: 0.88rem; }
   .pq__broj:empty { display: none; }
   .pq__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
@@ -96,17 +99,18 @@ const faq = redovi.length
   .pq__prazno strong { color: var(--color-text); }
   .pq__nema-rez, .pq__greska { margin: var(--space-3) 0 0; }
 
+  .pq__uvod { margin: calc(-1 * var(--space-2)) 0 var(--space-4); font-size: 0.95rem; }
   .pq__lista :global(.pi-stavka) { padding: 0; }
   .pq__lista :global(.pi-stavka[hidden]) { display: none; }
-  .pq__lista :global(.pi-pitanje) {
-    display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start;
-    padding: var(--space-4);
-    cursor: pointer; list-style: none;
-    font-weight: 700; line-height: 1.45;
-    min-height: 48px;
-  }
-  .pq__lista :global(.pi-pitanje::-webkit-details-marker) { display: none; }
-  .pq__lista :global(.pi-pitanje:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: -3px; border-radius: var(--radius-lg); }
+  .pq__lista :global(.pi-stavka--novo) { box-shadow: 0 0 0 3px var(--color-accent-bright, var(--color-accent)); }
+  .pq__lista :global(.pi-pitanje),
+  .pq__lista :global(.pi-odgovor) { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; padding: var(--space-4); }
+  .pq__lista :global(.pi-pitanje__tijelo),
+  .pq__lista :global(.pi-odgovor__tekst) { display: grid; gap: var(--space-2); min-width: 0; overflow-wrap: anywhere; }
+  .pq__lista :global(.pi-pitanje__tekst) { margin: 0; font-weight: 700; line-height: 1.45; }
+  .pq__lista :global(.pi-odgovor) { border-top: 1px solid var(--color-border); }
+  .pq__lista :global(.pi-odgovor__tekst) { gap: var(--space-3); }
+  .pq__lista :global(.pi-odgovor__tekst p) { margin: 0; }
   .pq__lista :global(.pi-oznaka) {
     display: inline-grid; place-items: center;
     width: 28px; height: 28px; border-radius: 50%;
@@ -114,12 +118,9 @@ const faq = redovi.length
     font-size: 0.85rem; font-weight: 800;
   }
   .pq__lista :global(.pi-oznaka--o) { background: color-mix(in srgb, var(--color-primary) 14%, transparent); color: var(--color-primary); }
-  .pq__lista :global(.pi-det[open] .pi-pitanje) { border-bottom: 1px solid var(--color-border); }
-  .pq__lista :global(.pi-odgovor) { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); padding: var(--space-4); }
-  .pq__lista :global(.pi-odgovor__tekst) { display: grid; gap: var(--space-3); min-width: 0; overflow-wrap: anywhere; }
-  .pq__lista :global(.pi-odgovor__tekst p) { margin: 0; }
-  .pq__lista :global(.pi-meta) { font-size: 0.85rem; color: var(--color-text-muted); }
-  .pq__lista :global(.badge) { justify-self: start; }
+  .pq__lista :global(.pi-meta) { margin: 0; font-size: 0.85rem; color: var(--color-text-muted); display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); align-items: center; }
+  .pq__lista :global(.pi-meta strong) { color: var(--color-text); }
+  .pq__lista :global(.pi-ceka) { margin: 0; padding: var(--space-3) var(--space-4) var(--space-4) calc(var(--space-4) + 28px + var(--space-3)); font-size: 0.9rem; color: var(--color-text-muted); border-top: 1px dashed var(--color-border); }
 </style>
 
 <script>
@@ -130,12 +131,12 @@ const faq = redovi.length
   const lista = document.querySelector<HTMLElement>('[data-pq-lista]')!;
   const alati = document.querySelector<HTMLElement>('[data-pq-alati]')!;
   const trazi = document.querySelector<HTMLInputElement>('[data-pq-trazi]')!;
-  const katWrap = document.querySelector<HTMLElement>('[data-pq-kategorije]')!;
+  const filterWrap = document.querySelector<HTMLElement>('[data-pq-filter]')!;
   const broj = document.querySelector<HTMLElement>('[data-pq-broj]')!;
   const prazno = document.querySelector<HTMLElement>('[data-pq-prazno]')!;
   const nemaRez = document.querySelector<HTMLElement>('[data-pq-nema-rez]')!;
   const greska = document.querySelector<HTMLElement>('[data-pq-greska]')!;
-  let kategorija = '';
+  let status = '';
 
   function filtriraj() {
     const q = normalizuj(trazi.value.trim());
@@ -144,44 +145,26 @@ const faq = redovi.length
     const stavke = lista.querySelectorAll<HTMLElement>('.pi-stavka');
     stavke.forEach((li) => {
       const tekst = normalizuj(li.textContent ?? '');
-      const ok = rijeci.every((r) => tekst.includes(r)) && (!kategorija || li.dataset.kategorija === kategorija);
+      const ok = rijeci.every((r) => tekst.includes(r)) && (!status || li.dataset.status === status);
       li.hidden = !ok;
       if (ok) vidljivo++;
-      // pri pretrazi otvori pogotke da se vidi odgovor
-      const det = li.querySelector('details');
-      if (det && rijeci.length) det.open = ok;
     });
     nemaRez.hidden = !(stavke.length && vidljivo === 0);
-    broj.textContent = stavke.length ? (rijeci.length || kategorija ? `Prikazano ${vidljivo} od ${stavke.length}` : `${stavke.length} odgovora`) : '';
+    nemaRez.textContent = rijeci.length ? 'Nijedno pitanje ne odgovara pretrazi.' : 'Nema pitanja za ovaj prikaz.';
+    broj.textContent = stavke.length ? (rijeci.length || status ? `Prikazano ${vidljivo} od ${stavke.length}` : `${stavke.length} ${stavke.length % 10 === 1 && stavke.length % 100 !== 11 ? 'pitanje' : 'pitanja'}`) : '';
   }
 
-  function postaviKategorije(redovi: JavnoPitanje[]) {
-    const kat = [...new Set(redovi.map((p) => p.kategorija).filter((k): k is string => Boolean(k)))].sort((a, b) => a.localeCompare(b, 'sr'));
-    katWrap.hidden = kat.length < 2;
-    katWrap.innerHTML = '';
-    for (const k of ['', ...kat]) {
-      const li = document.createElement('li');
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'chip';
-      b.dataset.value = k;
-      b.textContent = k || 'Sve';
-      b.setAttribute('aria-pressed', String(k === kategorija));
-      li.append(b);
-      katWrap.append(li);
-    }
-  }
-
-  katWrap.addEventListener('click', (e) => {
+  filterWrap.addEventListener('click', (e) => {
     const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-value]');
     if (!b) return;
-    kategorija = b.dataset.value ?? '';
-    katWrap.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    status = b.dataset.value ?? '';
+    filterWrap.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     filtriraj();
   });
   trazi.addEventListener('input', filtriraj);
 
-  async function osvjezi() {
+  let ucitavanje: Promise<void> | null = null;
+  async function osvjezi(istakniNovo = false) {
     const r = await procitaj<JavnoPitanje>('pitanja_javna', UPIT_PITANJA);
     if (!r.ok) {
       // konfiguracija = sajt bez Supabase-a; ostale greške: zadržavamo verziju iz builda
@@ -190,23 +173,37 @@ const faq = redovi.length
         greska.hidden = false;
         greska.textContent =
           r.vrsta === 'mreza'
-            ? 'Najnovije odgovore trenutno nije moguće učitati — provjerite internet vezu i osvježite stranicu.'
-            : 'Najnovije odgovore trenutno nije moguće učitati. Pokušajte ponovo malo kasnije.';
+            ? 'Najnovija pitanja trenutno nije moguće učitati — provjerite internet vezu i osvježite stranicu.'
+            : 'Najnovija pitanja trenutno nije moguće učitati. Pokušajte ponovo malo kasnije.';
       }
       return;
     }
-    const otvoreni = new Set([...lista.querySelectorAll<HTMLElement>('.pi-stavka')].filter((li) => li.querySelector('details')?.open).map((li) => li.dataset.pitanjeId));
+    const bili = new Set([...lista.querySelectorAll<HTMLElement>('.pi-stavka')].map((li) => li.dataset.pitanjeId));
     lista.innerHTML = renderPitanja(r.podaci);
-    lista.querySelectorAll<HTMLElement>('.pi-stavka').forEach((li) => {
-      if (otvoreni.has(li.dataset.pitanjeId)) li.querySelector('details')!.open = true;
-    });
+    if (istakniNovo) {
+      // pitanje koje je posjetilac upravo poslao (return=minimal ne vraća id) = novo na vrhu liste
+      const novo = [...lista.querySelectorAll<HTMLElement>('.pi-stavka')].find((li) => !bili.has(li.dataset.pitanjeId));
+      novo?.classList.add('pi-stavka--novo');
+    }
     prazno.hidden = r.podaci.length > 0;
     alati.hidden = r.podaci.length === 0;
     greska.hidden = true;
-    postaviKategorije(r.podaci);
     filtriraj();
   }
+  const pokreni = (istakni = false) => {
+    ucitavanje ??= osvjezi(istakni).finally(() => (ucitavanje = null));
+    return ucitavanje;
+  };
+
+  // javno pitanje upravo poslano iz obrasca na ovoj stranici → odmah u listu
+  document.addEventListener('pitanje:poslano', (e) => {
+    if ((e as CustomEvent<{ javno: boolean }>).detail?.javno) void pokreni(true);
+  });
+  // povratak na karticu (npr. poslije nekoliko minuta) → nova pitanja i odgovori drugih
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') void pokreni();
+  });
 
   filtriraj();
-  void osvjezi();
+  void pokreni();
 </script>

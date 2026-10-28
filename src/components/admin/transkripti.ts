@@ -2,6 +2,7 @@
 // čuva samo izmijenjene segmente (tabela transkript_ispravke). Originalni tekst je u JSON fajlovima
 // sajta — učitava se lijeno sa /transkripti/<id>.json (tek kad se predavanje izabere).
 import { datumTekst } from '../../lib/format';
+import { formaOtvorena, formaZatvorena } from './istorija';
 import { sb } from './sb';
 import { nazivImama, ugradjeno, type UgradjenoPredavanje } from './stanje';
 import { el, norm, odgovara, porukaGreske, poruka, potvrdi, toast, uToku } from './util';
@@ -12,6 +13,9 @@ interface Original {
   en: string[] | null;
   od: number[];
   odEn: number[] | null;
+  /** arapski segmenti (jezik "ar"): indeks → prevod (samo za čitanje) i oznaka "provjeriti" */
+  ar?: Record<number, { prevod: string | null; provjeriti?: boolean }>;
+  arEn?: Record<number, { prevod: string | null; provjeriti?: boolean }>;
 }
 
 const SACUVANO_TR = 'Sačuvano. Ispravke transkripta se na sajtu vide za otprilike 15–20 minuta (automatsko osvježavanje).';
@@ -140,16 +144,28 @@ export class SekcijaTranskripti {
     this.original.forEach((orig, i) => {
       const tid = `tr-seg-${i}`;
       const trenutno = this.ispravke.get(i) ?? orig;
-      const t = el('textarea', { id: tid, class: 'textarea textarea--sm adm-tr__tekst', rows: String(Math.min(6, Math.max(2, Math.ceil(trenutno.length / 90)))), lang: this.jezik === 'en' ? 'en' : 'bs', dir: 'auto' }) as HTMLTextAreaElement;
+      const ar = (this.jezik === 'en' ? o.arEn : o.ar)?.[i];
+      const t = el('textarea', {
+        id: tid,
+        class: `textarea textarea--sm adm-tr__tekst${ar ? ' adm-arapski' : ''}`,
+        rows: String(Math.min(6, Math.max(2, Math.ceil(trenutno.length / (ar ? 60 : 90))))),
+        lang: ar ? 'ar' : this.jezik === 'en' ? 'en' : 'bs',
+        dir: ar ? 'rtl' : 'auto',
+      }) as HTMLTextAreaElement;
       t.value = trenutno;
       this.polja.push(t);
       const sek = od[i] ?? 0;
       const lab = el('label', { for: tid, class: 'adm-tr__vrijeme' }, el('span', { class: 'visually-hidden', text: `Segment ${i + 1}, ` }), vrijeme(sek));
       const yt = el('a', { href: `https://www.youtube.com/watch?v=${encodeURIComponent(p.id)}&t=${Math.floor(sek)}s`, target: '_blank', rel: 'noopener noreferrer', class: 'adm-tr__yt', text: '▶', 'aria-label': `Poslušaj od ${vrijeme(sek)} na YouTube-u` });
-      const oznaka = el('span', { class: 'badge badge--primary', text: 'ispravljeno', hidden: !this.ispravke.has(i) });
-      const vrati = el('button', { type: 'button', class: 'btn btn--ghost btn--sm', text: 'Vrati original', hidden: !this.ispravke.has(i), 'aria-label': `Vrati original za segment ${vrijeme(sek)}` }) as HTMLButtonElement;
+      const oznaka = el('span', { class: 'badge badge--primary', 'data-tr-ispravljeno': '', text: 'ispravljeno', hidden: !this.ispravke.has(i) });
+      const vrati = el('button', { type: 'button', class: 'btn btn--ghost btn--sm', 'data-tr-vrati': '', text: 'Vrati original', hidden: !this.ispravke.has(i), 'aria-label': `Vrati original za segment ${vrijeme(sek)}` }) as HTMLButtonElement;
       vrati.addEventListener('click', () => uToku(vrati, '…', () => this.vratiOriginal(i, t, oznaka, vrati)));
-      const li = el('li', { class: 'adm-tr__seg', 'data-i': String(i) }, el('div', { class: 'adm-tr__glava' }, lab, yt, oznaka, vrati), t);
+      const glava = el('div', { class: 'adm-tr__glava' }, lab, yt);
+      if (ar) glava.append(el('span', { class: 'badge badge--muted', text: 'arapski' }));
+      if (ar?.provjeriti) glava.append(el('span', { class: 'badge badge--warn', text: 'provjeriti' }));
+      glava.append(oznaka, vrati);
+      const li = el('li', { class: `adm-tr__seg${ar ? ' adm-tr__seg--ar' : ''}`, 'data-i': String(i) }, glava, t);
+      if (ar?.prevod) li.append(el('p', { class: 'adm-pomoc adm-tr__prevod', lang: this.jezik === 'en' ? 'en' : 'bs', text: `Prevod (ne mijenja se ovdje): ${ar.prevod}` }));
       t.addEventListener('input', () => li.classList.toggle('adm-tr__seg--izmijenjeno', t.value !== (this.ispravke.get(i) ?? orig)));
       stavke.push(li);
     });
@@ -171,10 +187,12 @@ export class SekcijaTranskripti {
     const status = el('p', { class: 'adm-poruka', hidden: true });
     const sacuvaj = el('button', { type: 'submit', class: 'btn btn--primary', text: 'Sačuvaj izmjene' }) as HTMLButtonElement;
     const zatvori = el('button', { type: 'button', class: 'btn btn--ghost', text: 'Zatvori' }) as HTMLButtonElement;
-    zatvori.addEventListener('click', () => {
-      if (this.izmijenjeni().length && !potvrdi('Odbaciti nesačuvane izmjene u transkriptu?')) return;
+    const pokusajZatvori = (): boolean => {
+      if (this.izmijenjeni().length && !potvrdi('Odbaciti nesačuvane izmjene u transkriptu?')) return false;
       this.zatvori();
-    });
+      return true;
+    };
+    zatvori.addEventListener('click', () => pokusajZatvori());
     const form = el('form', { class: 'adm-forma card', novalidate: true, 'aria-labelledby': 'tr-urednik-naslov' },
       h,
       el('p', { class: 'adm-pomoc', text: `${datumTekst(p.datum)} · ${p.id}. Mijenjajte samo pogrešno prepoznate riječi; vrijeme segmenta ostaje isto.` }),
@@ -193,8 +211,8 @@ export class SekcijaTranskripti {
     const oznakeOsvjezi = () => {
       stavke.forEach((li, i) => {
         const isp = this.ispravke.has(i);
-        li.querySelector<HTMLElement>('.badge')!.hidden = !isp;
-        li.querySelector<HTMLElement>('button')!.hidden = !isp;
+        li.querySelector<HTMLElement>('[data-tr-ispravljeno]')!.hidden = !isp;
+        li.querySelector<HTMLElement>('[data-tr-vrati]')!.hidden = !isp;
         li.classList.remove('adm-tr__seg--izmijenjeno');
       });
       primijeniFilter();
@@ -202,6 +220,7 @@ export class SekcijaTranskripti {
     primijeniFilter();
     this.urednik.replaceChildren(form);
     this.urednik.hidden = false;
+    formaOtvorena(pokusajZatvori);
     h.focus();
   }
 
@@ -266,6 +285,7 @@ export class SekcijaTranskripti {
   }
 
   private zatvori() {
+    formaZatvorena();
     window.removeEventListener('beforeunload', this.cuvar);
     this.id = null;
     this.polja = [];

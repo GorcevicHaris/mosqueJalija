@@ -9,14 +9,15 @@ const s = (v: unknown) => (v === null || v === undefined ? '' : String(v));
 /** Brojači za bedževe u navigaciji. */
 export async function brojNovih(): Promise<{ poruke: number; prijave: number; pitanja: number }> {
   const k = await sb();
-  const broj = async (tabela: string, filter: (q: any) => any) => {
+  const broj = async (tabela: string, filter: (q: any) => any): Promise<number | null> => {
     const { count, error } = await filter(k.from(tabela).select('id', { count: 'exact', head: true }));
-    return error ? 0 : (count ?? 0);
+    return error ? null : (count ?? 0);
   };
   const [poruke, prijave, pitanja] = await Promise.all([
-    broj('poruke', (q) => q.eq('procitano', false)),
-    broj('prijave', (q) => q.eq('status', 'nova')),
-    broj('pitanja', (q) => q.is('odgovor', null)),
+    broj('poruke', (q) => q.eq('procitano', false)).then((n) => n ?? 0),
+    broj('prijave', (q) => q.eq('status', 'nova')).then((n) => n ?? 0),
+    // bez odgovora i nije sakriveno; prije migracije 0007 kolona `skriveno` ne postoji → bez tog uslova
+    broj('pitanja', (q) => q.is('odgovor', null).eq('skriveno', false)).then(async (n) => n ?? (await broj('pitanja', (q) => q.is('odgovor', null))) ?? 0),
   ]);
   return { poruke, prijave, pitanja };
 }
@@ -153,7 +154,7 @@ export class SekcijaPoruke extends Sanduce {
           toast(porukaGreske(e), 'greska');
         }
       }));
-    const odgovori = el('a', { class: 'btn btn--primary btn--sm', href: `mailto:${encodeURIComponent(s(r.email))}?subject=${encodeURIComponent(`Re: ${s(r.tema)}`)}`, text: 'Odgovori e-mailom' });
+    const odgovori = el('a', { class: 'btn btn--primary btn--sm', href: `mailto:${s(r.email)}?subject=${encodeURIComponent(`Re: ${s(r.tema)}`)}`, text: 'Odgovori e-mailom' });
     odgovori.addEventListener('click', () => {
       if (!r.procitano) void this.azuriraj(r, { procitano: true }, 'Označeno kao pročitano.').then(() => this.prikazi()).catch(() => {});
     });
@@ -260,63 +261,115 @@ export class SekcijaPrijave extends Sanduce {
 }
 
 // ---------------------------------------------------------------------------------------------
+// Pitanja: javna (odmah na sajtu, urednik ih može sakriti) i privatne poruke (vidi ih samo urednik;
+// odgovor se može objaviti anonimno). Kolone javno/skriveno — migracija 0007.
+const jeJavno = (r: Red) => r.javno === true;
+
 export class SekcijaPitanja extends Sanduce {
   protected tabela = 'pitanja';
   constructor(k: HTMLElement, naPromjenu: () => void) {
-    super(k, 'pitanja', 'Pitanja ("Pitaj imama")', 'Odgovorite na pitanje i, ako želite, objavite ga na sajtu. Ime i e-mail onoga ko pita se nikad ne objavljuju.', [
+    super(k, 'pitanja', 'Pitanja ("Pitaj imama")',
+      'Javna pitanja se odmah vide na stranici „Pitaj imama“, a vaš odgovor ispod njih čim ga sačuvate (neprikladna sakrijte). Privatne poruke vidite samo vi — odgovor možete objaviti anonimno. E-mail se nikad ne objavljuje.', [
       { v: '', t: 'Sva pitanja' },
-      { v: 'neodgovorena', t: 'Bez odgovora' },
-      { v: 'neobjavljena', t: 'Odgovorena, nisu objavljena' },
-      { v: 'objavljena', t: 'Objavljena' },
+      { v: 'neodgovorena', t: 'Neodgovorena' },
+      { v: 'javna', t: 'Javna' },
+      { v: 'privatna', t: 'Privatne poruke' },
+      { v: 'sakrivena', t: 'Sakrivena sa sajta' },
     ], naPromjenu);
   }
   protected indeks(r: Red) {
-    return `${r.pitanje} ${r.odgovor} ${r.ime} ${r.email} ${r.odgovorio}`;
+    return `${r.pitanje} ${r.odgovor} ${r.ime} ${r.email} ${r.odgovorio} ${jeJavno(r) ? 'javno' : 'privatno'}`;
   }
   protected odgovaraFilteru(r: Red, f: string) {
-    return f === 'neodgovorena' ? !r.odgovor : f === 'neobjavljena' ? !!r.odgovor && !r.objavljeno : !!r.objavljeno;
+    if (f === 'neodgovorena') return !r.odgovor;
+    if (f === 'javna') return jeJavno(r);
+    if (f === 'privatna') return !jeJavno(r);
+    if (f === 'sakrivena') return r.skriveno === true;
+    return true;
+  }
+  /** Da li se pitanje sada vidi na sajtu (ista pravila kao pogled pitanja_javna). */
+  private naSajtu(r: Red) {
+    return r.skriveno !== true && (jeJavno(r) || (r.objavljeno === true && !!r.odgovor));
   }
   protected stavka(r: Red): HTMLElement {
     const id = `pitanje-${s(r.id)}`;
-    const odgovor = el('textarea', { id: `${id}-odgovor`, class: 'textarea', rows: '5', maxlength: '20000' }) as HTMLTextAreaElement;
+    const javno = jeJavno(r);
+    const odgovor = el('textarea', { id: `${id}-odgovor`, class: 'textarea adm-rastuci', rows: '5', maxlength: '20000' }) as HTMLTextAreaElement;
     odgovor.value = s(r.odgovor);
     const listaId = 'adm-imena-imama';
     if (!document.getElementById(listaId)) document.body.append(el('datalist', { id: listaId }, ...stanje.imami.map((i) => el('option', { value: i.punoIme }))));
-    const odgovorio = el('input', { id: `${id}-odgovorio`, class: 'input', type: 'text', maxlength: '120', list: listaId, placeholder: 'npr. Hfz. Admir ef. Jašarević' }) as HTMLInputElement;
+    const odgovorio = el('input', { id: `${id}-odgovorio`, class: 'input', type: 'text', maxlength: '120', list: listaId, placeholder: 'npr. Hfz. Admir ef. Jašarević', autocomplete: 'off' }) as HTMLInputElement;
     odgovorio.value = s(r.odgovorio);
-    const objavi = el('input', { id: `${id}-objavi`, type: 'checkbox' }) as HTMLInputElement;
-    objavi.checked = r.objavljeno === true;
+    // javno: "Sakrij sa sajta"; privatno: "Objavi odgovor (anonimno)"
+    const prekidac = el('input', { id: `${id}-${javno ? 'sakrij' : 'objavi'}`, type: 'checkbox' }) as HTMLInputElement;
+    prekidac.checked = javno ? r.skriveno === true : r.objavljeno === true;
+    const prekidacPomoc = el('p', {
+      class: 'adm-pomoc',
+      id: `${id}-prekidac-pomoc`,
+      text: javno
+        ? 'Sakriveno pitanje (i odgovor) nestaje sa stranice „Pitaj imama“ odmah; ostaje ovdje.'
+        : 'Pitanje i odgovor se prikazuju na sajtu bez imena i e-maila — samo kad postoji odgovor.',
+    });
+    prekidac.setAttribute('aria-describedby', prekidacPomoc.id);
     const status = el('p', { class: 'adm-poruka', hidden: true });
-    const sacuvaj = this.dugme('Sačuvaj odgovor', 'btn btn--primary btn--sm');
+    const sacuvaj = this.dugme('Sačuvaj', 'btn btn--primary btn--sm');
     sacuvaj.addEventListener('click', () => {
       const tekst = odgovor.value.trim();
-      if (objavi.checked && !tekst) {
-        poruka(status, 'Pitanje se može objaviti tek kad ima odgovor.', 'greska');
+      if (!javno && prekidac.checked && !tekst) {
+        poruka(status, 'Odgovor na privatnu poruku se može objaviti tek kad ga upišete.', 'greska');
         odgovor.focus();
         return;
       }
+      const izmjene: Red = { odgovor: tekst || null, odgovorio: odgovorio.value.trim() || null };
+      if (javno) izmjene.skriveno = prekidac.checked;
+      else izmjene.objavljeno = prekidac.checked && !!tekst;
+      const vidljivo = this.naSajtu({ ...r, ...izmjene });
+      const tekstPoruke = javno
+        ? vidljivo
+          ? tekst ? 'Sačuvano — odgovor se odmah vidi na stranici „Pitaj imama“.' : 'Sačuvano — pitanje je na sajtu i čeka odgovor.'
+          : 'Sačuvano — pitanje je sakriveno sa sajta.'
+        : vidljivo
+          ? 'Sačuvano i objavljeno (bez imena) — vidi se odmah na stranici „Pitaj imama“.'
+          : 'Sačuvano. Privatna poruka se ne prikazuje na sajtu.';
       void uToku(sacuvaj, 'Čuvam…', async () => {
         try {
-          await this.azuriraj(r, { odgovor: tekst || null, odgovorio: odgovorio.value.trim() || null, objavljeno: objavi.checked && !!tekst },
-            objavi.checked ? 'Odgovor je sačuvan i objavljen — na stranici „Pitaj imama“ vidi se odmah.' : 'Odgovor je sačuvan (nije objavljen).');
+          await this.azuriraj(r, izmjene, tekstPoruke);
           poruka(status, '');
           this.prikazi();
+          this.lista.querySelector<HTMLElement>(`[data-pitanje="${CSS.escape(s(r.id))}"] .btn--primary`)?.focus();
         } catch (e) {
           poruka(status, porukaGreske(e), 'greska');
         }
       });
     });
     const obrisi = this.dugme('Obriši', 'btn btn--ghost btn--sm adm-opasno');
-    obrisi.addEventListener('click', () => this.obrisi(r, 'ovo pitanje'));
-    const ko = [r.ime, r.email].filter(Boolean).map(s).join(', ');
-    return el('li', { class: `adm-poruka-stavka${r.odgovor ? '' : ' adm-poruka-stavka--nova'}` },
+    obrisi.addEventListener('click', () => this.obrisi(r, javno ? 'ovo javno pitanje (nestaje i sa sajta)' : 'ovu privatnu poruku'));
+
+    const ime = s(r.ime).trim();
+    const ko = javno ? (ime ? `${ime} (ime se vidi na sajtu)` : 'anonimno') : [ime || 'bez imena (staro pitanje)', s(r.email)].filter(Boolean).join(', ');
+    const znacke = el('span', { class: 'adm-red-dugmadi adm-pitanje__znacke' },
+      el('span', { class: `badge ${javno ? 'badge--primary' : 'badge--muted'}`, text: javno ? 'Javno' : 'Privatno' }),
+      r.odgovor ? el('span', { class: 'badge badge--muted', text: 'Odgovoreno' }) : el('span', { class: 'badge badge--warn', text: 'Bez odgovora' }),
+      r.skriveno === true
+        ? el('span', { class: 'badge badge--warn', text: 'Sakriveno sa sajta' })
+        : this.naSajtu(r)
+          ? el('span', { class: 'badge badge--primary', text: javno ? 'Na sajtu' : 'Odgovor objavljen (anonimno)' })
+          : null);
+    const detalji = el('dl', { class: 'adm-detalji' }, el('dt', { text: 'Pita' }), el('dd', { text: ko }));
+    if (r.email) {
+      const dd = detalji.lastElementChild as HTMLElement;
+      dd.replaceChildren(`${ime || 'bez imena'}, `, el('a', { href: `mailto:${s(r.email)}`, text: s(r.email) }));
+    }
+    return el('li', { class: `adm-poruka-stavka${r.odgovor || r.skriveno ? '' : ' adm-poruka-stavka--nova'}`, 'data-pitanje': s(r.id) },
       el('div', { class: 'adm-poruka-stavka__glava' },
-        el('p', { class: 'adm-stavka__meta' }, `${datumVrijeme(s(r.created_at))}${ko ? ` · ${ko}` : ' · anonimno'} `,
-          r.objavljeno ? el('span', { class: 'badge badge--primary', text: 'Objavljeno' }) : r.odgovor ? el('span', { class: 'badge badge--muted', text: 'Nije objavljeno' }) : el('span', { class: 'badge badge--warn', text: 'Bez odgovora' }))),
+        el('p', { class: 'adm-stavka__meta' }, datumVrijeme(s(r.created_at)), ' ', znacke)),
       el('p', { class: 'adm-poruka-stavka__tekst adm-pitanje', text: s(r.pitanje) }),
-      el('div', { class: 'field' }, el('label', { for: odgovor.id, text: 'Odgovor' }), odgovor),
+      detalji,
+      el('div', { class: 'field' }, el('label', { for: odgovor.id, text: javno ? 'Odgovor (vidi se na sajtu čim sačuvate)' : 'Odgovor' }), odgovor),
       el('div', { class: 'field' }, el('label', { for: odgovorio.id, text: 'Odgovorio (prikazuje se uz odgovor)' }), odgovorio),
-      el('label', { class: 'adm-check', for: objavi.id }, objavi, ' Objavi na sajtu (bez imena i e-maila)'),
+      el('div', { class: 'field' },
+        el('label', { class: 'adm-check', for: prekidac.id }, prekidac, javno ? ' Sakrij sa sajta' : ' Objavi odgovor na sajtu (anonimno, bez imena i e-maila)'),
+        prekidacPomoc),
       status,
       el('div', { class: 'adm-red-dugmadi' }, sacuvaj, obrisi));
   }

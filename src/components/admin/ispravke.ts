@@ -2,6 +2,7 @@
 // Lista predavanja je ugrađena pri buildu (data/predavanja.json); ispravke se čuvaju u tabeli
 // predavanja_ispravke i primjenjuju pri sljedećem buildu (vidi docs/supabase.md).
 import { datumTekst } from '../../lib/format';
+import { formaOtvorena, formaZatvorena } from './istorija';
 import { Forma, type KontekstForme, type Polje } from './polja';
 import { sb } from './sb';
 import { nazivImama, opcijeImama, opcijeKategorija, opcijeSerija, stanje, ugradjeno, type UgradjenoPredavanje } from './stanje';
@@ -178,12 +179,17 @@ export class SekcijaIspravke {
     const status = el('p', { class: 'adm-poruka', hidden: true });
     const sacuvaj = el('button', { type: 'submit', class: 'btn btn--primary', text: 'Sačuvaj ispravku' }) as HTMLButtonElement;
     const odustani = el('button', { type: 'button', class: 'btn btn--ghost', text: 'Zatvori' }) as HTMLButtonElement;
-    const form = el('form', { class: 'adm-forma card', novalidate: true, 'aria-labelledby': 'isp-forma-naslov' }, h, info, forma.el, status, el('div', { class: 'adm-red-dugmadi' }, sacuvaj, odustani));
-    odustani.addEventListener('click', () => {
+    const form = el('form', { class: 'adm-forma card', novalidate: true, 'aria-labelledby': 'isp-forma-naslov' }, h, info, forma.el, status, el('div', { class: 'adm-red-dugmadi adm-forma__dugmad adm-forma__dugmad--ljepljivo' }, sacuvaj, odustani));
+    let pocetno = JSON.stringify(forma.procitaj());
+    const zatvori = (): boolean => {
+      if (JSON.stringify(forma.procitaj()) !== pocetno && !potvrdi('Odbaciti nesačuvane izmjene?')) return false;
+      formaZatvorena();
       this.formaOmot.hidden = true;
       this.formaOmot.replaceChildren();
       this.pretraga.focus();
-    });
+      return true;
+    };
+    odustani.addEventListener('click', () => zatvori());
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!forma.provjeri()) return;
@@ -201,6 +207,7 @@ export class SekcijaIspravke {
           this.ispravke = new Map([[id, podaci], ...this.ispravke]);
           this.prikaziPostojece();
           this.trazi();
+          pocetno = JSON.stringify(forma.procitaj());
           poruka(status, SACUVANO, 'uspjeh');
           toast(SACUVANO, 'uspjeh');
         } catch (err) {
@@ -210,6 +217,7 @@ export class SekcijaIspravke {
     });
     this.formaOmot.replaceChildren(form);
     this.formaOmot.hidden = false;
+    formaOtvorena(zatvori);
     h.focus();
   }
 

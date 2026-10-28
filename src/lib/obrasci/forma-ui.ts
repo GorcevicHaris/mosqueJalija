@@ -23,8 +23,8 @@ export interface OpcijeObrasca {
   pravila: Pravilo[];
   /** sastavlja red za bazu (samo dozvoljene kolone!) */
   red: () => Record<string, unknown>;
-  /** tekst nakon uspješnog slanja */
-  uspjeh: string;
+  /** tekst nakon uspješnog slanja (funkcija: zavisi od poslanog, npr. javno/privatno pitanje) */
+  uspjeh: string | (() => string);
   /** dodatne provjere (npr. saglasnost) — vraća listu grešaka */
   dodatno?: () => { el: Polje; naziv: string; greska: string }[];
   /** poziva se nakon uspjeha (npr. reset dodatnih elemenata) */
@@ -143,12 +143,12 @@ export function obrazac(o: OpcijeObrasca) {
     o.poslije?.();
     if (uspjehEl) {
       const tekst = uspjehEl.querySelector<HTMLElement>('[data-ob-uspjeh-tekst]');
-      if (tekst) tekst.textContent = o.uspjeh;
+      if (tekst) tekst.textContent = typeof o.uspjeh === 'function' ? o.uspjeh() : o.uspjeh;
       form.hidden = true;
       uspjehEl.hidden = false;
       uspjehEl.focus();
     } else {
-      postaviStatus('ok', o.uspjeh);
+      postaviStatus('ok', typeof o.uspjeh === 'function' ? o.uspjeh() : o.uspjeh);
     }
   }
 

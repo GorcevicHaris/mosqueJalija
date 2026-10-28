@@ -180,7 +180,7 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
       dohvati<Red>(`${TABELE.ispravke}?select=video_id,podaci`),
     ]);
     // pitanja su iz kasnije migracije (0004) — njihov izostanak ne obara ostatak sadržaja
-    const pitRed = await dohvati<Red>(`${TABELE.pitanjaJavna}?select=id,pitanje,odgovor,odgovorio,odgovoreno_at,created_at&order=odgovoreno_at.desc.nullslast`).catch(
+    const pitRed = await dohvati<Red>(`${TABELE.pitanjaJavna}?select=id,pitanje,odgovor,odgovorio,odgovoreno_at,created_at&odgovor=not.is.null&order=odgovoreno_at.desc.nullslast`).catch(
       (e: unknown) => {
         console.warn(`[supabase] pitanja nisu učitana: ${(e as Error).message}`);
         return [] as Red[];

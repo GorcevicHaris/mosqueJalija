@@ -29,6 +29,7 @@ skladište slika.
 | `supabase/migrations/0003_storage.sql` | bucket `slike` (javni, JPEG/PNG/WebP, ≤ 5 MB) + politike |
 | `supabase/migrations/0004_javni_unosi.sql` | `poruke`, `prijave`, `pitanja`, pogled `pitanja_javna`, anti-spam |
 | `supabase/migrations/0006_aktivnosti_citati.sql` | `aktivnosti` (tekst i/ili do 10 slika), `citati` (citat/hadis/ajet/pouka) |
+| `supabase/migrations/0007_pitanja_javna_privatna.sql` | `pitanja.javno` / `skriveno` / `ime_javno`, novi pogled `pitanja_javna` (javna pitanja odmah) |
 | `supabase/seed.sql` | početni sadržaj iz `data/*.json` — **generisan**: `node scripts/supabase-seed.mjs` |
 | `src/lib/supabase/config.ts` | URL/ključ, `supabaseUkljucen`, REST zaglavlja, nazivi tabela |
 | `src/lib/supabase/sadrzaj.ts` | build: `ucitajIzBaze()` + `spojiDzamiju`, `spojiPoSlugu`, `primijeniIspravke` |
@@ -56,8 +57,8 @@ skladište slika.
 | `urednici` | `email` (mala slova) | `uloga` admin/urednik, `dodao`, `created_at` |
 | `poruke` | `id` | kontakt forma: `ime`, `email`, `tema`, `poruka`, `procitano` |
 | `prijave` | `id` | `ime_prezime`, `roditelj`, `telefon`, `email`, `program`, `uzrast`, `napomena`, `status` (nova/kontaktiran/upisan/odbijen), `biljeska` (interna) |
-| `pitanja` | `id` | `ime`, `email`, `pitanje`, `odgovor`, `odgovorio` (ime za prikaz), `odgovoreno_at`, `objavljeno` |
-| pogled `pitanja_javna` | — | objavljena pitanja sa odgovorom, **bez** `ime`/`email` (`security_invoker`) |
+| `pitanja` | `id` | `javno` (0007: javno pitanje / privatna poruka), `ime` (obavezno kod privatne), `email`, `pitanje`, `odgovor`, `odgovorio` (ime za prikaz), `odgovoreno_at`, `objavljeno` (odgovor na privatnu poruku objavljen anonimno), `skriveno` (urednik sakrio javno pitanje), `ime_javno` (generisano: ime samo kod javnih) |
+| pogled `pitanja_javna` | — | javna nesakrivena pitanja (i bez odgovora; `ime` samo ako ga je pitalac upisao) + objavljeni odgovori na privatne poruke (bez imena); **nikad** `email` (`security_invoker`) |
 
 Sve tabele imaju `created_at` (i `updated_at` sa okidačem, osim `urednici` i `poruke`).
 
@@ -70,7 +71,7 @@ Sve tabele imaju `created_at` (i `updated_at` sa okidačem, osim `urednici` i `p
 | `kategorije` `hutba`, `predavanje` | | | ne može obrisati | ne može obrisati |
 | `urednici` | — | vidi 0 redova | čita | čita + piše (ne može ukloniti zadnjeg admina) |
 | `poruke`, `prijave` | samo INSERT javnih kolona | samo INSERT | čita, mijenja, briše | isto |
-| `pitanja` | INSERT (`ime`, `email`, `pitanje`); čita samo objavljena+odgovorena, bez `ime`/`email` | INSERT | sve | sve |
+| `pitanja` | INSERT (`ime`, `email`, `pitanje`, `javno`); čita javna nesakrivena + objavljene odgovore, bez `ime`/`email` (samo `ime_javno`) | INSERT | sve | sve |
 | storage `slike` | čita preko javnog URL-a (bez listanja) | isto | upload/izmjena/brisanje | isto |
 
 - `private.je_urednik()` = prijavljeni korisnik ima **potvrđen** e-mail (`auth.users.email_confirmed_at`)
@@ -92,7 +93,7 @@ anti-spam radi, storage upload samo za urednike u bucket `slike`, migracije i se
 
 1. **Migracije** (SQL editor ili Supabase MCP `apply_migration`), tačno ovim redom:
    `0001_sadrzaj` → `0002_rls` → `0003_storage` → `0004_javni_unosi` → `0005_programi_kartice_transkripti` →
-   `0006_aktivnosti_citati` (bez seed-a).
+   `0006_aktivnosti_citati` → `0007_pitanja_javna_privatna` (bez seed-a).
    Sve su idempotentne.
 2. **Seed**: `supabase/seed.sql` (početni sadržaj; `ON CONFLICT DO NOTHING`, ne prepisuje izmjene).
    Ponovno generisanje poslije izmjena u `data/*.json`: `node scripts/supabase-seed.mjs`.
@@ -271,7 +272,7 @@ const res = await fetch(`${SUPABASE_URL}/rest/v1/prijave`, {
 - `poruke`: `ime` (1–100), `email` (obavezan, format), `tema` (1–60, podrazumijevano "Opšte"), `poruka` (2–5000).
 - `prijave`: `ime_prezime` (2–120), `telefon` (6–40), `program` (1–120), `uzrast` (3–99 ili null),
   `roditelj`/`email`/`napomena` opcionalno.
-- `pitanja`: `pitanje` (10–3000), `ime`/`email` opcionalno. Javno čitanje: `GET /rest/v1/pitanja_javna?select=*&order=odgovoreno_at.desc` (ili `ucitajJavnaPitanja()` iz `klijent.ts`).
+- `pitanja`: `pitanje` (10–3000), `javno` (true/false, 0007), `ime` (kod `javno = false` obavezno, ≥ 2 znaka; kod javnog opcionalno), `email` opcionalno (obrazac ga traži samo kod privatne poruke). Javno čitanje: `GET /rest/v1/pitanja_javna?select=*&order=created_at.desc` (samo odgovorena: `&odgovor=not.is.null`, kao `ucitajJavnaPitanja()` iz `klijent.ts`).
 - Greške: HTTP 400 sa `code: "23514"` (dužina/format), `code: "P0001"` i porukom "Previše poruka u
   kratkom vremenu…" (anti-spam), 401/403 `42501` (pokušaj slanja nedozvoljene kolone).
 
@@ -362,3 +363,40 @@ ugrađeni sadržaj, a ostatak se i dalje čita iz baze.
   ponašanje `src/lib/aktivnosti-ui.ts`. Stranice i blokovi pri učitavanju čitaju bazu i usklađuju listu po
   `id`/`updated_at` — nova, izmijenjena ili obrisana objava se vidi odmah, bez builda.
 - Tabele su opcione pri buildu: dok 0006 nije primijenjena, stranice prikazuju prazno stanje (a REST vraća 404).
+
+
+### Migracija 0007 (javna i privatna pitanja — „Pitaj imama“)
+
+| Šta | Kako |
+|---|---|
+| Obrazac (`PitanjeForma.astro`) | na vrhu izbor **„Javno pitanje — vidjeće ga svi“** / **„Privatna poruka — vidi je samo imam“**; ime nije obavezno za javno (placeholder „Ime (nije obavezno)“), obavezno za privatno (+ opcioni e-mail za odgovor); napomena o privatnosti se mijenja po izboru |
+| `/pitaj-imama` | lista javnih pitanja (najnovija prvo) + objavljeni odgovori na privatne poruke; neodgovorena imaju „Čeka odgovor“; filter Sva / Odgovorena / Čekaju odgovor + pretraga; pri buildu u HTML-u, u pregledaču osvježavanje iz pogleda (odmah poslije slanja javnog pitanja — događaj `pitanje:poslano` — i pri povratku na karticu) |
+| Admin → Inbox → Pitanja | filter Neodgovorena / Javna / Privatne poruke / Sakrivena; bedževi Javno/Privatno, Odgovoreno/Bez odgovora, Na sajtu/Sakriveno; javno: „Sakrij sa sajta“; privatno: „Objavi odgovor na sajtu (anonimno)“ (traži odgovor); brisanje |
+| Baza | `javno boolean default false` (sva stara pitanja = privatna), `skriveno boolean default false`, `ime_javno` (generisana), CHECK `javno or ime ≥ 2 znaka` (stara anonimna privatna pitanja izuzeta po `created_at` < vrijeme primjene), anon INSERT `ime, email, pitanje, javno`, okidač resetuje `skriveno/odgovor/odgovorio/objavljeno` |
+
+**Redoslijed:** 0007 primijeniti **prije ili zajedno sa** deployem ovog koda — obrazac šalje kolonu `javno`;
+bez migracije baza odbija unos (poruka „Neki podaci nisu prihvaćeni…“). Admin i javna lista rade i prije
+migracije (kolone se tretiraju kao `javno = false`, `skriveno = false`).
+
+## QA: admin bez prijave (samo `astro dev`)
+
+Za provjeru admin panela bez prave prijave i bez upisa u bazu postoji razvojni „mock“:
+
+```
+astro dev --background            # ili npx astro dev --port 4330
+http://localhost:4330/mosqueJalija/admin/?qa-mock            # administrator
+http://localhost:4330/mosqueJalija/admin/?qa-mock=urednik    # urednik (bez odjeljka Urednici)
+…&qa-greska=upis|citanje|mreza|slika|prava                   # simulirana greška (ili meni u donjem desnom uglu)
+```
+
+- Kod: `src/components/admin/qa-mock.ts`; uključuje ga `sb()` u `src/components/admin/sb.ts` samo unutar
+  `if (import.meta.env.DEV && …)`. U produkcijskom buildu `import.meta.env.DEV` je `false`, pa se grana i
+  sam fajl izbacuju iz bundle-a. Provjera poslije builda: `grep -rl "qa-mock\|qaMock" dist/` mora biti prazno.
+- Lažna sesija (`qa-urednik@primjer.test`) + baza u memoriji pregledača: javne tabele se jednom pročitaju
+  **anonimno** (GET, kao posjetilac), a `urednici`, `poruke`, `prijave`, `pitanja` dobijaju izmišljene redove.
+  Upis/izmjena/brisanje, otpremanje slika (blob URL) i brisanje iz skladišta ostaju u memoriji —
+  **ništa se ne šalje u Supabase**; osvježavanje stranice vraća početno stanje.
+- Mock oponaša podrazumijevane vrijednosti, `updated_at`, okidač odgovora na pitanje, `ime_javno` i dio
+  CHECK-ova (aktivnost bez teksta i slika, privatno pitanje bez imena, dupli slug). RLS, storage politike i
+  prava e-mail prijava se ovako **ne** testiraju.
+- U konzoli: `qaMock.log` (dnevnik upisa), `qaMock.tabela('pitanja')` (sadržaj „baze“), `qaMock.greska = 'upis'`.

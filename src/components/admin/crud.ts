@@ -1,5 +1,6 @@
 // Generički uređivač tabele: lista (pretraga, filteri, redoslijed) + forma (dodaj/uredi/obriši).
 // Svaka sekcija admin panela je opis (DefTabele) — vidi sekcije.ts.
+import { formaOtvorena, formaZatvorena } from './istorija';
 import { Forma, type KontekstForme, type Opcija, type Polje } from './polja';
 import { sb, type SB } from './sb';
 import { ukloniSliku } from './slike';
@@ -92,8 +93,13 @@ export class SekcijaCrud {
       const fid = `${d.id}-f-${f.k}`;
       const sel = el('select', { id: fid, class: 'select' }) as HTMLSelectElement;
       const napuni = () => {
+        const opcije = typeof f.opcije === 'function' ? f.opcije() : f.opcije;
+        // iste opcije → ne diraj (zamjena opcija dok je lista otvorena zatvara izbornik na iPhone-u)
+        const kljuc = JSON.stringify(opcije);
+        if (sel.dataset.opcije === kljuc) return;
+        sel.dataset.opcije = kljuc;
         const v = sel.value;
-        sel.replaceChildren(el('option', { value: '', text: `${f.l}: sve` }), ...(typeof f.opcije === 'function' ? f.opcije() : f.opcije).map((o) => el('option', { value: o.v, text: o.t })));
+        sel.replaceChildren(el('option', { value: '', text: `${f.l}: sve` }), ...opcije.map((o) => el('option', { value: o.v, text: o.t })));
         sel.value = v;
       };
       napuni();
@@ -282,7 +288,7 @@ export class SekcijaCrud {
     const status = el('p', { class: 'adm-poruka', hidden: true });
     const sacuvaj = el('button', { type: 'submit', class: 'btn btn--primary', text: 'Sačuvaj' }) as HTMLButtonElement;
     const odustani = el('button', { type: 'button', class: 'btn btn--ghost', text: 'Odustani' }) as HTMLButtonElement;
-    const dugmad = el('div', { class: 'adm-red-dugmadi adm-forma__dugmad' }, sacuvaj);
+    const dugmad = el('div', { class: 'adm-red-dugmadi adm-forma__dugmad adm-forma__dugmad--ljepljivo' }, sacuvaj);
     const pregledEl = el('div', { class: 'adm-pregled', hidden: true, 'aria-live': 'polite' });
     if (d.pregled) {
       const pregledBtn = el('button', { type: 'button', class: 'btn btn--ghost', text: 'Pregled', 'aria-expanded': 'false' }) as HTMLButtonElement;
@@ -298,6 +304,7 @@ export class SekcijaCrud {
     const form = el('form', { class: 'adm-forma card', novalidate: true, 'aria-labelledby': naslovId }, h, forma.el, status, dugmad, pregledEl);
 
     const zatvori = (fokusPk?: string) => {
+      formaZatvorena();
       this.formaEl.hidden = true;
       this.formaEl.replaceChildren();
       this.pogled.hidden = false;
@@ -311,12 +318,16 @@ export class SekcijaCrud {
     };
     window.addEventListener('beforeunload', cuvar);
 
-    odustani.addEventListener('click', async () => {
-      if (JSON.stringify(forma.procitaj()) !== pocetno && !potvrdi('Odbaciti nesačuvane izmjene?')) return;
-      const k = await sb();
-      for (const u of ctx.otpremljene) void ukloniSliku(k, u);
+    /** Odustani (dugme ili "Nazad" na telefonu): false = urednik je ipak ostao u formi. */
+    const odbaci = (): boolean => {
+      if (JSON.stringify(forma.procitaj()) !== pocetno && !potvrdi('Odbaciti nesačuvane izmjene?')) return false;
+      const otpremljene = [...ctx.otpremljene];
+      ctx.otpremljene.clear();
+      if (otpremljene.length) void sb().then((k) => otpremljene.forEach((u) => void ukloniSliku(k, u)));
       zatvori(jeNovo ? undefined : String(r![d.pk]));
-    });
+      return true;
+    };
+    odustani.addEventListener('click', () => odbaci());
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -361,6 +372,7 @@ export class SekcijaCrud {
     this.pogled.hidden = true;
     this.formaEl.replaceChildren(form);
     this.formaEl.hidden = false;
+    formaOtvorena(odbaci);
     h.focus();
   }
 }

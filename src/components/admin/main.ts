@@ -9,6 +9,7 @@ import { SekcijaPredavanja } from './predavanja';
 import { SekcijaTraka } from './traka';
 import { SekcijaTranskripti } from './transkripti';
 import { SVI_ODJELJCI } from './odjeljci';
+import { pratiIstoriju, zapamtiOdjeljak } from './istorija';
 import { adminUrl, sb, type SB } from './sb';
 import * as def from './sekcije';
 import { osvjeziListe, stanje } from './stanje';
@@ -204,6 +205,13 @@ async function osvjeziBrojace() {
       e.hidden = !n;
       e.setAttribute('aria-label', n ? `${n} novih` : '');
     });
+    // telefon: ukupan broj novih u Inboxu na dugmetu ladice
+    const ukupno = b.poruke + b.prijave + b.pitanja;
+    document.querySelectorAll<HTMLElement>('[data-brojac-ukupno]').forEach((e) => {
+      e.textContent = ukupno ? String(ukupno) : '';
+      e.hidden = !ukupno;
+      e.setAttribute('aria-label', ukupno ? `${ukupno} novih u Inboxu` : '');
+    });
   } catch {
     /* brojači nisu bitni */
   }
@@ -240,18 +248,16 @@ function dozvoljen(id: string) {
   return !!o && (!o.samoAdmin || stanje.uloga === 'admin');
 }
 
-async function otvoriOdjeljak(id: string, fokus = true): Promise<Sekcija> {
+async function otvoriOdjeljak(id: string, fokus = true, istorija: 'push' | 'replace' | 'ne' = 'push'): Promise<Sekcija> {
   if (!dozvoljen(id)) id = 'obavjestenja';
   document.querySelectorAll<HTMLElement>('[data-sekcija]').forEach((s) => (s.hidden = s.dataset.sekcija !== id));
   document.querySelectorAll<HTMLElement>('[data-nav]').forEach((b) => {
     if (b.dataset.nav === id) b.setAttribute('aria-current', 'page');
     else b.removeAttribute('aria-current');
   });
-  const sel = $<HTMLSelectElement>('#adm-nav-select');
-  if (sel) sel.value = id;
-  const u = new URL(location.href);
-  u.searchParams.set('odjeljak', id);
-  history.replaceState(history.state, '', u);
+  const naziv = SVI_ODJELJCI.find((o) => o.id === id)?.naziv ?? '';
+  document.querySelectorAll<HTMLElement>('[data-nav-trenutni]').forEach((e) => (e.textContent = naziv));
+  zapamtiOdjeljak(id, istorija);
 
   const kontejner = $(`[data-sekcija="${id}"]`)!;
   let inst = instance.get(id);
@@ -259,7 +265,13 @@ async function otvoriOdjeljak(id: string, fokus = true): Promise<Sekcija> {
     inst = TVORNICE[id](kontejner);
     instance.set(id, inst);
   }
-  if (fokus) kontejner.querySelector<HTMLElement>('h2')?.focus();
+  if (fokus) {
+    const h2 = kontejner.querySelector<HTMLElement>('h2');
+    h2?.focus({ preventScroll: true });
+    // telefon: novi odjeljak počinje od vrha (ne ostaje na sredini prethodne liste)
+    const vrh = $('.adm-app__tijelo');
+    if (vrh && vrh.getBoundingClientRect().top < 0) window.scrollTo({ top: vrh.getBoundingClientRect().top + window.scrollY - 140, behavior: 'auto' });
+  }
   await inst.aktiviraj();
   return inst;
 }
@@ -279,8 +291,24 @@ document.addEventListener('adm:otvori', (e) => {
 });
 
 function poveziNavigaciju() {
-  document.querySelectorAll<HTMLButtonElement>('[data-nav]').forEach((b) => b.addEventListener('click', () => otvoriOdjeljak(b.dataset.nav!)));
-  $<HTMLSelectElement>('#adm-nav-select')?.addEventListener('change', (e) => otvoriOdjeljak((e.target as HTMLSelectElement).value));
+  const meni = $<HTMLDialogElement>('[data-adm-meni]');
+  document.querySelectorAll<HTMLButtonElement>('[data-nav]').forEach((b) =>
+    b.addEventListener('click', () => {
+      if (meni?.open) meni.close();
+      void otvoriOdjeljak(b.dataset.nav!);
+    }),
+  );
+  // telefon: ladica sa odjeljcima (umjesto javnog menija sajta)
+  $('[data-adm-meni-otvori]')?.addEventListener('click', () => {
+    if (!meni) return;
+    meni.showModal();
+    meni.querySelector<HTMLElement>('[aria-current="page"]')?.focus();
+  });
+  meni?.querySelector('[data-adm-meni-zatvori]')?.addEventListener('click', () => meni.close());
+  meni?.addEventListener('click', (e) => {
+    if (e.target === meni) meni.close(); // klik na zatamnjenu pozadinu
+  });
+  pratiIstoriju((id) => void otvoriOdjeljak(id, true, 'ne'));
 }
 
 async function nastavi(session: { user: { email?: string } }) {
@@ -305,11 +333,10 @@ async function nastavi(session: { user: { email?: string } }) {
     stanje.uloga = data.uloga === 'admin' ? 'admin' : 'urednik';
     document.querySelectorAll<HTMLElement>('[data-uloga]').forEach((e) => (e.textContent = stanje.uloga === 'admin' ? 'Administrator' : 'Urednik'));
     document.querySelectorAll<HTMLElement>('[data-samo-admin]').forEach((e) => (e.hidden = stanje.uloga !== 'admin'));
-    document.querySelectorAll<HTMLOptionElement>('#adm-nav-select option[data-samo-admin]').forEach((o) => (o.disabled = stanje.uloga !== 'admin'));
     pokazi('app');
     await osvjeziListe();
     void osvjeziBrojace();
-    await otvoriOdjeljak(new URLSearchParams(location.search).get('odjeljak') ?? 'obavjestenja', false);
+    await otvoriOdjeljak(new URLSearchParams(location.search).get('odjeljak') ?? 'obavjestenja', false, 'replace');
     $('[data-app-naslov]')?.focus();
   } catch (e) {
     prijavljenKao = null;
@@ -352,6 +379,9 @@ async function start() {
     pokaziPrijavu();
   }
 }
+
+// obavijest se sklanja i tapom (na telefonu može prekriti dio forme)
+document.getElementById('adm-toast')?.addEventListener('click', (e) => ((e.currentTarget as HTMLElement).hidden = true));
 
 window.addEventListener('unhandledrejection', (e) => {
   console.error(e.reason);

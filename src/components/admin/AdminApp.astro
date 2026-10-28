@@ -13,6 +13,11 @@ interface Props {
 const { podaci } = Astro.props;
 const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
 ---
+<script is:inline>
+  // Na /admin/ se sakriva javna navigacija sajta (meni, pretraga, donacije, traka, podnožje):
+  // na telefonu je urednik iz admina tapom na javni meni završavao na javnoj stranici.
+  document.documentElement.setAttribute('data-adm-stranica', '');
+</script>
 <div class="adm container" data-adm>
   <!-- Baza nije podešena (build bez PUBLIC_SUPABASE_URL / PUBLIC_SUPABASE_ANON_KEY) -->
   <section class="adm-ekran card" data-ekran="nije-podeseno" hidden={supabaseUkljucen} aria-labelledby="adm-np-naslov">
@@ -91,17 +96,41 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
     </header>
 
     <div class="adm-app__tijelo">
-      <nav class="adm-nav" aria-label="Odjeljci uređivanja">
-        <div class="field adm-nav__mobilni">
-          <label for="adm-nav-select">Odjeljak</label>
-          <select id="adm-nav-select" class="select">
-            {ODJELJCI.map((g) => (
-              <optgroup label={g.naziv}>
-                {g.stavke.map((s) => <option value={s.id} data-samo-admin={g.samoAdmin ? '' : undefined}>{s.naziv}</option>)}
-              </optgroup>
-            ))}
-          </select>
+      <!-- Telefon/tablet: ljepljiva traka sa trenutnim odjeljkom; dugme otvara ladicu sa svim odjeljcima.
+           (Javni meni sajta je na /admin/ sakriven — vodio je na javne stranice, npr. /galerija/.) -->
+      <div class="adm-mtraka">
+        <button type="button" class="adm-mtraka__dugme" data-adm-meni-otvori aria-haspopup="dialog" aria-controls="adm-meni">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <span class="adm-mtraka__tekst"><span class="adm-mtraka__oznaka">Odjeljak</span> <span data-nav-trenutni>Obavještenja i objave</span></span>
+          <span class="adm-brojac adm-mtraka__brojac" data-brojac-ukupno hidden></span>
+        </button>
+      </div>
+      <dialog class="adm-meni" id="adm-meni" data-adm-meni aria-labelledby="adm-meni-naslov">
+        <div class="adm-meni__glava">
+          <p class="adm-meni__naslov" id="adm-meni-naslov">Odjeljci uređivanja</p>
+          <button type="button" class="adm-ikona" data-adm-meni-zatvori aria-label="Zatvori listu odjeljaka">✕</button>
         </div>
+        <nav class="adm-meni__lista" aria-label="Odjeljci uređivanja (telefon)">
+          {ODJELJCI.map((g) => (
+            <div class="adm-nav__grupa" data-samo-admin={g.samoAdmin ? '' : undefined} hidden={g.samoAdmin}>
+              <p class="adm-nav__naslov">{g.naziv}</p>
+              <ul role="list">
+                {g.stavke.map((s) => (
+                  <li>
+                    <button type="button" class="adm-nav__stavka" data-nav={s.id}>
+                      <span>{s.naziv}</span>
+                      {s.brojac && <span class="adm-brojac" data-brojac={s.brojac} hidden></span>}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+        <p class="adm-meni__dno"><a href={url('/')} target="_blank" rel="noopener">Otvori javni sajt u novoj kartici ↗</a></p>
+      </dialog>
+
+      <nav class="adm-nav" aria-label="Odjeljci uređivanja">
         <div class="adm-nav__lista">
           {ODJELJCI.map((g) => (
             <div class="adm-nav__grupa" data-samo-admin={g.samoAdmin ? '' : undefined} hidden={g.samoAdmin}>
@@ -167,6 +196,15 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
   .adm-poruka[data-vrsta='uspjeh'] { border-color: var(--color-success); color: var(--color-success); background: color-mix(in srgb, var(--color-success) 8%, var(--color-surface)); }
   .adm-toast { position: fixed; z-index: 100; left: 50%; bottom: var(--space-4); transform: translateX(-50%); width: min(560px, calc(100% - 2rem)); margin: 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--color-text); color: var(--color-bg); box-shadow: var(--shadow-lg); font-size: 0.95rem; }
   .adm-toast[data-vrsta='greska'] { background: var(--color-danger); color: #fff; }
+  /* telefon: iznad ljepljive trake sa dugmetom "Sačuvaj" (da ga obavijest ne prekrije) */
+  @media (max-width: 959.98px) { .adm-toast { bottom: calc(76px + env(safe-area-inset-bottom)); } }
+  /* veći dodirni ciljevi na ekranima osjetljivim na dodir */
+  @media (pointer: coarse) {
+    .adm-ikona { min-width: 44px; min-height: 44px; }
+    .adm .btn--sm { min-height: 44px; }
+    .adm-check { min-height: 44px; align-items: center; }
+    .adm-check input { margin-top: 0; }
+  }
   :root[data-theme='dark'] .adm-toast[data-vrsta='greska'] { color: #1a0906; }
 
   /* Ljuska aplikacije */
@@ -174,15 +212,42 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
   .adm-app__naslov { margin: 0 !important; }
   .adm-app__korisnik { margin: var(--space-1) 0 0; font-size: 0.9rem; overflow-wrap: anywhere; }
   .adm-app__tijelo { display: grid; gap: var(--space-5); }
-  .adm-nav__lista { display: none; }
+  .adm-nav { display: none; }
   @media (min-width: 960px) {
     .adm-app__tijelo { grid-template-columns: 240px minmax(0, 1fr); align-items: start; gap: var(--space-6); }
-    .adm-nav { position: sticky; top: var(--space-4); }
-    .adm-nav__mobilni { display: none; }
+    .adm-nav { display: block; position: sticky; top: calc(var(--header-h) + var(--space-4)); max-height: calc(100vh - var(--header-h) - var(--space-6)); overflow-y: auto; overscroll-behavior: contain; }
     .adm-nav__lista { display: grid; gap: var(--space-4); }
+    .adm-mtraka { display: none; }
   }
+
+  /* Javna navigacija sajta se na admin stranici ne prikazuje (osim logotipa i promjene teme) */
+  :root[data-adm-stranica] .topbar,
+  :root[data-adm-stranica] .traka,
+  :root[data-adm-stranica] .site-nav,
+  :root[data-adm-stranica] .nav-backdrop,
+  :root[data-adm-stranica] .menu-toggle,
+  :root[data-adm-stranica] .search-btn,
+  :root[data-adm-stranica] .loc-btn,
+  :root[data-adm-stranica] .donate-btn,
+  :root[data-adm-stranica] .site-footer { display: none !important; }
+
+  /* Telefon: ljepljiva traka odjeljka + ladica */
+  .adm-mtraka { position: sticky; top: var(--header-h); z-index: 60; margin-inline: calc(-1 * var(--space-2)); padding: var(--space-2); background: color-mix(in srgb, var(--page-bg) 94%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .adm-mtraka__dugme { width: 100%; display: flex; align-items: center; gap: var(--space-3); min-height: 52px; padding: 0.5rem 1rem; border: 1.5px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); font: inherit; font-weight: 700; text-align: left; cursor: pointer; box-shadow: var(--shadow-sm); }
+  .adm-mtraka__dugme:hover { border-color: var(--color-primary); }
+  .adm-mtraka__tekst { flex: 1; min-width: 0; display: grid; line-height: 1.25; }
+  .adm-mtraka__tekst [data-nav-trenutni] { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .adm-mtraka__oznaka { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); }
+  .adm-meni { width: min(420px, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0 0 0 auto; padding: 0; border: 0; border-left: 1px solid var(--color-border); background: var(--color-bg); color: var(--color-text); box-shadow: var(--shadow-lg); overscroll-behavior: contain; }
+  .adm-meni[open] { display: flex; flex-direction: column; }
+  .adm-meni::backdrop { background: rgb(5 14 11 / 0.55); }
+  .adm-meni__glava { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); position: sticky; top: 0; background: var(--color-bg); }
+  .adm-meni__naslov { margin: 0; font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; }
+  .adm-meni__lista { display: grid; gap: var(--space-4); padding: var(--space-4); overflow-y: auto; flex: 1; }
+  .adm-meni .adm-nav__stavka { min-height: 48px; font-size: 1rem; }
+  .adm-meni__dno { margin: 0; padding: var(--space-3) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom)); border-top: 1px solid var(--color-border); font-size: 0.92rem; }
   .adm-nav__naslov { margin: 0 0 var(--space-1); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-muted); }
-  .adm-nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .adm-nav ul, .adm-meni ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
   .adm-nav__stavka { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: 40px; padding: 0.45rem 0.75rem; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-text); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
   .adm-nav__stavka:hover { background: var(--color-surface-2); }
   .adm-nav__stavka[aria-current='page'] { background: var(--color-primary); color: var(--color-on-primary); }
@@ -238,7 +303,8 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
   .adm-check input { width: 1.2em; height: 1.2em; margin-top: 0.15em; accent-color: var(--color-primary); flex: none; }
   .adm-arapski { font-family: var(--font-arabic); font-size: 1.3rem; line-height: 1.9; }
   .adm-forma__dugmad { padding-top: var(--space-2); }
-  .adm-forma__dugmad--ljepljivo { position: sticky; bottom: 0; z-index: 5; padding: var(--space-3) 0; background: linear-gradient(to top, var(--page-bg) 70%, transparent); }
+  .adm-forma__dugmad--ljepljivo { position: sticky; bottom: 0; z-index: 5; padding: var(--space-3) 0 calc(var(--space-3) + env(safe-area-inset-bottom)); background: linear-gradient(to top, var(--color-surface) 75%, transparent); }
+  .adm-grupa ~ .adm-forma__dugmad--ljepljivo, .adm-forma:not(.card) > .adm-forma__dugmad--ljepljivo { background: linear-gradient(to top, var(--page-bg) 75%, transparent); }
   .adm-grupa { border: 1px solid var(--color-border); gap: var(--space-4); }
   .adm-grupa > legend { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; padding: 0 var(--space-2); }
   .select--sm, .textarea--sm { min-height: 40px; }
@@ -296,7 +362,9 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
   .adm-tr__seg--izmijenjeno { border-color: var(--color-accent-bright); box-shadow: inset 4px 0 0 var(--color-accent-bright); }
   .adm-tr__glava { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
   .adm-tr__vrijeme { font-weight: 800; font-variant-numeric: tabular-nums; font-size: 0.9rem; color: var(--color-text-muted); }
-  .adm-tr__yt { display: inline-grid; place-items: center; min-width: 32px; min-height: 32px; border-radius: var(--radius-sm); text-decoration: none; }
+  .adm-tr__yt { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; border-radius: var(--radius-sm); text-decoration: none; }
+  .adm-tr__seg--ar .adm-tr__tekst { text-align: right; }
+  .adm-tr__prevod { overflow-wrap: anywhere; }
   .adm-tr__glava .btn { margin-left: auto; }
   .adm-tr__tekst { width: 100%; }
 

@@ -9,8 +9,17 @@ export type SB = any;
 
 let klijent: SB | null = null;
 
+/** QA (samo `astro dev`): /admin/?qa-mock[=urednik] — lažna sesija + baza u memoriji (qa-mock.ts). */
+export const qaMock = (): boolean => import.meta.env.DEV && new URLSearchParams(location.search).has('qa-mock');
+
 export async function sb(): Promise<SB> {
   if (klijent) return klijent;
+  // import.meta.env.DEV je u produkcijskom buildu `false`: grana (i qa-mock.ts) se izbacuje iz bundle-a.
+  if (import.meta.env.DEV && qaMock()) {
+    const { napraviMock } = await import('./qa-mock');
+    klijent = await napraviMock(new URLSearchParams(location.search).get('qa-mock') === 'urednik' ? 'urednik' : 'admin');
+    return klijent;
+  }
   const modul = await import(/* @vite-ignore */ SUPABASE_JS_CDN);
   klijent = modul.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     auth: {
