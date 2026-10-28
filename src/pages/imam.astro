@@ -1,0 +1,149 @@
+---
+// Profil imama džamije (hfz. Admir ef. Jašarević). Jedina stranica profila na sajtu:
+// /imami/ i /imami/admir-jasarevic/ preusmjeravaju ovamo (canonical + meta refresh).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Placeholder from '../components/ui/Placeholder.astro';
+import LectureCard from '../components/predavanja/LectureCard.astro';
+import ImamAvatar from '../components/predavanja/ImamAvatar.astro';
+import { predavanja, getKategorija } from '../lib/data';
+import { imamDzamije, IMAM_SLUG } from '../lib/imam';
+import { filterQuery } from '../lib/predavanja';
+import { oblik } from '../lib/format';
+import { url } from '../lib/url';
+import type { Imam } from '../lib/types';
+
+// Bez podataka o imamu (npr. obrisan red u bazi) stranica i dalje postoji, uz vidljivu oznaku.
+const imam: Imam = imamDzamije ?? {
+  slug: IMAM_SLUG, punoIme: 'Imam džamije', aliasi: [], uloga: null, bio: null, slika: null,
+  potvrdjeno: false, izvori: [], brojPredavanja: 0,
+};
+const imaPodatke = imamDzamije !== null;
+const njegova = predavanja.filter((p) => p.imam === imam.slug);
+const PRIKAZ = 12;
+const poKategoriji = Object.entries(
+  njegova.reduce<Record<string, number>>((acc, p) => ((acc[p.kategorija] = (acc[p.kategorija] ?? 0) + 1), acc), {}),
+).sort((a, b) => b[1] - a[1]);
+// Biografija iz admina: paragrafi odvojeni praznim redom.
+const bioParagrafi = (imam.bio ?? '').split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean);
+// Potpis fotografije: izvor čiji naziv počinje sa "Fotografija" / "Foto" (data/imami-bio.json, admin → Izvori).
+const jeFotoIzvor = (n: string) => /^foto(grafija)?\b/i.test(n.trim());
+const fotoIzvor = imam.slika ? (imam.izvori.find((iz) => jeFotoIzvor(iz.naziv)) ?? null) : null;
+const ostaliIzvori = imam.izvori.filter((iz) => iz !== fotoIzvor);
+const fotoTekst = fotoIzvor ? fotoIzvor.naziv.replace(/^foto(grafija)?\s*:?\s*/i, '') : null;
+const opis =
+  (imam.bio ? (imam.bio.length > 155 ? `${imam.bio.slice(0, 154).replace(/\s+\S*$/, '')}…` : imam.bio).replace(/\s+/g, ' ') : null) ??
+  `${imam.punoIme} — ${njegova.length} ${oblik(njegova.length, 'snimak', 'snimka', 'snimaka')} (hutbe i predavanja) u Džamiji na Jaliji.`;
+---
+<BaseLayout title={imaPodatke ? `${imam.punoIme} — imam` : 'Imam džamije'} description={opis} image={imam.slika ?? undefined}>
+  {!imaPodatke && <PageHero eyebrow="Džemat" title="Imam džamije"><Placeholder label="podaci o imamu" /></PageHero>}
+  {imaPodatke && (
+  <section class="im-hero theme-inverse pattern-bg">
+    <div class="container container--narrow im-hero__inner">
+      <figure class="im-hero__foto">
+        <ImamAvatar punoIme={imam.punoIme} slika={imam.slika} size={128} eager />
+        {fotoTekst && (
+          <figcaption class="im-hero__credit">
+            Foto: {fotoIzvor?.url ? <a href={fotoIzvor.url} target="_blank" rel="noopener">{fotoTekst}</a> : fotoTekst}
+          </figcaption>
+        )}
+      </figure>
+      <div>
+        <p class="eyebrow">Naš imam</p>
+        <h1 class="im-hero__name">{imam.punoIme}</h1>
+        {imam.uloga && <p class="im-hero__role">{imam.uloga}</p>}
+        <p class="im-hero__count">{njegova.length} {oblik(njegova.length, 'snimak', 'snimka', 'snimaka')} na sajtu</p>
+      </div>
+    </div>
+  </section>
+  )}
+
+  <section class="section section--tight">
+    <div class="container container--narrow im-body">
+      <div class="im-bio">
+        <h2 class="im-h2">O imamu</h2>
+        {imam.bio ? (
+          <div class="prose">{bioParagrafi.map((par) => <p>{par}</p>)}</div>
+        ) : (
+          <Placeholder label={`biografija (${imam.punoIme})`} hint="podaci će biti dodani nakon provjere" />
+        )}
+        {ostaliIzvori.length > 0 && (
+          <div class="im-izvori">
+            <h3>Izvori</h3>
+            <ul>
+              {ostaliIzvori.map((iz) => (
+                <li>{iz.url ? <a href={iz.url} target="_blank" rel="noopener">{iz.naziv}</a> : iz.naziv}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      {poKategoriji.length > 0 && (
+        <nav class="im-kat" aria-labelledby="im-kat-naslov">
+          <h2 class="im-h3" id="im-kat-naslov">Snimci po kategorijama</h2>
+          <ul role="list">
+            {poKategoriji.map(([k, n]) => (
+              <li>
+                <a class="im-kat__link" href={url(`/predavanja${filterQuery({ imam: imam.slug, kategorija: k })}`)}>
+                  {getKategorija(k)?.naziv ?? k} <span class="im-kat__n">{n}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--tint section--tight" aria-labelledby="im-pred">
+    <div class="container">
+      <div class="im-pred-head">
+        <h2 id="im-pred">Najnovija predavanja i hutbe</h2>
+        {njegova.length > 0 && (
+          <a class="btn btn--primary" href={url(`/predavanja${filterQuery({ imam: imam.slug })}`)}>Sva predavanja ({njegova.length})</a>
+        )}
+      </div>
+      {njegova.length === 0 ? (
+        <p class="muted">Još nema objavljenih snimaka.</p>
+      ) : (
+        <div class="grid-cards">
+          {njegova.slice(0, PRIKAZ).map((p) => <LectureCard predavanje={p} />)}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .im-hero { padding-block: clamp(2.5rem, 6vw, 4rem); }
+  .im-hero__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5) var(--space-6); }
+  .im-hero__foto { margin: 0; display: grid; justify-items: center; gap: var(--space-3); max-width: 220px; }
+  .im-hero__credit { font-size: 0.75rem; line-height: 1.35; color: var(--inverse-muted); text-align: center; }
+  .im-hero__credit a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .im-hero__name { color: var(--inverse-text); margin: var(--space-1) 0; font-size: clamp(1.8rem, 3vw + 1rem, 2.8rem); }
+  .im-hero__role { color: var(--inverse-muted); margin: 0; font-size: 1.08rem; }
+  .im-hero__count { color: var(--inverse-accent); margin: var(--space-2) 0 0; font-weight: 700; }
+  .im-body { display: grid; gap: var(--space-7); }
+  .im-h2 { margin-top: 0; font-size: clamp(1.4rem, 1.1vw + 1.1rem, 1.75rem); }
+  .im-h3 { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 var(--space-3); }
+  .im-izvori { margin-top: var(--space-6); font-size: 0.9rem; }
+  .im-izvori h3 { font-size: 1rem; margin-bottom: var(--space-2); }
+  .im-izvori ul { padding-left: 1.2em; margin: 0; display: grid; gap: var(--space-1); }
+  .im-kat { padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
+  .im-kat ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .im-kat__link {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    min-height: 40px; padding: 0.3rem 0.5rem 0.3rem 0.95rem;
+    border: 1px solid var(--color-border); border-radius: var(--radius-full);
+    background: var(--color-surface);
+    color: var(--color-text); font-size: 0.9rem; font-weight: 600; text-decoration: none;
+  }
+  .im-kat__link:hover { border-color: var(--color-primary); color: var(--color-primary); }
+  .im-kat__n {
+    display: inline-grid; place-items: center; min-width: 1.75rem; height: 1.75rem; padding: 0 0.4rem;
+    border-radius: var(--radius-full); background: var(--color-surface-2);
+    font-size: 0.78rem; font-weight: 700; color: var(--color-text-muted);
+  }
+  .im-pred-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); margin-bottom: var(--space-5); }
+  .im-pred-head h2 { margin: 0; }
+</style>

@@ -5,12 +5,13 @@ import Placeholder from '../components/ui/Placeholder.astro';
 import KontaktSupabase from '../components/obrasci/KontaktSupabase.astro';
 import { url } from '../lib/url';
 import { dzamija, zaglavljeStranice } from '../lib/data';
+import { lokacija } from '../lib/lokacija';
 
-const { lat, lng, potvrdjeno } = dzamija.koordinate;
-// Sve mape vode na Google Maps (ugrađena mapa, "Otvori" i navigacija).
-const gEmbed = `https://maps.google.com/maps?q=${lat},${lng}&z=17&hl=sr&output=embed`;
-const gmaps = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-const gnav = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+const { potvrdjeno } = lokacija;
+// Sve mape vode na Google Maps (ugrađena mapa, "Otvori" i navigacija) — src/lib/lokacija.ts.
+const gEmbed = lokacija.embed(17);
+const gmaps = lokacija.otvori;
+const gnav = lokacija.navigacija;
 const adresa = [dzamija.adresa, dzamija.drzava].filter(Boolean).join(', ');
 const k = dzamija.kontakt;
 const m = dzamija.drustveneMreze;
@@ -33,6 +34,7 @@ const zaglavlje = zaglavljeStranice('kontakt', { podnaslov: adresa || dzamija.na
       <div class="kt__btns">
         <a class="btn btn--primary" href={gnav} target="_blank" rel="noopener">Navigacija do džamije</a>
         <a class="btn btn--ghost" href={gmaps} target="_blank" rel="noopener">Otvori u Google Maps</a>
+        <a class="btn btn--ghost" href={url('/lokacija')}>Stranica lokacije</a>
       </div>
 
       <div class="kt__frame">

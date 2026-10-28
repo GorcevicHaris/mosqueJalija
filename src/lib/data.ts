@@ -25,12 +25,12 @@ import type {
 
 import { ucitajIzBaze, spojiDzamiju, spojiPoSlugu, primijeniIspravke, dodajRucnaPredavanja } from './supabase/sadrzaj';
 import { trakaVidljiva } from './supabase/tipovi';
-import type { TerminRasporeda, StranicaTekst, JavnoPitanje, Traka, TranskriptIspravke } from './supabase/tipovi';
+import type { TerminRasporeda, StranicaTekst, JavnoPitanje, Traka, TranskriptIspravke, Aktivnost, Citat } from './supabase/tipovi';
 import { PROGRAMI, type Program } from './obrasci/programi';
 import { UGRADJENE_KARTICE, type Kartica, type StranicaKartica } from './kartice';
 import { ugradjenTekst } from './tekstovi-stranica';
 
-export type { TerminRasporeda, StranicaTekst, JavnoPitanje, Traka, TranskriptIspravke } from './supabase/tipovi';
+export type { TerminRasporeda, StranicaTekst, JavnoPitanje, Traka, TranskriptIspravke, Aktivnost, Citat, VrstaCitata } from './supabase/tipovi';
 
 // Sadržaj iz Supabase baze (admin panel). null = nema varijabli ili baza nije dostupna → data/*.json.
 // "Sve ili ništa": nikad mješavina baze i JSON-a (vidi docs/supabase.md).
@@ -148,6 +148,11 @@ export const transkriptIspravke: TranskriptIspravke = baza?.transkriptIspravke ?
 
 /** Traka na vrhu sajta iz builda (null = nema / nije aktivna ili je istekla). Skripta je osvježava u pregledaču. */
 export const traka: Traka | null = trakaVidljiva(baza?.traka ?? null) ? baza!.traka : null;
+
+/** Aktivnosti džemata (admin → Aktivnosti): samo objavljene, najnovije prve. Prazno bez baze/tabele (0006). */
+export const aktivnosti: Aktivnost[] = baza?.aktivnosti ?? [];
+/** Citati, hadisi, ajeti i pouke (admin → Citati i pouke): samo objavljeni, najnoviji prvi. */
+export const citati: Citat[] = baza?.citati ?? [];
 
 export const getImam = (slug: string | null) => imami.find((i) => i.slug === slug) ?? null;
 export const getKategorija = (slug: string | null) => kategorije.find((k) => k.slug === slug) ?? null;

@@ -1,0 +1,66 @@
+---
+// Blok "Gdje se nalazimo" (početna): mala Google mapa, adresa i navigacija do džamije.
+// Props: id = id naslova (aria-labelledby sekcije koja ga koristi).
+import Icon from '../ui/Icon.astro';
+import Placeholder from '../ui/Placeholder.astro';
+import { url } from '../../lib/url';
+import { dzamija } from '../../lib/data';
+import { lokacija } from '../../lib/lokacija';
+
+interface Props { id?: string }
+const { id = 'lokacija-naslov' } = Astro.props;
+---
+<div class="lb">
+  <div class="lb__text">
+    <p class="eyebrow">Posjetite nas</p>
+    <h2 id={id} class="lb__title">Gdje se nalazimo</h2>
+    <p class="lb__adresa">
+      <Icon name="map-pin" size={22} />
+      {lokacija.adresa ? <span>{lokacija.adresa}</span> : <Placeholder inline label="adresa džamije" />}
+    </p>
+    {!lokacija.potvrdjeno && <p class="muted lb__small">Lokacija na mapi je približna (nije potvrđena).</p>}
+    <div class="lb__btns">
+      <a class="btn btn--primary" href={lokacija.navigacija} target="_blank" rel="noopener">
+        <Icon name="navigation" size={18} /> Navigacija do džamije
+      </a>
+      <a class="btn btn--ghost" href={url('/lokacija')}>Lokacija i mapa <Icon name="arrow-right" size={16} /></a>
+    </div>
+  </div>
+  <div class="lb__map">
+    <iframe
+      src={lokacija.embed(16)}
+      title={`Google mapa: lokacija — ${dzamija.naziv}`}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</div>
+
+<style>
+  .lb {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .lb { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-7); }
+  }
+  .lb__text > * { margin: 0; }
+  .lb__text { display: grid; gap: var(--space-3); justify-items: start; }
+  .lb__title { font-size: clamp(1.6rem, 2vw + 1rem, 2.3rem); }
+  .lb__adresa { display: flex; gap: var(--space-2); align-items: flex-start; font-size: 1.15rem; font-weight: 700; line-height: 1.4; }
+  .lb__adresa :global(svg) { flex: none; margin-top: 2px; color: var(--color-accent); }
+  .lb__small { font-size: 0.86rem; }
+  .lb__btns { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2) !important; }
+  .lb__map {
+    aspect-ratio: 16 / 10;
+    min-height: 260px;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    background: var(--color-surface-2);
+  }
+  .lb__map iframe { width: 100%; height: 100%; border: 0; display: block; }
+</style>

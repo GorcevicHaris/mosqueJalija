@@ -253,6 +253,27 @@ const json = JSON.stringify(podaci).replace(/</g, '\\u003c');
   .adm input[type='file'].visually-hidden:focus-visible + label { outline: 3px solid var(--color-focus); outline-offset: 2px; }
   .adm-alatka { display: inline-flex; }
 
+  /* Više slika (Aktivnosti) */
+  .adm-slike__omot { border: 0; padding: 0; margin: 0; display: grid; gap: var(--space-2); min-width: 0; }
+  .adm-slike__omot > legend { padding: 0; margin-bottom: var(--space-2); font-weight: 700; }
+  .adm-slike { display: grid; gap: var(--space-3); padding: var(--space-3); border: 1.5px dashed var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-surface-2); }
+  .adm-slike--prevlaci { border-color: var(--color-primary); background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface-2)); }
+  .adm-slike__lista { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--space-3); }
+  .adm-slike__lista:empty { display: none; }
+  .adm-slike__stavka { position: relative; display: grid; gap: var(--space-1); padding: var(--space-1); border-radius: var(--radius-md); background: var(--color-surface); border: 1px solid var(--color-border); }
+  .adm-slike__stavka img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-surface-2); }
+  .adm-slike__stavka--ceka { aspect-ratio: 1 / 1; place-items: center; }
+  .adm-slike__broj { position: absolute; top: var(--space-2); left: var(--space-2); padding: 0.05rem 0.5rem; border-radius: var(--radius-full); background: rgb(5 14 11 / 0.7); color: #fdf8ec; font-size: 0.75rem; font-weight: 800; }
+  .adm-slike__alati { display: flex; gap: var(--space-1); justify-content: space-between; }
+  .adm-slike__alati .adm-ikona { flex: 1; min-height: 44px; }
+  .adm-slike__dugmad { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .adm-slike__dodaj { min-height: 48px; flex: 1 1 auto; justify-content: center; }
+  .adm-slike__dodaj[aria-disabled='true'] { opacity: 0.55; pointer-events: none; }
+  .adm input[type='file'].visually-hidden:focus-visible + .adm-slike__dodaj { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .adm-slike__stanje:empty { display: none; }
+  @media (max-width: 420px) { .adm-slike__lista { grid-template-columns: 1fr 1fr; gap: var(--space-2); } }
+  .adm-rastuci { resize: vertical; min-height: 7.5em; font-size: max(16px, 1rem); line-height: 1.55; }
+
   /* Niz (ponavljajuće stavke) */
   .adm-niz { border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4) var(--space-4); margin: 0; display: grid; gap: var(--space-3); min-width: 0; }
   .adm-niz > legend { font-weight: 700; font-size: 0.92rem; padding: 0 var(--space-1); }

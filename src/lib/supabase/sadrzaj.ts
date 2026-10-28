@@ -16,8 +16,8 @@ import type {
   Serija,
 } from '../types';
 import { restUrl, supabaseUkljucen, TABELE, zaglavlja } from './config';
-import { trakaIz } from './tipovi';
-import type { IspravkaPredavanja, JavnoPitanje, KarticaIzBaze, StranicaTekst, TerminRasporeda, Traka, TranskriptIspravke, ZaKoga } from './tipovi';
+import { aktivnostIz, AKTIVNOSTI_SELECT, citatIz, CITATI_SELECT, trakaIz } from './tipovi';
+import type { Aktivnost, Citat, IspravkaPredavanja, JavnoPitanje, KarticaIzBaze, StranicaTekst, TerminRasporeda, Traka, TranskriptIspravke, ZaKoga } from './tipovi';
 import { PROGRAMI_SELECT, programIzReda, type Program } from '../obrasci/programi';
 
 export interface SadrzajIzBaze {
@@ -40,6 +40,9 @@ export interface SadrzajIzBaze {
   kartice: KarticaIzBaze[] | null; // samo aktivne, po stranici i redoslijedu
   transkriptIspravke: TranskriptIspravke | null;
   predavanjaRucna: PredavanjeRucno[] | null;
+  // ---- migracija 0006: null = tabela ne postoji / nije dostupna → prazno stanje ----
+  aktivnosti: Aktivnost[] | null; // samo objavljene, najnovije prve
+  citati: Citat[] | null; // samo objavljeni, najnoviji prvi
 }
 
 /** Red tabele predavanja_rucna (ručno dodan YouTube video). */
@@ -184,11 +187,14 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
       },
     );
     // migracija 0005 — svaka tabela posebno; bez nje (ili kad ne odgovori) ugrađeni sadržaj
-    const [progRed, kartRed, trIspRed, rucRed] = await Promise.all([
+    const [progRed, kartRed, trIspRed, rucRed, aktRed, citRed] = await Promise.all([
       opciono('programi', dohvati<Red>(`${TABELE.programi}?select=${PROGRAMI_SELECT}&order=redoslijed.asc,slug.asc`)),
       opciono('kartice stranica', dohvati<Red>(`${TABELE.kartice}?select=stranica,naslov,tekst,ikona,link&aktivno=eq.true&order=stranica.asc,redoslijed.asc,created_at.asc`)),
       opciono('ispravke transkripata', dohvatiSve<Red>(`${TABELE.transkriptIspravke}?select=video_id,jezik,segment,tekst&order=video_id.asc,jezik.asc,segment.asc`)),
       opciono('ručno dodana predavanja', dohvati<Red>(`${TABELE.predavanjaRucna}?select=id,naslov,naslov_cist,datum,trajanje,imam,kategorija,serija,serija_dio,opis&order=datum.desc`)),
+      // migracija 0006
+      opciono('aktivnosti', dohvati<Red>(`${TABELE.aktivnosti}?select=${AKTIVNOSTI_SELECT}&objavljeno=eq.true&order=datum.desc,id.desc`)),
+      opciono('citati', dohvati<Red>(`${TABELE.citati}?select=${CITATI_SELECT}&objavljeno=eq.true&order=datum.desc,id.desc`)),
     ]);
     const postavka = (kljuc: string) => postRed.find((r) => r.kljuc === kljuc)?.vrijednost;
     const dzamijaRed = postavka('dzamija');
@@ -264,6 +270,8 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
         : null,
       transkriptIspravke: trIspRed ? mapIspravkeTranskripata(trIspRed) : null,
       predavanjaRucna: rucRed ? rucRed.map(mapRucno).filter((p): p is PredavanjeRucno => p !== null) : null,
+      aktivnosti: aktRed ? aktRed.map(aktivnostIz).filter((a): a is Aktivnost => a !== null) : null,
+      citati: citRed ? citRed.map(citatIz).filter((c): c is Citat => c !== null) : null,
     };
     console.info(
       `[supabase] sadržaj iz baze: ${rez.obavjestenja.length} obavještenja, ${rez.galerija.length} slika, ${rez.dove.length} dova, ` +
@@ -271,7 +279,9 @@ export async function ucitajIzBaze(): Promise<SadrzajIzBaze | null> {
         (rez.programi ? `, ${rez.programi.length} programa` : '') +
         (rez.kartice ? `, ${rez.kartice.length} kartica` : '') +
         (rez.transkriptIspravke ? `, ${Object.keys(rez.transkriptIspravke).length} transkripata sa ispravkama` : '') +
-        (rez.predavanjaRucna ? `, ${rez.predavanjaRucna.length} ručno dodanih predavanja` : ''),
+        (rez.predavanjaRucna ? `, ${rez.predavanjaRucna.length} ručno dodanih predavanja` : '') +
+        (rez.aktivnosti ? `, ${rez.aktivnosti.length} aktivnosti` : '') +
+        (rez.citati ? `, ${rez.citati.length} citata` : ''),
     );
     return rez;
   } catch (e) {

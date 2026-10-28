@@ -58,6 +58,9 @@ export const TABELE = {
   kartice: 'kartice_stranica',
   transkriptIspravke: 'transkript_ispravke',
   predavanjaRucna: 'predavanja_rucna',
+  // migracija 0006 (opcione pri buildu: bez tabele = prazno stanje)
+  aktivnosti: 'aktivnosti',
+  citati: 'citati',
 } as const;
 
 export const BUCKET_SLIKE = 'slike';

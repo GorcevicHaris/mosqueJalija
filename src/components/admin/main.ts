@@ -1,5 +1,6 @@
 // Admin panel: prijava (magic link / kod iz e-maila), provjera uredničkih prava, navigacija.
 import { supabaseUkljucen } from '../../lib/supabase/config';
+import * as aktivnostiDef from './aktivnosti';
 import { SekcijaCrud } from './crud';
 import { SekcijaDzamija } from './dzamija';
 import { brojNovih, SekcijaPitanja, SekcijaPoruke, SekcijaPrijave } from './inbox';
@@ -210,6 +211,8 @@ async function osvjeziBrojace() {
 
 const TVORNICE: Record<string, (c: HTMLElement) => Sekcija> = {
   obavjestenja: (c) => new SekcijaCrud(def.obavjestenja, c),
+  aktivnosti: (c) => new SekcijaCrud(aktivnostiDef.aktivnosti, c),
+  citati: (c) => new SekcijaCrud(aktivnostiDef.citati, c),
   raspored: (c) => new SekcijaCrud(def.raspored, c),
   galerija: (c) => new SekcijaCrud(def.galerija, c),
   dove: (c) => new SekcijaCrud(def.dove, c),

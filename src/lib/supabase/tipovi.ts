@@ -92,3 +92,71 @@ export const trakaVidljiva = (t: Traka | null, danas = danasBeograd()): t is Tra
 
 export const DANI = ['ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota', 'nedjelja'] as const;
 export const nazivDana = (dan: number): string => DANI[(dan - 1 + 7) % 7] ?? '';
+
+// ---------------------------------------------------------------------------------------------
+// Aktivnosti i citati (migracija 0006) — dijele ih build (sadrzaj.ts) i pregledač
+// ---------------------------------------------------------------------------------------------
+
+/** Objava aktivnosti: tekst i/ili slike (najviše 10). `datum` = ISO vrijeme objave. */
+export interface Aktivnost {
+  id: string;
+  naslov: string | null;
+  tekst: string | null;
+  slike: string[];
+  datum: string;
+  /** updated_at — za prepoznavanje izmijenjene objave pri osvježavanju u pregledaču */
+  verzija: string;
+}
+
+export type VrstaCitata = 'citat' | 'hadis' | 'ajet' | 'pouka';
+export const VRSTE_CITATA: { v: VrstaCitata; naziv: string; mnozina: string; dana: string }[] = [
+  { v: 'citat', naziv: 'Citat', mnozina: 'Citati', dana: 'Citat dana' },
+  { v: 'hadis', naziv: 'Hadis', mnozina: 'Hadisi', dana: 'Hadis dana' },
+  { v: 'ajet', naziv: 'Ajet', mnozina: 'Ajeti', dana: 'Ajet dana' },
+  { v: 'pouka', naziv: 'Pouka', mnozina: 'Pouke', dana: 'Pouka dana' },
+];
+
+/** Citat, hadis, ajet ili pouka. */
+export interface Citat {
+  id: string;
+  tekst: string;
+  izvor: string | null;
+  vrsta: VrstaCitata;
+  arapski: string | null;
+  slika: string | null;
+  datum: string;
+  verzija: string;
+}
+
+export const AKTIVNOSTI_SELECT = 'id,naslov,tekst,slike,datum,updated_at';
+export const CITATI_SELECT = 'id,tekst,izvor,vrsta,arapski,slika,datum,updated_at';
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const tekstIli = (v: unknown): string | null => (typeof v === 'string' && v.trim() ? v.trim() : null);
+/** Samo https:// URL ili lokalna putanja (/images/…) — ništa drugo ne ide u src. */
+const slikaIli = (v: unknown): string | null => {
+  const s = tekstIli(v);
+  return s && /^(https:\/\/|\/(?!\/))[^\s"'<>]+$/.test(s) ? s : null;
+};
+const vrijeme = (v: unknown): string | null => (typeof v === 'string' && !Number.isNaN(Date.parse(v)) ? v : null);
+
+/** Red tabele aktivnosti → Aktivnost (null = neispravan red ili bez sadržaja). */
+export function aktivnostIz(r: Record<string, unknown>): Aktivnost | null {
+  const id = typeof r.id === 'string' && UUID_RE.test(r.id) ? r.id : null;
+  const datum = vrijeme(r.datum);
+  if (!id || !datum) return null;
+  const slike = (Array.isArray(r.slike) ? r.slike : []).map(slikaIli).filter((s): s is string => !!s).slice(0, 10);
+  const tekst = tekstIli(r.tekst);
+  if (!tekst && !slike.length) return null;
+  return { id, naslov: tekstIli(r.naslov), tekst, slike, datum, verzija: vrijeme(r.updated_at) ?? datum };
+}
+
+/** Red tabele citati → Citat (null = neispravan red). */
+export function citatIz(r: Record<string, unknown>): Citat | null {
+  const id = typeof r.id === 'string' && UUID_RE.test(r.id) ? r.id : null;
+  const datum = vrijeme(r.datum);
+  const tekst = tekstIli(r.tekst);
+  if (!id || !datum || !tekst) return null;
+  const vrsta = VRSTE_CITATA.some((x) => x.v === r.vrsta) ? (r.vrsta as VrstaCitata) : 'citat';
+  return { id, tekst, izvor: tekstIli(r.izvor), vrsta, arapski: tekstIli(r.arapski), slika: slikaIli(r.slika), datum, verzija: vrijeme(r.updated_at) ?? datum };
+}

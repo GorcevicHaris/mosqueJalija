@@ -85,7 +85,7 @@ const opis = 'Vakuf, gradnja, otvaranje i džemat danas — činjenice uz navede
           {punaAdresa() || <Placeholder inline label="adresa" />}
         </p>
         {!d.koordinate.potvrdjeno && <p class="muted small">Položaj na mapi je približan i čeka potvrdu džemata.</p>}
-        <a class="btn btn--primary" href={url('/kontakt')}><Icon name="map-pin" size={18} /> Mapa i kontakt</a>
+        <a class="btn btn--primary" href={url('/lokacija')}><Icon name="map-pin" size={18} /> Lokacija i mapa</a>
       </section>
 
       {d.izvori.length > 0 && (
@@ -104,7 +104,8 @@ const opis = 'Vakuf, gradnja, otvaranje i džemat danas — činjenice uz navede
         <ul role="list">
           <li><a class="link-arrow" href={url('/galerija')}>Galerija</a></li>
           <li><a class="link-arrow" href={url('/pravila-ponasanja')}>Pravila ponašanja</a></li>
-          <li><a class="link-arrow" href={url('/imami')}>Imami i predavači</a></li>
+          <li><a class="link-arrow" href={url('/imam')}>Imam džamije</a></li>
+          <li><a class="link-arrow" href={url('/lokacija')}>Lokacija</a></li>
           <li><a class="link-arrow" href={url('/mekteb')}>Mekteb i halke</a></li>
         </ul>
       </nav>

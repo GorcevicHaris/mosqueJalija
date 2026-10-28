@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import YouTubeFacade from '../../components/predavanja/YouTubeFacade.astro';
 import Transkript from '../../components/predavanja/Transkript.astro';
 import { predavanja, getImam, getKategorija, getSerija, formatDatum } from '../../lib/data';
+import { profilPredavaca } from '../../lib/imam';
 import { dijeloviSerije } from '../../lib/predavanja';
 import { trajanjeISO, trajanjeTekst } from '../../lib/format';
 import { getTranskriptEn } from '../../lib/transkripti';
@@ -17,6 +18,8 @@ interface Props { p: Predavanje }
 const { p } = Astro.props;
 
 const imam = getImam(p.imam);
+// Profil postoji samo za imama džamije; ostali predavači su običan tekst.
+const imamProfil = profilPredavaca(imam?.slug);
 const kategorija = getKategorija(p.kategorija);
 const serija = getSerija(p.serija);
 const dijelovi = dijeloviSerije(p.serija);
@@ -70,7 +73,7 @@ const ld = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
       <h1 class="pd__title">{punNaslov}</h1>
       {naslovEn && <p class="pd__title-en" lang="en" data-tr-l="en" hidden>{naslovEn}</p>}
       <p class="pd__meta">
-        {imam ? <a href={url(`/imami/${imam.slug}`)}>{imam.punoIme}</a> : <span>Predavač nije naveden</span>}
+        {imam ? (imamProfil ? <a href={url(imamProfil)}>{imam.punoIme}</a> : <span>{imam.punoIme}</span>) : <span>Predavač nije naveden</span>}
         <span aria-hidden="true">·</span>
         <time datetime={p.datum}>{formatDatum(p.datum)}</time>
         {traj && (

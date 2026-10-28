@@ -12,7 +12,10 @@ import SocialLinks from '../components/ui/SocialLinks.astro';
 import DanasUDzamiji from '../components/obrasci/DanasUDzamiji.astro';
 import { naslovnaSlika as dajNaslovnu, varijanta } from '../lib/slike';
 import { url } from '../lib/url';
-import { dzamija, predavanja, obavjestenja, imami, galerija, formatDatum, punaAdresa, samostalanTekst } from '../lib/data';
+import LokacijaBlok from '../components/lokacija/LokacijaBlok.astro';
+import AktivnostiPocetna from '../components/aktivnosti/AktivnostiPocetna.astro';
+import CitatDana from '../components/aktivnosti/CitatDana.astro';
+import { dzamija, predavanja, obavjestenja, galerija, formatDatum, samostalanTekst } from '../lib/data';
 
 const najnovija = predavanja.slice(0, 6);
 const brojHutbi = predavanja.filter((p) => p.kategorija === 'hutba').length;
@@ -74,7 +77,6 @@ const korisno = [
           <ul class="hero__facts" role="list">
             <li><strong>{predavanja.length}</strong> snimaka na kanalu</li>
             {brojHutbi > 0 && <li><strong>{brojHutbi}</strong> hutbi</li>}
-            {imami.length > 0 && <li><strong>{imami.length}</strong> {imami.length === 1 ? 'predavač' : 'predavača'}</li>}
           </ul>
         )}
       </div>
@@ -159,6 +161,12 @@ const korisno = [
     </div>
   </section>
 
+  <!-- ================= AKTIVNOSTI (objave efendije; sakrije se kad nema objava) ================= -->
+  <AktivnostiPocetna class="section--tint" />
+
+  <!-- ================= CITAT / POUKA (sakrije se kad nema) ================= -->
+  <CitatDana />
+
   <!-- ================= AJET / HADIS DANA ================= -->
   <section class="section section--tight" aria-label="Ajet / hadis dana">
     <div class="container container--narrow ahd-col">
@@ -231,25 +239,20 @@ const korisno = [
     </div>
   </section>
 
-  <!-- ================= PRATITE NAS + POSJETITE NAS ================= -->
+  <!-- ================= PRATITE NAS ================= -->
   <section class="section" aria-labelledby="pratite-naslov">
     <div class="container">
       <SectionHeading id="pratite-naslov" eyebrow="Pratite nas" title="Budite u toku sa džematom">
         <a slot="action" class="link-arrow" href={url('/mediji')}>Mediji</a>
       </SectionHeading>
       <SocialLinks variant="cards" />
-      <div class="visit card">
-        <div class="visit__icon"><Icon name="map-pin" size={26} /></div>
-        <div class="visit__body">
-          <h3>Posjetite nas</h3>
-          {[dzamija.adresa, dzamija.grad].some(Boolean) ? (
-            <p>{punaAdresa()}</p>
-          ) : (
-            <Placeholder label="tačna adresa džamije" />
-          )}
-        </div>
-        <a class="btn btn--primary" href={url('/kontakt')}>Kontakt i mapa</a>
-      </div>
+    </div>
+  </section>
+
+  <!-- ================= GDJE SE NALAZIMO (lokacija, prije podnožja) ================= -->
+  <section class="section section--tint pattern-bg pattern-bg--fade" aria-labelledby="gdje-naslov">
+    <div class="container">
+      <LokacijaBlok id="gdje-naslov" />
     </div>
   </section>
 </BaseLayout>
@@ -471,18 +474,6 @@ const korisno = [
   .donate__hadith figcaption { font-size: 0.85rem; color: var(--inverse-muted); margin-top: var(--space-1); }
   .donate__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
 
-  /* ---------- Posjetite nas ---------- */
-  .visit {
-    margin-top: var(--space-6);
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-4) var(--space-5);
-  }
-  .visit__icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--color-accent-soft); color: var(--color-accent); flex: none; }
-  .visit__body { flex: 1 1 260px; }
-  .visit__body h3 { margin-bottom: var(--space-2); }
-  .visit__body p { margin: 0; }
 </style>
 
 <script>

@@ -6,6 +6,9 @@ import { ukloniSliku } from './slike';
 import { el, esc, norm, odgovara, porukaGreske, potvrdi, poruka, SACUVANO, toast, uToku } from './util';
 
 /** Lokalna putanja ('/images/…') → sa base-om sajta (GitHub Pages podfolder); URL ostaje. */
+/** Vrijednost polja sa slikom (URL ili niz URL-ova) → lista URL-ova. */
+const urlovi = (v: unknown): string[] => (Array.isArray(v) ? v : [v]).filter((x): x is string => typeof x === 'string' && !!x);
+
 const srcSlike = (v: string): string =>
   /^https?:\/\//.test(v) ? v : `${import.meta.env.BASE_URL.replace(/\/$/, '')}${v.startsWith('/') ? v : `/${v}`}`;
 
@@ -42,8 +45,9 @@ export interface DefTabele {
   nakonIzmjene?(): void | Promise<void>;
   pregled?(podaci: Red): string;
   alatke?(s: SekcijaCrud): HTMLElement | null;
+  /** polja sa slikama iz bucketa (URL ili niz URL-ova): zamijenjene/uklonjene slike se brišu iz skladišta */
   slikaPolja?: string[];
-  porukaSacuvano?: string;
+  porukaSacuvano?: string | ((podaci: Red) => string);
   potvrdaBrisanja?(r: Red): string;
 }
 
@@ -249,7 +253,7 @@ export class SekcijaCrud {
           const { error } = await k.from(this.def.tabela).delete().eq(this.def.pk, r[this.def.pk]);
           if (error) throw error;
         }
-        for (const s of this.def.slikaPolja ?? []) await ukloniSliku(k, r[s] as string);
+        for (const s of this.def.slikaPolja ?? []) for (const u of urlovi(r[s])) await ukloniSliku(k, u);
         toast(`Obrisano: ${naslov}`, 'uspjeh', 4000);
         await this.def.nakonIzmjene?.();
         await this.ucitaj();
@@ -336,9 +340,13 @@ export class SekcijaCrud {
             if (error) throw error;
           }
           // stara slika koja je zamijenjena/uklonjena se briše iz bucketa
-          if (!jeNovo) for (const s of d.slikaPolja ?? []) if (r![s] && r![s] !== podaci[s]) await ukloniSliku(k, r![s] as string);
+          if (!jeNovo)
+            for (const s of d.slikaPolja ?? []) {
+              const ostaju = new Set(urlovi(podaci[s]));
+              for (const u of urlovi(r![s])) if (!ostaju.has(u)) await ukloniSliku(k, u);
+            }
           ctx.otpremljene.clear();
-          toast(d.porukaSacuvano ?? SACUVANO, 'uspjeh');
+          toast(typeof d.porukaSacuvano === 'function' ? d.porukaSacuvano(podaci) : (d.porukaSacuvano ?? SACUVANO), 'uspjeh');
           await d.nakonIzmjene?.();
           await this.ucitaj();
           zatvori(String(podaci[d.pk] ?? r?.[d.pk] ?? ''));

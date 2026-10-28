@@ -34,6 +34,8 @@ export const TEKSTOVI_STRANICA: UgradjenTekst[] = [
   { kljuc: 'footer-o-nama', naziv: 'Podnožje sajta — tekst o džamiji', putanja: '/', vrsta: 'tekst', naslov: null, sadrzaj: null, pomoc: 'Prazno = „Kratak opis“ iz odjeljka Podaci o džamiji.' },
   // ---- 0005: zaglavlja stranica (naslov + podnaslov) ----
   { kljuc: 'kontakt', naziv: 'Kontakt — zaglavlje', putanja: '/kontakt', vrsta: 'podnaslov', naslov: 'Posjetite nas', sadrzaj: null, pomoc: 'Prazan podnaslov = adresa džamije.' },
+  { kljuc: 'lokacija', naziv: 'Lokacija — zaglavlje', putanja: '/lokacija', vrsta: 'podnaslov', naslov: 'Lokacija džamije', sadrzaj: null, pomoc: 'Prazan podnaslov = adresa džamije.' },
+  { kljuc: 'lokacija-kako-doci', naziv: 'Lokacija — kako doći', putanja: '/lokacija', vrsta: 'tekst', naslov: null, sadrzaj: null, pomoc: 'Kratko uputstvo kako doći do džamije (orijentiri, parking, ulaz). Prazno = odjeljak „Kako doći“ se ne prikazuje.' },
   { kljuc: 'galerija', naziv: 'Galerija — zaglavlje', putanja: '/galerija', vrsta: 'podnaslov', naslov: 'Galerija', sadrzaj: 'Fotografije džamije, mekteba i aktivnosti džemata.' },
   { kljuc: 'mediji', naziv: 'Mediji — zaglavlje', putanja: '/mediji', vrsta: 'podnaslov', naslov: 'Mediji', sadrzaj: 'Predavanja, hutbe i snimci sa YouTube kanala džamije i zvanični profili na društvenim mrežama.' },
   { kljuc: 'dove', naziv: 'Dove — zaglavlje', putanja: '/dove', vrsta: 'podnaslov', naslov: 'Dove', sadrzaj: "Dove iz Kur'ana i sunneta sa arapskim tekstom, transliteracijom, prevodom i izvorom." },

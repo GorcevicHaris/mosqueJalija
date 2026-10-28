@@ -1,0 +1,43 @@
+---
+// Početna: najnovije 3 aktivnosti (kartice sa slikom, vremenom i izvodom) + "Sve aktivnosti".
+// Cijela sekcija je skrivena kad nema objava, ali skripta i tada pita bazu — prva nova objava
+// se pojavi odmah, bez builda. Postaviti kao samostalnu sekciju u src/pages/index.astro.
+import SectionHeading from '../ui/SectionHeading.astro';
+import '../../styles/aktivnosti.css';
+import { aktivnosti } from '../../lib/data';
+import { aktivnostKratkoHTML } from '../../lib/aktivnosti';
+import { url } from '../../lib/url';
+
+interface Props {
+  /** dodatne klase sekcije, npr. 'section--tint' */
+  class?: string;
+  max?: number;
+}
+const { class: cls, max = 3 } = Astro.props;
+const najnovije = aktivnosti.slice(0, max);
+---
+<section class:list={['section akt-pocetna', cls]} data-akt-pocetna data-max={max} hidden={!najnovije.length} aria-labelledby="aktivnosti-pocetna-naslov">
+  <div class="container">
+    <SectionHeading id="aktivnosti-pocetna-naslov" eyebrow="Iz džemata" title="Aktivnosti" lead="Kratke objave i fotografije sa aktivnosti u našoj džamiji.">
+      <a slot="action" class="link-arrow" href={url('/aktivnosti')}>Sve aktivnosti</a>
+    </SectionHeading>
+    <ul class="akt-kratko" role="list" data-akt-pocetna-lista set:html={najnovije.map(aktivnostKratkoHTML).join('')}></ul>
+  </div>
+</section>
+
+<script>
+  import { aktivnostKratkoHTML, ucitajAktivnosti, uskladi } from '../../lib/aktivnosti';
+  import { osvjeziVremena, pokreniVremena } from '../../lib/aktivnosti-ui';
+
+  const sekcija = document.querySelector<HTMLElement>('[data-akt-pocetna]');
+  const lista = sekcija?.querySelector<HTMLElement>('[data-akt-pocetna-lista]');
+  if (sekcija && lista) {
+    pokreniVremena();
+    void ucitajAktivnosti(Number(sekcija.dataset.max) || 3).then((sveze) => {
+      if (!sveze) return; // baza nije dostupna → ostaje sadržaj iz builda
+      uskladi(lista, sveze, aktivnostKratkoHTML);
+      sekcija.hidden = sveze.length === 0;
+      osvjeziVremena(sekcija);
+    });
+  }
+</script>

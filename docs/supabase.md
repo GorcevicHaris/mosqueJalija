@@ -28,6 +28,7 @@ skladište slika.
 | `supabase/migrations/0002_rls.sql` | šema `private`, `private.je_urednik()` / `private.je_admin()`, privilegije, RLS |
 | `supabase/migrations/0003_storage.sql` | bucket `slike` (javni, JPEG/PNG/WebP, ≤ 5 MB) + politike |
 | `supabase/migrations/0004_javni_unosi.sql` | `poruke`, `prijave`, `pitanja`, pogled `pitanja_javna`, anti-spam |
+| `supabase/migrations/0006_aktivnosti_citati.sql` | `aktivnosti` (tekst i/ili do 10 slika), `citati` (citat/hadis/ajet/pouka) |
 | `supabase/seed.sql` | početni sadržaj iz `data/*.json` — **generisan**: `node scripts/supabase-seed.mjs` |
 | `src/lib/supabase/config.ts` | URL/ključ, `supabaseUkljucen`, REST zaglavlja, nazivi tabela |
 | `src/lib/supabase/sadrzaj.ts` | build: `ucitajIzBaze()` + `spojiDzamiju`, `spojiPoSlugu`, `primijeniIspravke` |
@@ -90,7 +91,8 @@ anti-spam radi, storage upload samo za urednike u bucket `slike`, migracije i se
 ## Postavljanje (redom)
 
 1. **Migracije** (SQL editor ili Supabase MCP `apply_migration`), tačno ovim redom:
-   `0001_sadrzaj` → `0002_rls` → `0003_storage` → `0004_javni_unosi` → `0005_programi_kartice_transkripti`.
+   `0001_sadrzaj` → `0002_rls` → `0003_storage` → `0004_javni_unosi` → `0005_programi_kartice_transkripti` →
+   `0006_aktivnosti_citati` (bez seed-a).
    Sve su idempotentne.
 2. **Seed**: `supabase/seed.sql` (početni sadržaj; `ON CONFLICT DO NOTHING`, ne prepisuje izmjene).
    Ponovno generisanje poslije izmjena u `data/*.json`: `node scripts/supabase-seed.mjs`.
@@ -345,3 +347,18 @@ kažu ~15–20 minuta.
 Nove tabele su **opcione pri buildu**: dok 0005 nije primijenjena (ili tabela ne odgovori), sajt koristi
 ugrađeni sadržaj, a ostatak se i dalje čita iz baze.
 
+
+### Migracija 0006 (aktivnosti i citati)
+
+| Admin odjeljak (tabela) | Gdje se vidi |
+|---|---|
+| Sadržaj → Aktivnosti (`aktivnosti`: `naslov?`, `tekst?`, `slike text[]` ≤ 10, `datum`, `objavljeno`) | `/aktivnosti` (feed, po 10 + „Učitaj još“, lightbox), `AktivnostiPocetna.astro` (zadnje 3) |
+| Sadržaj → Citati i pouke (`citati`: `tekst`, `izvor?`, `vrsta` citat/hadis/ajet/pouka, `arapski?`, `slika?`, `objavljeno`) | `/citati` (filter `?vrsta=`, „Podijeli“), `CitatDana.astro` (najnoviji) |
+
+- RLS: javnost čita samo `objavljeno = true`, urednik vidi i skice; piše samo `private.je_urednik()`.
+  Provjera u bazi: objava mora imati tekst ili bar jednu sliku. Slike idu u postojeći bucket `slike`
+  (foldere `aktivnosti/`, `citati/`); obrisane/zamijenjene slike panel briše iz skladišta.
+- Markup pravi `src/lib/aktivnosti.ts` (isti pri buildu i u pregledaču), stilovi `src/styles/aktivnosti.css`,
+  ponašanje `src/lib/aktivnosti-ui.ts`. Stranice i blokovi pri učitavanju čitaju bazu i usklađuju listu po
+  `id`/`updated_at` — nova, izmijenjena ili obrisana objava se vidi odmah, bez builda.
+- Tabele su opcione pri buildu: dok 0006 nije primijenjena, stranice prikazuju prazno stanje (a REST vraća 404).

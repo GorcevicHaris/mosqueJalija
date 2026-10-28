@@ -1,0 +1,297 @@
+/* =====================================================================
+   Aktivnosti i citati — globalni stilovi (prefiksi .akt, .akt-k, .akt-lb, .cit).
+   Globalni su jer markup pravi ista funkcija pri buildu (set:html) i u pregledaču
+   (src/lib/aktivnosti.ts), pa Astro scoped atributi ne bi važili. Samo tokeni iz global.css.
+   ===================================================================== */
+
+/* ---------- Feed aktivnosti ---------- */
+.akt-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); }
+.akt-stavka[hidden] { display: none; }
+.akt { gap: var(--space-4); padding: var(--space-5); scroll-margin-top: var(--space-6); }
+.akt > * { margin: 0; }
+.akt:target { outline: 3px solid var(--color-accent-bright); outline-offset: 3px; }
+.akt__glava { display: flex; align-items: center; gap: var(--space-3); }
+.akt__avatar {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-accent-bright);
+}
+.akt__ko { display: grid; min-width: 0; line-height: 1.3; }
+.akt__autor { margin: 0; font-weight: 800; }
+.akt__vrijeme { justify-self: start; align-self: flex-start; color: var(--color-text-muted); font-size: 0.88rem; text-decoration: none; }
+.akt__vrijeme:hover { text-decoration: underline; color: var(--color-text); }
+.akt__naslov { font-size: clamp(1.2rem, 0.8vw + 1rem, 1.45rem); line-height: 1.3; overflow-wrap: anywhere; }
+.akt__tekst { font-size: 1.04rem; line-height: 1.65; overflow-wrap: anywhere; }
+.akt__tekst > * + * { margin-top: var(--space-3); }
+.akt__tekst p { margin: 0; }
+.akt__tekst a { font-weight: 600; overflow-wrap: anywhere; }
+.akt__tekst.je-sklopljeno {
+  max-height: 15em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
+  mask-image: linear-gradient(to bottom, #000 65%, transparent);
+}
+.akt__vise {
+  align-self: flex-start;
+  justify-self: start;
+  min-height: 40px;
+  margin-top: calc(-1 * var(--space-2)) !important;
+  padding: 0.3rem 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.akt__vise:hover { text-decoration: underline; }
+.akt__vise[hidden] { display: none; }
+
+/* mreža slika: 1 = puna širina, 2 = dvije, 3 = jedna velika + dvije, 4+ = 2×2 (+N) */
+.akt__slike {
+  display: grid;
+  gap: 4px;
+  margin-inline: calc(-1 * var(--space-5)) !important;
+  overflow: hidden;
+}
+.akt__slike--2 { grid-template-columns: 1fr 1fr; }
+.akt__slike--3 { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
+.akt__slike--3 .akt__slika:first-child { grid-row: 1 / 3; }
+.akt__slike--4 { grid-template-columns: 1fr 1fr; }
+.akt__slika {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--color-surface-2);
+  cursor: zoom-in;
+  overflow: hidden;
+}
+.akt__slika img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease, opacity 200ms ease; }
+.akt__slike--1 .akt__slika img { height: auto; max-height: min(78vh, 680px); }
+.akt__slike--2 .akt__slika, .akt__slike--4 .akt__slika { aspect-ratio: 1 / 1; }
+.akt__slike--3 { aspect-ratio: 3 / 2; }
+@media (prefers-reduced-motion: no-preference) { .akt__slika:hover img { transform: scale(1.03); } }
+.akt__slika:focus-visible { outline: 3px solid var(--color-focus); outline-offset: -3px; z-index: 1; }
+.akt__jos {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(5 14 11 / 0.55);
+  color: #fdf8ec;
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 600;
+}
+.akt__dno { display: flex; justify-content: flex-end; padding-top: var(--space-3); border-top: 1px solid var(--color-border); }
+.akt__dijeli, .cit__dijeli { gap: 0.45em; }
+
+.akt-vise-red { display: grid; justify-items: center; gap: var(--space-2); margin-top: var(--space-6); }
+.akt-vise-red[hidden] { display: none; }
+
+/* prazno stanje (zajedničko) */
+.akt-prazno { text-align: center; align-items: center; gap: var(--space-3); padding: var(--space-7) var(--space-5); }
+.akt-prazno[hidden] { display: none; }
+.akt-prazno > * { margin: 0; }
+.akt-prazno__ikona {
+  display: inline-grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+.akt-prazno__naslov { font-family: var(--font-serif); font-size: var(--card-title-size); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .akt { padding: var(--space-4); border-radius: var(--radius-md); }
+  .akt__slike { margin-inline: calc(-1 * var(--space-4)) !important; }
+  .akt-lista { gap: var(--space-4); }
+}
+
+/* ---------- Kratko (početna) ---------- */
+.akt-pocetna[hidden], .cit-dana[hidden] { display: none; }
+.akt-kratko { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.akt-k { padding: 0; overflow: hidden; gap: 0; }
+.akt-k__slika { position: relative; aspect-ratio: 16 / 10; background: var(--color-surface-2); overflow: hidden; }
+.akt-k__slika img { width: 100%; height: 100%; object-fit: cover; }
+.akt-k__slika--bez { display: grid; place-items: center; background: color-mix(in srgb, var(--color-primary) 10%, var(--color-surface-2)); }
+.akt-k__slika--bez .akt__avatar { width: 56px; height: 56px; }
+.akt-k__broj {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: rgb(5 14 11 / 0.7);
+  color: #fdf8ec;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.akt-k__tijelo { display: grid; gap: var(--space-2); padding: var(--space-4) var(--space-5) var(--space-5); }
+.akt-k__tijelo > * { margin: 0 !important; }
+.akt-k__meta { font-size: 0.85rem; color: var(--color-text-muted); }
+.akt-k__naslov { overflow-wrap: anywhere; }
+.akt-k__opis { color: var(--color-text-muted); font-size: 0.95rem; overflow-wrap: anywhere; }
+
+/* ---------- Lightbox ---------- */
+.akt-lb {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(5 14 11 / 0.95);
+  color: #f6efdd;
+  overscroll-behavior: contain;
+}
+.akt-lb::backdrop { background: rgb(5 14 11 / 0.7); }
+.akt-lb__okvir {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-3) var(--space-6);
+}
+.akt-lb__slika { margin: 0; display: grid; place-items: center; height: 100%; min-height: 0; }
+.akt-lb__slika img { max-width: 100%; max-height: calc(100dvh - 140px); width: auto; height: auto; object-fit: contain; border-radius: var(--radius-sm); user-select: none; -webkit-user-drag: none; }
+.akt-lb__dugme {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgb(246 239 221 / 0.25);
+  background: rgb(246 239 221 / 0.08);
+  color: #f6efdd;
+  cursor: pointer;
+}
+.akt-lb__dugme:hover { background: rgb(246 239 221 / 0.18); }
+.akt-lb__dugme:focus-visible { outline: 3px solid #f2c94c; outline-offset: 2px; }
+.akt-lb__dugme[hidden] { display: none; }
+.akt-lb__zatvori { position: absolute; top: var(--space-3); right: var(--space-3); z-index: 1; }
+.akt-lb__broj { position: absolute; z-index: 1; top: var(--space-4); left: var(--space-4); margin: 0; font-weight: 700; color: #e2bf6e; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) {
+  .akt-lb__okvir { grid-template-columns: minmax(0, 1fr); padding-inline: var(--space-2); }
+  .akt-lb__nav { position: absolute; bottom: var(--space-4); z-index: 1; }
+  .akt-lb__nav--pret { left: var(--space-4); }
+  .akt-lb__nav--sled { right: var(--space-4); }
+  .akt-lb__slika img { max-height: calc(100dvh - 190px); }
+}
+
+/* ---------- Citati ---------- */
+.cit-lista { list-style: none; margin: 0; padding: 0; columns: 1; column-gap: var(--space-5); }
+@media (min-width: 900px) { .cit-lista { columns: 2; } }
+.cit-lista > .cit-stavka { break-inside: avoid; margin-bottom: var(--space-5); }
+.cit-stavka[hidden] { display: none; }
+.cit-lista--jedan { columns: 1 !important; }
+.cit {
+  --cit-boja: var(--color-accent);
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  scroll-margin-top: var(--space-6);
+}
+.cit:target { outline: 3px solid var(--color-accent-bright); outline-offset: 3px; }
+.cit--hadis { --cit-boja: var(--color-primary); }
+.cit--ajet { --cit-boja: var(--color-accent); }
+.cit--pouka { --cit-boja: var(--color-success); }
+.cit::after {
+  content: '';
+  position: absolute;
+  right: -46px;
+  bottom: -46px;
+  width: 160px;
+  height: 160px;
+  background: var(--color-accent-bright);
+  opacity: 0.08;
+  -webkit-mask: var(--ornament-star-line) center / contain no-repeat;
+  mask: var(--ornament-star-line) center / contain no-repeat;
+  pointer-events: none;
+}
+.cit__slika { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--color-surface-2); }
+.cit__tijelo { position: relative; z-index: 1; display: grid; gap: var(--space-4); padding: var(--space-5) var(--space-5) var(--space-4); }
+.cit__tijelo > * { margin: 0; }
+.cit__glava { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.cit__oznaka {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cit-boja);
+}
+.cit__oznaka::before {
+  content: '';
+  width: 0.7em;
+  height: 0.7em;
+  background: currentColor;
+  -webkit-mask: var(--ornament-star-line) center / contain no-repeat;
+  mask: var(--ornament-star-line) center / contain no-repeat;
+}
+.cit__vrijeme { color: var(--color-text-muted); font-size: 0.82rem; text-decoration: none; }
+.cit__vrijeme:hover { text-decoration: underline; }
+.cit__citat { margin: 0; display: grid; gap: var(--space-3); }
+.cit__arapski {
+  margin: 0;
+  font-family: var(--font-arabic);
+  font-size: clamp(1.45rem, 1.2vw + 1.1rem, 1.9rem);
+  line-height: 2;
+  text-align: right;
+  color: var(--color-text);
+}
+.cit__tekst {
+  margin: 0;
+  position: relative;
+  font-family: var(--font-serif);
+  font-size: clamp(1.12rem, 0.6vw + 1rem, 1.32rem);
+  line-height: 1.55;
+  font-weight: 450;
+  overflow-wrap: anywhere;
+}
+.cit--hadis .cit__tekst, .cit--ajet .cit__tekst { padding-left: var(--space-4); border-left: 3px solid color-mix(in srgb, var(--cit-boja) 55%, transparent); }
+.cit--citat .cit__tekst::before, .cit--pouka .cit__tekst::before { content: '„'; color: var(--color-accent-bright); margin-right: 0.05em; }
+.cit--citat .cit__tekst::after, .cit--pouka .cit__tekst::after { content: '“'; color: var(--color-accent-bright); margin-left: 0.05em; }
+.cit__dno {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+.cit__izvor { font-style: normal; font-weight: 700; color: var(--color-accent); font-size: 0.95rem; overflow-wrap: anywhere; }
+.cit__izvor::before { content: '— '; color: var(--color-text-muted); font-weight: 400; }
+.cit--istaknuto .cit__tijelo { padding: clamp(1.5rem, 4vw, 2.5rem); }
+.cit--istaknuto .cit__tekst { font-size: clamp(1.25rem, 1.1vw + 1rem, 1.6rem); }
+@media (min-width: 760px) {
+  .cit--istaknuto.cit--sa-slikom { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+  .cit--istaknuto.cit--sa-slikom .cit__slika { aspect-ratio: auto; height: 100%; min-height: 260px; }
+}
+.cit-dana__lista { list-style: none; margin: 0; padding: 0; }
+.cit-dana__dno { display: flex; justify-content: flex-end; margin-top: var(--space-3); }
+
+.cit-filter { margin-bottom: var(--space-5); }
+.cit-filter[hidden] { display: none; }

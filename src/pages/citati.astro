@@ -1,0 +1,126 @@
+---
+// Citati, hadisi, ajeti i pouke (admin → Sadržaj → Citati i pouke; tabela citati, migracija 0006).
+// Build iscrtava sve objavljene; skripta ih odmah usklađuje sa bazom (vidi se bez builda).
+// Filter po vrsti (?vrsta=hadis), dugme "Podijeli" (Web Share ili kopiranje teksta i linka).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Icon from '../components/ui/Icon.astro';
+import '../styles/aktivnosti.css';
+import { citati } from '../lib/data';
+import { citatHTML, VRSTE_CITATA } from '../lib/aktivnosti';
+import { url } from '../lib/url';
+
+const html = citati.map((c) => citatHTML(c)).join('');
+const vrste = VRSTE_CITATA.map((v) => ({ ...v, n: citati.filter((c) => c.vrsta === v.v).length }));
+---
+<BaseLayout
+  title="Citati i pouke"
+  description="Hadisi, ajeti, mudre riječi i islamske pouke koje objavljuje imam Džamije na Jaliji — sa izvorom, za čitanje i dijeljenje."
+>
+  <PageHero eyebrow="Riječ za srce" title="Citati i pouke" subtitle="Hadisi, ajeti, mudre riječi i pouke — sa izvorom, za čitanje i dijeljenje." />
+  <section class="section section--tight">
+    <div class="container cit-strana" data-cit>
+      <div class="cit-filter" role="group" aria-label="Filter po vrsti" data-cit-filter hidden>
+        <ul class="chips">
+          <li><button type="button" class="chip" aria-pressed="true" data-cit-vrsta="">Sve <span class="chip__count">{citati.length}</span></button></li>
+          {vrste.map((v) => (
+            <li hidden={!v.n}><button type="button" class="chip" aria-pressed="false" data-cit-vrsta={v.v}>{v.mnozina} <span class="chip__count">{v.n}</span></button></li>
+          ))}
+        </ul>
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-cit-live></p>
+
+      <ul class:list={['cit-lista', { 'cit-lista--jedan': citati.length < 2 }]} role="list" aria-label="Citati i pouke" data-cit-lista set:html={html}></ul>
+
+      <div class="card akt-prazno cit-strana__prazno" data-cit-prazno hidden={citati.length > 0}>
+        <span class="akt-prazno__ikona" aria-hidden="true"><Icon name="book" size={26} /></span>
+        <p class="akt-prazno__naslov">Još nema objavljenih citata</p>
+        <p class="muted">Uskoro ovdje citati, hadisi i islamske pouke.</p>
+        <a class="link-arrow" href={url('/kuran-hadisi')}>Kur'an i hadisi</a>
+      </div>
+
+      <p class="cit-strana__dalje muted">Pogledajte i <a href={url('/aktivnosti')}>aktivnosti džemata</a>, <a href={url('/kuran-hadisi')}>Kur'an i hadise</a> i <a href={url('/dove')}>dove</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cit-strana { max-width: calc(1040px + 2 * var(--space-5)); }
+  .cit-strana :global([hidden]) { display: none !important; }
+  .cit-strana :global(.cit-lista--jedan), .cit-strana__prazno { max-width: var(--container-narrow); margin-inline: auto; }
+  .cit-strana__dalje { margin: var(--space-6) 0 0; text-align: center; font-size: 0.92rem; }
+</style>
+
+<script>
+  import { citatHTML, ucitajCitate, uskladi, VRSTE_CITATA, type Citat } from '../lib/aktivnosti';
+  import { osvjeziVremena, pokreniVremena, poveziPonasanje } from '../lib/aktivnosti-ui';
+
+  const root = document.querySelector<HTMLElement>('[data-cit]');
+  if (root) {
+    const lista = root.querySelector<HTMLElement>('[data-cit-lista]')!;
+    const prazno = root.querySelector<HTMLElement>('[data-cit-prazno]')!;
+    const filter = root.querySelector<HTMLElement>('[data-cit-filter]')!;
+    const live = root.querySelector<HTMLElement>('[data-cit-live]')!;
+    const dugmad = Array.from(filter.querySelectorAll<HTMLButtonElement>('[data-cit-vrsta]'));
+    const stavke = () => Array.from(lista.children) as HTMLElement[];
+    const vrsteIme = new Set(VRSTE_CITATA.map((v) => v.v as string));
+    const cilj = location.hash.match(/^#c-([0-9a-f-]{36})$/i)?.[1]?.toLowerCase() ?? null;
+
+    const izUrl = () => {
+      const v = new URLSearchParams(location.search).get('vrsta') ?? '';
+      return vrsteIme.has(v) ? v : '';
+    };
+
+    const brojaci = () => {
+      const s = stavke();
+      let vrsta = 0;
+      dugmad.forEach((b) => {
+        const v = b.dataset.citVrsta ?? '';
+        const n = v ? s.filter((e) => e.dataset.vrsta === v).length : s.length;
+        b.querySelector('.chip__count')!.textContent = String(n);
+        if (v) {
+          b.parentElement!.hidden = n === 0;
+          if (n) vrsta++;
+        }
+      });
+      filter.hidden = vrsta < 2;
+      prazno.hidden = s.length > 0;
+    };
+
+    const primijeni = (v: string, najava: boolean) => {
+      // vrsta bez stavki (ili cilj iz linka druge vrste) → sve
+      if (v && !stavke().some((e) => e.dataset.vrsta === v)) v = '';
+      const ciljEl = cilj && !najava ? lista.querySelector<HTMLElement>(`[data-id="${cilj}"]`) : null;
+      if (v && ciljEl && ciljEl.dataset.vrsta !== v) v = '';
+      dugmad.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.citVrsta ?? '') === v)));
+      let n = 0;
+      stavke().forEach((e) => {
+        e.hidden = !!v && e.dataset.vrsta !== v;
+        if (!e.hidden) n++;
+      });
+      lista.classList.toggle('cit-lista--jedan', n < 2);
+      const u = new URL(location.href);
+      if (v) u.searchParams.set('vrsta', v);
+      else u.searchParams.delete('vrsta');
+      if (u.href !== location.href) history.replaceState(history.state, '', u);
+      if (najava) live.textContent = `Prikazano: ${n}`;
+    };
+
+    dugmad.forEach((b) => b.addEventListener('click', () => primijeni(b.dataset.citVrsta ?? '', true)));
+    window.addEventListener('popstate', () => primijeni(izUrl(), false));
+    poveziPonasanje();
+    brojaci();
+    primijeni(izUrl(), false);
+    pokreniVremena();
+
+    void ucitajCitate().then((sveze: Citat[] | null) => {
+      if (!sveze) return; // baza nije dostupna → ostaje sadržaj iz builda
+      const nijeBilo = !!cilj && !lista.querySelector(`[data-id="${cilj}"]`);
+      uskladi(lista, sveze, (c) => citatHTML(c));
+      brojaci();
+      primijeni(izUrl(), false);
+      osvjeziVremena(lista);
+      if (nijeBilo) document.getElementById(`c-${cilj}`)?.scrollIntoView({ block: 'start' });
+    });
+  }
+</script>

@@ -2,6 +2,7 @@
 // Kompaktan oblik (nizovi umjesto objekata, nazivi imama/kategorija/serija kao indeksi u tabelama)
 // da bi JSON ostao mali i sa hiljadama predavanja.
 import { dove, imami, kategorije, obavjestenja, predavanja, serije } from '../data';
+import { imamDzamije } from '../imam';
 import { glavniMeni, isGroup, type NavLink } from '../../components/layout/nav';
 import { postoji } from './stranice';
 import { ALATI } from '../alati/alati';
@@ -12,7 +13,7 @@ export type PIndeks = [string, string, string, number, number, number, number];
 export type OIndeks = [string, string, string, string, string, 'o' | 'b'];
 /** Dova: [slug, naslov, kategorija, izvor, prevod (skraćen)] */
 export type DIndeks = [string, string, string, string, string];
-/** Imam: [slug, punoIme, aliasi (spojeni), uloga, brojPredavanja] */
+/** Imam (samo imam džamije, profil /imam/): [slug, punoIme, aliasi (spojeni), uloga, brojPredavanja] */
 export type MIndeks = [string, string, string, string, number];
 /** Stranica: [putanja, naslov, opis, ključne riječi] */
 export type SIndeks = [string, string, string, string];
@@ -39,7 +40,8 @@ const KLJUCNE: Record<string, string> = {
   '/pravila-ponasanja': 'adab bonton ponasanje pravila odijevanje',
   '/predavanja': 'video youtube vaz vazovi tefsir hadis',
   '/hutbe': 'hutba dzuma petak',
-  '/imami': 'imam hatib predavaci efendija hafiz',
+  '/imam': 'imam imami hatib predavac efendija hafiz biografija',
+  '/lokacija': 'lokacija adresa mapa karta navigacija google maps kako doci gdje se nalazi put',
   '/vaktija': 'namaz namaska vremena sabah izlazak sunca podne ikindija aksam jacija takvim',
   '/obavjestenja': 'vijesti najave obavijesti',
   '/objave': 'vijesti zapisi',
@@ -120,7 +122,8 @@ export function napraviIndeks(): PretragaIndeks {
       o.tip === 'objava' ? 'b' : 'o',
     ]),
     d: dove.map((d) => [d.slug, d.naslov, d.kategorija, d.izvor, skrati(d.prevod, 160)]),
-    m: imami.map((i) => [i.slug, i.punoIme, i.aliasi.join(' '), i.uloga ?? '', i.brojPredavanja]),
+    // Samo imam džamije ima profil (/imam/); ostali predavači su u indeksu predavanja (`im`).
+    m: imamDzamije ? [[imamDzamije.slug, imamDzamije.punoIme, imamDzamije.aliasi.join(' '), imamDzamije.uloga ?? '', imamDzamije.brojPredavanja]] : [],
     s: stranice(),
     ob: imajuObjaveDetalj ? '/objave/' : '/obavjestenja/',
   };

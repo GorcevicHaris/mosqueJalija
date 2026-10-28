@@ -15,6 +15,8 @@ export const ODJELJCI: GrupaOdjeljaka[] = [
     naziv: 'Sadržaj',
     stavke: [
       { id: 'obavjestenja', naziv: 'Obavještenja i objave' },
+      { id: 'aktivnosti', naziv: 'Aktivnosti' },
+      { id: 'citati', naziv: 'Citati i pouke' },
       { id: 'stranice', naziv: 'Tekstovi stranica' },
       { id: 'kartice', naziv: 'Kartice na stranicama' },
       { id: 'galerija', naziv: 'Galerija' },

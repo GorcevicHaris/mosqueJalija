@@ -1,0 +1,39 @@
+---
+// Početna: najnoviji objavljeni citat / hadis / ajet / pouka (admin → Citati i pouke) + "Svi citati".
+// Skrivena kad nema nijednog; skripta pita bazu pri učitavanju, pa se novi citat vidi odmah.
+// Postaviti kao samostalnu sekciju u src/pages/index.astro.
+import '../../styles/aktivnosti.css';
+import { citati } from '../../lib/data';
+import { citatHTML, VRSTE_CITATA } from '../../lib/aktivnosti';
+import { url } from '../../lib/url';
+
+interface Props {
+  class?: string;
+}
+const { class: cls } = Astro.props;
+const citat = citati[0] ?? null;
+const oznaka = (citat && VRSTE_CITATA.find((v) => v.v === citat.vrsta)?.dana) || 'Citat dana';
+---
+<section class:list={['section section--tight cit-dana', cls]} data-cit-dana hidden={!citat} aria-label={oznaka}>
+  <div class="container container--narrow">
+    <ul class="cit-dana__lista" role="list" data-cit-dana-lista set:html={citat ? citatHTML(citat, { istaknuto: true }) : ''}></ul>
+    <p class="cit-dana__dno"><a class="link-arrow" href={url('/citati')}>Svi citati i pouke</a></p>
+  </div>
+</section>
+
+<script>
+  import { citatHTML, ucitajCitate, uskladi, VRSTE_CITATA } from '../../lib/aktivnosti';
+  import { poveziPonasanje } from '../../lib/aktivnosti-ui';
+
+  const sekcija = document.querySelector<HTMLElement>('[data-cit-dana]');
+  const lista = sekcija?.querySelector<HTMLElement>('[data-cit-dana-lista]');
+  if (sekcija && lista) {
+    poveziPonasanje(); // dugme "Podijeli"
+    void ucitajCitate(1).then((sveze) => {
+      if (!sveze) return; // baza nije dostupna → ostaje sadržaj iz builda
+      uskladi(lista, sveze, (c) => citatHTML(c, { istaknuto: true }));
+      sekcija.hidden = sveze.length === 0;
+      if (sveze[0]) sekcija.setAttribute('aria-label', VRSTE_CITATA.find((v) => v.v === sveze[0].vrsta)?.dana ?? 'Citat dana');
+    });
+  }
+</script>

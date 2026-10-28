@@ -1,5 +1,11 @@
 // Struktura glavne navigacije (vlasnik: dizajner). Putanje su BEZ base-a; prolaze kroz url() pri renderu.
-export interface NavLink { label: string; href: string; opis?: string }
+export interface NavLink {
+  label: string;
+  href: string;
+  opis?: string;
+  /** Istaknuta stavka glavnog menija (ikonica lokacije + naglašen stil), npr. "Lokacija". */
+  istaknuto?: boolean;
+}
 export interface NavGroup { label: string; children: NavLink[] }
 export type NavItem = NavLink | NavGroup;
 
@@ -8,7 +14,7 @@ export const glavniMeni: NavItem[] = [
   {
     label: 'O džamiji',
     children: [
-      { label: 'Historija', href: '/o-dzamiji', opis: 'Historija, činjenice i lokacija' },
+      { label: 'Historija', href: '/o-dzamiji', opis: 'Historija i činjenice o džamiji' },
       { label: 'Galerija', href: '/galerija', opis: 'Fotografije džamije i džemata' },
       { label: 'Pravila ponašanja', href: '/pravila-ponasanja', opis: 'Adab u džamiji' },
     ],
@@ -18,13 +24,15 @@ export const glavniMeni: NavItem[] = [
     children: [
       { label: 'Sva predavanja', href: '/predavanja', opis: 'Video predavanja sa YouTube kanala' },
       { label: 'Hutbe', href: '/hutbe', opis: 'Džuma-hutbe' },
-      { label: 'Imami', href: '/imami', opis: 'Imami i predavači' },
+      { label: 'Imam', href: '/imam', opis: 'Profil imama Džamije na Jaliji' },
     ],
   },
   { label: 'Vaktija', href: '/vaktija' },
   {
-    label: 'Obavještenja',
+    label: 'Aktivnosti',
     children: [
+      { label: 'Aktivnosti', href: '/aktivnosti', opis: 'Objave i fotografije aktivnosti džemata' },
+      { label: 'Citati i pouke', href: '/citati', opis: 'Citati, hadisi i islamske pouke' },
       { label: 'Obavještenja', href: '/obavjestenja', opis: 'Najave i vijesti džemata' },
       { label: 'Objave', href: '/objave', opis: 'Zapisi i fotografije iz džemata' },
     ],
@@ -49,6 +57,7 @@ export const glavniMeni: NavItem[] = [
       { label: 'Mediji', href: '/mediji', opis: 'YouTube kanal i društvene mreže' },
     ],
   },
+  { label: 'Lokacija', href: '/lokacija', istaknuto: true },
   { label: 'Kontakt', href: '/kontakt' },
 ];
 

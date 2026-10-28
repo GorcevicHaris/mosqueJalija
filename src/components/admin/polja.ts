@@ -14,6 +14,7 @@ export type TipPolja =
   | 'lista' // text[] — jedna stavka po redu
   | 'paragrafi' // text[] — paragrafi odvojeni praznim redom
   | 'slika' // URL slike + upload
+  | 'slike' // text[] URL-ova — više slika: upload, sličice, redoslijed, uklanjanje (max = najviše slika)
   | 'niz'; // niz objekata (podPolja), sa dodavanjem/brisanjem/redoslijedom
 
 export interface Polje {
@@ -36,6 +37,7 @@ export interface Polje {
   rtl?: boolean; // arapski tekst
   placeholder?: string;
   prazanString?: boolean; // prazno = '' umjesto null
+  rastuci?: boolean; // textarea raste sa tekstom (pisanje na telefonu)
 }
 
 export interface KontekstForme {
@@ -93,6 +95,7 @@ function napraviKontrolu(p: Polje, ctx: KontekstForme, jeNovo: boolean): Kontrol
 
   if (p.t === 'niz') return napraviNiz(p, ctx);
   if (p.t === 'slika') return napraviSliku(p, ctx, id);
+  if (p.t === 'slike') return napraviSlike(p, ctx, id);
 
   if (p.t === 'checkbox') {
     const ulaz = el('input', { type: 'checkbox', id }) as HTMLInputElement;
@@ -181,6 +184,15 @@ function napraviKontrolu(p: Polje, ctx: KontekstForme, jeNovo: boolean): Kontrol
   }
   if (p.obavezno) ulaz.required = true;
   if (zakljucano) ulaz.readOnly = true;
+  let rasti = () => {};
+  if (p.rastuci && ulaz instanceof HTMLTextAreaElement) {
+    ulaz.classList.add('adm-rastuci');
+    rasti = () => {
+      ulaz.style.height = 'auto';
+      ulaz.style.height = `${Math.min(ulaz.scrollHeight + 2, Math.max(window.innerHeight * 0.6, 240))}px`;
+    };
+    ulaz.addEventListener('input', rasti);
+  }
   const { omot, gr, opisano } = omotac(p, id, ulaz);
   ulaz.setAttribute('aria-describedby', opisano);
 
@@ -198,6 +210,7 @@ function napraviKontrolu(p: Polje, ctx: KontekstForme, jeNovo: boolean): Kontrol
       if (p.t === 'lista') ulaz.value = Array.isArray(v) ? v.join('\n') : '';
       else if (p.t === 'paragrafi') ulaz.value = Array.isArray(v) ? v.join('\n\n') : typeof v === 'string' ? v : '';
       else ulaz.value = v === null || v === undefined ? '' : String(v);
+      if (p.rastuci) requestAnimationFrame(rasti);
     },
     provjeri: () => {
       const s = ulaz.value.trim();
@@ -287,6 +300,142 @@ function napraviSliku(p: Polje, ctx: KontekstForme, id: string): Kontrola {
     provjeri: () => (p.obavezno && !url.value.trim() ? 'Dodajte sliku.' : null),
     greska: (m) => postaviGresku(url, gr, m),
     fokus: () => url.focus(),
+  };
+}
+
+/** Više slika (text[]): dodavanje (i više odjednom, ili prevlačenjem), sličice, ← → za redoslijed, ✕. */
+function napraviSlike(p: Polje, ctx: KontekstForme, id: string): Kontrola {
+  const max = p.max ?? 10;
+  let slike: string[] = [];
+  let otpremaUToku = 0;
+  const fajlId = `${id}-fajl`;
+  const fajl = el('input', { type: 'file', id: fajlId, multiple: true, accept: 'image/jpeg,image/png,image/webp,image/*', class: 'visually-hidden' }) as HTMLInputElement;
+  const dodaj = el('label', { for: fajlId, class: 'btn btn--ghost adm-slike__dodaj' }) as HTMLLabelElement;
+  const lista = el('ul', { class: 'adm-slike__lista', role: 'list' });
+  const stanje = el('p', { class: 'adm-pomoc adm-slike__stanje', role: 'status' });
+  const zona = el('div', { class: 'adm-slike' }, lista, el('div', { class: 'adm-slike__dugmad' }, fajl, dodaj), stanje);
+  const omot = el('fieldset', { class: 'adm-polje adm-slike__omot', id }, el('legend', { text: p.l + (p.obavezno ? ' *' : '') }), zona);
+  omot.append(el('p', { class: 'adm-pomoc', text: p.pomoc ?? `Najviše ${max} slika. Smanjuju se automatski (najviše 1600 px, WebP). Prva slika je naslovna.` }));
+  const gr = el('p', { class: 'adm-greska', hidden: true });
+  omot.append(gr);
+
+  const greska = (m: string | null) => {
+    gr.textContent = m ?? '';
+    gr.hidden = !m;
+  };
+
+  const prikazi = (fokus?: { i: number; dugme: 'lijevo' | 'desno' | 'ukloni' }) => {
+    const n = slike.length;
+    lista.replaceChildren(
+      ...slike.map((u, i) => {
+        const lijevo = el('button', { type: 'button', class: 'adm-ikona', 'data-s': 'lijevo', text: '←', 'aria-label': `Pomjeri sliku ${i + 1} naprijed`, disabled: i === 0 }) as HTMLButtonElement;
+        const desno = el('button', { type: 'button', class: 'adm-ikona', 'data-s': 'desno', text: '→', 'aria-label': `Pomjeri sliku ${i + 1} nazad`, disabled: i === n - 1 }) as HTMLButtonElement;
+        const ukloni = el('button', { type: 'button', class: 'adm-ikona adm-ikona--opasno', 'data-s': 'ukloni', text: '✕', 'aria-label': `Ukloni sliku ${i + 1}` }) as HTMLButtonElement;
+        lijevo.addEventListener('click', () => pomjeri(i, -1));
+        desno.addEventListener('click', () => pomjeri(i, 1));
+        ukloni.addEventListener('click', () => void skloni(i));
+        return el(
+          'li',
+          { class: 'adm-slike__stavka' },
+          el('img', { src: u, alt: `Slika ${i + 1}`, loading: 'lazy' }),
+          el('span', { class: 'adm-slike__broj', text: i === 0 ? '1 · naslovna' : String(i + 1), 'aria-hidden': 'true' }),
+          el('div', { class: 'adm-slike__alati' }, lijevo, desno, ukloni),
+        );
+      }),
+      ...Array.from({ length: otpremaUToku }, () => el('li', { class: 'adm-slike__stavka adm-slike__stavka--ceka', 'aria-hidden': 'true' }, el('span', { class: 'adm-spiner' }))),
+    );
+    const slobodno = max - n - otpremaUToku;
+    dodaj.textContent = n ? `+ Dodaj još slika (${n}/${max})` : '+ Dodaj slike';
+    dodaj.setAttribute('aria-disabled', String(slobodno <= 0 || otpremaUToku > 0));
+    fajl.disabled = slobodno <= 0 || otpremaUToku > 0;
+    if (fokus) {
+      const li = lista.children[Math.min(fokus.i, n - 1)];
+      (li?.querySelector<HTMLButtonElement>(`[data-s="${fokus.dugme}"]:not([disabled])`) ?? li?.querySelector<HTMLButtonElement>('[data-s="ukloni"]') ?? fajl).focus();
+    }
+  };
+
+  const pomjeri = (i: number, smjer: number) => {
+    const j = i + smjer;
+    if (j < 0 || j >= slike.length) return;
+    [slike[i], slike[j]] = [slike[j], slike[i]];
+    prikazi({ i: j, dugme: smjer < 0 ? 'lijevo' : 'desno' });
+    stanje.textContent = `Slika je sada ${j + 1}. po redu.`;
+  };
+
+  const skloni = async (i: number) => {
+    const [u] = slike.splice(i, 1);
+    // slika otpremljena u ovoj izmjeni (još nesačuvana) odmah se briše iz skladišta;
+    // ranije sačuvana se briše tek kad se izmjena sačuva (crud.ts)
+    if (u && ctx.otpremljene.has(u)) {
+      ctx.otpremljene.delete(u);
+      void ukloniSliku(await ctx.klijent(), u);
+    }
+    prikazi({ i, dugme: 'ukloni' });
+    stanje.textContent = slike.length ? `Slika je uklonjena. Ostalo: ${slike.length}.` : 'Sve slike su uklonjene.';
+  };
+
+  const otpremi = async (fajlovi: File[]) => {
+    greska(null);
+    const slobodno = max - slike.length;
+    if (!fajlovi.length || slobodno <= 0) return;
+    const izabrani = fajlovi.slice(0, slobodno);
+    const greske: string[] = [];
+    let uspjelo = 0;
+    if (fajlovi.length > slobodno) greske.push(`Dodano je samo prvih ${slobodno} (najviše ${max} slika).`);
+    otpremaUToku = izabrani.length;
+    prikazi();
+    const k = await ctx.klijent();
+    for (const [i, f] of izabrani.entries()) {
+      stanje.textContent = `Smanjujem i otpremam ${i + 1}/${izabrani.length}…`;
+      try {
+        const javni = await otpremiSliku(k, f, p.folder ?? 'ostalo');
+        ctx.otpremljene.add(javni);
+        slike.push(javni);
+        uspjelo++;
+      } catch (e) {
+        greske.push(`${f.name}: ${porukaGreske(e)}`);
+      }
+      otpremaUToku--;
+      prikazi();
+    }
+    stanje.textContent = uspjelo ? `Otpremljeno slika: ${uspjelo}. Sačuvajte izmjene.` : '';
+    if (greske.length) greska(greske.join(' '));
+    if (!omot.contains(document.activeElement) || document.activeElement === fajl) fajl.focus({ preventScroll: true });
+  };
+
+  fajl.addEventListener('change', async () => {
+    const fajlovi = Array.from(fajl.files ?? []);
+    fajl.value = '';
+    await otpremi(fajlovi);
+  });
+  // prevlačenje fajlova (računar)
+  zona.addEventListener('dragover', (e) => {
+    if (!e.dataTransfer?.types.includes('Files')) return;
+    e.preventDefault();
+    zona.classList.add('adm-slike--prevlaci');
+  });
+  zona.addEventListener('dragleave', () => zona.classList.remove('adm-slike--prevlaci'));
+  zona.addEventListener('drop', (e) => {
+    zona.classList.remove('adm-slike--prevlaci');
+    const fajlovi = Array.from(e.dataTransfer?.files ?? []).filter((f) => f.type.startsWith('image/'));
+    if (!fajlovi.length) return;
+    e.preventDefault();
+    if (otpremaUToku === 0) void otpremi(fajlovi);
+  });
+
+  prikazi();
+  return {
+    p,
+    omot,
+    get: () => slike.slice(),
+    set: (v) => {
+      slike = Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string' && !!x.trim()) : [];
+      stanje.textContent = '';
+      prikazi();
+    },
+    provjeri: () => (otpremaUToku > 0 ? 'Sačekajte da se slike otpreme.' : p.obavezno && !slike.length ? 'Dodajte bar jednu sliku.' : null),
+    greska,
+    fokus: () => (lista.querySelector<HTMLElement>('button') ?? fajl).focus(),
   };
 }
 

@@ -43,10 +43,10 @@ Doniraj, Historijat, Obnova, Pravila ponašanja, Kur'an i hadisi, Mekteb, Učenj
 | `/dove`, `/kuran-hadisi` (ajet/hadis dana), `/pravila-ponasanja`, `/ucenje-kurana`, `/mediji` | Dizajner |
 | `src/components/predavanja/**`, `src/components/vaktija/**`, `src/components/forms/**`, `src/lib/*` osim `url.ts`/`types.ts`/`data.ts` | Funkcionalnosti |
 | `/predavanja`, `/predavanja/[id]`, `/hutbe` (predavanja sa preset filterom kategorija=hutba) | Funkcionalnosti |
-| `/imami`, `/imami/[slug]` | Funkcionalnosti |
+| `/imam` (profil imama džamije; `/imami/` i `/imami/admir-jasarevic/` preusmjeravaju ovamo, ostali predavači nemaju profil — `src/lib/imam.ts`) | Funkcionalnosti |
 | `/vaktija` (danas, odbrojavanje do sljedećeg namaza, mjesečna tabela) | Funkcionalnosti |
 | `/obavjestenja`, `/obavjestenja/[slug]`, `/objave` | Funkcionalnosti |
-| `/kontakt` (mapa, forma) | Funkcionalnosti |
+| `/kontakt` (mapa, forma), `/lokacija` (velika Google mapa, navigacija; URL-ovi mapa u `src/lib/lokacija.ts`) | Funkcionalnosti |
 | `scripts/**`, `.github/workflows/update-videos.yml` | YouTube/podaci |
 | `astro.config.mjs`, `package.json`, `src/lib/url.ts`, `src/lib/types.ts`, `src/lib/data.ts`, `.github/workflows/deploy.yml` | Orkestrator (Funkcionalnosti smije DODAVATI exporte u data.ts) |
 

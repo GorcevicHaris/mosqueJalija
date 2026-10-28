@@ -21,7 +21,7 @@ const email = dzamija.kontakt.email;
     ) : <span aria-hidden="true"></span>}
     <ul class="topbar__links" role="list">
       {mjesto && (
-        <li><a href={url('/kontakt')}><Icon name="map-pin" size={15} /><span>{mjesto}</span></a></li>
+        <li><a href={url('/lokacija')} title="Lokacija džamije na mapi"><Icon name="map-pin" size={15} /><span>{mjesto}</span><span class="visually-hidden"> — lokacija džamije</span></a></li>
       )}
       {email && (
         <li><a href={`mailto:${email}`}><Icon name="mail" size={15} /><span>{email}</span></a></li>
@@ -89,13 +89,15 @@ const email = dzamija.kontakt.email;
             );
           }
           return (
-            <li class:list={['nav__item', { 'nav__item--home': item.href === '/' }]}>
+            <li class:list={['nav__item', { 'nav__item--home': item.href === '/', 'nav__item--istaknuto': item.istaknuto }]}>
               <a
-                class:list={['nav__link', { 'is-active': isActive(item.href, current) }]}
+                class:list={['nav__link', { 'is-active': isActive(item.href, current), 'nav__link--istaknuto': item.istaknuto }]}
                 href={url(item.href)}
                 aria-current={current === item.href ? 'page' : undefined}
               >
-                {item.label}
+                {item.istaknuto && <Icon name="map-pin" size={17} class="nav__pin" />}
+                <span>{item.label}</span>
+                {item.istaknuto && <span class="nav__hint">Mapa i navigacija</span>}
               </a>
             </li>
           );
@@ -119,6 +121,9 @@ const email = dzamija.kontakt.email;
     <div class="site-header__actions">
       <a class="icon-btn search-btn" href={url('/pretraga')} aria-label="Pretraga">
         <Icon name="search" size={20} />
+      </a>
+      <a class="icon-btn loc-btn" href={url('/lokacija')} aria-label="Lokacija džamije" title="Lokacija džamije">
+        <Icon name="map-pin" size={20} />
       </a>
       <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Promijeni temu">
         <Icon name="moon" size={20} class="theme-toggle__moon" />
@@ -279,6 +284,10 @@ const email = dzamija.kontakt.email;
   /* pretraga: isti jezik kao polje pretrage na stranicama (obrub-pilula) */
   .search-btn { border-color: var(--color-border); }
   .search-btn:hover { border-color: var(--color-primary); }
+  /* prečica do lokacije: samo na tabletu (na desktopu je "Lokacija" u meniju, na telefonu u ladici) */
+  .loc-btn { display: none; color: var(--color-accent); border-color: color-mix(in srgb, var(--color-accent) 55%, transparent); }
+  .loc-btn:hover { border-color: var(--color-primary); }
+  @media (min-width: 600px) and (max-width: 1239.98px) { .loc-btn { display: inline-grid; } }
   .nav-search { position: relative; }
   .nav-search__icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); display: flex; color: var(--color-text-muted); pointer-events: none; }
   .nav-search__input {
@@ -321,6 +330,9 @@ const email = dzamija.kontakt.email;
   .nav__link.is-active, .nav__link[aria-current='page'] { color: var(--color-primary); }
   .nav__toggle :global(.nav__chevron) { transition: transform var(--transition); opacity: 0.7; }
   .nav__toggle[aria-expanded='true'] :global(.nav__chevron) { transform: rotate(180deg); }
+  /* Istaknuta stavka (Lokacija): ikonica + zlatni okvir, da se lako uoči */
+  .nav__link--istaknuto :global(.nav__pin) { color: var(--color-accent); flex: none; }
+  .nav__hint { display: none; }
   .nav__sub { list-style: none; margin: 0; padding: 0; }
   .nav__sublink {
     display: flex;
@@ -338,12 +350,23 @@ const email = dzamija.kontakt.email;
   .nav__subdesc { font-size: 0.8rem; color: var(--color-text-muted); }
 
   /* ---------- Desktop ---------- */
-  @media (min-width: 1140px) {
+  @media (min-width: 1240px) {
     .menu-toggle, .site-nav__head, .site-nav__footer, .nav-backdrop { display: none !important; }
     .site-nav { order: 0; }
     .site-header__actions { order: 1; }
     .nav__list { display: flex; align-items: center; gap: 0.1rem; }
     .nav__item { position: relative; }
+    .nav__link--istaknuto {
+      margin-left: 0.2rem;
+      padding-inline: 0.65rem 0.8rem;
+      border: 1.5px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
+      border-radius: var(--radius-full);
+      background: var(--color-accent-soft);
+      min-height: 40px;
+    }
+    .nav__link--istaknuto:hover { border-color: var(--color-primary); }
+    .nav__link--istaknuto.is-active::after, .nav__link--istaknuto[aria-current='page']::after { display: none; }
+    .nav__link--istaknuto.is-active, .nav__link--istaknuto[aria-current='page'] { border-color: var(--color-primary); }
     .nav__link.is-active::after, .nav__link[aria-current='page']::after {
       content: '';
       position: absolute;
@@ -382,15 +405,20 @@ const email = dzamija.kontakt.email;
     }
   }
 
-  /* Uži desktop: "Početna" se skriva (logo vodi na početnu), da 8 stavki stane u jedan red bez preklapanja. */
-  @media (min-width: 1140px) and (max-width: 1319.98px) {
+  /* Desktop: "Početna" se skriva (logo vodi na početnu), da 9 stavki (sa istaknutom "Lokacija") stane
+     u jedan red bez preklapanja — širina kontejnera je ograničena, pa ovo važi za sve desktop širine. */
+  @media (min-width: 1240px) {
     .nav__item--home { display: none; }
-    .nav__link { padding-inline: 0.55rem; }
+    .nav__link { padding-inline: 0.5rem; font-size: 0.92rem; }
+    .nav__list { gap: 0; }
+    .nav__link--istaknuto { margin-left: 0.2rem; padding-inline: 0.6rem 0.75rem; }
     .site-header__inner { gap: var(--space-3); }
+    .brand { flex-shrink: 0; }
+    .brand__name { font-size: 1.2rem; }
   }
 
   /* ---------- Mobilni / tablet: ladica ---------- */
-  @media (max-width: 1139.98px) {
+  @media (max-width: 1239.98px) {
     .site-nav {
       position: fixed;
       top: 0;
@@ -440,6 +468,25 @@ const email = dzamija.kontakt.email;
       padding: 0.85rem 0.5rem;
       font-size: 1.05rem;
       min-height: 48px;
+    }
+    .nav__item--istaknuto { border-bottom: 0; padding-block: var(--space-2); }
+    .nav__link--istaknuto {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      column-gap: var(--space-2);
+      row-gap: 0;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
+      border-radius: var(--radius-md);
+      background: var(--color-accent-soft);
+    }
+    .nav__link--istaknuto .nav__hint {
+      display: block;
+      flex-basis: 100%;
+      padding-left: calc(17px + var(--space-2));
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
     }
     .nav__sub { display: none; padding: 0 0 var(--space-3) var(--space-2); }
     .nav__toggle[aria-expanded='true'] + .nav__sub { display: block; }
@@ -524,7 +571,7 @@ const email = dzamija.kontakt.email;
   });
 
   // ---------- Navigacija ----------
-  const desktop = window.matchMedia('(min-width: 1140px)');
+  const desktop = window.matchMedia('(min-width: 1240px)');
   const nav = document.querySelector<HTMLElement>('[data-site-nav]');
   const openBtn = document.querySelector<HTMLButtonElement>('[data-nav-open]');
   const closeBtn = document.querySelector<HTMLButtonElement>('[data-nav-close]');

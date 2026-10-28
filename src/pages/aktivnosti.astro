@@ -1,0 +1,128 @@
+---
+// Aktivnosti džemata — objave efendije (admin → Sadržaj → Aktivnosti; tabela aktivnosti, migracija 0006).
+// Pri buildu se iscrtavaju sve objavljene objave; skripta odmah poslije učitavanja čita bazu i
+// usklađuje listu (nova/izmijenjena/obrisana objava se vidi bez novog builda), pa prikazuje po 10.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Icon from '../components/ui/Icon.astro';
+import '../styles/aktivnosti.css';
+import { aktivnosti } from '../lib/data';
+import { aktivnostHTML, PO_STRANI } from '../lib/aktivnosti';
+import { url } from '../lib/url';
+
+const html = aktivnosti.map(aktivnostHTML).join('');
+---
+<BaseLayout
+  title="Aktivnosti"
+  description="Aktivnosti džemata Džamije na Jaliji u Novom Pazaru: akcije, druženja, mekteb, iftari i drugi događaji — kratke objave i fotografije."
+>
+  <PageHero eyebrow="Iz džemata" title="Aktivnosti" subtitle="Šta se dešava u našoj džamiji — kratke objave i fotografije." />
+  <section class="section section--tight">
+    <div class="container container--narrow" data-akt-feed data-po-strani={PO_STRANI}>
+      <ol class="akt-lista" role="list" aria-label="Objave aktivnosti" data-akt-lista set:html={html}></ol>
+
+      <div class="card akt-prazno" data-akt-prazno hidden={aktivnosti.length > 0}>
+        <span class="akt-prazno__ikona" aria-hidden="true"><Icon name="sparkles" size={26} /></span>
+        <p class="akt-prazno__naslov">Još nema objava</p>
+        <p class="muted">Uskoro ovdje objave aktivnosti džemata.</p>
+        <a class="link-arrow" href={url('/obavjestenja')}>Pogledajte obavještenja</a>
+      </div>
+
+      <div class="akt-vise-red" data-akt-vise-red hidden>
+        <button type="button" class="btn btn--ghost" data-akt-ucitaj>Učitaj još</button>
+        <p class="muted akt-vise-red__greska" data-akt-greska hidden>Učitavanje nije uspjelo. Provjerite internet vezu i pokušajte ponovo.</p>
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-akt-live></p>
+
+      <p class="akt-dalje muted">Pogledajte i <a href={url('/citati')}>citate i pouke</a> i <a href={url('/obavjestenja')}>obavještenja</a>.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .akt-dalje { margin: var(--space-7) 0 0; text-align: center; font-size: 0.92rem; }
+  .akt-vise-red__greska { margin: 0; font-size: 0.9rem; }
+  .akt-vise-red__greska[hidden] { display: none; }
+</style>
+
+<script>
+  import { aktivnostHTML, PO_STRANI, ucitajAktivnosti, uskladi, type Aktivnost } from '../lib/aktivnosti';
+  import { osvjeziVremena, pokreniVremena, poveziPonasanje, pripremiSklapanje } from '../lib/aktivnosti-ui';
+
+  const root = document.querySelector<HTMLElement>('[data-akt-feed]');
+  if (root) {
+    const lista = root.querySelector<HTMLElement>('[data-akt-lista]')!;
+    const prazno = root.querySelector<HTMLElement>('[data-akt-prazno]')!;
+    const viseRed = root.querySelector<HTMLElement>('[data-akt-vise-red]')!;
+    const dugme = root.querySelector<HTMLButtonElement>('[data-akt-ucitaj]')!;
+    const greska = root.querySelector<HTMLElement>('[data-akt-greska]')!;
+    const live = root.querySelector<HTMLElement>('[data-akt-live]')!;
+    const PRVO = 100; // prvo čitanje iz baze; dalje po stranama na "Učitaj još"
+    let prikazano = PO_STRANI;
+    let imaJos = false; // baza ima još objava koje nisu na stranici
+    const cilj = location.hash.match(/^#a-([0-9a-f-]{36})$/i)?.[1]?.toLowerCase() ?? null;
+    const stavke = () => Array.from(lista.children) as HTMLElement[];
+
+    const primijeni = () => {
+      const s = stavke();
+      // objava iz linka (#a-…) mora biti vidljiva
+      const i = cilj ? s.findIndex((e) => e.dataset.id === cilj) : -1;
+      if (i >= prikazano) prikazano = Math.ceil((i + 1) / PO_STRANI) * PO_STRANI;
+      s.forEach((e, j) => (e.hidden = j >= prikazano));
+      prazno.hidden = s.length > 0;
+      viseRed.hidden = !(s.length > prikazano || imaJos);
+      pripremiSklapanje(lista);
+      osvjeziVremena(lista);
+    };
+
+    const dodajNaKraj = (nove: Aktivnost[]) => {
+      const ima = new Set(stavke().map((e) => e.dataset.id));
+      for (const a of nove) {
+        if (ima.has(a.id)) continue;
+        const t = document.createElement('template');
+        t.innerHTML = aktivnostHTML(a).trim();
+        lista.append(t.content.firstElementChild!);
+      }
+    };
+
+    poveziPonasanje();
+    primijeni();
+    pokreniVremena();
+
+    void ucitajAktivnosti(PRVO).then((sveze) => {
+      if (!sveze) return; // baza nije dostupna → ostaje sadržaj iz builda
+      const nijeBilo = !!cilj && !lista.querySelector(`[data-id="${cilj}"]`);
+      uskladi(lista, sveze, aktivnostHTML);
+      imaJos = sveze.length === PRVO;
+      primijeni();
+      if (nijeBilo) document.getElementById(`a-${cilj}`)?.scrollIntoView({ block: 'start' });
+    });
+
+    dugme.addEventListener('click', async () => {
+      greska.hidden = true;
+      if (stavke().length <= prikazano && imaJos) {
+        const tekst = dugme.textContent;
+        dugme.disabled = true;
+        dugme.setAttribute('aria-busy', 'true');
+        dugme.textContent = 'Učitavam…';
+        const jos = await ucitajAktivnosti(PO_STRANI * 2 + 1, stavke().length);
+        dugme.disabled = false;
+        dugme.removeAttribute('aria-busy');
+        dugme.textContent = tekst;
+        if (!jos) {
+          greska.hidden = false;
+          return;
+        }
+        imaJos = jos.length === PO_STRANI * 2 + 1;
+        dodajNaKraj(jos);
+      }
+      const prije = prikazano;
+      prikazano += PO_STRANI;
+      primijeni();
+      const n = Math.max(0, Math.min(prikazano, stavke().length) - prije);
+      live.textContent = n ? `Prikazano još ${n} ${n === 1 ? 'objava' : n < 5 ? 'objave' : 'objava'}.` : 'Nema starijih objava.';
+      // fokus ostaje na dugmetu; kad više nema objava, prelazi na prvu novoprikazanu
+      if (viseRed.hidden) stavke()[prije]?.querySelector<HTMLElement>('.akt__vrijeme')?.focus();
+    });
+  }
+</script>

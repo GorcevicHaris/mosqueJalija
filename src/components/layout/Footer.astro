@@ -15,17 +15,20 @@ const kolone = [
     naslov: 'Džemat',
     linkovi: [
       ['Vaktija', '/vaktija'],
+      ['Aktivnosti', '/aktivnosti'],
+      ['Citati i pouke', '/citati'],
       ['Obavještenja', '/obavjestenja'],
       ['Objave', '/objave'],
       ['Predavanja', '/predavanja'],
       ['Hutbe', '/hutbe'],
-      ['Imami', '/imami'],
+      ['Imam', '/imam'],
     ],
   },
   {
     naslov: 'O džamiji',
     linkovi: [
       ['Historija', '/o-dzamiji'],
+      ['Lokacija', '/lokacija'],
       ['Galerija', '/galerija'],
       ['Pravila ponašanja', '/pravila-ponasanja'],
       ['Donacije', '/donacije'],
@@ -87,7 +90,7 @@ const kolone = [
       <ul role="list">
         <li>
           <Icon name="map-pin" size={18} />
-          {adresa ? <span>{adresa}</span> : <Placeholder inline label="adresa" />}
+          {adresa ? <a href={url('/lokacija')}>{adresa}</a> : <Placeholder inline label="adresa" />}
         </li>
         <li>
           <Icon name="mail" size={18} />
@@ -97,6 +100,7 @@ const kolone = [
           <li><Icon name="phone" size={18} /><a href={`tel:${k.telefon.replace(/\s+/g, '')}`}>{k.telefon}</a></li>
         )}
       </ul>
+      <a class="btn btn--ghost btn--sm site-footer__loc" href={url('/lokacija')}><Icon name="map-pin" size={16} /> Lokacija i mapa</a>
       <a class="btn btn--gold btn--sm" href={url('/donacije')}><Icon name="heart" size={16} /> Podržite džamiju</a>
     </div>
   </div>
@@ -163,6 +167,13 @@ const kolone = [
   .site-footer__contact li { display: flex; gap: var(--space-2); align-items: flex-start; color: var(--inverse-muted); }
   .site-footer__contact li :global(svg) { flex: none; margin-top: 3px; color: var(--inverse-accent); }
   .site-footer__contact .btn { margin-top: var(--space-5); }
+  .site-footer__contact .site-footer__loc {
+    margin-right: var(--space-2);
+    --btn-fg: var(--inverse-text);
+    --btn-border: color-mix(in srgb, var(--inverse-accent) 70%, transparent);
+    opacity: 1;
+  }
+  .site-footer__contact .site-footer__loc:hover { --btn-bg: rgb(246 239 221 / 0.08); border-color: var(--inverse-accent); color: var(--inverse-text); text-decoration: none; }
   .site-footer__bottom {
     display: flex;
     flex-wrap: wrap;

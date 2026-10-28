@@ -73,7 +73,7 @@ export function porukaGreske(e: unknown): string {
     return 'Previše pokušaja u kratkom vremenu. Sačekajte nekoliko minuta pa pokušajte ponovo.';
   if (/signups not allowed|user not found/i.test(m)) return 'Ova adresa nema nalog. Zamolite administratora da vas pozove.';
   if (/token has expired|otp.*(expired|invalid)|invalid.*otp/i.test(m)) return 'Kod je neispravan ili je istekao. Zatražite novi.';
-  if (/Could not find the table|schema cache|PGRST205/i.test(m)) return 'Tabela još ne postoji u bazi (migracije nisu primijenjene — za programe, kartice, transkripte i dodane videe treba 0005, vidi docs/supabase.md).';
+  if (/Could not find the table|schema cache|PGRST205/i.test(m)) return 'Tabela još ne postoji u bazi (migracije nisu primijenjene — za programe, kartice, transkripte i dodane videe treba 0005, za aktivnosti i citate 0006 — vidi docs/supabase.md).';
   return m || 'Došlo je do neočekivane greške.';
 }
 

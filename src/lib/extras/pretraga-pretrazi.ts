@@ -9,7 +9,7 @@ export const GRUPE: { kljuc: Grupa; naziv: string }[] = [
   { kljuc: 'predavanja', naziv: 'Predavanja i hutbe' },
   { kljuc: 'obavjestenja', naziv: 'Obavještenja' },
   { kljuc: 'dove', naziv: 'Dove' },
-  { kljuc: 'imami', naziv: 'Imami' },
+  { kljuc: 'imami', naziv: 'Imam' },
 ];
 
 export interface Stavka {
@@ -66,11 +66,11 @@ export function raspakuj(ix: PretragaIndeks): Stavka[] {
   for (const [slug, naslov, kat, izvor, prevod] of ix.d) {
     out.push({ g: 'dove', naslov, meta: [kat, izvor].filter(Boolean).join(' · '), opis: prevod, skriveno: '', url: `/dove#${slug}`, datum: '' });
   }
-  for (const [slug, ime, aliasi, uloga, broj] of ix.m) {
+  for (const [, ime, aliasi, uloga, broj] of ix.m) {
     const meta = [uloga, broj ? `${broj} ${broj % 10 === 1 && broj % 100 !== 11 ? 'predavanje' : 'predavanja'}` : '']
       .filter(Boolean)
       .join(' · ');
-    out.push({ g: 'imami', naslov: ime, meta, opis: '', skriveno: aliasi, url: `/imami/${slug}`, datum: '' });
+    out.push({ g: 'imami', naslov: ime, meta, opis: '', skriveno: aliasi, url: '/imam', datum: '' }); // jedini profil: imam džamije
   }
   return out.map((s) => ({
     ...s,

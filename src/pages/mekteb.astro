@@ -4,6 +4,7 @@ import PageHero from '../components/ui/PageHero.astro';
 import Icon, { icons, type IconName } from '../components/ui/Icon.astro';
 import RasporedSedmica from '../components/obrasci/RasporedSedmica.astro';
 import { url } from '../lib/url';
+import { profilPredavaca } from '../lib/imam';
 import { obavjestenja, imami, predavanja, formatDatum, karticeStranica, tekstStranice, tekstoviStranica } from '../lib/data';
 
 // Uvodni tekst iz admina (Tekstovi stranica → mekteb); prazno = ugrađeni tekst ispod.
@@ -56,7 +57,7 @@ const uci = karticeStranica('mekteb').map((k) => ({
           </a>
           {imamDzamije.length > 0 && (
             <span class="mk-imam">
-              Imam: {imamDzamije.map((i, n) => <>{n > 0 && ', '}<a href={url(`/imami/${i.slug}`)}>{i.punoIme}</a></>)}
+              Imam: {imamDzamije.map((i, n) => <>{n > 0 && ', '}{profilPredavaca(i.slug) ? <a href={url(profilPredavaca(i.slug)!)}>{i.punoIme}</a> : i.punoIme}</>)}
             </span>
           )}
         </div>

@@ -17,6 +17,6 @@ export default defineConfig({
   output: 'static',
   // CSS je mali (~15 KB) — ugrađuje se u stranicu da ne blokira prvo iscrtavanje.
   build: { inlineStylesheets: 'always' },
-  // Admin panel i privremeni prikaz objava iz baze nisu za pretraživače.
-  integrations: [sitemap({ filter: (page) => !/\/admin\/|\/obavjestenja\/prikaz\//.test(page) })],
+  // Admin panel, privremeni prikaz objava iz baze i stare adrese /imami/… (preusmjerenja na /imam/) nisu za pretraživače.
+  integrations: [sitemap({ filter: (page) => !/\/admin\/|\/obavjestenja\/prikaz\/|\/imami\//.test(page) })],
 });
