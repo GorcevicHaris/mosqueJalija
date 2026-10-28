@@ -87,7 +87,7 @@ Samo dvije stvari se ne mijenjaju kroz admin, i to namjerno:
 Kad se nešto sačuva u adminu, nova obavještenja se na sajtu vide odmah. Ostale izmjene se pojavljuju
 za ~15–20 minuta, jer se sajt automatski obnavlja iz baze svakih 15 minuta.
 
-Prijava ide samo preko linka na e-mail, bez lozinke. Ulaz je dugme „Admin prijava“ u podnožju sajta, „Admin“ u gornjoj traci i „Admin prijava“ u meniju na telefonu.
+Prijava ide linkom na e-mail ili lozinkom („Prijava lozinkom“ ispod forme). Ulaz je dugme „Admin prijava“ u podnožju sajta, „Admin“ u gornjoj traci i „Admin prijava“ u meniju na telefonu.
 
 **Sigurnost:**
 - svaka tabela ima RLS pravila, a Supabase sigurnosna provjera ne prijavljuje upozorenja;
@@ -148,9 +148,9 @@ Već podešeno:
 - **Supabase prijava:** Site URL i redirect adrese za `/mosqueJalija/admin/` (javni sajt) i
   `localhost:4330` (razvoj).
 - **Prvi administrator:** harisgorcevic1000@gmail.com.
-- **Prijava bez lozinke:** samo link na e-mail (opcija sa lozinkom je uklonjena). U Supabase-u su
-  ipak postavljena stroga pravila za lozinke (12+ znakova, slova, brojevi, simboli), za slučaj da se
-  lozinke ikad uključe.
+- **Prijava:** link na e-mail ili lozinka. Nalog sa lozinkom pravi administrator u Supabase-u
+  (Authentication → Users → Add user, uključiti Auto Confirm). Lozinka mora imati 12+ znakova, slova,
+  brojeve i simbole. Urednik mora biti upisan i u tabelu `urednici`.
 - **Ulaz u admin:** dugme „Admin prijava“ u podnožju, „Admin“ u gornjoj traci (desktop) i „Admin
   prijava“ na dnu menija na telefonu. Nije u glavnom meniju, a Google ga ne indeksira.
 

@@ -153,6 +153,29 @@ function poveziPrijavu() {
     });
   });
 
+  const fL = $<HTMLFormElement>('[data-prijava-lozinka]')!;
+  fL.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const emailL = $<HTMLInputElement>('#adm-email-l')!;
+    const lozinkaEl = $<HTMLInputElement>('#adm-lozinka')!;
+    const email = emailL.value.trim().toLowerCase();
+    if (!emailL.checkValidity() || !email || !lozinkaEl.value) {
+      poruka(status, 'Unesite e-mail adresu i lozinku.', 'greska');
+      (email ? lozinkaEl : emailL).focus();
+      return;
+    }
+    void uToku(fL.querySelector('button[type="submit"]'), 'Provjeravam…', async () => {
+      try {
+        const { data, error } = await klijent.auth.signInWithPassword({ email, password: lozinkaEl.value });
+        if (error) throw error;
+        lozinkaEl.value = '';
+        if (data?.session) await nastavi(data.session);
+      } catch (err) {
+        poruka(status, porukaGreske(err), 'greska');
+      }
+    });
+  });
+
   $('[data-ponovo]')!.addEventListener('click', async () => {
     const email = emailEl.value.trim().toLowerCase();
     try {
